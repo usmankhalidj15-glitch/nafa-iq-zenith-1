@@ -145,6 +145,14 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function Spinner() {
+  return (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-background">
+      <Loader2 className="h-6 w-6 animate-spin text-bull" />
+    </div>
+  );
+}
+
 function AuthGate() {
   const { user, loading } = useAuth();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -152,33 +160,24 @@ function AuthGate() {
   const isAuthRoute = pathname === "/auth";
 
   useEffect(() => {
-    if (!loading && !user && !isAuthRoute) {
-      navigate({ to: "/auth" });
-    }
+    if (loading) return;
+    if (!user && !isAuthRoute) navigate({ to: "/auth" });
   }, [loading, user, isAuthRoute, navigate]);
 
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
-        <Loader2 className="h-6 w-6 animate-spin text-bull" />
-      </div>
-    );
+  // Outlet must ALWAYS render so the router keeps its matched route (avoids
+  // "Expected to find a match below the root match" during hydration).
+  if (isAuthRoute) {
+    return <Outlet />;
   }
 
-  if (isAuthRoute) return <Outlet />;
-
-  if (!user) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
-        <Loader2 className="h-6 w-6 animate-spin text-bull" />
-      </div>
-    );
-  }
-
+  const blocking = loading || !user;
   return (
-    <AppShell>
-      <Outlet />
-    </AppShell>
+    <>
+      <AppShell>
+        <Outlet />
+      </AppShell>
+      {blocking && <Spinner />}
+    </>
   );
 }
 
