@@ -14,7 +14,6 @@ import {
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { TICKER_ITEMS } from "@/lib/data";
-import icon from "/icons/icon-192.png";
 
 const NAV = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard, mobile: "Home" },
@@ -28,7 +27,7 @@ const NAV = [
 function Logo() {
   return (
     <Link to="/" className="flex items-center gap-2">
-      <img src={icon} alt="NafaIQ" width={28} height={28} className="rounded-[6px]" />
+      <img src="/icons/icon-192.png" alt="NafaIQ" width={28} height={28} className="rounded-[6px]" />
       <span className="text-lg font-bold tracking-tight text-bull">NafaIQ</span>
     </Link>
   );
