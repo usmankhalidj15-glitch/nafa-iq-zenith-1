@@ -1,4 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
+import logo from "@/assets/logo.png";
 import {
   LayoutDashboard,
   TrendingUp,
