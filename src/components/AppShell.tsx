@@ -35,8 +35,19 @@ function Logo() {
   );
 }
 
+function initial(name?: string | null, email?: string | null) {
+  return (name?.trim()?.[0] || email?.trim()?.[0] || "U").toUpperCase();
+}
+
 function Sidebar() {
   const path = useRouterState({ select: (s) => s.location.pathname });
+  const { profile, user, signOut } = useAuth();
+  const navigate = useNavigate();
+  const name = profile?.display_name || user?.email?.split("@")[0] || "User";
+  async function handleSignOut() {
+    await signOut();
+    navigate({ to: "/auth" });
+  }
   return (
     <aside className="fixed top-0 left-0 z-30 hidden h-screen w-[240px] flex-col border-r border-border bg-sidebar lg:flex">
       <div className="flex h-[52px] items-center border-b border-border px-4">
