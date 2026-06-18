@@ -74,12 +74,16 @@ function Sidebar() {
         })}
       </nav>
       <div className="flex items-center gap-3 border-t border-border p-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-bull/20 font-semibold text-bull">A</div>
-        <div className="flex-1">
-          <div className="text-sm font-medium text-text-primary">Ahmed</div>
-          <div className="text-xs text-text-muted">Free plan</div>
+        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-bull/20 font-semibold text-bull">
+          {initial(profile?.display_name, user?.email)}
         </div>
-        <Settings className="h-[18px] w-[18px] text-text-secondary" />
+        <div className="min-w-0 flex-1">
+          <div className="truncate text-sm font-medium text-text-primary">{name}</div>
+          <div className="text-xs text-text-muted">{profile?.plan ?? "Free"} plan</div>
+        </div>
+        <button onClick={handleSignOut} aria-label="Sign out" className="text-text-secondary transition-colors hover:text-bear">
+          <LogOut className="h-[18px] w-[18px]" />
+        </button>
       </div>
     </aside>
   );
