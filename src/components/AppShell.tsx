@@ -203,6 +203,23 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 {n.label}
               </Link>
             ))}
+            <div className="mt-2 flex items-center gap-3 border-t border-border px-3 pt-3">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-bull/20 text-sm font-semibold text-bull">
+                {initial(profile?.display_name, user?.email)}
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="truncate text-sm font-medium text-text-primary">
+                  {profile?.display_name || user?.email?.split("@")[0] || "User"}
+                </div>
+                <div className="text-xs text-text-muted">{profile?.plan ?? "Free"} plan</div>
+              </div>
+              <button
+                onClick={handleSignOut}
+                className="flex items-center gap-1.5 rounded-[6px] px-2.5 py-1.5 text-sm font-medium text-bear hover:bg-hover"
+              >
+                <LogOut className="h-4 w-4" /> Sign out
+              </button>
+            </div>
           </div>
         </div>
       )}
