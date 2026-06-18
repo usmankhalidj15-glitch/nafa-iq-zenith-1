@@ -9,38 +9,155 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PsxRouteImport } from './routes/psx'
+import { Route as PortfolioRouteImport } from './routes/portfolio'
+import { Route as LearnRouteImport } from './routes/learn'
+import { Route as FinanceRouteImport } from './routes/finance'
+import { Route as AlertsRouteImport } from './routes/alerts'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as StockTickerRouteImport } from './routes/stock.$ticker'
 
+const PsxRoute = PsxRouteImport.update({
+  id: '/psx',
+  path: '/psx',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortfolioRoute = PortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearnRoute = LearnRouteImport.update({
+  id: '/learn',
+  path: '/learn',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FinanceRoute = FinanceRouteImport.update({
+  id: '/finance',
+  path: '/finance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AlertsRoute = AlertsRouteImport.update({
+  id: '/alerts',
+  path: '/alerts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StockTickerRoute = StockTickerRouteImport.update({
+  id: '/stock/$ticker',
+  path: '/stock/$ticker',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/alerts': typeof AlertsRoute
+  '/finance': typeof FinanceRoute
+  '/learn': typeof LearnRoute
+  '/portfolio': typeof PortfolioRoute
+  '/psx': typeof PsxRoute
+  '/stock/$ticker': typeof StockTickerRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/alerts': typeof AlertsRoute
+  '/finance': typeof FinanceRoute
+  '/learn': typeof LearnRoute
+  '/portfolio': typeof PortfolioRoute
+  '/psx': typeof PsxRoute
+  '/stock/$ticker': typeof StockTickerRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/alerts': typeof AlertsRoute
+  '/finance': typeof FinanceRoute
+  '/learn': typeof LearnRoute
+  '/portfolio': typeof PortfolioRoute
+  '/psx': typeof PsxRoute
+  '/stock/$ticker': typeof StockTickerRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/alerts'
+    | '/finance'
+    | '/learn'
+    | '/portfolio'
+    | '/psx'
+    | '/stock/$ticker'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/alerts'
+    | '/finance'
+    | '/learn'
+    | '/portfolio'
+    | '/psx'
+    | '/stock/$ticker'
+  id:
+    | '__root__'
+    | '/'
+    | '/alerts'
+    | '/finance'
+    | '/learn'
+    | '/portfolio'
+    | '/psx'
+    | '/stock/$ticker'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AlertsRoute: typeof AlertsRoute
+  FinanceRoute: typeof FinanceRoute
+  LearnRoute: typeof LearnRoute
+  PortfolioRoute: typeof PortfolioRoute
+  PsxRoute: typeof PsxRoute
+  StockTickerRoute: typeof StockTickerRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/psx': {
+      id: '/psx'
+      path: '/psx'
+      fullPath: '/psx'
+      preLoaderRoute: typeof PsxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portfolio': {
+      id: '/portfolio'
+      path: '/portfolio'
+      fullPath: '/portfolio'
+      preLoaderRoute: typeof PortfolioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn': {
+      id: '/learn'
+      path: '/learn'
+      fullPath: '/learn'
+      preLoaderRoute: typeof LearnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/finance': {
+      id: '/finance'
+      path: '/finance'
+      fullPath: '/finance'
+      preLoaderRoute: typeof FinanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/alerts': {
+      id: '/alerts'
+      path: '/alerts'
+      fullPath: '/alerts'
+      preLoaderRoute: typeof AlertsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +165,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/stock/$ticker': {
+      id: '/stock/$ticker'
+      path: '/stock/$ticker'
+      fullPath: '/stock/$ticker'
+      preLoaderRoute: typeof StockTickerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AlertsRoute: AlertsRoute,
+  FinanceRoute: FinanceRoute,
+  LearnRoute: LearnRoute,
+  PortfolioRoute: PortfolioRoute,
+  PsxRoute: PsxRoute,
+  StockTickerRoute: StockTickerRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
