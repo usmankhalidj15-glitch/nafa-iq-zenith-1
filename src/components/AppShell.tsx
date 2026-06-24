@@ -18,7 +18,7 @@ import { TICKER_ITEMS } from "@/lib/data";
 import { useAuth } from "@/hooks/use-auth";
 
 const NAV = [
-  { to: "/", label: "Dashboard", icon: LayoutDashboard, mobile: "Home" },
+  { to: "/app", label: "Dashboard", icon: LayoutDashboard, mobile: "Home" },
   { to: "/psx", label: "PSX Market", icon: TrendingUp, mobile: "PSX" },
   { to: "/portfolio", label: "Portfolio", icon: Briefcase, mobile: "Portfolio" },
   { to: "/finance", label: "Finance", icon: Wallet, mobile: "Finance" },
@@ -28,7 +28,7 @@ const NAV = [
 
 function Logo() {
   return (
-    <Link to="/" className="flex items-center gap-2">
+    <Link to="/app" className="flex items-center gap-2">
       <img src={logo} alt="NafaIQ" width={28} height={28} className="rounded-[6px]" />
       <span className="text-lg font-bold tracking-tight text-bull">NafaIQ</span>
     </Link>
