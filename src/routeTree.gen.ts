@@ -17,6 +17,7 @@ import { Route as FinanceRouteImport } from './routes/finance'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as AlertsRouteImport } from './routes/alerts'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as StockTickerRouteImport } from './routes/stock.$ticker'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -59,6 +60,11 @@ const AlertsRoute = AlertsRouteImport.update({
   path: '/alerts',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StockTickerRoute = StockTickerRouteImport.update({
   id: '/stock/$ticker',
   path: '/stock/$ticker',
@@ -66,6 +72,7 @@ const StockTickerRoute = StockTickerRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/alerts': typeof AlertsRoute
   '/app': typeof AppRoute
   '/auth': typeof AuthRoute
@@ -77,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/stock/$ticker': typeof StockTickerRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/alerts': typeof AlertsRoute
   '/app': typeof AppRoute
   '/auth': typeof AuthRoute
@@ -89,6 +97,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
   '/alerts': typeof AlertsRoute
   '/app': typeof AppRoute
   '/auth': typeof AuthRoute
@@ -102,6 +111,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/alerts'
     | '/app'
     | '/auth'
@@ -113,6 +123,7 @@ export interface FileRouteTypes {
     | '/stock/$ticker'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/alerts'
     | '/app'
     | '/auth'
@@ -124,6 +135,7 @@ export interface FileRouteTypes {
     | '/stock/$ticker'
   id:
     | '__root__'
+    | '/'
     | '/alerts'
     | '/app'
     | '/auth'
@@ -136,6 +148,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   AlertsRoute: typeof AlertsRoute
   AppRoute: typeof AppRoute
   AuthRoute: typeof AuthRoute
@@ -205,6 +218,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AlertsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/stock/$ticker': {
       id: '/stock/$ticker'
       path: '/stock/$ticker'
@@ -216,6 +236,7 @@ declare module '@tanstack/react-router' {
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   AlertsRoute: AlertsRoute,
   AppRoute: AppRoute,
   AuthRoute: AuthRoute,
