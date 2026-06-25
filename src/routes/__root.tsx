@@ -16,6 +16,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AppShell } from "../components/AppShell";
 import { AuthProvider, useAuth } from "@/hooks/use-auth";
+import { LearnProvider } from "@/hooks/use-learn";
 import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
@@ -190,8 +191,10 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <AuthProvider>
-        <AuthGate />
-        <Toaster />
+        <LearnProvider>
+          <AuthGate />
+          <Toaster />
+        </LearnProvider>
       </AuthProvider>
     </QueryClientProvider>
   );
