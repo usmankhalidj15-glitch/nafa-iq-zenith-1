@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Plus, Search, Check, Sparkles } from "lucide-react";
+import { Plus, Search, Check, Sparkles, ArrowUpRight, ArrowDownRight, PiggyBank, Percent } from "lucide-react";
 import { Card, StatCard } from "@/components/Card";
-import { IncomeExpenseChart } from "@/components/charts";
+import { IncomeExpenseChart, Sparkline } from "@/components/charts";
 import { fmtPKR } from "@/lib/data";
 import { TRANSACTIONS, BUDGETS, BILLS, GOALS, INCOME_EXPENSE } from "@/lib/finance-data";
 import { cn } from "@/lib/utils";
