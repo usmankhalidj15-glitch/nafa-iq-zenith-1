@@ -482,7 +482,14 @@ function Landing() {
       <Nav />
 
       {/* HERO */}
-      <section className="relative overflow-hidden">
+      <section
+        className="relative overflow-hidden"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,45,45,0.95) 0%, #0A0E1A 60%)",
+        }}
+      >
+        <ScatteredTickers />
         {/* gradient orbs */}
         <div className="pointer-events-none absolute inset-0 z-0">
           <span
