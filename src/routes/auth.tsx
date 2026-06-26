@@ -156,6 +156,14 @@ function AuthPage() {
                 "Create account"
               )}
             </Button>
+            <Button
+              type="button"
+              variant="outline"
+              asChild
+              className="w-full border-white/10 bg-transparent text-text-secondary hover:bg-white/5 hover:text-text-primary"
+            >
+              <Link to="/">Cancel</Link>
+            </Button>
           </form>
         </div>
 
