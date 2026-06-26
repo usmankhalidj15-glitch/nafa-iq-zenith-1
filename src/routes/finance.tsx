@@ -50,102 +50,187 @@ function Finance() {
   );
 }
 
-function KpiCard({ children }: { children: React.ReactNode }) {
+/* ---------- count-up hook (animates a number when it scrolls into view) ---------- */
+function useCountUp(target: number, decimals = 0, duration = 1200) {
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.4 });
+  const [val, setVal] = useState(reduce ? target : 0);
+
+  useEffect(() => {
+    if (reduce) {
+      setVal(target);
+      return;
+    }
+    if (!inView) return;
+    let raf = 0;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const t = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setVal(target * eased);
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [inView, target, duration, reduce]);
+
+  const formatted =
+    decimals > 0
+      ? val.toLocaleString("en-PK", { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
+      : Math.round(val).toLocaleString("en-PK");
+  return { ref, formatted };
+}
+
+/* ---------- glass KPI card ---------- */
+function KpiCard({
+  index = 0,
+  accent,
+  children,
+}: {
+  index?: number;
+  accent: string;
+  children: React.ReactNode;
+}) {
+  const reduce = useReducedMotion();
   return (
-    <div className="rounded-[12px] border border-border bg-surface p-4 transition-all duration-200 hover:border-bull/25 hover:shadow-[0_4px_20px_rgba(0,0,0,0.3)] sm:p-5">
-      {children}
-    </div>
+    <motion.div
+      initial={reduce ? false : { opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.5, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={reduce ? undefined : { y: -3 }}
+      className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/5 bg-surface/40 p-4 backdrop-blur-md transition-shadow duration-300 sm:p-5"
+      style={{ boxShadow: "inset 0 1px 0 0 rgba(255,255,255,0.04)" }}
+    >
+      {/* inner highlight */}
+      <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.05] to-transparent" />
+      {/* accent glow on hover */}
+      <div
+        className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+        style={{ background: accent }}
+      />
+      <div className="relative z-10 flex h-full flex-col">{children}</div>
+    </motion.div>
   );
 }
 
 function KpiLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mb-1.5 text-[11px] font-medium uppercase tracking-[0.06em] text-text-secondary sm:text-xs">
-      {children}
-    </div>
+    <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-text-muted">{children}</div>
   );
 }
 
-function KpiValue({ children }: { children: React.ReactNode }) {
-  return <div className="font-mono text-lg font-bold text-text-primary sm:text-[22px]">{children}</div>;
-}
-
 function Overview() {
+  const income = useCountUp(47500);
+  const expenses = useCountUp(18675);
+  const savings = useCountUp(28825);
+  const rate = useCountUp(60.7, 1);
+
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
+    <div className="relative space-y-4">
+      {/* ambient background glows */}
+      <div className="pointer-events-none absolute -right-16 -top-10 h-64 w-64 rounded-full bg-ai/10 blur-[100px]" />
+      <div className="pointer-events-none absolute -left-16 top-1/2 h-64 w-64 rounded-full bg-bull/5 blur-[100px]" />
+
+      <div className="relative z-10 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
         {/* Monthly Income */}
-        <KpiCard>
-          <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-[8px]" style={{ background: "rgba(0,212,170,0.12)" }}>
+        <KpiCard index={0} accent="rgba(0,212,170,0.5)">
+          <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]" style={{ background: "rgba(0,212,170,0.12)" }}>
             <ArrowUpRight className="h-5 w-5 text-bull" />
           </div>
           <KpiLabel>Monthly Income</KpiLabel>
-          <KpiValue>PKR 47,500</KpiValue>
+          <div className="mt-1 font-mono text-lg font-semibold tracking-tight text-bull tabular-nums sm:text-xl">
+            PKR <span ref={income.ref}>{income.formatted}</span>
+          </div>
           <div className="mt-3 flex items-end justify-between gap-2">
-            <span className="text-[11px] text-bull sm:text-xs">+PKR 2,500 vs last month</span>
-            <div className="w-16 shrink-0">
-              <Sparkline data={[43000, 45000, 47500]} color="#00d4aa" />
-            </div>
+            <span className="text-[10px] text-bull/80 sm:text-[11px]">+PKR 2,500 vs last month</span>
+            <div className="w-14 shrink-0"><Sparkline data={[43000, 45000, 47500]} color="#00d4aa" /></div>
           </div>
         </KpiCard>
 
         {/* Total Expenses */}
-        <KpiCard>
-          <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-[8px]" style={{ background: "rgba(255,77,77,0.12)" }}>
+        <KpiCard index={1} accent="rgba(255,77,77,0.45)">
+          <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]" style={{ background: "rgba(255,77,77,0.12)" }}>
             <ArrowDownRight className="h-5 w-5 text-bear" />
           </div>
           <KpiLabel>Total Expenses</KpiLabel>
-          <KpiValue>PKR 18,675</KpiValue>
+          <div className="mt-1 font-mono text-lg font-semibold tracking-tight text-bear tabular-nums sm:text-xl">
+            PKR <span ref={expenses.ref}>{expenses.formatted}</span>
+          </div>
           <div className="mt-3 flex items-end justify-between gap-2">
-            <span className="text-[11px] text-bull sm:text-xs">-12% vs last month</span>
-            <div className="w-16 shrink-0">
-              <Sparkline data={[22000, 21200, 18675]} color="#ff4d4d" />
-            </div>
+            <span className="text-[10px] text-bull/80 sm:text-[11px]">-12% vs last month</span>
+            <div className="w-14 shrink-0"><Sparkline data={[22000, 21200, 18675]} color="#ff4d4d" /></div>
           </div>
         </KpiCard>
 
         {/* Net Savings */}
-        <KpiCard>
-          <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-[8px]" style={{ background: "rgba(0,212,170,0.12)" }}>
-            <PiggyBank className="h-5 w-5 text-bull" />
+        <KpiCard index={2} accent="rgba(139,92,246,0.45)">
+          <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]" style={{ background: "rgba(139,92,246,0.12)" }}>
+            <PiggyBank className="h-5 w-5 text-ai" />
           </div>
           <KpiLabel>Net Savings</KpiLabel>
-          <KpiValue>PKR 28,825</KpiValue>
-          <div className="mt-3 flex items-end justify-between gap-2">
-            <span className="text-[11px] text-text-secondary sm:text-xs">Saved this month</span>
-            <span className="text-[11px] text-bull sm:text-xs">+PKR 4,825 vs May</span>
+          <div className="mt-1 font-mono text-lg font-semibold tracking-tight text-ai tabular-nums sm:text-xl">
+            PKR <span ref={savings.ref}>{savings.formatted}</span>
+          </div>
+          <div className="mt-3 flex items-center justify-between gap-2">
+            <span className="text-[10px] text-text-muted sm:text-[11px]">Saved this month</span>
+            <span className="text-[10px] text-bull/80 sm:text-[11px]">+PKR 4,825</span>
           </div>
         </KpiCard>
 
         {/* Savings Rate */}
-        <KpiCard>
-          <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-[8px]" style={{ background: "rgba(0,212,170,0.12)" }}>
-            <Percent className="h-5 w-5 text-bull" />
+        <KpiCard index={3} accent="rgba(245,158,11,0.45)">
+          <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]" style={{ background: "rgba(245,158,11,0.12)" }}>
+            <Percent className="h-5 w-5 text-warning" />
           </div>
           <KpiLabel>Savings Rate</KpiLabel>
-          <KpiValue>60.7%</KpiValue>
-          <div className="mt-2 h-1 w-full overflow-hidden rounded-full" style={{ background: "rgba(0,212,170,0.12)" }}>
-            <div className="h-full rounded-full bg-bull" style={{ width: "60.7%" }} />
+          <div className="mt-1 font-mono text-lg font-semibold tracking-tight text-warning tabular-nums sm:text-xl">
+            <span ref={rate.ref}>{rate.formatted}</span>%
           </div>
-          <div className="mt-3 flex items-center justify-between gap-2">
-            <span className="rounded-full px-2 py-0.5 text-[10px] font-semibold text-bull" style={{ background: "rgba(0,212,170,0.12)", border: "1px solid rgba(0,212,170,0.3)" }}>
+          <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-white/5">
+            <motion.div
+              className="h-full rounded-full bg-warning"
+              initial={{ width: 0 }}
+              whileInView={{ width: "60.7%" }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            />
+          </div>
+          <div className="mt-2.5 flex items-center justify-between gap-2">
+            <span className="rounded-full border border-warning/30 px-2 py-0.5 text-[10px] font-semibold text-warning" style={{ background: "rgba(245,158,11,0.1)" }}>
               Excellent
             </span>
-            <span className="text-[11px] text-text-muted sm:text-xs">Goal: 65%</span>
+            <span className="text-[10px] text-text-muted sm:text-[11px]">Goal: 65%</span>
           </div>
         </KpiCard>
       </div>
 
-      <Card>
-        <div className="text-sm text-text-secondary">6-Month Overview</div>
-        <div className="text-xs text-text-muted">Jan 2026 — Jun 2026</div>
-        <div className="mt-3">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+        className="relative z-10 overflow-hidden rounded-3xl border border-white/10 bg-surface/60 p-5 backdrop-blur-xl sm:p-6"
+      >
+        <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-br from-white/[0.04] to-transparent" />
+        <div className="relative z-10 flex items-end justify-between">
+          <div>
+            <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-text-secondary">6-Month Overview</div>
+            <div className="mt-0.5 text-[11px] text-text-muted">Jan 2026 — Jun 2026</div>
+          </div>
+          <div className="flex items-center gap-3 text-[11px] font-medium text-text-secondary">
+            <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-bull" />In</span>
+            <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-bear" />Out</span>
+          </div>
+        </div>
+        <div className="relative z-10 mt-4">
           <IncomeExpenseChart data={INCOME_EXPENSE} />
         </div>
-        <div className="mt-3 text-center text-xs text-text-muted">
+        <div className="relative z-10 mt-3 text-center text-[11px] text-text-muted">
           6-month totals: Income PKR 2,85,000 · Expenses PKR 1,12,050 · Saved PKR 1,72,950
         </div>
-      </Card>
+      </motion.div>
     </div>
   );
 }
