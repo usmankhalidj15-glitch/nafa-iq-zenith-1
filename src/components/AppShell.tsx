@@ -9,7 +9,6 @@ import {
   Bell,
   LogOut,
   Menu,
-  MoreHorizontal,
   X,
 } from "lucide-react";
 import { useState } from "react";
