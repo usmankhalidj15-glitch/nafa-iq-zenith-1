@@ -30,7 +30,9 @@ function Logo() {
   return (
     <Link to="/app" className="flex items-center gap-2">
       <img src={logo} alt="NafaIQ" width={28} height={28} className="rounded-[6px]" />
-      <span className="text-lg font-bold tracking-tight text-bull">NafaIQ</span>
+      <span className="font-display text-lg font-bold tracking-tight text-text-primary">
+        Nafa<span className="text-gold">IQ</span>
+      </span>
     </Link>
   );
 }

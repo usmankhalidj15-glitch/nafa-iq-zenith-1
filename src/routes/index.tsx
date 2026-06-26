@@ -257,7 +257,7 @@ function PhoneMockup() {
           <div className="m-2 overflow-hidden rounded-[36px] bg-[#070B14]">
             <div className="space-y-2.5 p-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-bull">NafaIQ</span>
+                <span className="font-display text-xs font-bold text-text-primary">Nafa<span className="text-gold">IQ</span></span>
                 <span className="h-5 w-5 rounded-full bg-bull/20" />
               </div>
               <div className="rounded-[8px] border border-l-2 border-l-ai border-border bg-ai-tint p-2">
@@ -457,7 +457,7 @@ function Nav() {
       <div className="mx-auto flex h-14 max-w-[1200px] items-center justify-between px-6">
         <div className="flex items-center gap-2">
           <img src={logo} alt="NafaIQ" width={26} height={26} className="rounded-[6px]" />
-          <span className="text-lg font-bold tracking-tight text-bull">NafaIQ</span>
+          <span className="font-display text-lg font-bold tracking-tight text-text-primary">Nafa<span className="text-gold">IQ</span></span>
         </div>
         <nav className="flex items-center gap-4 sm:gap-6">
           <NavLink href="#features">Features</NavLink>
@@ -671,7 +671,7 @@ function Hero() {
             </span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h1 className="mt-6 text-[32px] font-extrabold leading-[1.05] tracking-[-0.02em] sm:text-5xl lg:text-[68px]">
+            <h1 className="font-display mt-6 text-[32px] font-extrabold leading-[1.05] tracking-[-0.02em] sm:text-5xl lg:text-[68px]">
               PSX. Finance. AI.
               <br />
               <span className="text-bull" style={{ textShadow: "0 0 60px rgba(0,212,170,0.3)" }}>
@@ -994,7 +994,7 @@ function Landing() {
           <div>
             <div className="flex items-center gap-2">
               <img src={logo} alt="NafaIQ" width={26} height={26} className="rounded-[6px]" />
-              <span className="text-lg font-bold tracking-tight text-bull">NafaIQ</span>
+              <span className="font-display text-lg font-bold tracking-tight text-text-primary">Nafa<span className="text-gold">IQ</span></span>
             </div>
             <p className="mt-3 max-w-xs text-sm text-text-secondary">
               Pakistan's Financial Intelligence Terminal
