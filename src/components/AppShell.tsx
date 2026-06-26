@@ -49,8 +49,8 @@ function Sidebar() {
     navigate({ to: "/auth" });
   }
   return (
-    <aside className="fixed top-0 left-0 z-30 hidden h-screen w-[240px] flex-col border-r border-border bg-sidebar lg:flex">
-      <div className="flex h-[52px] items-center border-b border-border px-4">
+    <aside className="glass-chrome fixed top-0 left-0 z-30 hidden h-screen w-[240px] flex-col border-r border-white/5 lg:flex">
+      <div className="flex h-[52px] items-center border-b border-white/5 px-4">
         <Logo />
       </div>
       <nav className="flex-1 space-y-1 p-3">
@@ -61,10 +61,10 @@ function Sidebar() {
               key={n.to}
               to={n.to}
               className={cn(
-                "flex items-center gap-3 rounded-[6px] border-l-2 px-3 py-2.5 text-sm font-medium transition-colors",
+                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
                 active
-                  ? "border-bull bg-bull/10 text-bull"
-                  : "border-transparent text-text-secondary hover:bg-hover hover:text-text-primary",
+                  ? "nav-active text-bull"
+                  : "text-text-secondary hover:bg-white/5 hover:text-text-primary",
               )}
             >
               <n.icon className="h-[18px] w-[18px]" />
