@@ -73,11 +73,16 @@ function AuthPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-10">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,hsl(var(--bull)/0.08),transparent_55%)]" />
-      <div className="w-full max-w-[400px]">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-10">
+      {/* ambient brand glows */}
+      <div className="ambient-glow -top-24 left-1/2 h-[460px] w-[460px] -translate-x-1/2 bg-bull/10" />
+      <div className="ambient-glow bottom-[-10%] right-[-10%] h-[360px] w-[360px] bg-ai/[0.08]" />
+      <div className="relative z-10 w-full max-w-[400px]">
         <div className="mb-8 flex flex-col items-center text-center">
-          <img src={logo} alt="NafaIQ" width={48} height={48} className="rounded-[10px]" />
+          <div className="relative">
+            <div className="absolute inset-0 -z-10 rounded-[14px] bg-bull/30 blur-xl" />
+            <img src={logo} alt="NafaIQ" width={48} height={48} className="rounded-[10px]" />
+          </div>
           <h1 className="mt-4 text-2xl font-bold tracking-tight text-text-primary">
             {mode === "signin" ? "Welcome back" : "Create your account"}
           </h1>
@@ -88,11 +93,11 @@ function AuthPage() {
           </p>
         </div>
 
-        <div className="rounded-[12px] border border-border bg-card p-5 shadow-xl">
+        <div className="glass-card rounded-2xl p-6">
           <button
             onClick={handleGoogle}
             disabled={busy}
-            className="flex w-full items-center justify-center gap-2.5 rounded-[8px] border border-border bg-background px-4 py-2.5 text-sm font-medium text-text-primary transition-colors hover:bg-hover disabled:opacity-60"
+            className="flex w-full items-center justify-center gap-2.5 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-text-primary transition-colors hover:bg-white/10 disabled:opacity-60"
           >
             <GoogleIcon />
             Continue with Google
