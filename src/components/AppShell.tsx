@@ -51,11 +51,11 @@ function Sidebar() {
     navigate({ to: "/auth" });
   }
   return (
-    <aside className="glass-chrome fixed top-0 left-0 z-30 hidden h-screen w-[240px] flex-col border-r border-white/5 lg:flex">
-      <div className="flex h-[52px] items-center border-b border-white/5 px-4">
+    <aside className="glass-chrome fixed top-0 left-0 z-30 hidden h-screen w-[212px] flex-col border-r border-white/[0.06] lg:flex">
+      <div className="flex h-[56px] items-center border-b border-white/[0.06] px-5">
         <Logo />
       </div>
-      <nav className="flex-1 space-y-1 p-3">
+      <nav className="flex-1 space-y-0.5 p-3">
         {NAV.map((n) => {
           const active = path === n.to || path.startsWith(n.to + "/");
           return (
@@ -63,33 +63,34 @@ function Sidebar() {
               key={n.to}
               to={n.to}
               className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
+                "relative flex items-center gap-3 rounded-md px-3 py-2 text-[13px] font-medium transition-colors duration-200",
                 active
-                  ? "nav-active text-bull"
-                  : "text-text-secondary hover:bg-white/5 hover:text-text-primary",
+                  ? "nav-active text-text-primary"
+                  : "text-text-secondary hover:bg-white/[0.04] hover:text-text-primary",
               )}
             >
-              <n.icon className="h-[18px] w-[18px]" />
+              <n.icon className="h-5 w-5 shrink-0" strokeWidth={1.75} />
               {n.label}
             </Link>
           );
         })}
       </nav>
-      <div className="flex items-center gap-3 border-t border-white/5 p-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-bull/20 font-semibold text-bull">
+      <div className="flex items-center gap-3 border-t border-white/[0.06] p-3">
+        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/15 text-xs font-semibold text-primary">
           {initial(profile?.display_name, user?.email)}
         </div>
         <div className="min-w-0 flex-1">
-          <div className="truncate text-sm font-medium text-text-primary">{name}</div>
-          <div className="text-xs text-text-muted">{profile?.plan ?? "Free"} plan</div>
+          <div className="truncate text-[13px] font-medium text-text-primary">{name}</div>
+          <div className="text-[11px] text-text-muted">{profile?.plan ?? "Free"} plan</div>
         </div>
         <button onClick={handleSignOut} aria-label="Sign out" className="text-text-secondary transition-colors hover:text-bear">
-          <LogOut className="h-[18px] w-[18px]" />
+          <LogOut className="h-[18px] w-[18px]" strokeWidth={1.75} />
         </button>
       </div>
     </aside>
   );
 }
+
 
 function Ticker() {
   const items = [...TICKER_ITEMS, ...TICKER_ITEMS];
@@ -114,25 +115,26 @@ function Ticker() {
 function Header({ onMenu }: { onMenu: () => void }) {
   const { profile, user } = useAuth();
   return (
-    <header className="glass-chrome sticky top-0 z-20 flex h-[52px] items-center gap-3 border-b border-white/5 px-3 lg:pl-6">
+    <header className="glass-chrome sticky top-0 z-20 flex h-[48px] items-center gap-3 border-b border-white/[0.06] px-3 lg:pl-6">
       <button onClick={onMenu} className="text-text-secondary lg:hidden" aria-label="Menu">
-        <Menu className="h-5 w-5" />
+        <Menu className="h-5 w-5" strokeWidth={1.75} />
       </button>
-      <span className="hidden shrink-0 items-center gap-2 rounded-[4px] bg-bull/15 px-2 py-0.5 text-[10px] font-semibold text-bull sm:inline-flex">
+      <span className="hidden shrink-0 items-center gap-1.5 rounded-[4px] bg-bull/10 px-2 py-0.5 text-[10px] font-semibold text-bull sm:inline-flex">
         <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-bull" />
         PSX OPEN
       </span>
       <Ticker />
-      <button className="relative shrink-0 text-text-secondary" aria-label="Notifications">
-        <Bell className="h-5 w-5" />
-        <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-bear text-[9px] font-bold text-white">
+      <button className="relative shrink-0 text-text-secondary transition-colors hover:text-text-primary" aria-label="Notifications">
+        <Bell className="h-[18px] w-[18px]" strokeWidth={1.75} />
+        <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-bear text-[9px] font-bold text-white">
           3
         </span>
       </button>
-      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-bull/20 text-sm font-semibold text-bull">
+      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/15 text-xs font-semibold text-primary">
         {initial(profile?.display_name, user?.email)}
       </div>
     </header>
+
   );
 }
 
@@ -149,8 +151,9 @@ function BottomNav({ onMore }: { onMore: () => void }) {
             to={t.to}
             className="flex min-h-[64px] flex-1 flex-col items-center justify-center gap-1 py-2"
           >
-            <t.icon className={cn("h-5 w-5", active ? "text-bull" : "text-text-muted")} />
-            {active && <span className="text-[10px] font-medium text-bull">{"mobile" in t ? t.mobile : t.label}</span>}
+            <t.icon className={cn("h-5 w-5", active ? "text-primary" : "text-text-muted")} strokeWidth={1.75} />
+            {active && <span className="text-[10px] font-medium text-primary">{"mobile" in t ? t.mobile : t.label}</span>}
+
           </Link>
         );
       })}
@@ -172,11 +175,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-background">
-      {/* ambient depth — subtle brand glows behind everything */}
-      <div className="ambient-glow -top-32 right-[-10%] h-[420px] w-[420px] bg-bull/[0.06]" />
-      <div className="ambient-glow top-1/3 left-[-12%] h-[380px] w-[380px] bg-ai/[0.05]" />
+      {/* ambient depth — very subtle brand wash */}
+      <div className="ambient-glow -top-40 right-[-12%] h-[420px] w-[420px] bg-primary/[0.03]" />
+
       <Sidebar />
-      <div className="relative lg:pl-[240px]">
+      <div className="relative lg:pl-[212px]">
         <Header onMenu={() => setDrawer(true)} />
         <main key={useRouterState({ select: (s) => s.location.pathname })} className="animate-[page-in_0.25s_ease-out] px-3 pt-4 pb-24 sm:px-5 lg:px-6 lg:pb-8">
           {children}

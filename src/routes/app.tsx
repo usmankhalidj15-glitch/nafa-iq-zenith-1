@@ -45,51 +45,60 @@ function Dashboard() {
   const months = range === "1M" ? 2 : range === "3M" ? 3 : range === "1Y" ? 6 : 6;
 
   return (
-    <div className="mx-auto max-w-7xl space-y-6">
-      {/* Greeting */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-text-primary sm:text-3xl">
+    <div className="mx-auto max-w-7xl space-y-8">
+      {/* Greeting — compact hero */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
+          <h1 className="truncate text-xl font-bold text-text-primary sm:text-2xl">
             Asalam-o-Alaikum, {firstName}
           </h1>
-          <p className="mt-1 text-sm text-text-secondary">
-            Thursday, 19 June 2025 · KSE-100 is up <span className="text-bull">1.24%</span> today
+          <p className="mt-0.5 text-[13px] text-text-secondary">
+            Thursday, 19 June 2025 · KSE-100 <span className="font-mono text-bull">+1.24%</span> today
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex shrink-0 gap-2">
           <Link
             to="/psx"
-            className="rounded-[6px] bg-bull px-4 py-2 text-sm font-semibold text-bull-foreground transition hover:brightness-110"
+            className="rounded-lg bg-primary px-3.5 py-2 text-[13px] font-semibold text-primary-foreground transition-all duration-200 hover:-translate-y-0.5 hover:brightness-110"
           >
             Explore PSX
           </Link>
           <Link
             to="/finance"
-            className="rounded-[6px] border border-bull px-4 py-2 text-sm font-semibold text-bull transition hover:bg-bull/10"
+            className="rounded-lg border border-white/[0.08] bg-surface px-3.5 py-2 text-[13px] font-semibold text-text-primary transition-all duration-200 hover:-translate-y-0.5 hover:border-white/[0.16]"
           >
             Add Transaction
           </Link>
         </div>
       </div>
 
-      {/* AI Insight banner */}
+      {/* AI Insight — premium recommendation widget */}
       {showAI && (
-        <div className="rounded-[8px] border border-border border-l-4 border-l-ai bg-ai-tint p-4 shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
-          <div className="flex flex-col gap-3 md:flex-row md:items-start">
-            <Sparkles className="h-5 w-5 shrink-0 text-ai" />
+        <div className="rounded-[14px] border border-white/[0.06] bg-surface p-5">
+          <div className="flex flex-col gap-4 md:flex-row md:items-start">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+              <Sparkles className="h-[18px] w-[18px] text-primary" strokeWidth={1.75} />
+            </div>
             <div className="flex-1">
-              <h2 className="text-sm font-semibold text-text-primary">Today's AI Insight</h2>
-              <p className="mt-1 text-sm leading-relaxed text-text-secondary">
-                You spent 15% more on dining this month. Redirecting PKR 5,000 to your Hajj Fund
-                could bring your goal 3 months closer. Also, HBL in your portfolio is showing a
-                Strong Buy signal — up 2.41% today with rising volume.
+              <div className="flex items-center gap-2.5">
+                <h2 className="text-sm font-semibold text-text-primary">AI Recommendation</h2>
+                <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">
+                  92% confidence
+                </span>
+              </div>
+              <p className="mt-1.5 text-[13px] font-medium text-text-primary">
+                Redirect PKR 5,000 from dining to your Hajj Fund.
+              </p>
+              <p className="mt-1 text-xs leading-relaxed text-text-secondary">
+                You spent 15% more on dining this month — reallocating brings your goal 3 months
+                closer. HBL is also flashing a Strong Buy, up 2.41% on rising volume.
               </p>
             </div>
-            <div className="flex gap-2">
-              <Link to="/psx" className="rounded-[6px] bg-bull px-3 py-1.5 text-xs font-semibold text-bull-foreground hover:brightness-110">
-                See Detail
+            <div className="flex shrink-0 gap-2">
+              <Link to="/psx" className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground transition hover:brightness-110">
+                View
               </Link>
-              <button onClick={() => setShowAI(false)} className="rounded-[6px] px-3 py-1.5 text-xs text-text-muted hover:text-text-primary">
+              <button onClick={() => setShowAI(false)} className="rounded-lg px-3 py-1.5 text-xs text-text-muted transition hover:bg-white/[0.04] hover:text-text-primary">
                 Dismiss
               </button>
             </div>
@@ -97,13 +106,24 @@ function Dashboard() {
         </div>
       )}
 
-      {/* Stat cards */}
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <StatCard label="Total Net Worth" value={fmtPKR(4280500)} sub="+PKR 56,000 (+1.32%) this month" subColor="text-bull" />
-        <StatCard label="Monthly Spending" value={fmtPKR(112050)} sub="-12% vs May" subColor="text-bull" />
-        <StatCard label="Portfolio Value" value={fmtPKR(858054)} sub="+12.73% YTD" subColor="text-bull" />
-        <StatCard label="Today's PSX P/L" value="+PKR 17,480" sub="+1.42%" subColor="text-bull" />
+      {/* Metric cards — Net Worth primary, rest secondary */}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+        <Card className="lg:col-span-6">
+          <div className="text-[13px] font-medium text-text-secondary">Total Net Worth</div>
+          <div className="mt-3 font-mono text-4xl font-bold tabular-nums text-text-primary">
+            {fmtPKR(4280500)}
+          </div>
+          <div className="mt-2 font-mono text-sm tabular-nums text-bull">
+            +PKR 56,000 (+1.32%) this month
+          </div>
+        </Card>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:col-span-6">
+          <StatCard label="Portfolio Value" value={fmtPKR(858054)} sub="+12.73% YTD" subColor="text-bull" />
+          <StatCard label="Monthly Spending" value={fmtPKR(112050)} sub="-12% vs May" subColor="text-bull" />
+          <StatCard label="Today's PSX P/L" value="+17,480" sub="+1.42%" subColor="text-bull" />
+        </div>
       </div>
+
 
       {/* Charts */}
       <div className="grid gap-4 lg:grid-cols-5">

@@ -9,7 +9,7 @@ export function Card({
   return (
     <div
       className={cn(
-        "glass-card rounded-2xl p-4",
+        "glass-card rounded-[14px] p-6",
         hover && "glass-card-hover",
         className,
       )}

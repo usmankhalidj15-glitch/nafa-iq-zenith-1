@@ -21,7 +21,12 @@ import {
   Linkedin,
   Github,
   Zap,
+  Apple,
+  Smartphone,
+  Globe,
+  MonitorSmartphone,
 } from "lucide-react";
+
 import { toast } from "sonner";
 import logo from "@/assets/logo.png";
 import { TICKER_ITEMS } from "@/lib/data";
@@ -977,12 +982,23 @@ function Landing() {
             <div className="mt-8">
               <StoreButtons center />
             </div>
-            <div className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-text-secondary">
-              <span>🍎 iOS 14+</span>
-              <span>🤖 Android 8+</span>
-              <span>💻 All Browsers</span>
-              <span>📲 Installable PWA</span>
+            <div className="mt-8 flex flex-wrap justify-center gap-2.5">
+              {[
+                { icon: Apple, label: "iOS 14+" },
+                { icon: Smartphone, label: "Android 8+" },
+                { icon: Globe, label: "All Browsers" },
+                { icon: MonitorSmartphone, label: "Installable PWA" },
+              ].map(({ icon: Icon, label }) => (
+                <span
+                  key={label}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-text-secondary"
+                >
+                  <Icon className="h-3.5 w-3.5 text-text-muted" strokeWidth={1.75} />
+                  {label}
+                </span>
+              ))}
             </div>
+
           </Reveal>
         </div>
       </section>
