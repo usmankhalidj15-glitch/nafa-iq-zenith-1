@@ -21,7 +21,12 @@ import {
   Linkedin,
   Github,
   Zap,
+  Apple,
+  Smartphone,
+  Globe,
+  MonitorSmartphone,
 } from "lucide-react";
+
 import { toast } from "sonner";
 import logo from "@/assets/logo.png";
 import { TICKER_ITEMS } from "@/lib/data";
