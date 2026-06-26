@@ -94,7 +94,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Premium Pakistan Stock Exchange dashboard, trading terminal, and AI-powered personal finance manager.",
       },
       { name: "author", content: "NafaIQ" },
-      { name: "theme-color", content: "#0a0e1a" },
+      { name: "theme-color", content: "#060d1f" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
       { name: "apple-mobile-web-app-title", content: "NafaIQ" },
