@@ -257,7 +257,7 @@ function PhoneMockup() {
           <div className="m-2 overflow-hidden rounded-[36px] bg-[#070B14]">
             <div className="space-y-2.5 p-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-bull">NafaIQ</span>
+                <span className="font-display text-xs font-bold text-text-primary">Nafa<span className="text-gold">IQ</span></span>
                 <span className="h-5 w-5 rounded-full bg-bull/20" />
               </div>
               <div className="rounded-[8px] border border-l-2 border-l-ai border-border bg-ai-tint p-2">
