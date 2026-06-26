@@ -994,7 +994,7 @@ function Landing() {
           <div>
             <div className="flex items-center gap-2">
               <img src={logo} alt="NafaIQ" width={26} height={26} className="rounded-[6px]" />
-              <span className="text-lg font-bold tracking-tight text-bull">NafaIQ</span>
+              <span className="font-display text-lg font-bold tracking-tight text-text-primary">Nafa<span className="text-gold">IQ</span></span>
             </div>
             <p className="mt-3 max-w-xs text-sm text-text-secondary">
               Pakistan's Financial Intelligence Terminal
