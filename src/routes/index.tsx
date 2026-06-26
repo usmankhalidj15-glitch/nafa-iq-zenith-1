@@ -671,7 +671,7 @@ function Hero() {
             </span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h1 className="mt-6 text-[32px] font-extrabold leading-[1.05] tracking-[-0.02em] sm:text-5xl lg:text-[68px]">
+            <h1 className="font-display mt-6 text-[32px] font-extrabold leading-[1.05] tracking-[-0.02em] sm:text-5xl lg:text-[68px]">
               PSX. Finance. AI.
               <br />
               <span className="text-bull" style={{ textShadow: "0 0 60px rgba(0,212,170,0.3)" }}>
