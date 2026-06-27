@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Sparkles, Loader2, X, Pencil, Trash2, Plus } from "lucide-react";
+import { Sparkles, Loader2, X, Pencil, Trash2, Plus, ShieldAlert, ArrowRight, AlertTriangle } from "lucide-react";
 import { Card, StatCard } from "@/components/Card";
 import { Change } from "@/components/Change";
 import { SignalBadge } from "@/components/SignalBadge";
