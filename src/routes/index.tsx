@@ -61,6 +61,8 @@ import {
   perspectiveCard,
   Magnetic,
   SPRING,
+  SPRING_UI,
+  SPRING_SOFT,
   CountUp,
 } from "@/components/animations";
 import { Tilt3D } from "@/components/Tilt3D";
