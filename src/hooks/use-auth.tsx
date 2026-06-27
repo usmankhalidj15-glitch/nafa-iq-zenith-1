@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable/index";
+import { nafaiqAuth } from "@/integrations/nafaiq/index";
 
 export type Profile = {
   id: string;
@@ -85,7 +85,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signInWithGoogle: AuthContextValue["signInWithGoogle"] = async () => {
-    const result = await lovable.auth.signInWithOAuth("google", {
+    const result = await nafaiqAuth.auth.signInWithOAuth("google", {
       redirect_uri: `${window.location.origin}/auth`,
     });
     if (result.error) return { error: result.error.message ?? "Google sign-in failed" };

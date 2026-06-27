@@ -14,7 +14,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Loader2 } from "lucide-react";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
+import { reportNafaIQError } from "../lib/nafaiq-error-reporting";
 import { AppShell } from "../components/AppShell";
 import { AuthProvider, useAuth } from "@/hooks/use-auth";
 import { LearnProvider } from "@/hooks/use-learn";
@@ -46,7 +46,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
+    reportNafaIQError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
 
   return (

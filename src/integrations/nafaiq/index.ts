@@ -9,7 +9,7 @@ type SignInOptions = {
   extraParams?: Record<string, string>;
 };
 
-export const lovable = {
+export const nafaiqAuth = {
   auth: {
     signInWithOAuth: async (
       provider: "google" | "apple" | "microsoft" | "lovable",
