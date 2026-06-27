@@ -64,7 +64,13 @@ const CandleShape = (props: CandleShapeProps) => {
   );
 };
 
-function OHLCTooltip({ active, payload }: any) {
+function OHLCTooltip({
+  active,
+  payload,
+}: {
+  active?: boolean;
+  payload?: { payload?: Candle }[];
+}) {
   if (!active || !payload?.length) return null;
   const p = payload[0]?.payload as Candle;
   if (!p) return null;
