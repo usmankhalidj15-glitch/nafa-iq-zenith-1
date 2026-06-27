@@ -491,8 +491,9 @@ function TrustStrip() {
 
 const NAV_LINKS = [
   { label: "Features", href: "#features", to: undefined },
-  { label: "Halal Investing", href: "#features", to: undefined },
-  { label: "Plans", href: undefined, to: "/plans" },
+  { label: "About", href: "#about", to: undefined },
+  { label: "Pricing", href: undefined, to: "/plans" },
+  { label: "Contact", href: "#contact", to: undefined },
 ] as const;
 
 function usePsxOpen() {
