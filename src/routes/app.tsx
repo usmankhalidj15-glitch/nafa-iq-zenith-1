@@ -4,6 +4,7 @@ import { Sparkles, ArrowRight } from "lucide-react";
 import { Card, StatCard } from "@/components/Card";
 import { Change } from "@/components/Change";
 import { SignalBadge } from "@/components/SignalBadge";
+import { EmojiIcon } from "@/components/icons";
 import { DonutChart, PortfolioAreaChart, Sparkline } from "@/components/charts";
 import { STOCKS, WATCHLIST, generateOHLCV, fmtPKR } from "@/lib/data";
 import { SPENDING, GOALS } from "@/lib/finance-data";
