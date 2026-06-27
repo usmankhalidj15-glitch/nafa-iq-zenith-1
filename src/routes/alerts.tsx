@@ -35,7 +35,7 @@ function Alerts() {
         <div className="space-y-2">
           {alerts.map((a, i) => (
             <Card key={i} className="flex items-center gap-3">
-              <span className="text-xl">{a.emoji}</span>
+              <span className="flex h-9 w-9 items-center justify-center rounded-[8px] border border-white/[0.06] bg-elevated text-text-secondary"><EmojiIcon emoji={a.emoji} size={16} /></span>
               <div className="flex-1">
                 <div className="text-sm font-medium text-text-primary">{a.title}</div>
                 <div className="text-[11px] text-text-muted">{a.type} · {a.meta}</div>
