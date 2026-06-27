@@ -1,3 +1,4 @@
+import { VideoPlaceholder } from "@/components/VideoPlaceholder";
 import { createFileRoute, Link, useNavigate, useParams } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
