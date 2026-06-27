@@ -166,13 +166,12 @@ function PageTransition({ routeKey, children }: { routeKey: string; children: Re
   }
 
   return (
-    <AnimatePresence mode="sync" initial={false}>
+    <AnimatePresence mode="wait" initial={false}>
       <motion.div
         key={routeKey}
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.2, ease: "easeOut" }}
+        animate={{ opacity: 1, transition: { duration: 0.2, ease: "easeOut" } }}
+        exit={{ opacity: 0, transition: { duration: 0.15, ease: "easeOut" } }}
       >
         {children}
       </motion.div>
