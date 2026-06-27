@@ -447,7 +447,7 @@ function VideoPlayer({ url }: { url: string }) {
     <div className="relative aspect-video w-full overflow-hidden rounded-[12px] border border-border bg-[#0d1421]">
       {failed ? (
         <div className="flex h-full flex-col items-center justify-center gap-2 text-text-muted">
-          <div className="text-3xl">🎬</div>
+          <Video className="h-8 w-8" strokeWidth={1.5} />
           <div className="text-sm">Video loading…</div>
         </div>
       ) : (
