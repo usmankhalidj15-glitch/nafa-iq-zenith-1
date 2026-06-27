@@ -1360,7 +1360,7 @@ function Landing() {
                 '"What if" comparison: PSX vs USD cash vs Gold',
               ].map((t) => (
                 <li key={t} className="flex items-start gap-2.5 text-sm text-text-secondary">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-warning" />
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-bull" />
                   {t}
                 </li>
               ))}
