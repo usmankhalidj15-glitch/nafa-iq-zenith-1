@@ -973,6 +973,21 @@ function Hero() {
         </Reveal>
       </motion.div>
 
+      {/* scroll-to-discover cue */}
+      <motion.div
+        style={{ opacity: reduce ? 1 : cueOpacity }}
+        className="pointer-events-none absolute bottom-6 left-1/2 z-[2] hidden -translate-x-1/2 flex-col items-center gap-2 sm:flex"
+      >
+        <span className="text-[10px] uppercase tracking-[0.2em] text-text-muted">Scroll to discover</span>
+        <span className="relative flex h-9 w-[22px] items-start justify-center rounded-full border border-white/15 p-1.5">
+          <motion.span
+            className="h-1.5 w-1.5 rounded-full bg-bull"
+            animate={reduce ? undefined : { y: [0, 12, 0], opacity: [1, 0.2, 1] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </span>
+      </motion.div>
+
       {/* bottom fade mask */}
       <div
         className="pointer-events-none absolute bottom-0 left-0 right-0 z-[1] h-[200px]"
