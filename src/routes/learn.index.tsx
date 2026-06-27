@@ -138,7 +138,7 @@ function Learn() {
             const id = LESSON_ID_BY_TITLE[l.title];
             const status = statusOf(id);
             const content = LESSON_CONTENT[id];
-            const isVideo = content?.type === "video";
+            const isVideo = content?.type === "video" && !!content?.videoUrl;
             return (
               <Link key={l.title} to="/learn/lesson/$id" params={{ id }}>
                 <Card className="group h-full transition-all hover:-translate-y-[3px] hover:border-bull">
