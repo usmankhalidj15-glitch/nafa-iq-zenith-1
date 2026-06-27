@@ -734,8 +734,98 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     level: "Intermediate",
     type: "article",
     presets: ["What is a 'good' P/E?", "Forward vs trailing P/E?", "P/E for PSX banks?"],
-    sections: placeholderSections("the price-to-earnings ratio", "#3b82f6"),
-    quiz: genericQuiz("the P/E ratio"),
+    sections: [
+      {
+        id: "introduction",
+        heading: "What the P/E Ratio Tells You",
+        blocks: [
+          {
+            type: "p",
+            text: "The price-to-earnings (P/E) ratio answers one question: how many rupees are you paying for every one rupee of a company's annual profit? A P/E of 8 means the market values the stock at 8 times its yearly earnings per share.",
+          },
+          {
+            type: "formula",
+            lines: ["P/E = Share Price ÷ Earnings Per Share (EPS)", "Example: 240 ÷ 30 = 8.0x"],
+          },
+          {
+            type: "callout",
+            kind: "note",
+            text: "EPS on PSX is usually reported annually in company financials. Most terminals show trailing EPS (last 12 months) by default.",
+          },
+        ],
+      },
+      {
+        id: "cheap-vs-expensive",
+        heading: "Cheap Isn't Always Good",
+        blocks: [
+          {
+            type: "p",
+            text: "A low P/E can mean a bargain — or a company the market expects to shrink. A high P/E can mean an overpriced stock — or one investors expect to grow fast. The number only has meaning when you compare a company to its own sector.",
+          },
+          {
+            type: "table",
+            head: ["Stock type", "Typical PSX P/E", "What it usually signals"],
+            rows: [
+              ["Mature bank", "4–7x", "Steady earnings, low growth expectations"],
+              ["Cement / cyclical", "6–10x", "Earnings swing with the economic cycle"],
+              ["Fast-growing tech/FMCG", "15x+", "Market is pricing in future growth"],
+            ],
+          },
+          {
+            type: "callout",
+            kind: "example",
+            text: "If a PSX bank trades at 4x while its peers average 7x, ask why. Sometimes it's an opportunity; sometimes the market sees a risk you haven't yet.",
+          },
+        ],
+      },
+      {
+        id: "limits",
+        heading: "Where P/E Breaks Down",
+        blocks: [
+          {
+            type: "p",
+            text: "P/E is useless when a company has no profit (negative EPS), and it can be distorted by one-off gains like asset sales. Always check whether the earnings are recurring before trusting the ratio.",
+          },
+          {
+            type: "callout",
+            kind: "warning",
+            text: "A single-year P/E can be misleading for cyclical PSX sectors. Look at earnings across a full cycle, not just the latest result.",
+          },
+        ],
+      },
+    ],
+    quiz: [
+      {
+        q: "A stock trades at PKR 150 with an EPS of PKR 25. What is its P/E?",
+        options: ["3.75x", "6.0x", "25x", "150x"],
+        correct: 1,
+        explanation: "P/E = price ÷ EPS = 150 ÷ 25 = 6.0x.",
+      },
+      {
+        q: "A PSX bank has a P/E of 4 while the sector averages 7. What is the smartest read?",
+        options: [
+          "It is automatically a bargain — buy immediately",
+          "Investigate why it's cheaper before concluding anything",
+          "It is overpriced and should be avoided",
+          "P/E never applies to banks",
+        ],
+        correct: 1,
+        explanation:
+          "A below-peer P/E is a prompt to investigate, not an automatic buy. The discount may reflect real risk.",
+      },
+      {
+        q: "When is the P/E ratio least reliable?",
+        options: [
+          "When the company has steady recurring profits",
+          "When earnings are negative or boosted by one-off gains",
+          "When comparing a company to its own sector",
+          "When the stock pays a dividend",
+        ],
+        correct: 1,
+        explanation:
+          "With no profit or distorted one-off earnings, P/E gives a misleading picture of value.",
+      },
+    ],
   },
 };
 
