@@ -28,9 +28,17 @@ export function Sparkline({ data, color }: { data: number[]; color: string }) {
   );
 }
 
-const CandleShape = (props: any) => {
-  const { x, width, y, height, payload } = props;
-  if (y == null || height == null) return null;
+interface CandleShapeProps {
+  x?: number;
+  width?: number;
+  y?: number;
+  height?: number;
+  payload?: Candle;
+}
+
+const CandleShape = (props: CandleShapeProps) => {
+  const { x = 0, width = 0, y, height, payload } = props;
+  if (y == null || height == null || !payload) return null;
   const { open, close, high, low } = payload;
   const up = close >= open;
   const color = up ? "#00d4aa" : "#e5484d";
