@@ -117,15 +117,15 @@ function StoreButtons({ center = false }: { center?: boolean }) {
     <div className={cn("flex flex-col gap-5", center && "items-center")}>
       {/* PRIMARY — single dominant action */}
       <Magnetic strength={0.45}>
-        <motion.div whileTap={{ scale: 0.96 }} whileHover={{ scale: 1.03 }} transition={SPRING}>
+        <motion.div whileTap={{ scale: 0.96 }} whileHover={{ scale: 1.03 }} transition={SPRING} className={cn("inline-flex", center && "justify-center")}>
           <Link
             to="/app"
-            className="flex items-center gap-3 rounded-[14px] bg-gradient-to-br from-[#00d4aa] to-[#00a88a] px-7 py-4 text-left text-bull-foreground shadow-[0_8px_30px_rgba(0,212,170,0.3)] transition hover:shadow-[0_12px_50px_rgba(0,212,170,0.55)]"
+            className="inline-flex items-center gap-2.5 rounded-xl bg-gradient-to-br from-[#00d4aa] to-[#00a88a] px-5 py-3 text-left text-bull-foreground shadow-[0_8px_30px_rgba(0,212,170,0.3)] transition hover:shadow-[0_12px_50px_rgba(0,212,170,0.55)]"
           >
-            <Download className="h-7 w-7 shrink-0" />
+            <Download className="h-5 w-5 shrink-0" />
             <span className="flex flex-col leading-tight">
-              <span className="text-[10px] uppercase tracking-wide text-white/80">Install as</span>
-              <span className="text-lg font-semibold">Web App — Free</span>
+              <span className="text-[9px] uppercase tracking-wide text-white/80">Install as</span>
+              <span className="text-sm font-semibold">Web App — Free</span>
             </span>
           </Link>
         </motion.div>
@@ -827,6 +827,7 @@ function Hero() {
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const contentY = useTransform(scrollYProgress, [0, 1], [0, 80]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const cueOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
 
   // mouse following glows with spring physics
   const mx = useMotionValue(0.5);
@@ -970,6 +971,21 @@ function Hero() {
         <Reveal delay={0.2} className="lg:col-span-2">
           <PhoneMockup />
         </Reveal>
+      </motion.div>
+
+      {/* scroll-to-discover cue */}
+      <motion.div
+        style={{ opacity: reduce ? 1 : cueOpacity }}
+        className="pointer-events-none absolute bottom-6 left-1/2 z-[2] hidden -translate-x-1/2 flex-col items-center gap-2 sm:flex"
+      >
+        <span className="text-[10px] uppercase tracking-[0.2em] text-text-muted">Scroll to discover</span>
+        <span className="relative flex h-9 w-[22px] items-start justify-center rounded-full border border-white/15 p-1.5">
+          <motion.span
+            className="h-1.5 w-1.5 rounded-full bg-bull"
+            animate={reduce ? undefined : { y: [0, 12, 0], opacity: [1, 0.2, 1] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </span>
       </motion.div>
 
       {/* bottom fade mask */}
