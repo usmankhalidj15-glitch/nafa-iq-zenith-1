@@ -100,7 +100,7 @@ function HaqeeqiDaulat() {
             </button>
           </div>
           <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/5">
-            <div className="h-full rounded-full bg-warning" style={{ width: "38%" }} />
+            <div className="h-full rounded-full bg-gold" style={{ width: "38%" }} />
           </div>
         </div>
       </div>
