@@ -669,8 +669,9 @@ function Hero() {
             </div>
           </Reveal>
           <Reveal delay={0.24}>
-            <p className="mt-4 text-xs text-text-muted">
-              ✓ No account required to explore&nbsp;&nbsp; ✓ Works on iOS, Android &amp; Desktop
+            <p className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-text-muted">
+              <span className="inline-flex items-center gap-1.5"><Check className="h-3.5 w-3.5 text-bull" strokeWidth={1.5} /> No account required to explore</span>
+              <span className="inline-flex items-center gap-1.5"><Check className="h-3.5 w-3.5 text-bull" strokeWidth={1.5} /> Works on iOS, Android &amp; Desktop</span>
             </p>
           </Reveal>
         </motion.div>
