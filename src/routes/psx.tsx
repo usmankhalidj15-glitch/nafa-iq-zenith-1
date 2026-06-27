@@ -255,46 +255,6 @@ export default function PSX() {
         </div>
       </div>
 
-      {/* Screener */}
-      <Card>
-        <div className="mb-3 flex items-center gap-2">
-          <Filter className="h-4 w-4 text-text-secondary" />
-          <h3 className="text-sm font-semibold text-text-primary">Stock Screener</h3>
-        </div>
-        <div className="mb-3 flex flex-wrap gap-1.5">
-          {(["All", "STRONG BUY", "BUY", "HOLD", "SELL", "STRONG SELL"] as (string | Signal)[]).map((f) => (
-            <button key={f} onClick={() => setSignalFilter(f)} className={cn("rounded-full px-3 py-1 text-xs font-medium", signalFilter === f ? "bg-bull text-bull-foreground" : "border border-border text-text-secondary hover:bg-hover")}>{f}</button>
-          ))}
-        </div>
-        <div className="scrollbar-none overflow-x-auto">
-          <table className="w-full min-w-[640px] text-xs">
-            <thead>
-              <tr className="border-b border-border text-left text-text-muted">
-                <th className="py-2">Stock</th><th>Sector</th><th className="text-right">Price</th><th className="text-right">Change</th><th className="text-center">Signal</th><th className="text-right">RSI</th><th className="text-right">Volume</th><th className="pr-2 text-right">Mkt Cap</th>
-              </tr>
-            </thead>
-            <tbody>
-              {screened.map((s, i) => (
-                <tr key={s.ticker} className={cn("cursor-pointer hover:bg-hover", i % 2 ? "bg-surface-alt" : "")}>
-                  <td className="py-2"><Link to="/psx/$ticker" params={{ ticker: s.ticker }} className="font-semibold text-bull">{s.ticker}</Link></td>
-                  <td className="text-text-secondary">{s.sector}</td>
-                  <td className="text-right font-mono tabular-nums text-text-primary">{fmtNum(s.price)}</td>
-                  <td className="text-right"><Change pct={s.changePct} /></td>
-                  <td className="text-center"><SignalBadge signal={s.signal} /></td>
-                  <td className="text-right font-mono tabular-nums">
-                    <span className={cn(s.rsi > 70 ? "text-bear" : s.rsi < 30 ? "text-bull" : "text-text-secondary")} title={s.rsi > 70 ? "Overbought" : s.rsi < 30 ? "Oversold" : "Neutral"}>
-                      {s.rsi}
-                      {s.rsi > 70 ? " OB" : s.rsi < 30 ? " OS" : ""}
-                    </span>
-                  </td>
-                  <td className="text-right font-mono tabular-nums text-text-secondary">{s.volume}</td>
-                  <td className="pr-2 text-right font-mono tabular-nums text-text-secondary">{s.marketCap}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Card>
     </div>
   );
 }
