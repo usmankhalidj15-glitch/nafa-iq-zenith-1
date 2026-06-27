@@ -1251,6 +1251,9 @@ function Landing() {
         </motion.div>
       </section>
 
+      {/* HOW IT WORKS */}
+      <HowItWorks />
+
       {/* HAQEEQI DAULAT SPOTLIGHT */}
       <section className="relative overflow-hidden border-y border-border bg-surface-alt">
         <div
