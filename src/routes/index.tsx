@@ -754,7 +754,7 @@ function Nav() {
             <Link
               to="/auth"
               onClick={() => setOpen(false)}
-              className="rounded-[12px] px-4 py-4 text-lg font-medium text-text-secondary transition hover:bg-white/[0.05]"
+              className="rounded-[12px] px-4 py-4 text-lg font-medium whitespace-nowrap text-text-secondary transition hover:bg-white/[0.05]"
             >
               Log In
             </Link>
