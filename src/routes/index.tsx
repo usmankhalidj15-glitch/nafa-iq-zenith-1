@@ -8,6 +8,7 @@ import {
   useMotionValue,
   useAnimationFrame,
   useReducedMotion,
+  type MotionValue,
 } from "framer-motion";
 import {
   Download,
@@ -40,8 +41,6 @@ import {
   AlertTriangle,
   ChevronDown,
   Mail,
-
-
   type LucideIcon,
 } from "lucide-react";
 
@@ -93,7 +92,6 @@ export const Route = createFileRoute("/")({
   component: Landing,
 });
 
-
 /* ---------- store / download buttons ---------- */
 function AppleGlyph() {
   return (
@@ -106,10 +104,22 @@ function AppleGlyph() {
 function GooglePlayGlyph() {
   return (
     <svg viewBox="0 0 512 512" height={28} className="shrink-0" aria-hidden>
-      <path d="M48 27.3c-3 3.2-4.8 8.2-4.8 14.7v428c0 6.5 1.8 11.5 4.8 14.7l1.4 1.4L289 261.7v-5.5L49.4 25.9 48 27.3z" fill="#00d4aa" />
-      <path d="M368.8 341.6l-79.8-79.9v-5.5l79.9-79.9 1.8 1L465 232c27 15.3 27 40.4 0 55.8l-94.4 53.6-1.8.2z" fill="#f59e0b" />
-      <path d="M370.6 340.6L289 259 48 500c8.9 9.4 23.6 10.6 40.1 1.2l282.5-160.6z" fill="#ff4d4d" />
-      <path d="M370.6 181.4L88.1 20.8C71.6 11.4 56.9 12.6 48 22l241 241 81.6-81.6z" fill="#00efc0" />
+      <path
+        d="M48 27.3c-3 3.2-4.8 8.2-4.8 14.7v428c0 6.5 1.8 11.5 4.8 14.7l1.4 1.4L289 261.7v-5.5L49.4 25.9 48 27.3z"
+        fill="#00d4aa"
+      />
+      <path
+        d="M368.8 341.6l-79.8-79.9v-5.5l79.9-79.9 1.8 1L465 232c27 15.3 27 40.4 0 55.8l-94.4 53.6-1.8.2z"
+        fill="#f59e0b"
+      />
+      <path
+        d="M370.6 340.6L289 259 48 500c8.9 9.4 23.6 10.6 40.1 1.2l282.5-160.6z"
+        fill="#ff4d4d"
+      />
+      <path
+        d="M370.6 181.4L88.1 20.8C71.6 11.4 56.9 12.6 48 22l241 241 81.6-81.6z"
+        fill="#00efc0"
+      />
     </svg>
   );
 }
@@ -207,7 +217,6 @@ function TickerStrip() {
   );
 }
 
-
 /* ---------- 3D phone with mouse tilt + float ---------- */
 function PhoneMockup({ startDelay = 0 }: { startDelay?: number }) {
   const reduce = useReducedMotion();
@@ -264,7 +273,7 @@ function PhoneMockup({ startDelay = 0 }: { startDelay?: number }) {
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ ...SPRING_SOFT, delay: startDelay + 0.30 }}
+        transition={{ ...SPRING_SOFT, delay: startDelay + 0.3 }}
         className="absolute -bottom-8 -right-8 z-20"
       >
         <motion.div
@@ -282,7 +291,6 @@ function PhoneMockup({ startDelay = 0 }: { startDelay?: number }) {
           </div>
         </motion.div>
       </motion.div>
-
 
       {/* phone frame — entrance fade-and-rise */}
       <motion.div
@@ -310,7 +318,9 @@ function PhoneMockup({ startDelay = 0 }: { startDelay?: number }) {
           <div className="m-2 overflow-hidden rounded-[36px] bg-[#070B14]">
             <div className="space-y-2.5 p-3">
               <div className="flex items-center justify-between">
-                <span className="font-display text-xs font-bold text-text-primary">Nafa<span className="text-primary">IQ</span></span>
+                <span className="font-display text-xs font-bold text-text-primary">
+                  Nafa<span className="text-primary">IQ</span>
+                </span>
                 <span className="h-5 w-5 rounded-full bg-bull/20" />
               </div>
               <div className="rounded-[8px] border border-l-2 border-l-ai border-border bg-ai-tint p-2">
@@ -334,7 +344,11 @@ function PhoneMockup({ startDelay = 0 }: { startDelay?: number }) {
                 <div className="font-mono text-base font-bold text-text-primary">78,542.10</div>
                 <div className="mt-1.5 flex h-12 items-end gap-1">
                   {[40, 55, 35, 70, 50, 80, 65, 90, 75, 95].map((h, i) => (
-                    <div key={i} className="flex-1 rounded-t-sm bg-bull/70" style={{ height: `${h}%` }} />
+                    <div
+                      key={i}
+                      className="flex-1 rounded-t-sm bg-bull/70"
+                      style={{ height: `${h}%` }}
+                    />
                   ))}
                 </div>
               </div>
@@ -399,7 +413,6 @@ const FEATURES: {
   },
 ];
 
-
 const TESTIMONIALS = [
   {
     initials: "AK",
@@ -427,7 +440,6 @@ const TESTIMONIALS = [
   },
 ] as const;
 
-
 function StatsStrip() {
   const stats = [
     ["Public Beta", "Live now — free to use"],
@@ -452,7 +464,11 @@ function StatsStrip() {
 /* ---------- trust / recognition strip (honest, no fabricated logos) ---------- */
 const TRUST_MARKERS: { Icon: LucideIcon; label: string; sub: string }[] = [
   { Icon: LineChart, label: "Live PSX & KSE-100", sub: "Real market data" },
-  { Icon: CrescentIcon as unknown as LucideIcon, label: "Shariah Screening", sub: "Halal by design" },
+  {
+    Icon: CrescentIcon as unknown as LucideIcon,
+    label: "Shariah Screening",
+    sub: "Halal by design",
+  },
   { Icon: Lock, label: "Encrypted", sub: "In transit & at rest" },
   { Icon: UserCheck, label: "No Account Needed", sub: "Explore free first" },
 ];
@@ -466,28 +482,25 @@ function TrustStrip() {
             Built on real foundations
           </p>
         </Reveal>
-        <RevealGroup
-          amount={0.4}
-          className="mt-5 grid grid-cols-2 gap-4 md:grid-cols-4"
-        >
+        <RevealGroup amount={0.4} className="mt-5 grid grid-cols-2 gap-4 md:grid-cols-4">
           {TRUST_MARKERS.map((m) => (
             <motion.div
               key={m.label}
               variants={fadeUp}
               className="flex items-center justify-center gap-3 rounded-[12px] border border-white/[0.06] bg-white/[0.02] px-4 py-3"
             >
-
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[9px] bg-bull/10 text-bull">
                 <m.Icon size={18} strokeWidth={1.75} />
               </span>
               <span className="min-w-0">
-                <span className="block truncate text-sm font-semibold text-text-primary">{m.label}</span>
+                <span className="block truncate text-sm font-semibold text-text-primary">
+                  {m.label}
+                </span>
                 <span className="block truncate text-xs text-text-muted">{m.sub}</span>
               </span>
             </motion.div>
           ))}
         </RevealGroup>
-
       </div>
     </section>
   );
@@ -524,14 +537,19 @@ function StatusPill() {
     <span
       className={cn(
         "inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold",
-        open
-          ? "border-bull/25 bg-bull/10 text-bull"
-          : "border-bear/25 bg-bear/10 text-bear",
+        open ? "border-bull/25 bg-bull/10 text-bull" : "border-bear/25 bg-bear/10 text-bear",
       )}
     >
       <span className={cn("relative flex h-1.5 w-1.5")}>
-        {open && <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-bull opacity-75" />}
-        <span className={cn("relative inline-flex h-1.5 w-1.5 rounded-full", open ? "bg-bull" : "bg-bear")} />
+        {open && (
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-bull opacity-75" />
+        )}
+        <span
+          className={cn(
+            "relative inline-flex h-1.5 w-1.5 rounded-full",
+            open ? "bg-bull" : "bg-bear",
+          )}
+        />
       </span>
       PSX {open ? "Open" : "Closed"}
     </span>
@@ -632,11 +650,17 @@ function LangToggle({ className }: { className?: string }) {
     >
       <span className={cn(lang === "EN" && "text-text-primary")}>EN</span>
       <span className="mx-1 text-text-muted">/</span>
-      <span className={cn("inline-block pe-1 font-urdu leading-none", lang === "UR" && "text-text-primary")}>اردو</span>
+      <span
+        className={cn(
+          "inline-block pe-1 font-urdu leading-none",
+          lang === "UR" && "text-text-primary",
+        )}
+      >
+        اردو
+      </span>
     </button>
   );
 }
-
 
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -665,7 +689,13 @@ function Nav() {
       >
         {/* logo */}
         <Link to="/" className="flex shrink-0 items-center gap-2">
-          <img src={logo} alt="NafaIQ" width={26} height={26} className="rounded-[7px] ring-1 ring-bull/30" />
+          <img
+            src={logo}
+            alt="NafaIQ"
+            width={26}
+            height={26}
+            className="rounded-[7px] ring-1 ring-bull/30"
+          />
           <span className="font-display text-lg font-bold tracking-tight text-text-primary">
             Nafa<span className="text-primary">IQ</span>
           </span>
@@ -708,10 +738,13 @@ function Nav() {
             Log In
           </Link>
 
-
           {/* Enter App — dominant CTA, always visible */}
           <Magnetic strength={0.4}>
-            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} transition={SPRING_UI}>
+            <motion.div
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              transition={SPRING_UI}
+            >
               <Link
                 to="/app"
                 className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full bg-bull px-4 py-2 text-sm font-semibold text-bull-foreground shadow-[0_0_20px_rgba(0,212,170,0.25)] transition hover:bg-[#00efc0] hover:shadow-[0_0_28px_rgba(0,212,170,0.5)]"
@@ -745,16 +778,16 @@ function Nav() {
                   key={l.label}
                   to={l.to}
                   onClick={() => setOpen(false)}
-                className="rounded-[12px] px-4 py-4 text-lg font-medium whitespace-nowrap text-text-primary transition hover:bg-white/[0.05]"
-              >
-                {l.label}
-              </Link>
-            ) : (
-              <a
-                key={l.label}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="rounded-[12px] px-4 py-4 text-lg font-medium whitespace-nowrap text-text-primary transition hover:bg-white/[0.05]"
+                  className="rounded-[12px] px-4 py-4 text-lg font-medium whitespace-nowrap text-text-primary transition hover:bg-white/[0.05]"
+                >
+                  {l.label}
+                </Link>
+              ) : (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  className="rounded-[12px] px-4 py-4 text-lg font-medium whitespace-nowrap text-text-primary transition hover:bg-white/[0.05]"
                 >
                   {l.label}
                 </a>
@@ -816,7 +849,7 @@ const SCATTERED_TICKERS = [
   { text: "145.30", x: "42%", y: "38%", size: 10, opacity: 0.07, depth: 0.5 },
 ] as const;
 
-function ScatteredTickers({ progress }: { progress: any }) {
+function ScatteredTickers({ progress }: { progress: MotionValue<number> }) {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
       {SCATTERED_TICKERS.map((t, i) => (
@@ -826,7 +859,13 @@ function ScatteredTickers({ progress }: { progress: any }) {
   );
 }
 
-function ScatteredTicker({ t, progress }: { t: (typeof SCATTERED_TICKERS)[number]; progress: any }) {
+function ScatteredTicker({
+  t,
+  progress,
+}: {
+  t: (typeof SCATTERED_TICKERS)[number];
+  progress: MotionValue<number>;
+}) {
   const y = useTransform(progress, [0, 1], [0, -180 * t.depth]);
   const opacity = useTransform(progress, [0, 0.5, 1], [t.opacity, t.opacity * 1.6, 0]);
   return (
@@ -1029,8 +1068,14 @@ function Hero() {
           </Reveal>
           <Reveal delay={0.24}>
             <p className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-text-muted">
-              <span className="inline-flex items-center gap-1.5"><Check className="h-3.5 w-3.5 text-bull" strokeWidth={1.5} /> No account required to explore</span>
-              <span className="inline-flex items-center gap-1.5"><Check className="h-3.5 w-3.5 text-bull" strokeWidth={1.5} /> Works on iOS, Android &amp; Desktop</span>
+              <span className="inline-flex items-center gap-1.5">
+                <Check className="h-3.5 w-3.5 text-bull" strokeWidth={1.5} /> No account required to
+                explore
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Check className="h-3.5 w-3.5 text-bull" strokeWidth={1.5} /> Works on iOS, Android
+                &amp; Desktop
+              </span>
             </p>
           </Reveal>
         </motion.div>
@@ -1091,7 +1136,9 @@ function FlipCard() {
           </div>
           <div className="mt-8">
             <div className="text-[11px] text-text-muted">PSX Shows You</div>
-            <div className="mt-1 font-mono text-[44px] font-bold leading-none text-bull">+12.73%</div>
+            <div className="mt-1 font-mono text-[44px] font-bold leading-none text-bull">
+              +12.73%
+            </div>
             <div className="mt-2 text-[11px] text-text-secondary">PKR 858,054 portfolio</div>
           </div>
           <div className="my-6 flex items-center gap-3">
@@ -1124,7 +1171,10 @@ function FlipCard() {
             className="mt-8 rounded-[8px] p-3 text-[12px] text-warning"
             style={{ background: "rgba(245,158,11,0.1)" }}
           >
-            <span className="inline-flex items-center gap-1.5"><AlertTriangle className="h-3.5 w-3.5" strokeWidth={1.5} /> PKR 1,02,722 eroded by devaluation this year</span>
+            <span className="inline-flex items-center gap-1.5">
+              <AlertTriangle className="h-3.5 w-3.5" strokeWidth={1.5} /> PKR 1,02,722 eroded by
+              devaluation this year
+            </span>
           </div>
           <div className="mt-4 text-[11px] text-text-muted">Tap to flip back</div>
         </div>
@@ -1176,7 +1226,6 @@ function HowItWorks() {
               <p className="mt-2 text-sm leading-[1.6] text-text-secondary">{s.desc}</p>
             </div>
           </RevealItem>
-
         ))}
       </div>
     </section>
@@ -1259,10 +1308,11 @@ function Landing() {
       {/* TRUST STRIP */}
       <TrustStrip />
 
-
-
       {/* FEATURES */}
-      <section id="features" className="gradient-mesh mx-auto max-w-[1200px] px-6 py-[60px] lg:py-[100px]">
+      <section
+        id="features"
+        className="gradient-mesh mx-auto max-w-[1200px] px-6 py-[60px] lg:py-[100px]"
+      >
         <Reveal className="text-center">
           <SectionLabel>Everything you need</SectionLabel>
           <h2 className="mt-3 text-[28px] font-bold leading-[1.2] sm:text-[40px]">
@@ -1273,12 +1323,7 @@ function Landing() {
           {FEATURES.map((f, i) => {
             const Icon = f.Icon;
             return (
-              <RevealItem
-                key={f.title}
-                delay={i * 0.08}
-                className="[perspective:1000px]"
-              >
-
+              <RevealItem key={f.title} delay={i * 0.08} className="[perspective:1000px]">
                 <Tilt3D max={10} className="h-full">
                   <motion.div
                     whileHover={{ y: -4, scale: 1.02 }}
@@ -1315,7 +1360,6 @@ function Landing() {
                   </motion.div>
                 </Tilt3D>
               </RevealItem>
-
             );
           })}
         </div>
@@ -1348,11 +1392,13 @@ function Landing() {
             <h2 className="mt-3 text-[28px] font-bold leading-[1.2] sm:text-[40px]">
               The Truth About
               <br />
-              <span className="text-bull" style={{ textShadow: "0 0 60px rgba(0,212,170,0.3)" }}>Your PKR Gains</span>
+              <span className="text-bull" style={{ textShadow: "0 0 60px rgba(0,212,170,0.3)" }}>
+                Your PKR Gains
+              </span>
             </h2>
             <p className="mt-5 max-w-[520px] text-text-secondary">
-              Most Pakistani investors don't realize their PSX gains are partly an illusion. When PKR
-              devalues 16% in a year, a 12% PSX gain means you're actually poorer in real terms.
+              Most Pakistani investors don't realize their PSX gains are partly an illusion. When
+              PKR devalues 16% in a year, a 12% PSX gain means you're actually poorer in real terms.
               NafaIQ is the first app in the world to show you the complete picture.
             </p>
             <ul className="mt-6 space-y-3">
@@ -1392,12 +1438,7 @@ function Landing() {
         </Reveal>
         <div className="mt-12 grid gap-5 lg:grid-cols-3">
           {TESTIMONIALS.map((t, i) => (
-            <RevealItem
-              key={t.initials}
-              delay={i * 0.1}
-              className="[perspective:1000px]"
-            >
-
+            <RevealItem key={t.initials} delay={i * 0.1} className="[perspective:1000px]">
               <Tilt3D max={8} scale={1.03} className="h-full">
                 <div
                   className="relative h-full overflow-hidden rounded-[16px] border border-white/[0.07] p-6 backdrop-blur-md"
@@ -1431,7 +1472,6 @@ function Landing() {
                 </div>
               </Tilt3D>
             </RevealItem>
-
           ))}
         </div>
         <Reveal className="mt-16">
@@ -1473,13 +1513,15 @@ function Landing() {
                 </span>
               ))}
             </div>
-
           </Reveal>
         </div>
       </section>
 
       {/* ABOUT + CONTACT */}
-      <section id="about" className="mx-auto max-w-[1200px] scroll-mt-24 px-6 py-[60px] lg:py-[100px]">
+      <section
+        id="about"
+        className="mx-auto max-w-[1200px] scroll-mt-24 px-6 py-[60px] lg:py-[100px]"
+      >
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           <Reveal>
             <SectionLabel>About NafaIQ</SectionLabel>
@@ -1487,10 +1529,10 @@ function Landing() {
               Built for Pakistan's financial reality.
             </h2>
             <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-text-secondary">
-              NafaIQ brings live Pakistan Stock Exchange data, personal finance, and AI
-              insight into a single terminal — designed around the realities of investing,
-              saving, and growing wealth in Pakistan. We help everyday investors see their
-              true, devaluation-adjusted picture and make confident, values-aligned decisions.
+              NafaIQ brings live Pakistan Stock Exchange data, personal finance, and AI insight into
+              a single terminal — designed around the realities of investing, saving, and growing
+              wealth in Pakistan. We help everyday investors see their true, devaluation-adjusted
+              picture and make confident, values-aligned decisions.
             </p>
           </Reveal>
 
@@ -1501,8 +1543,8 @@ function Landing() {
                 We'd love to hear from you.
               </h2>
               <p className="mt-5 text-[15px] leading-relaxed text-text-secondary">
-                Questions, feedback, or partnership ideas? Reach out and our team will get back
-                to you.
+                Questions, feedback, or partnership ideas? Reach out and our team will get back to
+                you.
               </p>
               <div className="mt-6 space-y-3 text-sm">
                 <a
@@ -1525,7 +1567,9 @@ function Landing() {
           <div>
             <div className="flex items-center gap-2">
               <img src={logo} alt="NafaIQ" width={26} height={26} className="rounded-[6px]" />
-              <span className="font-display text-lg font-bold tracking-tight text-text-primary">Nafa<span className="text-primary">IQ</span></span>
+              <span className="font-display text-lg font-bold tracking-tight text-text-primary">
+                Nafa<span className="text-primary">IQ</span>
+              </span>
             </div>
             <p className="mt-3 max-w-xs text-sm text-text-secondary">
               Pakistan's Financial Intelligence Terminal
@@ -1548,20 +1592,56 @@ function Landing() {
           <div>
             <div className="text-sm font-semibold text-text-primary">App</div>
             <ul className="mt-3 space-y-2 text-sm text-text-secondary">
-              <li><Link to="/app" className="transition hover:text-bull">Dashboard</Link></li>
-              <li><Link to="/psx" className="transition hover:text-bull">PSX Market</Link></li>
-              <li><Link to="/portfolio" className="transition hover:text-bull">Portfolio</Link></li>
-              <li><Link to="/finance" className="transition hover:text-bull">Finance</Link></li>
-              <li><Link to="/learn" className="transition hover:text-bull">Learn Hub</Link></li>
+              <li>
+                <Link to="/app" className="transition hover:text-bull">
+                  Dashboard
+                </Link>
+              </li>
+              <li>
+                <Link to="/psx" className="transition hover:text-bull">
+                  PSX Market
+                </Link>
+              </li>
+              <li>
+                <Link to="/portfolio" className="transition hover:text-bull">
+                  Portfolio
+                </Link>
+              </li>
+              <li>
+                <Link to="/finance" className="transition hover:text-bull">
+                  Finance
+                </Link>
+              </li>
+              <li>
+                <Link to="/learn" className="transition hover:text-bull">
+                  Learn Hub
+                </Link>
+              </li>
             </ul>
           </div>
           <div>
             <div className="text-sm font-semibold text-text-primary">Company</div>
             <ul className="mt-3 space-y-2 text-sm text-text-secondary">
-              <li><a href="#about" className="transition hover:text-bull">About</a></li>
-              <li><a href="#" className="transition hover:text-bull">Privacy Policy</a></li>
-              <li><a href="#" className="transition hover:text-bull">Terms</a></li>
-              <li><a href="#contact" className="transition hover:text-bull">Contact</a></li>
+              <li>
+                <a href="#about" className="transition hover:text-bull">
+                  About
+                </a>
+              </li>
+              <li>
+                <a href="#" className="transition hover:text-bull">
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a href="#" className="transition hover:text-bull">
+                  Terms
+                </a>
+              </li>
+              <li>
+                <a href="#contact" className="transition hover:text-bull">
+                  Contact
+                </a>
+              </li>
             </ul>
           </div>
         </div>

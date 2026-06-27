@@ -102,7 +102,10 @@ export function TiltLayer({
   className?: string;
 }) {
   return (
-    <div className={className} style={{ transform: `translateZ(${z}px)`, transformStyle: "preserve-3d" }}>
+    <div
+      className={className}
+      style={{ transform: `translateZ(${z}px)`, transformStyle: "preserve-3d" }}
+    >
       {children}
     </div>
   );

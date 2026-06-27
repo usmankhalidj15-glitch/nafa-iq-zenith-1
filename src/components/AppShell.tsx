@@ -94,7 +94,10 @@ function SidebarLink({
         )}
       />
       <Icon
-        className={cn("h-5 w-5 shrink-0", active ? "text-bull" : "text-text-muted group-hover:text-text-primary")}
+        className={cn(
+          "h-5 w-5 shrink-0",
+          active ? "text-bull" : "text-text-muted group-hover:text-text-primary",
+        )}
         strokeWidth={1.75}
       />
       {label}
@@ -138,7 +141,11 @@ function Sidebar() {
           <div className="truncate text-[13px] font-medium text-text-primary">{name}</div>
           <div className="text-[11px] text-text-muted">{profile?.plan ?? "Free"} plan</div>
         </div>
-        <button onClick={handleSignOut} aria-label="Sign out" className="text-text-secondary transition-colors hover:text-bear">
+        <button
+          onClick={handleSignOut}
+          aria-label="Sign out"
+          className="text-text-secondary transition-colors hover:text-bear"
+        >
           <LogOut className="h-[18px] w-[18px]" strokeWidth={1.75} />
         </button>
       </div>
@@ -200,13 +207,20 @@ function NotificationBell() {
         <div className="glass-chrome absolute right-0 top-9 z-50 w-72 overflow-hidden rounded-[12px] border border-white/[0.08] shadow-2xl">
           <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-2.5">
             <span className="text-[13px] font-semibold text-text-primary">Notifications</span>
-            <Link to="/alerts" onClick={() => setOpen(false)} className="text-[11px] text-bull hover:underline">
+            <Link
+              to="/alerts"
+              onClick={() => setOpen(false)}
+              className="text-[11px] text-bull hover:underline"
+            >
               View all
             </Link>
           </div>
           <ul className="max-h-72 overflow-y-auto">
             {NOTIFICATIONS.map((n) => (
-              <li key={n.id} className="flex items-start gap-2.5 px-4 py-3 transition-colors hover:bg-white/[0.03]">
+              <li
+                key={n.id}
+                className="flex items-start gap-2.5 px-4 py-3 transition-colors hover:bg-white/[0.03]"
+              >
                 <span
                   className={cn(
                     "mt-1.5 h-2 w-2 shrink-0 rounded-full",
@@ -381,10 +395,7 @@ function BottomNav() {
               />
             </span>
             <span
-              className={cn(
-                "text-[10px] font-medium",
-                active ? "text-gold" : "text-text-muted",
-              )}
+              className={cn("text-[10px] font-medium", active ? "text-gold" : "text-text-muted")}
             >
               {label}
             </span>
@@ -414,9 +425,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <div className="relative lg:pl-[212px]">
         <Header onMenu={() => setDrawer(true)} />
         <Breadcrumbs />
-        <main className="px-3 pt-4 pb-24 sm:px-5 lg:px-6 lg:pb-8">
-          {children}
-        </main>
+        <main className="px-3 pt-4 pb-24 sm:px-5 lg:px-6 lg:pb-8">{children}</main>
       </div>
       <BottomNav />
 

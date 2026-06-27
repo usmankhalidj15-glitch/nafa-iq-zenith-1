@@ -162,7 +162,7 @@ export function Reveal({
 }) {
   const reduce = useReducedMotion();
   const { ref, inView } = useReveal(amount);
-  const Comp = (motion as any)[as] ?? motion.div;
+  const Comp = (motion[as] ?? motion.div) as React.ElementType;
   if (reduce) return <Comp className={className}>{children}</Comp>;
   return (
     <Comp
@@ -233,7 +233,6 @@ export function RevealGroup({
     </motion.div>
   );
 }
-
 
 /* ---------- parallax helper: maps scroll progress to a Y offset ---------- */
 export function useParallax(distance = 80) {

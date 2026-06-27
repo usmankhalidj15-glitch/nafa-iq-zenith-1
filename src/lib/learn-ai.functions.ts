@@ -39,7 +39,9 @@ export const askTutor = createServerFn({ method: "POST" })
       });
 
       if (res.status === 429) {
-        return { reply: "I'm getting a lot of questions right now — please wait a moment and try again." };
+        return {
+          reply: "I'm getting a lot of questions right now — please wait a moment and try again.",
+        };
       }
       if (res.status === 402) {
         return { reply: "The AI tutor has run out of credits for now. Please try again later." };

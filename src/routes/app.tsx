@@ -15,7 +15,10 @@ export const Route = createFileRoute("/app")({
   head: () => ({
     meta: [
       { title: "Dashboard — NafaIQ" },
-      { name: "description", content: "Your net worth, portfolio, spending and PSX signals at a glance." },
+      {
+        name: "description",
+        content: "Your net worth, portfolio, spending and PSX signals at a glance.",
+      },
     ],
   }),
   component: Dashboard,
@@ -40,7 +43,9 @@ function portfolioSeries(months: number) {
 
 function Dashboard() {
   const { profile, user } = useAuth();
-  const firstName = (profile?.display_name || user?.email?.split("@")[0] || "Investor").split(" ")[0];
+  const firstName = (profile?.display_name || user?.email?.split("@")[0] || "Investor").split(
+    " ",
+  )[0];
   const [range, setRange] = useState<(typeof RANGES)[number]>("6M");
   const [showAI, setShowAI] = useState(true);
   const months = range === "1M" ? 2 : range === "3M" ? 3 : range === "1Y" ? 6 : 6;
@@ -54,7 +59,13 @@ function Dashboard() {
             Asalam-o-Alaikum, {firstName}
           </h1>
           <p className="mt-0.5 text-[13px] text-text-secondary">
-            {new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" })} · KSE-100 <span className="font-mono text-bull">+1.24%</span> today
+            {new Date().toLocaleDateString("en-GB", {
+              weekday: "long",
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })}{" "}
+            · KSE-100 <span className="font-mono text-bull">+1.24%</span> today
           </p>
         </div>
         <div className="flex shrink-0 gap-2">
@@ -96,10 +107,16 @@ function Dashboard() {
               </p>
             </div>
             <div className="flex shrink-0 gap-2">
-              <Link to="/psx" className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground transition hover:brightness-110">
+              <Link
+                to="/psx"
+                className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground transition hover:brightness-110"
+              >
                 View
               </Link>
-              <button onClick={() => setShowAI(false)} className="rounded-lg px-3 py-1.5 text-xs text-text-muted transition hover:bg-white/[0.04] hover:text-text-primary">
+              <button
+                onClick={() => setShowAI(false)}
+                className="rounded-lg px-3 py-1.5 text-xs text-text-muted transition hover:bg-white/[0.04] hover:text-text-primary"
+              >
                 Dismiss
               </button>
             </div>
@@ -119,12 +136,21 @@ function Dashboard() {
           </div>
         </Card>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:col-span-6">
-          <StatCard label="Portfolio Value" value={fmtPKR(858054)} sub="+12.73% YTD" subColor="text-bull" />
-          <StatCard label="Monthly Spending" value={fmtPKR(112050)} sub="-12% vs May" subColor="text-bull" />
+          <StatCard
+            label="Portfolio Value"
+            value={fmtPKR(858054)}
+            sub="+12.73% YTD"
+            subColor="text-bull"
+          />
+          <StatCard
+            label="Monthly Spending"
+            value={fmtPKR(112050)}
+            sub="-12% vs May"
+            subColor="text-bull"
+          />
           <StatCard label="Today's PSX P/L" value="+17,480" sub="+1.42%" subColor="text-bull" />
         </div>
       </div>
-
 
       {/* Charts */}
       <div className="grid gap-4 lg:grid-cols-5">
@@ -138,7 +164,9 @@ function Dashboard() {
                   onClick={() => setRange(r)}
                   className={cn(
                     "rounded-[6px] px-2.5 py-1 text-xs font-medium transition",
-                    range === r ? "bg-bull text-bull-foreground" : "text-text-secondary hover:bg-hover",
+                    range === r
+                      ? "bg-bull text-bull-foreground"
+                      : "text-text-secondary hover:bg-hover",
                   )}
                 >
                   {r}
@@ -148,8 +176,14 @@ function Dashboard() {
           </div>
           <PortfolioAreaChart data={portfolioSeries(months)} />
           <div className="mt-2 flex gap-4 text-xs text-text-muted">
-            <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-bull" />Portfolio</span>
-            <span className="flex items-center gap-1.5"><span className="h-0.5 w-4 bg-text-secondary" />KSE-100</span>
+            <span className="flex items-center gap-1.5">
+              <span className="h-2 w-2 rounded-full bg-bull" />
+              Portfolio
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="h-0.5 w-4 bg-text-secondary" />
+              KSE-100
+            </span>
           </div>
         </Card>
         <Card className="lg:col-span-2">
@@ -206,15 +240,25 @@ function Dashboard() {
             return (
               <Card key={g.name} className="w-[280px] shrink-0 lg:w-auto">
                 <div className="flex items-center gap-2">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-[8px] border border-bull/20 bg-bull/[0.08] text-bull"><EmojiIcon emoji={g.emoji} size={16} /></span>
+                  <span className="flex h-9 w-9 items-center justify-center rounded-[8px] border border-bull/20 bg-bull/[0.08] text-bull">
+                    <EmojiIcon emoji={g.emoji} size={16} />
+                  </span>
                   <span className="font-semibold text-text-primary">{g.name}</span>
-                  <span className="ml-auto font-mono text-sm font-bold tabular-nums text-bull">{pct}%</span>
+                  <span className="ml-auto font-mono text-sm font-bold tabular-nums text-bull">
+                    {pct}%
+                  </span>
                 </div>
                 <div className="mt-2 font-mono text-xs tabular-nums text-text-secondary">
                   {fmtPKR(g.saved)} / {fmtPKR(g.target)}
                 </div>
                 <div className="mt-2 h-2 overflow-hidden rounded-full bg-elevated">
-                  <div className={cn("h-full rounded-full", g.color === "bull" ? "bg-bull" : "bg-warning")} style={{ width: `${pct}%` }} />
+                  <div
+                    className={cn(
+                      "h-full rounded-full",
+                      g.color === "bull" ? "bg-bull" : "bg-warning",
+                    )}
+                    style={{ width: `${pct}%` }}
+                  />
                 </div>
                 <p className="mt-2 text-[11px] leading-relaxed text-text-muted">{g.ai}</p>
               </Card>

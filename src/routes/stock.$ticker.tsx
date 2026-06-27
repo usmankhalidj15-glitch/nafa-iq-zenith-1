@@ -11,7 +11,10 @@ export const Route = createFileRoute("/stock/$ticker")({
   head: ({ params }) => ({
     meta: [
       { title: `${params.ticker} — NafaIQ` },
-      { name: "description", content: `${params.ticker} price chart, AI technical analysis and signal breakdown on NafaIQ.` },
+      {
+        name: "description",
+        content: `${params.ticker} price chart, AI technical analysis and signal breakdown on NafaIQ.`,
+      },
     ],
   }),
   component: StockDetail,
@@ -27,9 +30,24 @@ const SIGNAL_ROWS = [
 ] as const;
 
 const NEWS = [
-  { source: "Business Recorder", headline: "Banking sector rallies as policy rate held steady", time: "2h ago", sentiment: "Positive" },
-  { source: "Dawn Business", headline: "Foreign inflows lift PSX to fresh highs", time: "5h ago", sentiment: "Positive" },
-  { source: "The News", headline: "Analysts eye resistance near key levels", time: "1d ago", sentiment: "Neutral" },
+  {
+    source: "Business Recorder",
+    headline: "Banking sector rallies as policy rate held steady",
+    time: "2h ago",
+    sentiment: "Positive",
+  },
+  {
+    source: "Dawn Business",
+    headline: "Foreign inflows lift PSX to fresh highs",
+    time: "5h ago",
+    sentiment: "Positive",
+  },
+  {
+    source: "The News",
+    headline: "Analysts eye resistance near key levels",
+    time: "1d ago",
+    sentiment: "Neutral",
+  },
 ];
 
 function StockDetail() {
@@ -51,16 +69,23 @@ function StockDetail() {
 
   return (
     <div className="mx-auto max-w-5xl space-y-6">
-      <Link to="/psx" className="inline-flex items-center gap-1.5 text-sm text-text-secondary hover:text-text-primary">
+      <Link
+        to="/psx"
+        className="inline-flex items-center gap-1.5 text-sm text-text-secondary hover:text-text-primary"
+      >
         <ArrowLeft className="h-4 w-4" /> Back to Market
       </Link>
 
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-text-primary">{s.ticker} · {s.name}</h1>
+          <h1 className="text-2xl font-bold text-text-primary">
+            {s.ticker} · {s.name}
+          </h1>
           <p className="text-sm text-text-secondary">{s.sector} Sector</p>
           <div className="mt-2 flex items-baseline gap-3">
-            <span className="font-mono text-3xl font-bold tabular-nums text-text-primary">{fmtNum(s.price)}</span>
+            <span className="font-mono text-3xl font-bold tabular-nums text-text-primary">
+              {fmtNum(s.price)}
+            </span>
             <Change value={`${chg >= 0 ? "+" : ""}${fmtNum(chg)}`} pct={s.changePct} />
           </div>
         </div>
@@ -80,18 +105,26 @@ function StockDetail() {
         {stats.map(([l, v]) => (
           <Card key={l}>
             <div className="text-xs text-text-muted">{l}</div>
-            <div className="mt-1 font-mono text-sm font-bold tabular-nums text-text-primary">{v}</div>
+            <div className="mt-1 font-mono text-sm font-bold tabular-nums text-text-primary">
+              {v}
+            </div>
           </Card>
         ))}
       </div>
 
       <Card>
-        <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-text-primary"><Sparkles className="h-4 w-4 text-ai" />AI Technical Analysis</h3>
+        <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-text-primary">
+          <Sparkles className="h-4 w-4 text-ai" />
+          AI Technical Analysis
+        </h3>
         <div className="scrollbar-none overflow-x-auto">
           <table className="w-full min-w-[480px] text-xs">
             <thead>
               <tr className="border-b border-border text-left text-text-muted">
-                <th className="py-2">Indicator</th><th>Value</th><th>Reading</th><th className="text-right">Signal</th>
+                <th className="py-2">Indicator</th>
+                <th>Value</th>
+                <th>Reading</th>
+                <th className="text-right">Signal</th>
               </tr>
             </thead>
             <tbody>
@@ -101,41 +134,84 @@ function StockDetail() {
                   <td className="font-mono tabular-nums text-text-secondary">{r.value}</td>
                   <td className="text-text-secondary">{r.reading}</td>
                   <td className="text-right">
-                    <span className={cn("inline-flex items-center gap-1.5 font-semibold", r.sig === "BUY" ? "text-bull" : "text-text-secondary")}><Circle className={cn("h-2 w-2", r.sig === "BUY" ? "fill-bull text-bull" : "fill-text-muted text-text-muted")} /> {r.sig}</span>
+                    <span
+                      className={cn(
+                        "inline-flex items-center gap-1.5 font-semibold",
+                        r.sig === "BUY" ? "text-bull" : "text-text-secondary",
+                      )}
+                    >
+                      <Circle
+                        className={cn(
+                          "h-2 w-2",
+                          r.sig === "BUY"
+                            ? "fill-bull text-bull"
+                            : "fill-text-muted text-text-muted",
+                        )}
+                      />{" "}
+                      {r.sig}
+                    </span>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <div className="mt-3 rounded-[6px] bg-bull/10 px-3 py-2 text-sm font-semibold text-bull">Overall: STRONG BUY · 5 of 6 indicators bullish</div>
+        <div className="mt-3 rounded-[6px] bg-bull/10 px-3 py-2 text-sm font-semibold text-bull">
+          Overall: STRONG BUY · 5 of 6 indicators bullish
+        </div>
         <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-          {s.ticker} is showing strong bullish momentum. Price has broken above MA50 with significantly above-average volume — a classic confirmation signal. RSI at 61 leaves room before overbought territory. The only caution is Bollinger Band position suggesting the move may slow near 148–150. Consider a stop-loss at the MA20 level (~136).
+          {s.ticker} is showing strong bullish momentum. Price has broken above MA50 with
+          significantly above-average volume — a classic confirmation signal. RSI at 61 leaves room
+          before overbought territory. The only caution is Bollinger Band position suggesting the
+          move may slow near 148–150. Consider a stop-loss at the MA20 level (~136).
         </p>
-        <p className="mt-2 text-[11px] italic text-text-muted">This is AI-generated technical analysis only. Not financial advice.</p>
+        <p className="mt-2 text-[11px] italic text-text-muted">
+          This is AI-generated technical analysis only. Not financial advice.
+        </p>
       </Card>
 
       <Card>
         <h3 className="mb-3 text-sm font-semibold text-text-primary">Recent News</h3>
         <div className="space-y-2">
           {NEWS.map((n) => (
-            <div key={n.headline} className="flex items-center gap-3 rounded-[6px] border border-border bg-surface-alt p-3">
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[6px] bg-elevated text-xs font-bold text-text-secondary">{n.source[0]}</div>
+            <div
+              key={n.headline}
+              className="flex items-center gap-3 rounded-[6px] border border-border bg-surface-alt p-3"
+            >
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[6px] bg-elevated text-xs font-bold text-text-secondary">
+                {n.source[0]}
+              </div>
               <div className="flex-1">
                 <div className="text-sm text-text-primary">{n.headline}</div>
-                <div className="text-[11px] text-text-muted">{n.source} · {n.time}</div>
+                <div className="text-[11px] text-text-muted">
+                  {n.source} · {n.time}
+                </div>
               </div>
-              <span className={cn("rounded-[4px] px-2 py-0.5 text-[10px] font-medium", n.sentiment === "Positive" ? "bg-bull/15 text-bull" : "bg-neutral/20 text-text-secondary")}>{n.sentiment}</span>
+              <span
+                className={cn(
+                  "rounded-[4px] px-2 py-0.5 text-[10px] font-medium",
+                  n.sentiment === "Positive"
+                    ? "bg-bull/15 text-bull"
+                    : "bg-neutral/20 text-text-secondary",
+                )}
+              >
+                {n.sentiment}
+              </span>
             </div>
           ))}
         </div>
       </Card>
 
       <div className="flex flex-wrap gap-2">
-        <button className="rounded-[10px] border border-white/[0.08] bg-surface px-4 py-2 text-sm font-semibold text-text-primary transition-all duration-200 hover:-translate-y-0.5 hover:border-white/[0.16]">Add to Watchlist</button>
-        <button className="rounded-[10px] bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-all duration-200 hover:-translate-y-0.5 hover:brightness-110">Add to Portfolio</button>
-        <button className="rounded-[10px] border border-white/[0.08] bg-surface px-4 py-2 text-sm font-semibold text-text-primary transition-all duration-200 hover:-translate-y-0.5 hover:border-white/[0.16]">Set Price Alert</button>
-
+        <button className="rounded-[10px] border border-white/[0.08] bg-surface px-4 py-2 text-sm font-semibold text-text-primary transition-all duration-200 hover:-translate-y-0.5 hover:border-white/[0.16]">
+          Add to Watchlist
+        </button>
+        <button className="rounded-[10px] bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-all duration-200 hover:-translate-y-0.5 hover:brightness-110">
+          Add to Portfolio
+        </button>
+        <button className="rounded-[10px] border border-white/[0.08] bg-surface px-4 py-2 text-sm font-semibold text-text-primary transition-all duration-200 hover:-translate-y-0.5 hover:border-white/[0.16]">
+          Set Price Alert
+        </button>
       </div>
     </div>
   );
