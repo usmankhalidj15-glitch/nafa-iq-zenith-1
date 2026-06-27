@@ -26,6 +26,7 @@ import {
   Globe,
   MonitorSmartphone,
   Menu,
+  Moon,
   X,
   Search,
   CandlestickChart,
@@ -386,7 +387,7 @@ const FEATURES: {
     desc: "Personalized insights, AI-generated portfolio reports, and a 24/7 finance tutor — powered by Claude AI.",
   },
   {
-    Icon: CrescentIcon,
+    Icon: Moon,
     iconColor: "text-bull",
     chipBg: "rgba(16,185,129,0.15)",
     title: "Built for Muslim Investors",
@@ -1280,23 +1281,24 @@ function Landing() {
             One App. Complete Financial Intelligence.
           </h2>
         </Reveal>
-        <motion.div
-          variants={staggerParent}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
-        >
-          {FEATURES.map((f) => {
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {FEATURES.map((f, i) => {
             const Icon = f.Icon;
             return (
-              <motion.div key={f.title} variants={perspectiveCard} className="[perspective:1000px]">
+              <motion.div
+                key={f.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.4, ease: "easeOut", delay: i * 0.08 }}
+                className="[perspective:1000px]"
+              >
                 <Tilt3D max={10} className="h-full">
                   <motion.div
-                    whileHover={{ y: -6, scale: 1.02 }}
-                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                    whileHover={{ y: -4, scale: 1.02 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
                     className={cn(
-                      "group relative h-full rounded-[16px] border border-white/[0.07] p-7 backdrop-blur-md transition-shadow duration-300 hover:border-bull/30 hover:shadow-[0_18px_50px_rgba(0,212,170,0.14),0_0_0_1px_rgba(0,212,170,0.14)]",
+                      "group relative h-full rounded-[16px] border border-white/[0.07] p-7 backdrop-blur-md transition-shadow duration-[250ms] hover:border-bull/30 hover:shadow-[0_24px_60px_rgba(0,212,170,0.18),0_0_0_1px_rgba(0,212,170,0.18)]",
                       f.badge && "spin-border",
                     )}
                     style={{ background: "rgba(17,24,39,0.6)" }}
@@ -1329,8 +1331,7 @@ function Landing() {
               </motion.div>
             );
           })}
-
-        </motion.div>
+        </div>
       </section>
 
       {/* HOW IT WORKS */}
