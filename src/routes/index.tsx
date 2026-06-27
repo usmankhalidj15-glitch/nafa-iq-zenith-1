@@ -55,8 +55,6 @@ export const Route = createFileRoute("/")({
   component: Landing,
 });
 
-const STORE_TOAST =
-  "Coming soon to app stores! Use the Web App for now — it installs to your home screen just like a native app.";
 
 /* ---------- store / download buttons ---------- */
 function AppleGlyph() {
