@@ -1129,28 +1129,26 @@ function FlipCard() {
 }
 
 /* ---------- How NafaIQ Works — 3 steps ---------- */
-const STEPS: { Icon: LucideIcon; step: string; title: string; desc: string }[] = [
+const STEPS: { step: string; title: string; desc: string }[] = [
   {
-    Icon: LineChart,
     step: "01",
     title: "Track",
-    desc: "Connect your holdings and watchlist. NafaIQ pulls live PSX data, prices, and your full net worth into one terminal.",
+    desc: "Connect your portfolio or explore live PSX data instantly, no account required.",
   },
   {
-    Icon: Brain,
     step: "02",
-    title: "Analyze",
-    desc: "AI signals, sector heatmaps, and the Haqeeqi Daulat engine reveal your real, devaluation-adjusted returns.",
+    title: "Understand",
+    desc: "See your real wealth, AI insights, and devaluation-adjusted returns in plain language.",
   },
   {
-    Icon: Lightbulb,
     step: "03",
     title: "Decide",
-    desc: "Act with clarity — Shariah-screened ideas, budget insight, and a 24/7 AI advisor guiding every move.",
+    desc: "Act on personalized recommendations for investing, saving, and Zakat — all in one place.",
   },
 ];
 
 function HowItWorks() {
+  const reduce = useReducedMotion();
   return (
     <section className="mx-auto max-w-[1200px] px-6 py-[60px] lg:py-[100px]">
       <Reveal className="text-center">
@@ -1159,28 +1157,28 @@ function HowItWorks() {
           From data to decision in three steps
         </h2>
       </Reveal>
-      <motion.div
-        variants={staggerParent}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.3 }}
-        className="relative mt-12 grid gap-5 md:grid-cols-3"
-      >
-        {STEPS.map((s) => (
-          <motion.div key={s.step} variants={perspectiveCard}>
+      <div className="relative mt-12 grid gap-5 md:grid-cols-3">
+        {STEPS.map((s, i) => (
+          <motion.div
+            key={s.step}
+            initial={reduce ? false : { opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.4, ease: "easeOut", delay: i * 0.1 }}
+          >
             <div className="relative h-full rounded-[16px] border border-white/[0.07] bg-[rgba(17,24,39,0.6)] p-7 backdrop-blur-md">
               <span className="absolute right-5 top-4 font-mono text-3xl font-bold tabular-nums text-white/[0.06]">
                 {s.step}
               </span>
               <div className="flex h-12 w-12 items-center justify-center rounded-[12px] bg-bull/10 text-bull">
-                <s.Icon size={22} strokeWidth={1.75} />
+                <span className="font-mono text-lg font-bold">{s.step}</span>
               </div>
               <h3 className="mt-4 text-lg font-semibold text-text-primary">{s.title}</h3>
               <p className="mt-2 text-sm leading-[1.6] text-text-secondary">{s.desc}</p>
             </div>
           </motion.div>
         ))}
-      </motion.div>
+      </div>
     </section>
   );
 }
