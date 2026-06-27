@@ -1521,7 +1521,7 @@ function Landing() {
               <li><a href="#about" className="transition hover:text-bull">About</a></li>
               <li><a href="#" className="transition hover:text-bull">Privacy Policy</a></li>
               <li><a href="#" className="transition hover:text-bull">Terms</a></li>
-              <li><a href="#" className="transition hover:text-bull">Contact</a></li>
+              <li><a href="#contact" className="transition hover:text-bull">Contact</a></li>
             </ul>
           </div>
         </div>
