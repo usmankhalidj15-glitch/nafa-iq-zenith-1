@@ -695,7 +695,7 @@ function Nav() {
           </div>
           <Link
             to="/auth"
-            className="hidden text-[13px] font-normal text-text-secondary transition-colors hover:text-text-primary md:inline"
+            className="hidden whitespace-nowrap text-[13px] font-normal text-text-secondary transition-colors hover:text-text-primary md:inline"
           >
             Log In
           </Link>
