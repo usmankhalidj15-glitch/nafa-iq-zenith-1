@@ -142,7 +142,9 @@ function PlansPage() {
               onClick={() => setBilling("monthly")}
               className={cn(
                 "rounded-full px-5 py-2 text-sm font-semibold transition",
-                billing === "monthly" ? "bg-bull text-bull-foreground" : "text-text-secondary hover:text-text-primary",
+                billing === "monthly"
+                  ? "bg-bull text-bull-foreground"
+                  : "text-text-secondary hover:text-text-primary",
               )}
             >
               Monthly
@@ -151,7 +153,9 @@ function PlansPage() {
               onClick={() => setBilling("yearly")}
               className={cn(
                 "flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition",
-                billing === "yearly" ? "bg-bull text-bull-foreground" : "text-text-secondary hover:text-text-primary",
+                billing === "yearly"
+                  ? "bg-bull text-bull-foreground"
+                  : "text-text-secondary hover:text-text-primary",
               )}
             >
               Yearly
@@ -251,7 +255,10 @@ function PlansPage() {
                   >
                     <td className="px-5 py-3.5 text-text-secondary">{row.label}</td>
                     {[row.free, row.pro, row.premium].map((cell, idx) => (
-                      <td key={idx} className="px-5 py-3.5 text-center font-mono tabular-nums text-text-primary">
+                      <td
+                        key={idx}
+                        className="px-5 py-3.5 text-center font-mono tabular-nums text-text-primary"
+                      >
                         {cell === "✓" ? (
                           <Check className="mx-auto h-4 w-4 text-bull" strokeWidth={2.5} />
                         ) : cell === "—" ? (

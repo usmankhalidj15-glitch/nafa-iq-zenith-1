@@ -1,6 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Search, Check, Lock, Layers, X, RotateCcw, ArrowRight, Bot, Send, Sparkles } from "lucide-react";
+import {
+  Search,
+  Check,
+  Lock,
+  Layers,
+  X,
+  RotateCcw,
+  ArrowRight,
+  Bot,
+  Send,
+  Sparkles,
+} from "lucide-react";
 import { Card } from "@/components/Card";
 import { EmojiIcon } from "@/components/icons";
 import { Video, BookOpen, PartyPopper } from "lucide-react";
@@ -15,7 +26,11 @@ export const Route = createFileRoute("/learn/")({
   head: () => ({
     meta: [
       { title: "Learn Hub — NafaIQ" },
-      { name: "description", content: "Learn PSX investing from candlesticks to halal investing — lessons, videos, quizzes and an AI tutor, in plain Urdu and English." },
+      {
+        name: "description",
+        content:
+          "Learn PSX investing from candlesticks to halal investing — lessons, videos, quizzes and an AI tutor, in plain Urdu and English.",
+      },
     ],
   }),
   component: Learn,
@@ -73,14 +88,23 @@ function Learn() {
       <Card hover={false} className="bg-gradient-to-br from-ai-tint to-surface">
         <h1 className="font-urdu text-2xl text-text-primary">سمجھو، سیکھو، بڑھو</h1>
         <p className="text-sm font-semibold text-text-primary">Samjho, Seekho, Barho</p>
-        <p className="mt-1 text-sm text-text-secondary">From KSE basics to technical analysis — in plain Urdu and English.</p>
+        <p className="mt-1 text-sm text-text-secondary">
+          From KSE basics to technical analysis — in plain Urdu and English.
+        </p>
         <div className="mt-3 flex flex-wrap items-center gap-3">
-          <span className="rounded-[4px] bg-elevated px-2 py-1 text-xs text-text-secondary">Beginner Investor · {lessonsDone} lessons complete</span>
+          <span className="rounded-[4px] bg-elevated px-2 py-1 text-xs text-text-secondary">
+            Beginner Investor · {lessonsDone} lessons complete
+          </span>
           <div className="flex items-center gap-2">
             <div className="h-2 w-40 overflow-hidden rounded-full bg-elevated">
-              <div className="h-full rounded-full bg-bull transition-all duration-700" style={{ width: `${xpPct}%` }} />
+              <div
+                className="h-full rounded-full bg-bull transition-all duration-700"
+                style={{ width: `${xpPct}%` }}
+              />
             </div>
-            <span className="font-mono text-xs tabular-nums text-text-muted">{xp} / {XP_GOAL} XP</span>
+            <span className="font-mono text-xs tabular-nums text-text-muted">
+              {xp} / {XP_GOAL} XP
+            </span>
           </div>
         </div>
 
@@ -96,25 +120,40 @@ function Learn() {
       {/* Learning Paths */}
       <section>
         <h3 className="text-sm font-semibold text-text-primary">Learning Paths</h3>
-        <p className="mb-3 text-xs text-text-secondary">Follow a structured track or explore freely</p>
+        <p className="mb-3 text-xs text-text-secondary">
+          Follow a structured track or explore freely
+        </p>
         <div className="scrollbar-none flex gap-3 overflow-x-auto pb-2">
           {LEARNING_PATHS.map((p) => {
             const progress = pathProgress(p.lessonIds);
-            const firstUnfinished = p.lessonIds.find((l) => statusOf(l) !== "complete") ?? p.lessonIds[0];
+            const firstUnfinished =
+              p.lessonIds.find((l) => statusOf(l) !== "complete") ?? p.lessonIds[0];
             return (
               <div
                 key={p.id}
                 className="group min-w-[220px] flex-1 rounded-[12px] border border-border bg-surface p-5 transition-all hover:-translate-y-0.5 hover:border-border-hover hover:shadow-[0_8px_30px_rgba(0,0,0,0.4)]"
                 style={{ borderLeft: `3px solid ${p.accent}` }}
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-[8px] border border-white/[0.06] bg-elevated" style={{ color: p.accent }}><EmojiIcon emoji={p.emoji} size={18} /></div>
+                <div
+                  className="flex h-10 w-10 items-center justify-center rounded-[8px] border border-white/[0.06] bg-elevated"
+                  style={{ color: p.accent }}
+                >
+                  <EmojiIcon emoji={p.emoji} size={18} />
+                </div>
                 <div className="mt-2 text-sm font-semibold text-text-primary">{p.title}</div>
                 <div className="mt-0.5 text-xs text-text-secondary">{p.description}</div>
-                <div className="mt-2 font-mono text-[11px] text-text-muted">{p.lessonIds.length} lessons · Est: {p.estMin} min</div>
-                <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-elevated">
-                  <div className="h-full rounded-full transition-all duration-700" style={{ width: `${progress}%`, background: p.accent }} />
+                <div className="mt-2 font-mono text-[11px] text-text-muted">
+                  {p.lessonIds.length} lessons · Est: {p.estMin} min
                 </div>
-                <div className="mt-1 text-[10px] font-medium text-text-muted">{progress}% complete</div>
+                <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-elevated">
+                  <div
+                    className="h-full rounded-full transition-all duration-700"
+                    style={{ width: `${progress}%`, background: p.accent }}
+                  />
+                </div>
+                <div className="mt-1 text-[10px] font-medium text-text-muted">
+                  {progress}% complete
+                </div>
                 <Link
                   to="/learn/lesson/$id"
                   params={{ id: firstUnfinished }}
@@ -143,21 +182,37 @@ function Learn() {
               <Link key={l.title} to="/learn/lesson/$id" params={{ id }}>
                 <Card className="group h-full transition-all hover:-translate-y-[3px] hover:border-bull">
                   <div className="flex items-start gap-3">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-[8px] border border-white/[0.06] bg-elevated text-text-secondary"><EmojiIcon emoji={l.emoji} size={18} /></span>
+                    <span className="flex h-10 w-10 items-center justify-center rounded-[8px] border border-white/[0.06] bg-elevated text-text-secondary">
+                      <EmojiIcon emoji={l.emoji} size={18} />
+                    </span>
                     <div className="flex-1">
                       <div className="text-sm font-medium text-text-primary">{l.title}</div>
                       <div className="mt-1 flex items-center gap-1.5 text-[10px]">
-                        <span className="rounded-[4px] bg-elevated px-1.5 py-0.5 text-text-muted">{l.duration}</span>
-                        <span className="rounded-[4px] bg-elevated px-1.5 py-0.5 text-text-muted">{l.level}</span>
+                        <span className="rounded-[4px] bg-elevated px-1.5 py-0.5 text-text-muted">
+                          {l.duration}
+                        </span>
+                        <span className="rounded-[4px] bg-elevated px-1.5 py-0.5 text-text-muted">
+                          {l.level}
+                        </span>
                       </div>
                     </div>
                     <CompletionRing status={status} />
                   </div>
                   <div className="mt-3 flex items-center justify-between">
                     <span className="inline-flex items-center gap-1 rounded-[4px] bg-elevated px-2 py-0.5 text-[10px] text-text-secondary">
-                      {isVideo ? <><Video className="h-3 w-3" strokeWidth={1.5} /> Video + Article</> : <><BookOpen className="h-3 w-3" strokeWidth={1.5} /> Article</>}
+                      {isVideo ? (
+                        <>
+                          <Video className="h-3 w-3" strokeWidth={1.5} /> Video + Article
+                        </>
+                      ) : (
+                        <>
+                          <BookOpen className="h-3 w-3" strokeWidth={1.5} /> Article
+                        </>
+                      )}
                     </span>
-                    {status === "in-progress" && <span className="text-[10px] font-medium text-warning">In Progress</span>}
+                    {status === "in-progress" && (
+                      <span className="text-[10px] font-medium text-warning">In Progress</span>
+                    )}
                   </div>
                 </Card>
               </Link>
@@ -179,7 +234,12 @@ function Learn() {
         </div>
         <div className="mb-3 flex items-center gap-2 rounded-[6px] border border-border bg-surface px-3 py-2">
           <Search className="h-4 w-4 text-text-muted" />
-          <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search terms" className="w-full bg-transparent text-sm text-text-primary outline-none placeholder:text-text-muted" />
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search terms"
+            className="w-full bg-transparent text-sm text-text-primary outline-none placeholder:text-text-muted"
+          />
         </div>
         <div className="space-y-2">
           {terms.map((t) => (
@@ -207,7 +267,10 @@ function Learn() {
 
       {/* AI Tutor chat sheet */}
       {chatOpen && (
-        <div className="fixed inset-0 z-50 flex flex-col justify-end sm:items-end sm:justify-end sm:p-6" onClick={() => setChatOpen(false)}>
+        <div
+          className="fixed inset-0 z-50 flex flex-col justify-end sm:items-end sm:justify-end sm:p-6"
+          onClick={() => setChatOpen(false)}
+        >
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
           <div
             className="relative h-[80vh] rounded-t-[16px] border-t border-border bg-sidebar sm:h-[560px] sm:w-[380px] sm:rounded-[16px] sm:border"
@@ -218,7 +281,9 @@ function Learn() {
               <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-text-primary">
                 <Bot className="h-4 w-4 text-bull" strokeWidth={1.5} /> Ask AI Tutor
               </span>
-              <button onClick={() => setChatOpen(false)} aria-label="Close"><X className="h-5 w-5 text-text-secondary" /></button>
+              <button onClick={() => setChatOpen(false)} aria-label="Close">
+                <X className="h-5 w-5 text-text-secondary" />
+              </button>
             </div>
             <div className="h-[calc(80vh-56px)] sm:h-[calc(560px-56px)]">
               <HubChatPanel />
@@ -244,7 +309,11 @@ const HUB_PRESETS = [
 function HubChatPanel() {
   const ask = useServerFn(askTutor);
   const [messages, setMessages] = useState<HubChatMsg[]>([
-    { role: "assistant", content: "Hi! I'm your NafaIQ tutor. Ask me anything about PSX investing, terms, or strategies." },
+    {
+      role: "assistant",
+      content:
+        "Hi! I'm your NafaIQ tutor. Ask me anything about PSX investing, terms, or strategies.",
+    },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -271,7 +340,10 @@ function HubChatPanel() {
         });
         setMessages((m) => [...m, { role: "assistant", content: res.reply }]);
       } catch {
-        setMessages((m) => [...m, { role: "assistant", content: "Sorry, something went wrong. Please try again." }]);
+        setMessages((m) => [
+          ...m,
+          { role: "assistant", content: "Sorry, something went wrong. Please try again." },
+        ]);
       } finally {
         setLoading(false);
       }
@@ -302,7 +374,11 @@ function HubChatPanel() {
         {showPresets && (
           <div className="space-y-1.5 pt-1">
             {HUB_PRESETS.map((p) => (
-              <button key={p} onClick={() => send(p)} className="block w-full rounded-full border border-border px-3 py-1.5 text-left text-[11px] text-text-secondary hover:border-bull hover:text-bull">
+              <button
+                key={p}
+                onClick={() => send(p)}
+                className="block w-full rounded-full border border-border px-3 py-1.5 text-left text-[11px] text-text-secondary hover:border-bull hover:text-bull"
+              >
                 {p}
               </button>
             ))}
@@ -324,7 +400,11 @@ function HubChatPanel() {
           placeholder="Ask about investing…"
           className="flex-1 rounded-[8px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary outline-none placeholder:text-text-muted"
         />
-        <button onClick={() => send(input)} disabled={loading} className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] bg-bull text-bull-foreground disabled:opacity-50">
+        <button
+          onClick={() => send(input)}
+          disabled={loading}
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] bg-bull text-bull-foreground disabled:opacity-50"
+        >
           <Send className="h-4 w-4" />
         </button>
       </div>
@@ -359,8 +439,12 @@ function FlashcardModal({ onClose }: { onClose: () => void }) {
   return (
     <div className="fixed inset-0 z-50 flex flex-col bg-background p-4">
       <div className="flex items-center justify-between">
-        <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-text-primary"><Layers className="h-4 w-4" strokeWidth={1.5} /> Flashcards</span>
-        <button onClick={onClose} aria-label="Close"><X className="h-5 w-5 text-text-secondary" /></button>
+        <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-text-primary">
+          <Layers className="h-4 w-4" strokeWidth={1.5} /> Flashcards
+        </span>
+        <button onClick={onClose} aria-label="Close">
+          <X className="h-5 w-5 text-text-secondary" />
+        </button>
       </div>
 
       <div className="flex flex-1 flex-col items-center justify-center gap-6">
@@ -384,12 +468,22 @@ function FlashcardModal({ onClose }: { onClose: () => void }) {
             </button>
 
             <div className="flex items-center gap-3">
-              <button onClick={next} className="inline-flex items-center gap-1.5 rounded-[8px] bg-bull px-5 py-2.5 text-sm font-semibold text-bull-foreground hover:brightness-110"><Check className="h-4 w-4" strokeWidth={1.5} /> Got it</button>
-              <button onClick={reviewAgain} className="inline-flex items-center gap-1.5 rounded-[8px] border border-border px-5 py-2.5 text-sm font-medium text-text-secondary hover:bg-hover">
+              <button
+                onClick={next}
+                className="inline-flex items-center gap-1.5 rounded-[8px] bg-bull px-5 py-2.5 text-sm font-semibold text-bull-foreground hover:brightness-110"
+              >
+                <Check className="h-4 w-4" strokeWidth={1.5} /> Got it
+              </button>
+              <button
+                onClick={reviewAgain}
+                className="inline-flex items-center gap-1.5 rounded-[8px] border border-border px-5 py-2.5 text-sm font-medium text-text-secondary hover:bg-hover"
+              >
                 <RotateCcw className="h-4 w-4" /> Review Again
               </button>
             </div>
-            <div className="font-mono text-xs text-text-muted">{Math.min(reviewed + 1, total)} / {total} terms</div>
+            <div className="font-mono text-xs text-text-muted">
+              {Math.min(reviewed + 1, total)} / {total} terms
+            </div>
           </>
         ) : (
           <div className="text-center">
@@ -397,8 +491,18 @@ function FlashcardModal({ onClose }: { onClose: () => void }) {
             <div className="mt-3 text-lg font-semibold text-text-primary">Deck Complete!</div>
             <div className="mt-1 text-sm text-text-secondary">You reviewed all {total} terms.</div>
             <div className="mt-6 flex items-center justify-center gap-3">
-              <button onClick={restart} className="rounded-[8px] bg-bull px-5 py-2.5 text-sm font-semibold text-bull-foreground hover:brightness-110">Restart Deck</button>
-              <button onClick={onClose} className="rounded-[8px] border border-border px-5 py-2.5 text-sm font-medium text-text-secondary hover:bg-hover">Exit</button>
+              <button
+                onClick={restart}
+                className="rounded-[8px] bg-bull px-5 py-2.5 text-sm font-semibold text-bull-foreground hover:brightness-110"
+              >
+                Restart Deck
+              </button>
+              <button
+                onClick={onClose}
+                className="rounded-[8px] border border-border px-5 py-2.5 text-sm font-medium text-text-secondary hover:bg-hover"
+              >
+                Exit
+              </button>
             </div>
           </div>
         )}

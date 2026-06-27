@@ -108,11 +108,31 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:title", content: "NafaIQ — PSX Terminal & Personal Finance" },
-      { name: "description", content: "NafaIQ is a Pakistan Stock Exchange dashboard, trading terminal, and personal finance manager." },
-      { property: "og:description", content: "NafaIQ is a Pakistan Stock Exchange dashboard, trading terminal, and personal finance manager." },
-      { name: "twitter:description", content: "NafaIQ is a Pakistan Stock Exchange dashboard, trading terminal, and personal finance manager." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c9d8cc4f-f72d-4076-a36f-7b6b7cdd4499/id-preview-47fd2b28--4efafbc8-f1a0-40cc-a455-7a1e447a9b45.lovable.app-1781772713629.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c9d8cc4f-f72d-4076-a36f-7b6b7cdd4499/id-preview-47fd2b28--4efafbc8-f1a0-40cc-a455-7a1e447a9b45.lovable.app-1781772713629.png" },
+      {
+        name: "description",
+        content:
+          "NafaIQ is a Pakistan Stock Exchange dashboard, trading terminal, and personal finance manager.",
+      },
+      {
+        property: "og:description",
+        content:
+          "NafaIQ is a Pakistan Stock Exchange dashboard, trading terminal, and personal finance manager.",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "NafaIQ is a Pakistan Stock Exchange dashboard, trading terminal, and personal finance manager.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c9d8cc4f-f72d-4076-a36f-7b6b7cdd4499/id-preview-47fd2b28--4efafbc8-f1a0-40cc-a455-7a1e447a9b45.lovable.app-1781772713629.png",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c9d8cc4f-f72d-4076-a36f-7b6b7cdd4499/id-preview-47fd2b28--4efafbc8-f1a0-40cc-a455-7a1e447a9b45.lovable.app-1781772713629.png",
+      },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -204,7 +224,6 @@ function AuthGate() {
       </PageTransition>
     );
   }
-
 
   const blocking = loading || !user;
   return (

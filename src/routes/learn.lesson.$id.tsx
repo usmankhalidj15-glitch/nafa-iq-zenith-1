@@ -68,7 +68,12 @@ function LessonPage() {
       <div className="mx-auto max-w-md py-20 text-center">
         <Inbox className="mx-auto h-8 w-8 text-text-muted" strokeWidth={1.5} />
         <h1 className="mt-3 text-lg font-semibold text-text-primary">Lesson not found</h1>
-        <Link to="/learn" className="mt-4 inline-block rounded-[8px] bg-bull px-4 py-2 text-sm font-semibold text-bull-foreground">Back to Learn Hub</Link>
+        <Link
+          to="/learn"
+          className="mt-4 inline-block rounded-[8px] bg-bull px-4 py-2 text-sm font-semibold text-bull-foreground"
+        >
+          Back to Learn Hub
+        </Link>
       </div>
     );
   }
@@ -111,7 +116,9 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
     if (mode !== "reading") return;
     const obs = new IntersectionObserver(
       (entries) => {
-        const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
         if (visible[0]) setActiveSection(visible[0].target.id);
       },
       { rootMargin: "-80px 0px -60% 0px", threshold: 0 },
@@ -137,23 +144,39 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
     <div className="-mx-3 -mt-4 -mb-24 sm:-mx-5 lg:-mx-6 lg:-mb-8">
       {/* Reading progress bar */}
       <div className="sticky top-[52px] z-20 h-[3px] w-full bg-border">
-        <div className="h-full bg-bull transition-[width] duration-150" style={{ width: `${mode === "reading" ? progress : 100}%` }} />
+        <div
+          className="h-full bg-bull transition-[width] duration-150"
+          style={{ width: `${mode === "reading" ? progress : 100}%` }}
+        />
       </div>
 
       {/* Top bar */}
       <div className="sticky top-[55px] z-20 flex items-center gap-3 border-b border-border bg-sidebar px-3 py-2.5 lg:px-6">
-        <Link to="/learn" className="flex shrink-0 items-center gap-1.5 text-sm font-medium text-text-secondary hover:text-text-primary">
+        <Link
+          to="/learn"
+          className="flex shrink-0 items-center gap-1.5 text-sm font-medium text-text-secondary hover:text-text-primary"
+        >
           <ArrowLeft className="h-4 w-4" /> <span className="hidden sm:inline">Learn Hub</span>
         </Link>
-        <div className="flex-1 truncate text-center text-sm font-semibold text-text-primary">{lesson.title}</div>
+        <div className="flex-1 truncate text-center text-sm font-semibold text-text-primary">
+          {lesson.title}
+        </div>
         <button
           onClick={() => setChatOpen(true)}
           className="hidden shrink-0 items-center gap-1.5 rounded-[6px] bg-bull/10 px-2.5 py-1 text-xs font-semibold text-bull hover:bg-bull/20 lg:inline-flex xl:hidden"
         >
           <MessageCircle className="h-3.5 w-3.5" strokeWidth={1.5} /> Ask AI
         </button>
-        <button onClick={() => toggleBookmark(lesson.id)} aria-label="Bookmark" className="shrink-0 text-text-secondary hover:text-bull">
-          {bookmarked ? <BookmarkCheck className="h-5 w-5 text-bull" /> : <Bookmark className="h-5 w-5" />}
+        <button
+          onClick={() => toggleBookmark(lesson.id)}
+          aria-label="Bookmark"
+          className="shrink-0 text-text-secondary hover:text-bull"
+        >
+          {bookmarked ? (
+            <BookmarkCheck className="h-5 w-5 text-bull" />
+          ) : (
+            <Bookmark className="h-5 w-5" />
+          )}
         </button>
       </div>
 
@@ -162,7 +185,9 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
         {mode === "reading" && (
           <aside className="hidden w-[220px] shrink-0 lg:block">
             <div className="sticky top-[110px]">
-              <div className="text-xs font-semibold uppercase tracking-wide text-text-muted">In This Lesson</div>
+              <div className="text-xs font-semibold uppercase tracking-wide text-text-muted">
+                In This Lesson
+              </div>
               <nav className="mt-3 space-y-1 border-l border-border">
                 {lesson.sections.map((s) => (
                   <button
@@ -170,7 +195,9 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
                     onClick={() => scrollToSection(s.id)}
                     className={cn(
                       "-ml-px block border-l-2 py-1 pl-3 text-left text-xs transition-colors",
-                      activeSection === s.id ? "border-bull font-medium text-bull" : "border-transparent text-text-secondary hover:text-text-primary",
+                      activeSection === s.id
+                        ? "border-bull font-medium text-bull"
+                        : "border-transparent text-text-secondary hover:text-text-primary",
                     )}
                   >
                     {s.heading}
@@ -178,15 +205,33 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
                 ))}
               </nav>
               <div className="mt-5 space-y-1.5 border-t border-border pt-4 text-xs text-text-secondary">
-                <div className="flex items-center gap-1.5"><Sparkles className="h-3.5 w-3.5" strokeWidth={1.5} /> {lesson.duration} read</div>
-                <div className="flex items-center gap-1.5"><Target className="h-3.5 w-3.5" strokeWidth={1.5} /> {lesson.level}</div>
-                <div className="flex items-center gap-1.5">{lesson.type === "video" && lesson.videoUrl ? <><Video className="h-3.5 w-3.5" strokeWidth={1.5} /> Video + Article</> : <><BookOpen className="h-3.5 w-3.5" strokeWidth={1.5} /> Article</>}</div>
+                <div className="flex items-center gap-1.5">
+                  <Sparkles className="h-3.5 w-3.5" strokeWidth={1.5} /> {lesson.duration} read
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Target className="h-3.5 w-3.5" strokeWidth={1.5} /> {lesson.level}
+                </div>
+                <div className="flex items-center gap-1.5">
+                  {lesson.type === "video" && lesson.videoUrl ? (
+                    <>
+                      <Video className="h-3.5 w-3.5" strokeWidth={1.5} /> Video + Article
+                    </>
+                  ) : (
+                    <>
+                      <BookOpen className="h-3.5 w-3.5" strokeWidth={1.5} /> Article
+                    </>
+                  )}
+                </div>
               </div>
               <button
                 onClick={() => toggleBookmark(lesson.id)}
                 className="mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-[8px] border border-border px-3 py-2 text-xs font-medium text-text-secondary hover:bg-hover"
               >
-                {bookmarked ? <BookmarkCheck className="h-4 w-4 text-bull" /> : <Bookmark className="h-4 w-4" />}
+                {bookmarked ? (
+                  <BookmarkCheck className="h-4 w-4 text-bull" />
+                ) : (
+                  <Bookmark className="h-4 w-4" />
+                )}
                 {bookmarked ? "Bookmarked" : "Bookmark Lesson"}
               </button>
             </div>
@@ -259,13 +304,23 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
 
       {/* Mobile / tablet chat sheet */}
       {chatOpen && (
-        <div className="fixed inset-0 z-50 flex flex-col justify-end xl:hidden" onClick={() => setChatOpen(false)}>
+        <div
+          className="fixed inset-0 z-50 flex flex-col justify-end xl:hidden"
+          onClick={() => setChatOpen(false)}
+        >
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-          <div className="relative h-[80vh] rounded-t-[16px] border-t border-border bg-sidebar" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="relative h-[80vh] rounded-t-[16px] border-t border-border bg-sidebar"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="mx-auto mt-2 h-1 w-10 rounded-full bg-border" />
             <div className="flex items-center justify-between border-b border-border px-4 py-3">
-              <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-text-primary"><Cpu className="h-4 w-4 text-ai" strokeWidth={1.5} /> Ask AI Tutor</span>
-              <button onClick={() => setChatOpen(false)}><X className="h-5 w-5 text-text-secondary" /></button>
+              <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-text-primary">
+                <Cpu className="h-4 w-4 text-ai" strokeWidth={1.5} /> Ask AI Tutor
+              </span>
+              <button onClick={() => setChatOpen(false)}>
+                <X className="h-5 w-5 text-text-secondary" />
+              </button>
             </div>
             <div className="h-[calc(80vh-56px)]">
               <ChatPanel lesson={lesson} activeSection={activeSection} embedded />
@@ -287,7 +342,11 @@ function Blocks({ blocks, accent }: { blocks: ContentBlock[]; accent: string }) 
     <>
       {blocks.map((b, i) => {
         if (b.type === "p") {
-          return <p key={i} className="my-4 max-w-[680px] text-[16px] leading-[1.8] text-[#cbd5e1]">{b.text}</p>;
+          return (
+            <p key={i} className="my-4 max-w-[680px] text-[16px] leading-[1.8] text-[#cbd5e1]">
+              {b.text}
+            </p>
+          );
         }
         if (b.type === "callout") {
           const m = CALLOUT_META[b.kind];
@@ -297,14 +356,22 @@ function Blocks({ blocks, accent }: { blocks: ContentBlock[]; accent: string }) 
               className="my-6 max-w-[680px] rounded-r-[8px] p-4"
               style={{ background: `${m.color}10`, borderLeft: `3px solid ${m.color}` }}
             >
-              <div className="flex items-center gap-1.5 text-xs font-bold" style={{ color: m.color }}><EmojiIcon emoji={m.emoji} size={13} /> {m.label}</div>
+              <div
+                className="flex items-center gap-1.5 text-xs font-bold"
+                style={{ color: m.color }}
+              >
+                <EmojiIcon emoji={m.emoji} size={13} /> {m.label}
+              </div>
               <p className="mt-1.5 text-sm leading-relaxed text-[#cbd5e1]">{b.text}</p>
             </div>
           );
         }
         if (b.type === "formula") {
           return (
-            <div key={i} className="my-6 max-w-[680px] rounded-[8px] border border-border bg-[#0d1421] p-5 font-mono text-sm">
+            <div
+              key={i}
+              className="my-6 max-w-[680px] rounded-[8px] border border-border bg-[#0d1421] p-5 font-mono text-sm"
+            >
               {b.lines.map((line, j) => (
                 <div key={j} className="text-bull">
                   {line.split("=").map((part, k, all) => (
@@ -320,20 +387,36 @@ function Blocks({ blocks, accent }: { blocks: ContentBlock[]; accent: string }) 
         }
         // table
         return (
-          <div key={i} className="my-6 max-w-[680px] overflow-x-auto rounded-[8px] border border-border">
+          <div
+            key={i}
+            className="my-6 max-w-[680px] overflow-x-auto rounded-[8px] border border-border"
+          >
             <table className="w-full border-collapse text-sm">
               <thead>
                 <tr>
                   {b.head.map((h) => (
-                    <th key={h} className="border border-border bg-elevated px-3 py-2 text-left font-bold text-text-primary">{h}</th>
+                    <th
+                      key={h}
+                      className="border border-border bg-elevated px-3 py-2 text-left font-bold text-text-primary"
+                    >
+                      {h}
+                    </th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {b.rows.map((row, r) => (
-                  <tr key={r} className={cn("transition-colors hover:bg-bull/[0.04]", r % 2 === 0 ? "bg-surface" : "bg-surface-alt")}>
+                  <tr
+                    key={r}
+                    className={cn(
+                      "transition-colors hover:bg-bull/[0.04]",
+                      r % 2 === 0 ? "bg-surface" : "bg-surface-alt",
+                    )}
+                  >
                     {row.map((cell, c) => (
-                      <td key={c} className="border border-border px-3 py-2 text-text-secondary">{cell}</td>
+                      <td key={c} className="border border-border px-3 py-2 text-text-secondary">
+                        {cell}
+                      </td>
                     ))}
                   </tr>
                 ))}
@@ -371,14 +454,31 @@ function ReadingView({
   return (
     <div className="learn-fade-in">
       {/* Hero banner */}
-      <div className="rounded-[12px] bg-gradient-to-br from-surface to-[#0d1421] p-8" style={{ borderLeft: `4px solid ${lesson.accent}` }}>
-        <div className="flex h-12 w-12 items-center justify-center rounded-[10px] border border-white/[0.06] bg-elevated" style={{ color: lesson.accent }}><EmojiIcon emoji={lesson.emoji} size={24} /></div>
+      <div
+        className="rounded-[12px] bg-gradient-to-br from-surface to-[#0d1421] p-8"
+        style={{ borderLeft: `4px solid ${lesson.accent}` }}
+      >
+        <div
+          className="flex h-12 w-12 items-center justify-center rounded-[10px] border border-white/[0.06] bg-elevated"
+          style={{ color: lesson.accent }}
+        >
+          <EmojiIcon emoji={lesson.emoji} size={24} />
+        </div>
         <h1 className="mt-3 text-3xl font-bold text-text-primary">{lesson.title}</h1>
         <p className="mt-1 text-sm text-text-secondary">{lesson.subtitle}</p>
         <div className="mt-3 flex items-center gap-2 text-xs">
-          <span className="rounded-[4px] px-2 py-0.5 font-semibold" style={{ background: `${lesson.accent}1a`, color: lesson.accent }}>{lesson.level}</span>
-          <span className="rounded-[4px] bg-elevated px-2 py-0.5 text-text-secondary">⏱ {lesson.duration} read</span>
-          <span className="rounded-[4px] bg-elevated px-2 py-0.5 text-text-secondary">{lesson.category}</span>
+          <span
+            className="rounded-[4px] px-2 py-0.5 font-semibold"
+            style={{ background: `${lesson.accent}1a`, color: lesson.accent }}
+          >
+            {lesson.level}
+          </span>
+          <span className="rounded-[4px] bg-elevated px-2 py-0.5 text-text-secondary">
+            ⏱ {lesson.duration} read
+          </span>
+          <span className="rounded-[4px] bg-elevated px-2 py-0.5 text-text-secondary">
+            {lesson.category}
+          </span>
         </div>
       </div>
 
@@ -387,24 +487,38 @@ function ReadingView({
         <div className="mt-6">
           <VideoPlayer url={lesson.videoUrl} />
           <div className="mt-3 flex flex-wrap items-center gap-3">
-            <button onClick={() => setShowArticle(!showArticle)} className="inline-flex items-center gap-1.5 rounded-[8px] border border-border px-3 py-1.5 text-xs font-medium text-text-secondary hover:bg-hover">
-              <FileText className="h-3.5 w-3.5" strokeWidth={1.5} /> {showArticle ? "Hide" : "Read"} Article Version
+            <button
+              onClick={() => setShowArticle(!showArticle)}
+              className="inline-flex items-center gap-1.5 rounded-[8px] border border-border px-3 py-1.5 text-xs font-medium text-text-secondary hover:bg-hover"
+            >
+              <FileText className="h-3.5 w-3.5" strokeWidth={1.5} /> {showArticle ? "Hide" : "Read"}{" "}
+              Article Version
             </button>
-            <button onClick={onMarkWatched} className="inline-flex items-center gap-1.5 rounded-[8px] bg-bull/10 px-3 py-1.5 text-xs font-semibold text-bull hover:bg-bull/20">
+            <button
+              onClick={onMarkWatched}
+              className="inline-flex items-center gap-1.5 rounded-[8px] bg-bull/10 px-3 py-1.5 text-xs font-semibold text-bull hover:bg-bull/20"
+            >
               Mark Video as Watched <Check className="h-3.5 w-3.5" strokeWidth={1.5} />
             </button>
           </div>
-          <p className="mt-2 flex items-center gap-1.5 text-xs text-text-muted"><CheckCircle2 className="h-3.5 w-3.5 text-bull" strokeWidth={1.5} /> Watch at least 80% of the video to mark as complete</p>
+          <p className="mt-2 flex items-center gap-1.5 text-xs text-text-muted">
+            <CheckCircle2 className="h-3.5 w-3.5 text-bull" strokeWidth={1.5} /> Watch at least 80%
+            of the video to mark as complete
+          </p>
         </div>
       )}
 
       {/* Video coming soon */}
       {lesson.type === "video" && !lesson.videoUrl && (
         <div className="mt-6 flex aspect-video w-full flex-col items-center justify-center gap-3 rounded-[12px] border border-dashed border-border bg-surface text-center">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-elevated text-text-secondary"><Video className="h-6 w-6" strokeWidth={1.5} /></span>
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-elevated text-text-secondary">
+            <Video className="h-6 w-6" strokeWidth={1.5} />
+          </span>
           <div>
             <div className="text-sm font-semibold text-text-primary">Video coming soon</div>
-            <p className="mt-1 text-xs text-text-muted">A video walkthrough is in production. Read the full lesson below for now.</p>
+            <p className="mt-1 text-xs text-text-muted">
+              A video walkthrough is in production. Read the full lesson below for now.
+            </p>
           </div>
         </div>
       )}
@@ -414,7 +528,9 @@ function ReadingView({
         <article className="mt-6">
           {lesson.sections.map((s) => (
             <section key={s.id} id={s.id} className="scroll-mt-[120px]">
-              <h2 className="mt-10 border-b border-border pb-2 text-[22px] font-bold text-text-primary">{s.heading}</h2>
+              <h2 className="mt-10 border-b border-border pb-2 text-[22px] font-bold text-text-primary">
+                {s.heading}
+              </h2>
               <Blocks blocks={s.blocks} accent={lesson.accent} />
             </section>
           ))}
@@ -429,24 +545,46 @@ function ReadingView({
         >
           <Brain className="h-5 w-5" /> Test Your Understanding — Take the Quiz
         </button>
-        <p className="mt-2 text-xs text-text-muted">{lesson.quiz.length} questions · Earn up to 50 XP</p>
-        {completed && <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-bull"><Check className="h-3.5 w-3.5" strokeWidth={1.5} /> You've completed this lesson</p>}
+        <p className="mt-2 text-xs text-text-muted">
+          {lesson.quiz.length} questions · Earn up to 50 XP
+        </p>
+        {completed && (
+          <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-bull">
+            <Check className="h-3.5 w-3.5" strokeWidth={1.5} /> You've completed this lesson
+          </p>
+        )}
       </div>
 
       {/* Prev / Next */}
       <div className="mt-6 grid gap-3 sm:grid-cols-2">
         {prev ? (
-          <Link to="/learn/lesson/$id" params={{ id: prev.id }} className="rounded-[8px] border border-border p-3 text-left hover:border-border-hover">
-            <div className="flex items-center gap-1 text-[10px] text-text-muted"><ArrowLeft className="h-3 w-3" strokeWidth={1.5} /> Previous</div>
+          <Link
+            to="/learn/lesson/$id"
+            params={{ id: prev.id }}
+            className="rounded-[8px] border border-border p-3 text-left hover:border-border-hover"
+          >
+            <div className="flex items-center gap-1 text-[10px] text-text-muted">
+              <ArrowLeft className="h-3 w-3" strokeWidth={1.5} /> Previous
+            </div>
             <div className="text-sm font-medium text-text-primary">{prev.title}</div>
           </Link>
-        ) : <div />}
+        ) : (
+          <div />
+        )}
         {next ? (
-          <Link to="/learn/lesson/$id" params={{ id: next.id }} className="rounded-[8px] border border-border p-3 text-right hover:border-border-hover">
-            <div className="flex items-center justify-end gap-1 text-[10px] text-text-muted">Next <ArrowRight className="h-3 w-3" strokeWidth={1.5} /></div>
+          <Link
+            to="/learn/lesson/$id"
+            params={{ id: next.id }}
+            className="rounded-[8px] border border-border p-3 text-right hover:border-border-hover"
+          >
+            <div className="flex items-center justify-end gap-1 text-[10px] text-text-muted">
+              Next <ArrowRight className="h-3 w-3" strokeWidth={1.5} />
+            </div>
             <div className="text-sm font-medium text-text-primary">{next.title}</div>
           </Link>
-        ) : <div />}
+        ) : (
+          <div />
+        )}
       </div>
     </div>
   );
@@ -489,7 +627,15 @@ function buildShuffled(quiz: QuizQuestion[]): ShuffledQ[] {
   }));
 }
 
-function QuizView({ lesson, onExit, onFinish }: { lesson: LessonContent; onExit: () => void; onFinish: (correct: number) => void }) {
+function QuizView({
+  lesson,
+  onExit,
+  onFinish,
+}: {
+  lesson: LessonContent;
+  onExit: () => void;
+  onFinish: (correct: number) => void;
+}) {
   const [questions] = useState(() => buildShuffled(lesson.quiz));
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
@@ -541,27 +687,45 @@ function QuizView({ lesson, onExit, onFinish }: { lesson: LessonContent; onExit:
   return (
     <div className="learn-fade-in mx-auto max-w-2xl">
       <div className="flex items-center justify-between">
-        <button onClick={onExit} className="flex items-center gap-1.5 text-xs text-text-secondary hover:text-text-primary">
+        <button
+          onClick={onExit}
+          className="flex items-center gap-1.5 text-xs text-text-secondary hover:text-text-primary"
+        >
           <ArrowLeft className="h-4 w-4" /> Back to Lesson
         </button>
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-bull/10 px-3 py-1 text-xs font-semibold text-bull"><Star className="h-3.5 w-3.5" strokeWidth={1.5} /> Up to 50 XP</span>
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-bull/10 px-3 py-1 text-xs font-semibold text-bull">
+          <Star className="h-3.5 w-3.5" strokeWidth={1.5} /> Up to 50 XP
+        </span>
       </div>
 
       <div className="mt-4 text-xs text-text-muted">{lesson.title}</div>
-      <h2 className="flex items-center gap-2 text-xl font-bold text-text-primary"><Brain className="h-5 w-5" strokeWidth={1.5} /> Knowledge Check</h2>
+      <h2 className="flex items-center gap-2 text-xl font-bold text-text-primary">
+        <Brain className="h-5 w-5" strokeWidth={1.5} /> Knowledge Check
+      </h2>
       <div className="mt-3 flex items-center gap-3">
         <div className="flex gap-1.5">
           {questions.map((_, i) => (
-            <span key={i} className={cn("h-2.5 w-2.5 rounded-full", i < current ? "bg-bull" : i === current ? "bg-bull/60" : "bg-border")} />
+            <span
+              key={i}
+              className={cn(
+                "h-2.5 w-2.5 rounded-full",
+                i < current ? "bg-bull" : i === current ? "bg-bull/60" : "bg-border",
+              )}
+            />
           ))}
         </div>
-        <span className="text-xs text-text-secondary">Question {current + 1} of {total}</span>
+        <span className="text-xs text-text-secondary">
+          Question {current + 1} of {total}
+        </span>
       </div>
 
       <div className="mt-5 rounded-[16px] border border-border bg-surface p-6 sm:p-8">
         {/* Timer */}
         <div className="mb-5 h-1.5 w-full overflow-hidden rounded-full bg-border">
-          <div className="h-full transition-all duration-1000 ease-linear" style={{ width: `${(timeLeft / 30) * 100}%`, background: timerColor }} />
+          <div
+            className="h-full transition-all duration-1000 ease-linear"
+            style={{ width: `${(timeLeft / 30) * 100}%`, background: timerColor }}
+          />
         </div>
 
         <div className="mb-6 text-[20px] font-semibold text-text-primary">{q.q.q}</div>
@@ -589,9 +753,20 @@ function QuizView({ lesson, onExit, onFinish }: { lesson: LessonContent; onExit:
                 key={i}
                 disabled={answered}
                 onClick={() => answer(i)}
-                className={cn("flex w-full items-center gap-3 rounded-[10px] border px-5 py-4 text-left transition-all", stateCls, dim && "opacity-40")}
+                className={cn(
+                  "flex w-full items-center gap-3 rounded-[10px] border px-5 py-4 text-left transition-all",
+                  stateCls,
+                  dim && "opacity-40",
+                )}
               >
-                <span className={cn("flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold", circleCls)}>{labels[i]}</span>
+                <span
+                  className={cn(
+                    "flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold",
+                    circleCls,
+                  )}
+                >
+                  {labels[i]}
+                </span>
                 <span className="flex-1 text-sm text-text-primary">{opt.text}</span>
                 {icon}
               </button>
@@ -602,16 +777,26 @@ function QuizView({ lesson, onExit, onFinish }: { lesson: LessonContent; onExit:
         {answered && (
           <div
             className="learn-fade-in mt-5 rounded-[8px] p-4 text-sm leading-relaxed text-text-secondary"
-            style={{ background: q.options[selected]?.isCorrect ? "rgba(0,212,170,0.06)" : "rgba(229,72,77,0.06)" }}
+            style={{
+              background: q.options[selected]?.isCorrect
+                ? "rgba(0,212,170,0.06)"
+                : "rgba(229,72,77,0.06)",
+            }}
           >
-            <span className="font-semibold text-text-primary">{q.options[selected]?.isCorrect ? "Correct! " : "Not quite. "}</span>
+            <span className="font-semibold text-text-primary">
+              {q.options[selected]?.isCorrect ? "Correct! " : "Not quite. "}
+            </span>
             {q.q.explanation}
           </div>
         )}
 
         {answered && (
-          <button onClick={nextQuestion} className="mt-5 inline-flex items-center gap-1.5 rounded-[8px] bg-bull px-5 py-2.5 text-sm font-semibold text-bull-foreground hover:brightness-110">
-            {current + 1 >= total ? "See Results" : "Next Question"} <ArrowRight className="h-4 w-4" />
+          <button
+            onClick={nextQuestion}
+            className="mt-5 inline-flex items-center gap-1.5 rounded-[8px] bg-bull px-5 py-2.5 text-sm font-semibold text-bull-foreground hover:brightness-110"
+          >
+            {current + 1 >= total ? "See Results" : "Next Question"}{" "}
+            <ArrowRight className="h-4 w-4" />
           </button>
         )}
       </div>
@@ -700,12 +885,21 @@ function ResultsView({
         <svg className="h-full w-full -rotate-90" viewBox="0 0 120 120">
           <circle cx="60" cy="60" r={r} fill="none" stroke="#1e2a3a" strokeWidth="10" />
           <circle
-            cx="60" cy="60" r={r} fill="none" stroke={ringColor} strokeWidth="10" strokeLinecap="round"
-            strokeDasharray={circ} strokeDashoffset={circ - (drawn / 100) * circ}
+            cx="60"
+            cy="60"
+            r={r}
+            fill="none"
+            stroke={ringColor}
+            strokeWidth="10"
+            strokeLinecap="round"
+            strokeDasharray={circ}
+            strokeDashoffset={circ - (drawn / 100) * circ}
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="font-mono text-2xl font-bold tabular-nums" style={{ color: ringColor }}>{correct}/{total}</span>
+          <span className="font-mono text-2xl font-bold tabular-nums" style={{ color: ringColor }}>
+            {correct}/{total}
+          </span>
         </div>
       </div>
 
@@ -722,13 +916,26 @@ function ResultsView({
         {questions.map((sq, i) => (
           <details key={i} className="rounded-[8px] border border-border bg-surface p-3">
             <summary className="flex cursor-pointer items-center justify-between text-sm font-medium text-text-primary">
-              <span className="flex items-center gap-2"><span className="text-text-muted">Q{i + 1}</span> {sq.q.q}</span>
+              <span className="flex items-center gap-2">
+                <span className="text-text-muted">Q{i + 1}</span> {sq.q.q}
+              </span>
               <ChevronDown className="h-4 w-4 shrink-0 text-text-muted" />
             </summary>
             <div className="mt-3 space-y-1.5">
               {sq.options.map((o, j) => (
-                <div key={j} className={cn("flex items-center gap-1.5 rounded-[6px] px-3 py-1.5 text-xs", o.isCorrect ? "bg-bull/10 text-bull" : "text-text-secondary")}>
-                  {o.isCorrect ? <Check className="h-3 w-3 shrink-0" strokeWidth={1.5} /> : <span className="shrink-0">•</span>}{o.text}
+                <div
+                  key={j}
+                  className={cn(
+                    "flex items-center gap-1.5 rounded-[6px] px-3 py-1.5 text-xs",
+                    o.isCorrect ? "bg-bull/10 text-bull" : "text-text-secondary",
+                  )}
+                >
+                  {o.isCorrect ? (
+                    <Check className="h-3 w-3 shrink-0" strokeWidth={1.5} />
+                  ) : (
+                    <span className="shrink-0">•</span>
+                  )}
+                  {o.text}
                 </div>
               ))}
               <p className="mt-2 text-xs leading-relaxed text-text-muted">{sq.q.explanation}</p>
@@ -738,11 +945,24 @@ function ResultsView({
       </div>
 
       <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:justify-center">
-        <button onClick={onContinue} className="inline-flex items-center justify-center gap-1.5 rounded-[8px] bg-bull px-5 py-2.5 text-sm font-semibold text-bull-foreground hover:brightness-110">
+        <button
+          onClick={onContinue}
+          className="inline-flex items-center justify-center gap-1.5 rounded-[8px] bg-bull px-5 py-2.5 text-sm font-semibold text-bull-foreground hover:brightness-110"
+        >
           Continue Learning <ArrowRight className="h-4 w-4" />
         </button>
-        <button onClick={onRetake} className="rounded-[8px] border border-border px-5 py-2.5 text-sm font-medium text-text-secondary hover:bg-hover">Retake Quiz</button>
-        <button onClick={onBackToLesson} className="rounded-[8px] border border-border px-5 py-2.5 text-sm font-medium text-text-secondary hover:bg-hover">Back to Lesson</button>
+        <button
+          onClick={onRetake}
+          className="rounded-[8px] border border-border px-5 py-2.5 text-sm font-medium text-text-secondary hover:bg-hover"
+        >
+          Retake Quiz
+        </button>
+        <button
+          onClick={onBackToLesson}
+          className="rounded-[8px] border border-border px-5 py-2.5 text-sm font-medium text-text-secondary hover:bg-hover"
+        >
+          Back to Lesson
+        </button>
       </div>
     </div>
   );
@@ -755,10 +975,21 @@ interface ChatMsg {
   content: string;
 }
 
-function ChatPanel({ lesson, activeSection, embedded }: { lesson: LessonContent; activeSection?: string; embedded?: boolean }) {
+function ChatPanel({
+  lesson,
+  activeSection,
+  embedded,
+}: {
+  lesson: LessonContent;
+  activeSection?: string;
+  embedded?: boolean;
+}) {
   const ask = useServerFn(askTutor);
   const [messages, setMessages] = useState<ChatMsg[]>([
-    { role: "assistant", content: `Hi! I'm here to help you understand ${lesson.title}. What would you like to know?` },
+    {
+      role: "assistant",
+      content: `Hi! I'm here to help you understand ${lesson.title}. What would you like to know?`,
+    },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -787,7 +1018,10 @@ function ChatPanel({ lesson, activeSection, embedded }: { lesson: LessonContent;
         });
         setMessages((m) => [...m, { role: "assistant", content: res.reply }]);
       } catch {
-        setMessages((m) => [...m, { role: "assistant", content: "Sorry, something went wrong. Please try again." }]);
+        setMessages((m) => [
+          ...m,
+          { role: "assistant", content: "Sorry, something went wrong. Please try again." },
+        ]);
       } finally {
         setLoading(false);
       }
@@ -798,15 +1032,24 @@ function ChatPanel({ lesson, activeSection, embedded }: { lesson: LessonContent;
   const showPresets = messages.length === 1;
 
   return (
-    <div className={cn("flex h-full flex-col overflow-hidden rounded-[12px] border border-border bg-surface", embedded && "rounded-none border-0")}>
+    <div
+      className={cn(
+        "flex h-full flex-col overflow-hidden rounded-[12px] border border-border bg-surface",
+        embedded && "rounded-none border-0",
+      )}
+    >
       <div className="border-b border-border p-3">
         <div className="flex items-center gap-2 text-sm font-semibold text-text-primary">
-          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-bull/15 text-bull"><Bot className="h-3.5 w-3.5" /></span>
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-bull/15 text-bull">
+            <Bot className="h-3.5 w-3.5" />
+          </span>
           AI Tutor
         </div>
         <div className="mt-0.5 flex items-center gap-2">
           <span className="text-[11px] text-text-secondary">Ask anything about this lesson</span>
-          <span className="rounded-full bg-ai/15 px-1.5 py-0.5 text-[9px] font-semibold text-ai">Powered by AI</span>
+          <span className="rounded-full bg-ai/15 px-1.5 py-0.5 text-[9px] font-semibold text-ai">
+            Powered by AI
+          </span>
         </div>
       </div>
 
@@ -830,7 +1073,11 @@ function ChatPanel({ lesson, activeSection, embedded }: { lesson: LessonContent;
         {showPresets && (
           <div className="space-y-1.5 pt-1">
             {lesson.presets.map((p) => (
-              <button key={p} onClick={() => send(p)} className="block w-full rounded-full border border-border px-3 py-1.5 text-left text-[11px] text-text-secondary hover:border-bull hover:text-bull">
+              <button
+                key={p}
+                onClick={() => send(p)}
+                className="block w-full rounded-full border border-border px-3 py-1.5 text-left text-[11px] text-text-secondary hover:border-bull hover:text-bull"
+              >
                 {p}
               </button>
             ))}
@@ -852,11 +1099,14 @@ function ChatPanel({ lesson, activeSection, embedded }: { lesson: LessonContent;
           placeholder="Ask about this lesson…"
           className="flex-1 rounded-[8px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary outline-none placeholder:text-text-muted"
         />
-        <button onClick={() => send(input)} disabled={loading} className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] bg-bull text-bull-foreground disabled:opacity-50">
+        <button
+          onClick={() => send(input)}
+          disabled={loading}
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] bg-bull text-bull-foreground disabled:opacity-50"
+        >
           <Send className="h-4 w-4" />
         </button>
       </div>
     </div>
   );
 }
-

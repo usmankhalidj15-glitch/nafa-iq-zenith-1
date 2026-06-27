@@ -1,7 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
-import { Plus, Search, Check, Sparkles, ArrowUpRight, ArrowDownRight, PiggyBank, Percent, Lightbulb } from "lucide-react";
+import {
+  Plus,
+  Search,
+  Check,
+  Sparkles,
+  ArrowUpRight,
+  ArrowDownRight,
+  PiggyBank,
+  Percent,
+  Lightbulb,
+} from "lucide-react";
 import { EmojiIcon } from "@/components/icons";
 import { Card } from "@/components/Card";
 import { IncomeExpenseChart, Sparkline } from "@/components/charts";
@@ -13,7 +23,10 @@ export const Route = createFileRoute("/finance")({
   head: () => ({
     meta: [
       { title: "Finance — NafaIQ" },
-      { name: "description", content: "Track income, expenses, budgets, bills and savings goals with AI guidance." },
+      {
+        name: "description",
+        content: "Track income, expenses, budgets, bills and savings goals with AI guidance.",
+      },
     ],
   }),
   component: Finance,
@@ -23,8 +36,14 @@ const TABS = ["Overview", "Transactions", "Budgets", "Bills", "Goals"] as const;
 type Tab = (typeof TABS)[number];
 
 const CAT_COLOR: Record<string, string> = {
-  Utilities: "#3b82f6", Income: "#00d4aa", "Food & Dining": "#f59e0b", Transport: "#8b5cf6",
-  Groceries: "#00d4aa", Subscriptions: "#e5484d", Shopping: "#8b5cf6", Savings: "#6b7280",
+  Utilities: "#3b82f6",
+  Income: "#00d4aa",
+  "Food & Dining": "#f59e0b",
+  Transport: "#8b5cf6",
+  Groceries: "#00d4aa",
+  Subscriptions: "#e5484d",
+  Shopping: "#8b5cf6",
+  Savings: "#6b7280",
 };
 
 function Finance() {
@@ -32,7 +51,9 @@ function Finance() {
   return (
     <div className="mx-auto max-w-6xl space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight text-text-primary sm:text-3xl">Personal Finance</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-text-primary sm:text-3xl">
+          Personal Finance
+        </h1>
         <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-surface/60 backdrop-blur-md">
           <span className="h-2 w-2 animate-pulse rounded-full bg-bull" />
         </div>
@@ -49,7 +70,6 @@ function Finance() {
                 : "text-text-secondary hover:text-text-primary",
             )}
           >
-
             {t}
           </button>
         ))}
@@ -62,7 +82,9 @@ function Finance() {
       {tab === "Goals" && <Goals />}
 
       {tab === "Transactions" && (
-        <button className="safe-bottom fixed right-4 bottom-20 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-bull text-bull-foreground shadow-[0_4px_24px_rgba(0,0,0,0.5)] hover:brightness-110 lg:bottom-8"><Plus className="h-6 w-6" /></button>
+        <button className="safe-bottom fixed right-4 bottom-20 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-bull text-bull-foreground shadow-[0_4px_24px_rgba(0,0,0,0.5)] hover:brightness-110 lg:bottom-8">
+          <Plus className="h-6 w-6" />
+        </button>
       )}
     </div>
   );
@@ -95,7 +117,10 @@ function useCountUp(target: number, decimals = 0, duration = 1200) {
 
   const formatted =
     decimals > 0
-      ? val.toLocaleString("en-PK", { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
+      ? val.toLocaleString("en-PK", {
+          minimumFractionDigits: decimals,
+          maximumFractionDigits: decimals,
+        })
       : Math.round(val).toLocaleString("en-PK");
   return { ref, formatted };
 }
@@ -127,13 +152,14 @@ function KpiCard({
       />
       <div className="relative z-10 flex h-full flex-col">{children}</div>
     </motion.div>
-
   );
 }
 
 function KpiLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-text-muted">{children}</div>
+    <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-text-muted">
+      {children}
+    </div>
   );
 }
 
@@ -152,7 +178,10 @@ function Overview() {
       <div className="relative z-10 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
         {/* Monthly Income */}
         <KpiCard index={0} accent="rgba(0,212,170,0.5)">
-          <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]" style={{ background: "rgba(0,212,170,0.12)" }}>
+          <div
+            className="mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]"
+            style={{ background: "rgba(0,212,170,0.12)" }}
+          >
             <ArrowUpRight className="h-5 w-5 text-bull" />
           </div>
           <KpiLabel>Monthly Income</KpiLabel>
@@ -160,14 +189,21 @@ function Overview() {
             PKR <span ref={income.ref}>{income.formatted}</span>
           </div>
           <div className="mt-3 flex items-end justify-between gap-2">
-            <span className="text-[10px] text-bull/80 sm:text-[11px]">+PKR 2,500 vs last month</span>
-            <div className="w-14 shrink-0"><Sparkline data={[43000, 45000, 47500]} color="#00d4aa" /></div>
+            <span className="text-[10px] text-bull/80 sm:text-[11px]">
+              +PKR 2,500 vs last month
+            </span>
+            <div className="w-14 shrink-0">
+              <Sparkline data={[43000, 45000, 47500]} color="#00d4aa" />
+            </div>
           </div>
         </KpiCard>
 
         {/* Total Expenses */}
         <KpiCard index={1} accent="rgba(229,72,77,0.45)">
-          <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]" style={{ background: "rgba(229,72,77,0.12)" }}>
+          <div
+            className="mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]"
+            style={{ background: "rgba(229,72,77,0.12)" }}
+          >
             <ArrowDownRight className="h-5 w-5 text-bear" />
           </div>
           <KpiLabel>Total Expenses</KpiLabel>
@@ -176,13 +212,18 @@ function Overview() {
           </div>
           <div className="mt-3 flex items-end justify-between gap-2">
             <span className="text-[10px] text-bear/90 sm:text-[11px]">-12% vs last month</span>
-            <div className="w-14 shrink-0"><Sparkline data={[22000, 21200, 18675]} color="#e5484d" /></div>
+            <div className="w-14 shrink-0">
+              <Sparkline data={[22000, 21200, 18675]} color="#e5484d" />
+            </div>
           </div>
         </KpiCard>
 
         {/* Net Savings */}
         <KpiCard index={2} accent="rgba(139,92,246,0.45)">
-          <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]" style={{ background: "rgba(139,92,246,0.12)" }}>
+          <div
+            className="mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]"
+            style={{ background: "rgba(139,92,246,0.12)" }}
+          >
             <PiggyBank className="h-5 w-5 text-ai" />
           </div>
           <KpiLabel>Net Savings</KpiLabel>
@@ -197,7 +238,10 @@ function Overview() {
 
         {/* Savings Rate */}
         <KpiCard index={3} accent="rgba(245,158,11,0.45)">
-          <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]" style={{ background: "rgba(245,158,11,0.12)" }}>
+          <div
+            className="mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]"
+            style={{ background: "rgba(245,158,11,0.12)" }}
+          >
             <Percent className="h-5 w-5 text-warning" />
           </div>
           <KpiLabel>Savings Rate</KpiLabel>
@@ -214,7 +258,10 @@ function Overview() {
             />
           </div>
           <div className="mt-2.5 flex items-center justify-between gap-2">
-            <span className="rounded-full border border-warning/30 px-2 py-0.5 text-[10px] font-semibold text-warning" style={{ background: "rgba(245,158,11,0.1)" }}>
+            <span
+              className="rounded-full border border-warning/30 px-2 py-0.5 text-[10px] font-semibold text-warning"
+              style={{ background: "rgba(245,158,11,0.1)" }}
+            >
               Excellent
             </span>
             <span className="text-[10px] text-text-muted sm:text-[11px]">Goal: 65%</span>
@@ -232,12 +279,20 @@ function Overview() {
         <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-br from-white/[0.04] to-transparent" />
         <div className="relative z-10 flex items-end justify-between">
           <div>
-            <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-text-secondary">6-Month Overview</div>
+            <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-text-secondary">
+              6-Month Overview
+            </div>
             <div className="mt-0.5 text-[11px] text-text-muted">Jan 2026 — Jun 2026</div>
           </div>
           <div className="flex items-center gap-3 text-[11px] font-medium text-text-secondary">
-            <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-bull" />In</span>
-            <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-bear" />Out</span>
+            <span className="flex items-center gap-1.5">
+              <span className="h-2 w-2 rounded-full bg-bull" />
+              In
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="h-2 w-2 rounded-full bg-bear" />
+              Out
+            </span>
           </div>
         </div>
         <div className="relative z-10 mt-4">
@@ -261,7 +316,10 @@ function Transactions() {
       <div className="flex flex-wrap gap-2">
         <div className="flex flex-1 items-center gap-2 rounded-[6px] border border-border bg-surface px-3 py-2">
           <Search className="h-4 w-4 text-text-muted" />
-          <input placeholder="Search transactions" className="w-full bg-transparent text-sm text-text-primary outline-none placeholder:text-text-muted" />
+          <input
+            placeholder="Search transactions"
+            className="w-full bg-transparent text-sm text-text-primary outline-none placeholder:text-text-muted"
+          />
         </div>
       </div>
       {Object.entries(grouped).map(([date, items]) => (
@@ -270,8 +328,14 @@ function Transactions() {
           <Card className="divide-y divide-border/50 p-0" hover={false}>
             {items.map((t, i) => (
               <div key={i} className="flex items-center gap-3 px-3 py-2.5">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full text-sm" style={{ background: (CAT_COLOR[t.category] ?? "#6b7280") + "26" }}>
-                  <span className="h-2.5 w-2.5 rounded-full" style={{ background: CAT_COLOR[t.category] ?? "#6b7280" }} />
+                <div
+                  className="flex h-9 w-9 items-center justify-center rounded-full text-sm"
+                  style={{ background: (CAT_COLOR[t.category] ?? "#6b7280") + "26" }}
+                >
+                  <span
+                    className="h-2.5 w-2.5 rounded-full"
+                    style={{ background: CAT_COLOR[t.category] ?? "#6b7280" }}
+                  />
                 </div>
                 <div className="flex-1">
                   <div className="text-sm text-text-primary">{t.merchant}</div>
@@ -280,7 +344,15 @@ function Transactions() {
                     {t.account}
                   </div>
                 </div>
-                <span className={cn("font-mono text-sm font-medium tabular-nums", t.amount >= 0 ? "text-bull" : "text-bear")}>{t.amount >= 0 ? "+" : "-"}{fmtPKR(Math.abs(t.amount))}</span>
+                <span
+                  className={cn(
+                    "font-mono text-sm font-medium tabular-nums",
+                    t.amount >= 0 ? "text-bull" : "text-bear",
+                  )}
+                >
+                  {t.amount >= 0 ? "+" : "-"}
+                  {fmtPKR(Math.abs(t.amount))}
+                </span>
               </div>
             ))}
           </Card>
@@ -302,26 +374,49 @@ function Budgets() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-center gap-4 text-sm text-text-secondary">
-        <button onClick={() => setOffset((o) => o - 1)} className="hover:text-text-primary">‹ {shortMonth(prev)}</button>
+        <button onClick={() => setOffset((o) => o - 1)} className="hover:text-text-primary">
+          ‹ {shortMonth(prev)}
+        </button>
         <span className="font-semibold text-text-primary">{longLabel}</span>
-        <button onClick={() => setOffset((o) => o + 1)} className="hover:text-text-primary">{shortMonth(next)} ›</button>
+        <button onClick={() => setOffset((o) => o + 1)} className="hover:text-text-primary">
+          {shortMonth(next)} ›
+        </button>
       </div>
       <div className="grid gap-3 md:grid-cols-2">
         {BUDGETS.map((b) => {
           const pct = Math.round((b.spent / b.limit) * 100);
           const over = b.spent > b.limit;
-          const color = over ? "bg-bear" : pct >= 90 ? "bg-warning" : pct >= 80 ? "bg-warning" : "bg-bull";
+          const color = over
+            ? "bg-bear"
+            : pct >= 90
+              ? "bg-warning"
+              : pct >= 80
+                ? "bg-warning"
+                : "bg-bull";
           return (
             <Card key={b.category}>
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-text-primary">{b.category}</span>
-                <span className={cn("font-mono text-xs tabular-nums", over ? "text-bear" : "text-text-secondary")}>{fmtPKR(b.spent)} / {fmtPKR(b.limit)}</span>
+                <span
+                  className={cn(
+                    "font-mono text-xs tabular-nums",
+                    over ? "text-bear" : "text-text-secondary",
+                  )}
+                >
+                  {fmtPKR(b.spent)} / {fmtPKR(b.limit)}
+                </span>
               </div>
               <div className="mt-2 h-2 overflow-hidden rounded-full bg-elevated">
-                <div className={cn("h-full rounded-full", color)} style={{ width: `${Math.min(pct, 100)}%` }} />
+                <div
+                  className={cn("h-full rounded-full", color)}
+                  style={{ width: `${Math.min(pct, 100)}%` }}
+                />
               </div>
               {b.tip && (
-                <div className="mt-2 flex items-start gap-1.5 rounded-[6px] border-l-2 border-ai bg-ai-tint px-2.5 py-1.5 text-[11px] text-text-secondary"><Lightbulb className="mt-0.5 h-3 w-3 shrink-0 text-ai" strokeWidth={1.5} />{b.tip}</div>
+                <div className="mt-2 flex items-start gap-1.5 rounded-[6px] border-l-2 border-ai bg-ai-tint px-2.5 py-1.5 text-[11px] text-text-secondary">
+                  <Lightbulb className="mt-0.5 h-3 w-3 shrink-0 text-ai" strokeWidth={1.5} />
+                  {b.tip}
+                </div>
               )}
             </Card>
           );
@@ -336,17 +431,35 @@ function Bills() {
     <div className="space-y-3">
       {BILLS.map((b) => (
         <Card key={b.name} className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-elevated text-sm font-bold text-text-secondary">{b.name[0]}</div>
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-elevated text-sm font-bold text-text-secondary">
+            {b.name[0]}
+          </div>
           <div className="flex-1">
             <div className="text-sm font-medium text-text-primary">{b.name}</div>
             <div className="text-[11px] text-text-muted">Due {b.due}</div>
           </div>
-          <span className="font-mono text-sm font-medium tabular-nums text-text-primary">{fmtPKR(b.amount)}</span>
-          <span className={cn("rounded-[4px] px-2 py-0.5 text-[10px] font-semibold", b.status === "DUE SOON" ? "bg-warning/20 text-warning" : "bg-elevated text-text-secondary")}>{b.status}</span>
-          <button className="flex h-8 w-8 items-center justify-center rounded-full border border-bull text-bull hover:bg-bull/10"><Check className="h-4 w-4" /></button>
+          <span className="font-mono text-sm font-medium tabular-nums text-text-primary">
+            {fmtPKR(b.amount)}
+          </span>
+          <span
+            className={cn(
+              "rounded-[4px] px-2 py-0.5 text-[10px] font-semibold",
+              b.status === "DUE SOON"
+                ? "bg-warning/20 text-warning"
+                : "bg-elevated text-text-secondary",
+            )}
+          >
+            {b.status}
+          </span>
+          <button className="flex h-8 w-8 items-center justify-center rounded-full border border-bull text-bull hover:bg-bull/10">
+            <Check className="h-4 w-4" />
+          </button>
         </Card>
       ))}
-      <button className="flex w-full items-center justify-center gap-1.5 rounded-[6px] border border-dashed border-border py-3 text-sm font-medium text-text-secondary hover:border-bull hover:text-bull"><Plus className="h-4 w-4" />Add Bill</button>
+      <button className="flex w-full items-center justify-center gap-1.5 rounded-[6px] border border-dashed border-border py-3 text-sm font-medium text-text-secondary hover:border-bull hover:text-bull">
+        <Plus className="h-4 w-4" />
+        Add Bill
+      </button>
     </div>
   );
 }
@@ -359,20 +472,37 @@ function Goals() {
         return (
           <Card key={g.name}>
             <div className="flex items-center gap-2">
-              <span className="flex h-9 w-9 items-center justify-center rounded-[8px] border border-bull/20 bg-bull/[0.08] text-bull"><EmojiIcon emoji={g.emoji} size={16} /></span>
+              <span className="flex h-9 w-9 items-center justify-center rounded-[8px] border border-bull/20 bg-bull/[0.08] text-bull">
+                <EmojiIcon emoji={g.emoji} size={16} />
+              </span>
               <span className="font-semibold text-text-primary">{g.name}</span>
-              <span className="ml-auto font-mono text-sm font-bold tabular-nums text-bull">{pct}%</span>
+              <span className="ml-auto font-mono text-sm font-bold tabular-nums text-bull">
+                {pct}%
+              </span>
             </div>
-            <div className="mt-2 font-mono text-xs tabular-nums text-text-secondary">Target {fmtPKR(g.target)} · Saved {fmtPKR(g.saved)}</div>
+            <div className="mt-2 font-mono text-xs tabular-nums text-text-secondary">
+              Target {fmtPKR(g.target)} · Saved {fmtPKR(g.saved)}
+            </div>
             <div className="mt-2 h-2 overflow-hidden rounded-full bg-elevated">
-              <div className={cn("h-full rounded-full", g.color === "bull" ? "bg-bull" : "bg-warning")} style={{ width: `${pct}%` }} />
+              <div
+                className={cn("h-full rounded-full", g.color === "bull" ? "bg-bull" : "bg-warning")}
+                style={{ width: `${pct}%` }}
+              />
             </div>
-            {g.date && <div className="mt-2 text-[11px] text-text-muted">Target date: {g.date}</div>}
-            <div className="mt-2 rounded-[6px] border-l-2 border-ai bg-ai-tint px-2.5 py-1.5 text-[11px] text-text-secondary"><Sparkles className="mr-1 inline h-3 w-3 text-ai" />{g.ai}</div>
+            {g.date && (
+              <div className="mt-2 text-[11px] text-text-muted">Target date: {g.date}</div>
+            )}
+            <div className="mt-2 rounded-[6px] border-l-2 border-ai bg-ai-tint px-2.5 py-1.5 text-[11px] text-text-secondary">
+              <Sparkles className="mr-1 inline h-3 w-3 text-ai" />
+              {g.ai}
+            </div>
           </Card>
         );
       })}
-      <button className="flex min-h-[120px] items-center justify-center gap-1.5 rounded-[8px] border border-dashed border-border text-sm font-medium text-text-secondary hover:border-bull hover:text-bull"><Plus className="h-4 w-4" />Add Goal</button>
+      <button className="flex min-h-[120px] items-center justify-center gap-1.5 rounded-[8px] border border-dashed border-border text-sm font-medium text-text-secondary hover:border-bull hover:text-bull">
+        <Plus className="h-4 w-4" />
+        Add Goal
+      </button>
     </div>
   );
 }

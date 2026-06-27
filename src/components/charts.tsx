@@ -44,7 +44,14 @@ const CandleShape = (props: any) => {
   return (
     <g>
       <line x1={cx} y1={y} x2={cx} y2={y + height} stroke={color} strokeWidth={1} />
-      <rect x={x + width * 0.18} y={bodyTop} width={width * 0.64} height={bodyH} fill={color} rx={1} />
+      <rect
+        x={x + width * 0.18}
+        y={bodyTop}
+        width={width * 0.64}
+        height={bodyH}
+        fill={color}
+        rx={1}
+      />
     </g>
   );
 };
@@ -59,14 +66,20 @@ function OHLCTooltip({ active, payload }: any) {
     <div className="rounded-[8px] border border-border-hover bg-elevated p-3 text-xs shadow-[0_4px_24px_rgba(0,0,0,0.6)]">
       <div className="mb-1 font-medium text-text-secondary">{p.date}</div>
       <div className="grid grid-cols-2 gap-x-4 gap-y-0.5 font-mono tabular-nums text-text-primary">
-        <span className="text-text-muted">O</span><span>{fmtNum(p.open)}</span>
-        <span className="text-text-muted">H</span><span>{fmtNum(p.high)}</span>
-        <span className="text-text-muted">L</span><span>{fmtNum(p.low)}</span>
-        <span className="text-text-muted">C</span><span>{fmtNum(p.close)}</span>
-        <span className="text-text-muted">Vol</span><span>{p.volume}M</span>
+        <span className="text-text-muted">O</span>
+        <span>{fmtNum(p.open)}</span>
+        <span className="text-text-muted">H</span>
+        <span>{fmtNum(p.high)}</span>
+        <span className="text-text-muted">L</span>
+        <span>{fmtNum(p.low)}</span>
+        <span className="text-text-muted">C</span>
+        <span>{fmtNum(p.close)}</span>
+        <span className="text-text-muted">Vol</span>
+        <span>{p.volume}M</span>
       </div>
       <div className={`mt-1 font-mono text-xs ${up ? "text-bull" : "text-bear"}`}>
-        {up ? "+" : ""}{fmtNum(chg)} ({((chg / p.open) * 100).toFixed(2)}%)
+        {up ? "+" : ""}
+        {fmtNum(chg)} ({((chg / p.open) * 100).toFixed(2)}%)
       </div>
     </div>
   );
@@ -100,8 +113,23 @@ export function CandlestickChart({
     <ResponsiveContainer width="100%" height={height >= 9999 ? "100%" : height}>
       <ComposedChart data={enriched} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
         <CartesianGrid stroke="#1a2535" vertical={false} />
-        <XAxis dataKey="date" tick={{ fill: "#64748b", fontSize: 10 }} minTickGap={48} axisLine={{ stroke: "#1a2535" }} tickLine={false} />
-        <YAxis yAxisId="price" orientation="right" domain={[lows - pad, highs + pad]} tick={{ fill: "#64748b", fontSize: 10 }} width={56} axisLine={false} tickLine={false} tickFormatter={(v) => fmtNum(v, 0)} />
+        <XAxis
+          dataKey="date"
+          tick={{ fill: "#64748b", fontSize: 10 }}
+          minTickGap={48}
+          axisLine={{ stroke: "#1a2535" }}
+          tickLine={false}
+        />
+        <YAxis
+          yAxisId="price"
+          orientation="right"
+          domain={[lows - pad, highs + pad]}
+          tick={{ fill: "#64748b", fontSize: 10 }}
+          width={56}
+          axisLine={false}
+          tickLine={false}
+          tickFormatter={(v) => fmtNum(v, 0)}
+        />
         <YAxis yAxisId="vol" domain={[0, maxVol * 5]} hide />
         <Tooltip content={<OHLCTooltip />} cursor={{ stroke: "#94a3b8", strokeDasharray: "4 4" }} />
         <Bar yAxisId="vol" dataKey="volume" isAnimationActive={false}>
@@ -110,9 +138,36 @@ export function CandlestickChart({
           ))}
         </Bar>
         <Bar yAxisId="price" dataKey="range" shape={<CandleShape />} isAnimationActive={false} />
-        {mas.includes("MA20") && <Line yAxisId="price" dataKey="ma20" stroke="#f59e0b" dot={false} strokeWidth={1.2} isAnimationActive={false} />}
-        {mas.includes("MA50") && <Line yAxisId="price" dataKey="ma50" stroke="#3b82f6" dot={false} strokeWidth={1.2} isAnimationActive={false} />}
-        {mas.includes("MA200") && <Line yAxisId="price" dataKey="ma200" stroke="#8b5cf6" dot={false} strokeWidth={1.2} isAnimationActive={false} />}
+        {mas.includes("MA20") && (
+          <Line
+            yAxisId="price"
+            dataKey="ma20"
+            stroke="#f59e0b"
+            dot={false}
+            strokeWidth={1.2}
+            isAnimationActive={false}
+          />
+        )}
+        {mas.includes("MA50") && (
+          <Line
+            yAxisId="price"
+            dataKey="ma50"
+            stroke="#3b82f6"
+            dot={false}
+            strokeWidth={1.2}
+            isAnimationActive={false}
+          />
+        )}
+        {mas.includes("MA200") && (
+          <Line
+            yAxisId="price"
+            dataKey="ma200"
+            stroke="#8b5cf6"
+            dot={false}
+            strokeWidth={1.2}
+            isAnimationActive={false}
+          />
+        )}
       </ComposedChart>
     </ResponsiveContainer>
   );
@@ -137,12 +192,48 @@ export function PortfolioAreaChart({
           </linearGradient>
         </defs>
         <CartesianGrid stroke="#1a2535" vertical={false} />
-        <XAxis dataKey="label" tick={{ fill: "#64748b", fontSize: 11 }} axisLine={{ stroke: "#1a2535" }} tickLine={false} />
-        <YAxis tick={{ fill: "#64748b", fontSize: 10 }} width={56} axisLine={false} tickLine={false} tickFormatter={(v) => (v / 1000).toFixed(0) + "k"} />
-        <Tooltip contentStyle={{ background: "#1a2332", border: "1px solid #2a3a50", borderRadius: 8, fontSize: 12 }} labelStyle={{ color: "#94a3b8" }} />
-        <Area type="monotone" dataKey="value" name="Portfolio" stroke="#00d4aa" strokeWidth={2} fill="url(#tealFill)" isAnimationActive={false} />
+        <XAxis
+          dataKey="label"
+          tick={{ fill: "#64748b", fontSize: 11 }}
+          axisLine={{ stroke: "#1a2535" }}
+          tickLine={false}
+        />
+        <YAxis
+          tick={{ fill: "#64748b", fontSize: 10 }}
+          width={56}
+          axisLine={false}
+          tickLine={false}
+          tickFormatter={(v) => (v / 1000).toFixed(0) + "k"}
+        />
+        <Tooltip
+          contentStyle={{
+            background: "#1a2332",
+            border: "1px solid #2a3a50",
+            borderRadius: 8,
+            fontSize: 12,
+          }}
+          labelStyle={{ color: "#94a3b8" }}
+        />
+        <Area
+          type="monotone"
+          dataKey="value"
+          name="Portfolio"
+          stroke="#00d4aa"
+          strokeWidth={2}
+          fill="url(#tealFill)"
+          isAnimationActive={false}
+        />
         {showBenchmark && (
-          <Line type="monotone" dataKey="benchmark" name="KSE-100" stroke="#94a3b8" strokeWidth={1.5} strokeDasharray="5 4" dot={false} isAnimationActive={false} />
+          <Line
+            type="monotone"
+            dataKey="benchmark"
+            name="KSE-100"
+            stroke="#94a3b8"
+            strokeWidth={1.5}
+            strokeDasharray="5 4"
+            dot={false}
+            isAnimationActive={false}
+          />
         )}
       </AreaChart>
     </ResponsiveContainer>
@@ -162,17 +253,35 @@ export function DonutChart({
     <div className="relative">
       <ResponsiveContainer width="100%" height={220}>
         <PieChart>
-          <Pie data={data} dataKey="value" nameKey="name" innerRadius={62} outerRadius={92} paddingAngle={2} stroke="none" isAnimationActive={false}>
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="name"
+            innerRadius={62}
+            outerRadius={92}
+            paddingAngle={2}
+            stroke="none"
+            isAnimationActive={false}
+          >
             {data.map((d, i) => (
               <Cell key={i} fill={d.color} />
             ))}
           </Pie>
-          <Tooltip contentStyle={{ background: "#1a2332", border: "1px solid #2a3a50", borderRadius: 8, fontSize: 12 }} />
+          <Tooltip
+            contentStyle={{
+              background: "#1a2332",
+              border: "1px solid #2a3a50",
+              borderRadius: 8,
+              fontSize: 12,
+            }}
+          />
         </PieChart>
       </ResponsiveContainer>
       {centerValue && (
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-          <span className="font-mono text-sm font-bold tabular-nums text-text-primary">{centerValue}</span>
+          <span className="font-mono text-sm font-bold tabular-nums text-text-primary">
+            {centerValue}
+          </span>
           {centerLabel && <span className="text-[10px] text-text-muted">{centerLabel}</span>}
         </div>
       )}
@@ -189,12 +298,44 @@ export function IncomeExpenseChart({
     <ResponsiveContainer width="100%" height={280}>
       <ComposedChart data={data} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
         <CartesianGrid stroke="#1a2535" vertical={false} />
-        <XAxis dataKey="month" tick={{ fill: "#64748b", fontSize: 11 }} axisLine={{ stroke: "#1a2535" }} tickLine={false} />
-        <YAxis tick={{ fill: "#64748b", fontSize: 10 }} width={48} axisLine={false} tickLine={false} tickFormatter={(v) => (v / 1000).toFixed(0) + "k"} />
-        <Tooltip contentStyle={{ background: "#1a2332", border: "1px solid #2a3a50", borderRadius: 8, fontSize: 12 }} labelStyle={{ color: "#94a3b8" }} cursor={{ fill: "#1f2d40", fillOpacity: 0.4 }} />
+        <XAxis
+          dataKey="month"
+          tick={{ fill: "#64748b", fontSize: 11 }}
+          axisLine={{ stroke: "#1a2535" }}
+          tickLine={false}
+        />
+        <YAxis
+          tick={{ fill: "#64748b", fontSize: 10 }}
+          width={48}
+          axisLine={false}
+          tickLine={false}
+          tickFormatter={(v) => (v / 1000).toFixed(0) + "k"}
+        />
+        <Tooltip
+          contentStyle={{
+            background: "#1a2332",
+            border: "1px solid #2a3a50",
+            borderRadius: 8,
+            fontSize: 12,
+          }}
+          labelStyle={{ color: "#94a3b8" }}
+          cursor={{ fill: "#1f2d40", fillOpacity: 0.4 }}
+        />
         <Legend wrapperStyle={{ fontSize: 12 }} />
-        <Bar dataKey="income" name="Income" fill="#00d4aa" radius={[3, 3, 0, 0]} isAnimationActive={false} />
-        <Bar dataKey="expense" name="Expense" fill="#e5484d" radius={[3, 3, 0, 0]} isAnimationActive={false} />
+        <Bar
+          dataKey="income"
+          name="Income"
+          fill="#00d4aa"
+          radius={[3, 3, 0, 0]}
+          isAnimationActive={false}
+        />
+        <Bar
+          dataKey="expense"
+          name="Expense"
+          fill="#e5484d"
+          radius={[3, 3, 0, 0]}
+          isAnimationActive={false}
+        />
       </ComposedChart>
     </ResponsiveContainer>
   );

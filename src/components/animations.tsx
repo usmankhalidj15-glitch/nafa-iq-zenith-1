@@ -234,7 +234,6 @@ export function RevealGroup({
   );
 }
 
-
 /* ---------- parallax helper: maps scroll progress to a Y offset ---------- */
 export function useParallax(distance = 80) {
   const ref = useRef<HTMLDivElement>(null);
