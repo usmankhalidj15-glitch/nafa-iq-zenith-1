@@ -299,7 +299,7 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
       {/* Floating AI button */}
       <button
         onClick={() => setChatOpen(true)}
-        className="fixed right-4 bottom-20 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-bull text-bull-foreground shadow-[0_4px_24px_rgba(0,0,0,0.5)] hover:brightness-110 lg:bottom-8"
+        className="fixed right-4 bottom-20 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-bull text-bull-foreground shadow-[0_4px_24px_rgba(0,0,0,0.5)] hover:brightness-110 lg:bottom-8 xl:hidden"
         aria-label="Ask AI Tutor"
       >
         <Bot className="h-6 w-6" />
