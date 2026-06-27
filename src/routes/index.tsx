@@ -762,7 +762,7 @@ function FlipCard() {
             className="mt-8 rounded-[8px] p-3 text-[12px] text-warning"
             style={{ background: "rgba(245,158,11,0.1)" }}
           >
-            ⚠️ PKR 1,02,722 eroded by devaluation this year
+            <span className="inline-flex items-center gap-1.5"><AlertTriangle className="h-3.5 w-3.5" strokeWidth={1.5} /> PKR 1,02,722 eroded by devaluation this year</span>
           </div>
           <div className="mt-4 text-[11px] text-text-muted">Tap to flip back</div>
         </div>
