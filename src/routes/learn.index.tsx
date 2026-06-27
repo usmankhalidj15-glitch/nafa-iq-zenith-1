@@ -57,6 +57,7 @@ function Learn() {
   const { xp, statusOf, pathProgress } = useLearn();
   const [search, setSearch] = useState("");
   const [flashcards, setFlashcards] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
 
   const lessonsDone = useMemo(
     () => LESSONS.filter((l) => statusOf(LESSON_ID_BY_TITLE[l.title]) === "complete").length,
