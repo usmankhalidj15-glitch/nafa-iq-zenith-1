@@ -58,6 +58,8 @@ import { TICKER_ITEMS, STOCKS } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import {
   Reveal,
+  RevealItem,
+  RevealGroup,
   fadeUp,
   staggerParent,
   perspectiveCard,
@@ -67,6 +69,7 @@ import {
   SPRING_SOFT,
   CountUp,
 } from "@/components/animations";
+
 import { Tilt3D } from "@/components/Tilt3D";
 import { Particles } from "@/components/Particles";
 
@@ -463,11 +466,8 @@ function TrustStrip() {
             Built on real foundations
           </p>
         </Reveal>
-        <motion.div
-          variants={staggerParent}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.4 }}
+        <RevealGroup
+          amount={0.4}
           className="mt-5 grid grid-cols-2 gap-4 md:grid-cols-4"
         >
           {TRUST_MARKERS.map((m) => (
@@ -476,6 +476,7 @@ function TrustStrip() {
               variants={fadeUp}
               className="flex items-center justify-center gap-3 rounded-[12px] border border-white/[0.06] bg-white/[0.02] px-4 py-3"
             >
+
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[9px] bg-bull/10 text-bull">
                 <m.Icon size={18} strokeWidth={1.75} />
               </span>
@@ -485,7 +486,8 @@ function TrustStrip() {
               </span>
             </motion.div>
           ))}
-        </motion.div>
+        </RevealGroup>
+
       </div>
     </section>
   );
@@ -1160,13 +1162,7 @@ function HowItWorks() {
       </Reveal>
       <div className="relative mt-12 grid gap-5 md:grid-cols-3">
         {STEPS.map((s, i) => (
-          <motion.div
-            key={s.step}
-            initial={reduce ? false : { opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ ...SPRING_UI, delay: i * 0.1 }}
-          >
+          <RevealItem key={s.step} delay={i * 0.1}>
             <div className="relative h-full rounded-[16px] border border-white/[0.07] bg-[rgba(17,24,39,0.6)] p-7 backdrop-blur-md">
               <span className="absolute right-5 top-4 font-mono text-3xl font-bold tabular-nums text-white/[0.06]">
                 {s.step}
@@ -1177,7 +1173,8 @@ function HowItWorks() {
               <h3 className="mt-4 text-lg font-semibold text-text-primary">{s.title}</h3>
               <p className="mt-2 text-sm leading-[1.6] text-text-secondary">{s.desc}</p>
             </div>
-          </motion.div>
+          </RevealItem>
+
         ))}
       </div>
     </section>
@@ -1249,6 +1246,7 @@ function Landing() {
     <div className="dot-grid relative isolate min-h-screen bg-background text-text-primary">
       {/* Ambient drifting background — behind all content, decorative only */}
       <div className="ambient-bg pointer-events-none fixed inset-0 -z-10" aria-hidden="true" />
+
       <Nav />
 
       <Hero />
@@ -1273,14 +1271,12 @@ function Landing() {
           {FEATURES.map((f, i) => {
             const Icon = f.Icon;
             return (
-              <motion.div
+              <RevealItem
                 key={f.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ ...SPRING_UI, delay: i * 0.08 }}
+                delay={i * 0.08}
                 className="[perspective:1000px]"
               >
+
                 <Tilt3D max={10} className="h-full">
                   <motion.div
                     whileHover={{ y: -4, scale: 1.02 }}
@@ -1316,7 +1312,8 @@ function Landing() {
                     <p className="mt-2 text-sm leading-[1.6] text-text-secondary">{f.desc}</p>
                   </motion.div>
                 </Tilt3D>
-              </motion.div>
+              </RevealItem>
+
             );
           })}
         </div>
@@ -1393,14 +1390,12 @@ function Landing() {
         </Reveal>
         <div className="mt-12 grid gap-5 lg:grid-cols-3">
           {TESTIMONIALS.map((t, i) => (
-            <motion.div
+            <RevealItem
               key={t.initials}
+              delay={i * 0.1}
               className="[perspective:1000px]"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ ...SPRING_UI, delay: i * 0.1 }}
             >
+
               <Tilt3D max={8} scale={1.03} className="h-full">
                 <div
                   className="relative h-full overflow-hidden rounded-[16px] border border-white/[0.07] p-6 backdrop-blur-md"
@@ -1433,7 +1428,8 @@ function Landing() {
                   </p>
                 </div>
               </Tilt3D>
-            </motion.div>
+            </RevealItem>
+
           ))}
         </div>
         <Reveal className="mt-16">

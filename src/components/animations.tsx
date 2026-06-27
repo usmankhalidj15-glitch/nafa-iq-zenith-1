@@ -109,6 +109,41 @@ export const perspectiveCard: Variants = {
   },
 };
 
+/* ---------- deterministic in-view hook (works with SSR hydration) ---------- */
+export function useReveal(amount = 0.2) {
+  const ref = useRef<HTMLElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    // Defer observing until after layout/styles settle (avoids dev CSS-load
+    // flash that can latch elements to "in view" before they're positioned).
+    let io: IntersectionObserver | null = null;
+    const raf = requestAnimationFrame(() => {
+      io = new IntersectionObserver(
+        ([entry]) => {
+          // Reveal as soon as any part scrolls in; threshold 0 keeps tall
+          // sections (whose 20% may exceed the viewport) from never firing.
+          if (entry.isIntersecting) {
+            setInView(true);
+            io?.disconnect();
+          }
+        },
+        { threshold: 0, rootMargin: "0px 0px -12% 0px" },
+      );
+      io.observe(el);
+    });
+
+    return () => {
+      cancelAnimationFrame(raf);
+      io?.disconnect();
+    };
+  }, [amount]);
+
+  return { ref, inView };
+}
+
 /* ---------- generic scroll reveal wrapper ---------- */
 export function Reveal({
   children,
@@ -126,21 +161,79 @@ export function Reveal({
   as?: keyof typeof motion;
 }) {
   const reduce = useReducedMotion();
+  const { ref, inView } = useReveal(amount);
   const Comp = (motion as any)[as] ?? motion.div;
   if (reduce) return <Comp className={className}>{children}</Comp>;
   return (
     <Comp
+      ref={ref}
       className={className}
       variants={variants}
       initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount }}
+      animate={inView ? "show" : "hidden"}
       transition={{ delay }}
     >
       {children}
     </Comp>
   );
 }
+
+/* ---------- reveal a single item with a y-offset fade (controlled) ---------- */
+export function RevealItem({
+  children,
+  className,
+  delay = 0,
+  amount = 0.2,
+  y = 20,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+  amount?: number;
+  y?: number;
+}) {
+  const reduce = useReducedMotion();
+  const { ref, inView } = useReveal(amount);
+  if (reduce) return <div className={className}>{children}</div>;
+  return (
+    <motion.div
+      ref={ref as React.RefObject<HTMLDivElement>}
+      className={className}
+      initial={{ opacity: 0, y }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y }}
+      transition={{ ...SPRING_UI, delay }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ---------- reveal a group with staggered children variants (controlled) ---------- */
+export function RevealGroup({
+  children,
+  className,
+  amount = 0.2,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  amount?: number;
+}) {
+  const reduce = useReducedMotion();
+  const { ref, inView } = useReveal(amount);
+  if (reduce) return <div className={className}>{children}</div>;
+  return (
+    <motion.div
+      ref={ref as React.RefObject<HTMLDivElement>}
+      className={className}
+      variants={staggerParent}
+      initial="hidden"
+      animate={inView ? "show" : "hidden"}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 
 /* ---------- parallax helper: maps scroll progress to a Y offset ---------- */
 export function useParallax(distance = 80) {
