@@ -31,7 +31,7 @@ const NAV = [
   { to: "/alerts", label: "Alerts", icon: Bell },
 ] as const;
 
-const PRIMARY_NAV = NAV.slice(0, 5);
+const PRIMARY_NAV = NAV.slice(0, 6);
 
 const NOTIFICATIONS = [
   { id: 1, title: "HBL flashed a Strong Buy", time: "2m ago", tone: "bull" },
@@ -55,7 +55,7 @@ function Logo({ to = "/app" }: { to?: string }) {
     <Link to={to} className="flex items-center gap-2">
       <img src={logo} alt="NafaIQ" width={28} height={28} className="rounded-[6px]" />
       <span className="font-display text-lg font-bold tracking-tight text-text-primary">
-        Nafa<span className="text-gold">IQ</span>
+        Nafa<span className="text-primary">IQ</span>
       </span>
     </Link>
   );
@@ -127,7 +127,6 @@ function Sidebar() {
 
       {/* utility section — separated from primary nav */}
       <div className="space-y-1 border-t border-white/[0.06] px-3 py-3">
-        <SidebarLink to="/alerts" label="Alerts" icon={Bell} active={isActive("/alerts")} />
         <SidebarLink to="/app" label="Settings" icon={Settings} active={false} />
       </div>
 
