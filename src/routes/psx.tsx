@@ -243,7 +243,7 @@ export default function PSX() {
                   <td className="text-right font-mono tabular-nums">
                     <span className={cn(s.rsi > 70 ? "text-bear" : s.rsi < 30 ? "text-bull" : "text-text-secondary")} title={s.rsi > 70 ? "Overbought" : s.rsi < 30 ? "Oversold" : "Neutral"}>
                       {s.rsi}
-                      {s.rsi > 70 ? " ⚠" : s.rsi < 30 ? " ⚡" : ""}
+                      {s.rsi > 70 ? " OB" : s.rsi < 30 ? " OS" : ""}
                     </span>
                   </td>
                   <td className="text-right font-mono tabular-nums text-text-secondary">{s.volume}</td>
