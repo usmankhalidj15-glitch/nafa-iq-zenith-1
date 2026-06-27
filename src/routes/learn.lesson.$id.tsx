@@ -1,3 +1,4 @@
+import { VideoPlaceholder } from "@/components/VideoPlaceholder";
 import { createFileRoute, Link, useNavigate, useParams } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -502,20 +503,7 @@ function ReadingView({
       )}
 
       {/* Video coming soon */}
-      {lesson.type === "video" && !lesson.videoUrl && (
-        <div className="mt-6 flex w-full flex-col items-center justify-center gap-2.5 rounded-[12px] border border-dashed border-border bg-surface px-6 py-8 text-center">
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elevated text-text-secondary">
-            <Video className="h-5 w-5" strokeWidth={1.5} />
-          </span>
-          <div>
-            <div className="text-sm font-semibold text-text-primary">Video coming soon</div>
-            <p className="mt-1 text-xs text-text-muted">
-              A video walkthrough is in production. Read the full lesson below for now.
-            </p>
-          </div>
-        </div>
-
-      )}
+      {lesson.type === "video" && !lesson.videoUrl && <VideoPlaceholder />}
 
       {/* Article */}
       {(lesson.type !== "video" || !lesson.videoUrl || showArticle) && (
