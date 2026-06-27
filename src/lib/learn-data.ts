@@ -647,8 +647,90 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
       "Why are banks green today?",
       "How often does the heatmap update?",
     ],
-    sections: placeholderSections("the sector heatmap", "#3b82f6"),
-    quiz: genericQuiz("the sector heatmap"),
+    sections: [
+      {
+        id: "introduction",
+        heading: "Reading the Colours",
+        blocks: [
+          {
+            type: "p",
+            text: "A sector heatmap shows the whole market on one screen. Each tile is a sector or stock; its colour shows performance — green for gains, red for losses — and its size usually reflects market weight. One glance tells you where money is flowing today.",
+          },
+          {
+            type: "callout",
+            kind: "note",
+            text: "Deeper green or red means a bigger move. A pale tile is roughly flat, not necessarily 'safe' — it just hasn't moved much.",
+          },
+        ],
+      },
+      {
+        id: "the-core-idea",
+        heading: "Spotting Sector Rotation",
+        blocks: [
+          {
+            type: "p",
+            text: "Markets move in rotations — money leaves one sector and crowds into another. When banks are deep green while cement and autos bleed red, capital is rotating toward financials. The heatmap makes that shift obvious before headlines explain it.",
+          },
+          {
+            type: "callout",
+            kind: "example",
+            text: "If oil & gas tiles turn green across the board after a crude price jump, that's sector-wide momentum — not a one-stock story.",
+          },
+        ],
+      },
+      {
+        id: "why-it-matters",
+        heading: "Using It Without Being Fooled",
+        blocks: [
+          {
+            type: "p",
+            text: "The heatmap is a starting point, not a buy list. A green sector tells you where attention is, but you still confirm the individual stock's chart and fundamentals before acting.",
+          },
+          {
+            type: "callout",
+            kind: "warning",
+            text: "A single green day doesn't make a trend. Don't chase a hot sector at the top — confirm with a few sessions of follow-through.",
+          },
+        ],
+      },
+    ],
+    quiz: [
+      {
+        q: "On a sector heatmap, what does a deep red tile indicate?",
+        options: [
+          "A large gain",
+          "A large loss",
+          "No change",
+          "A halted stock",
+        ],
+        correct: 1,
+        explanation: "Red means a decline, and a deeper shade indicates a bigger loss.",
+      },
+      {
+        q: "Banks are green while autos and cement are red. What is this likely showing?",
+        options: [
+          "A data error",
+          "Sector rotation toward financials",
+          "The market is closed",
+          "Nothing meaningful",
+        ],
+        correct: 1,
+        explanation:
+          "Money moving into one sector while leaving others is classic sector rotation.",
+      },
+      {
+        q: "How should you treat a hot green sector on the heatmap?",
+        options: [
+          "Buy any stock in it immediately",
+          "As a starting point — confirm the individual stock before acting",
+          "Ignore it completely",
+          "Assume it will fall tomorrow",
+        ],
+        correct: 1,
+        explanation:
+          "The heatmap shows where attention is; you still confirm the specific stock's chart and fundamentals.",
+      },
+    ],
   },
 
   patterns: {
