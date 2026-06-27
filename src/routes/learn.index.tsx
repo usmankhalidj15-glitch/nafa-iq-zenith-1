@@ -25,7 +25,7 @@ function StatChip({ emoji, label, color }: { emoji: string; label: string; color
       className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold"
       style={{ color, borderColor: `${color}40`, background: `${color}14` }}
     >
-      <span>{emoji}</span>
+      <EmojiIcon emoji={emoji} size={14} />
       {label}
     </span>
   );
