@@ -816,10 +816,10 @@ function Landing() {
                     </span>
                   )}
                   <div
-                    className="flex h-12 w-12 items-center justify-center rounded-[12px] text-xl"
+                    className="flex h-12 w-12 items-center justify-center rounded-[12px] text-text-primary"
                     style={{ background: f.chipBg, transform: "translateZ(40px)" }}
                   >
-                    {f.emoji}
+                    <EmojiIcon emoji={f.emoji} size={22} />
                   </div>
                   <h3 className="mt-4 text-base font-semibold text-text-primary">{f.title}</h3>
                   <p className="mt-2 text-sm leading-[1.6] text-text-secondary">{f.desc}</p>
