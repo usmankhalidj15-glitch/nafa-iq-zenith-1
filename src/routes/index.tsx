@@ -969,6 +969,9 @@ function Hero() {
         </Reveal>
       </motion.div>
 
+      {/* scroll to discover cue — fades out once user scrolls */}
+      <ScrollCue progress={scrollYProgress} reduce={!!reduce} />
+
       {/* bottom fade mask */}
       <div
         className="pointer-events-none absolute bottom-0 left-0 right-0 z-[1] h-[200px]"
