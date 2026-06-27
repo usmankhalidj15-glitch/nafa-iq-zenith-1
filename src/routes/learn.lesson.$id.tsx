@@ -243,7 +243,7 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
         )}
 
         {/* Main content */}
-        <main className="min-w-0 flex-1">
+        <main className="min-w-0 flex-1 xl:max-w-[760px]">
           {mode === "reading" && (
             <ReadingView
               lesson={lesson}
