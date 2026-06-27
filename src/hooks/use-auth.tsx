@@ -85,7 +85,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signInWithGoogle: AuthContextValue["signInWithGoogle"] = async () => {
-    const result = await lovable.auth.signInWithOAuth("google", {
+    const result = await nafaiqAuth.auth.signInWithOAuth("google", {
       redirect_uri: `${window.location.origin}/auth`,
     });
     if (result.error) return { error: result.error.message ?? "Google sign-in failed" };
