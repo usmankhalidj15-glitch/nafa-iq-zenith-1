@@ -259,7 +259,7 @@ function PhoneMockup({ startDelay = 0 }: { startDelay?: number }) {
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: "easeOut", delay: startDelay + 0.30 }}
+        transition={{ ...SPRING_SOFT, delay: startDelay + 0.30 }}
         className="absolute -bottom-8 -right-8 z-20"
       >
         <motion.div
