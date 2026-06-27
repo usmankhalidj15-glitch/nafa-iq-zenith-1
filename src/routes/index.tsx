@@ -310,7 +310,7 @@ function PhoneMockup({ startDelay = 0 }: { startDelay?: number }) {
           <div className="m-2 overflow-hidden rounded-[36px] bg-[#070B14]">
             <div className="space-y-2.5 p-3">
               <div className="flex items-center justify-between">
-                <span className="font-display text-xs font-bold text-text-primary">Nafa<span className="text-gold">IQ</span></span>
+                <span className="font-display text-xs font-bold text-text-primary">Nafa<span className="text-primary">IQ</span></span>
                 <span className="h-5 w-5 rounded-full bg-bull/20" />
               </div>
               <div className="rounded-[8px] border border-l-2 border-l-ai border-border bg-ai-tint p-2">
@@ -667,7 +667,7 @@ function Nav() {
         <Link to="/" className="flex shrink-0 items-center gap-2">
           <img src={logo} alt="NafaIQ" width={26} height={26} className="rounded-[7px] ring-1 ring-bull/30" />
           <span className="font-display text-lg font-bold tracking-tight text-text-primary">
-            Nafa<span className="text-gold">IQ</span>
+            Nafa<span className="text-primary">IQ</span>
           </span>
         </Link>
 
@@ -1525,7 +1525,7 @@ function Landing() {
           <div>
             <div className="flex items-center gap-2">
               <img src={logo} alt="NafaIQ" width={26} height={26} className="rounded-[6px]" />
-              <span className="font-display text-lg font-bold tracking-tight text-text-primary">Nafa<span className="text-gold">IQ</span></span>
+              <span className="font-display text-lg font-bold tracking-tight text-text-primary">Nafa<span className="text-primary">IQ</span></span>
             </div>
             <p className="mt-3 max-w-xs text-sm text-text-secondary">
               Pakistan's Financial Intelligence Terminal
