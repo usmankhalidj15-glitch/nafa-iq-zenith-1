@@ -55,7 +55,7 @@ function HaqeeqiDaulat() {
               Haqeeqi Daulat™ — Your REAL Returns
             </h3>
           </div>
-          <span className="rounded-full border border-gold/30 bg-gold/10 px-2.5 py-0.5 text-[10px] font-semibold text-gold">
+          <span className="rounded-full border border-gold/35 bg-gold/[0.12] px-2.5 py-0.5 text-[10px] font-semibold text-gold">
             After 16.2% PKR devaluation
           </span>
         </div>
