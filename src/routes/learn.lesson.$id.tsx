@@ -387,14 +387,14 @@ function ReadingView({
         <div className="mt-6">
           <VideoPlayer url={lesson.videoUrl} />
           <div className="mt-3 flex flex-wrap items-center gap-3">
-            <button onClick={() => setShowArticle(!showArticle)} className="rounded-[8px] border border-border px-3 py-1.5 text-xs font-medium text-text-secondary hover:bg-hover">
-              📄 {showArticle ? "Hide" : "Read"} Article Version
+            <button onClick={() => setShowArticle(!showArticle)} className="inline-flex items-center gap-1.5 rounded-[8px] border border-border px-3 py-1.5 text-xs font-medium text-text-secondary hover:bg-hover">
+              <FileText className="h-3.5 w-3.5" strokeWidth={1.5} /> {showArticle ? "Hide" : "Read"} Article Version
             </button>
-            <button onClick={onMarkWatched} className="rounded-[8px] bg-bull/10 px-3 py-1.5 text-xs font-semibold text-bull hover:bg-bull/20">
-              Mark Video as Watched ✓
+            <button onClick={onMarkWatched} className="inline-flex items-center gap-1.5 rounded-[8px] bg-bull/10 px-3 py-1.5 text-xs font-semibold text-bull hover:bg-bull/20">
+              Mark Video as Watched <Check className="h-3.5 w-3.5" strokeWidth={1.5} />
             </button>
           </div>
-          <p className="mt-2 text-xs text-text-muted">✅ Watch at least 80% of the video to mark as complete</p>
+          <p className="mt-2 flex items-center gap-1.5 text-xs text-text-muted"><CheckCircle2 className="h-3.5 w-3.5 text-bull" strokeWidth={1.5} /> Watch at least 80% of the video to mark as complete</p>
         </div>
       )}
 
