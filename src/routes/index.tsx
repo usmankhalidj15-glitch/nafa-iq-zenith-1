@@ -1162,13 +1162,7 @@ function HowItWorks() {
       </Reveal>
       <div className="relative mt-12 grid gap-5 md:grid-cols-3">
         {STEPS.map((s, i) => (
-          <motion.div
-            key={s.step}
-            initial={reduce ? false : { opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ ...SPRING_UI, delay: i * 0.1 }}
-          >
+          <RevealItem key={s.step} delay={i * 0.1}>
             <div className="relative h-full rounded-[16px] border border-white/[0.07] bg-[rgba(17,24,39,0.6)] p-7 backdrop-blur-md">
               <span className="absolute right-5 top-4 font-mono text-3xl font-bold tabular-nums text-white/[0.06]">
                 {s.step}
@@ -1179,7 +1173,8 @@ function HowItWorks() {
               <h3 className="mt-4 text-lg font-semibold text-text-primary">{s.title}</h3>
               <p className="mt-2 text-sm leading-[1.6] text-text-secondary">{s.desc}</p>
             </div>
-          </motion.div>
+          </RevealItem>
+
         ))}
       </div>
     </section>
