@@ -9,6 +9,7 @@ import {
   Grid3X3,
   Percent,
   Eye,
+  CandlestickChart,
   Calculator,
   Building2,
   Bell,
