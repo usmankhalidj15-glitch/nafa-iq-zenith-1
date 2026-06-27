@@ -1498,7 +1498,7 @@ function Landing() {
                   href="#"
                   whileHover={{ scale: 1.18, rotate: 6 }}
                   whileTap={{ scale: 0.92 }}
-                  transition={SPRING}
+                  transition={SPRING_UI}
                   className="flex h-9 w-9 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.05] text-text-secondary transition hover:border-bull hover:bg-bull/10 hover:text-bull hover:shadow-[0_0_18px_rgba(0,212,170,0.35)]"
                 >
                   <Icon className="h-4 w-4" />
