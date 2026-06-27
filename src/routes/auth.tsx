@@ -10,6 +10,9 @@ import logo from "@/assets/logo.png";
 
 
 export const Route = createFileRoute("/auth")({
+  validateSearch: (search: Record<string, unknown>): { redirect?: string } => ({
+    redirect: typeof search.redirect === "string" ? search.redirect : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Sign in — NafaIQ" },
@@ -31,15 +34,24 @@ const GoogleIcon = () => (
 function AuthPage() {
   const { user, loading, signInWithPassword, signUpWithPassword, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
+  const { redirect } = Route.useSearch();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
 
+  // Send authenticated users to their intended in-app destination, defaulting
+  // to the dashboard. Never bounce back to the landing or auth pages.
+  const destination =
+    redirect && redirect.startsWith("/") && redirect !== "/" && !redirect.startsWith("/auth")
+      ? redirect
+      : "/app";
+
   useEffect(() => {
-    if (!loading && user) navigate({ to: "/" });
-  }, [user, loading, navigate]);
+    if (!loading && user) navigate({ to: destination });
+  }, [user, loading, navigate, destination]);
+
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

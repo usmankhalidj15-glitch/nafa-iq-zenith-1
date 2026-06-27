@@ -190,8 +190,10 @@ function AuthGate() {
 
   useEffect(() => {
     if (loading) return;
-    if (!user && !isPublic) navigate({ to: "/auth" });
-  }, [loading, user, isPublic, navigate]);
+    if (!user && !isPublic) {
+      navigate({ to: "/auth", search: { redirect: pathname } });
+    }
+  }, [loading, user, isPublic, navigate, pathname]);
 
   // Outlet must ALWAYS render so the router keeps its matched route (avoids
   // "Expected to find a match below the root match" during hydration).
