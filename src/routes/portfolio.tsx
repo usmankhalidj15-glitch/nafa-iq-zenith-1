@@ -166,6 +166,14 @@ function Portfolio() {
 
       <Card>
         <h3 className="mb-3 text-sm font-semibold text-text-primary">Holdings</h3>
+        {HOLDINGS.some((h) => h.signal === "SELL" || h.signal === "STRONG SELL") && (
+          <div className="mb-3 flex items-center gap-2 rounded-[8px] border border-bear/30 bg-bear/10 px-3 py-2 text-xs text-bear">
+            <AlertTriangle className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+            <span>
+              {HOLDINGS.filter((h) => h.signal === "SELL" || h.signal === "STRONG SELL").map((h) => h.ticker).join(", ")} — AI signals suggest reviewing these positions.
+            </span>
+          </div>
+        )}
         <div className="scrollbar-none overflow-x-auto">
           <table className="w-full min-w-[760px] text-xs">
             <thead>
