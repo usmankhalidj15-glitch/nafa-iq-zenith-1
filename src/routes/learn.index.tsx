@@ -195,6 +195,139 @@ function Learn() {
       </section>
 
       {flashcards && <FlashcardModal onClose={() => setFlashcards(false)} />}
+
+      {/* Floating AI Tutor button */}
+      <button
+        onClick={() => setChatOpen(true)}
+        className="fixed right-4 bottom-20 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-bull text-bull-foreground shadow-[0_4px_24px_rgba(0,0,0,0.5)] hover:brightness-110 lg:bottom-8"
+        aria-label="Ask AI Tutor"
+      >
+        <Bot className="h-6 w-6" />
+      </button>
+
+      {/* AI Tutor chat sheet */}
+      {chatOpen && (
+        <div className="fixed inset-0 z-50 flex flex-col justify-end sm:items-end sm:justify-end sm:p-6" onClick={() => setChatOpen(false)}>
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+          <div
+            className="relative h-[80vh] rounded-t-[16px] border-t border-border bg-sidebar sm:h-[560px] sm:w-[380px] sm:rounded-[16px] sm:border"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mx-auto mt-2 h-1 w-10 rounded-full bg-border sm:hidden" />
+            <div className="flex items-center justify-between border-b border-border px-4 py-3">
+              <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-text-primary">
+                <Bot className="h-4 w-4 text-bull" strokeWidth={1.5} /> Ask AI Tutor
+              </span>
+              <button onClick={() => setChatOpen(false)} aria-label="Close"><X className="h-5 w-5 text-text-secondary" /></button>
+            </div>
+            <div className="h-[calc(80vh-56px)] sm:h-[calc(560px-56px)]">
+              <HubChatPanel />
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+interface HubChatMsg {
+  role: "user" | "assistant";
+  content: string;
+}
+
+const HUB_PRESETS = [
+  "What is the KSE-100 index?",
+  "How do I start investing in PSX?",
+  "Explain candlestick charts simply",
+];
+
+function HubChatPanel() {
+  const ask = useServerFn(askTutor);
+  const [messages, setMessages] = useState<HubChatMsg[]>([
+    { role: "assistant", content: "Hi! I'm your NafaIQ tutor. Ask me anything about PSX investing, terms, or strategies." },
+  ]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+  }, [messages, loading]);
+
+  const send = useCallback(
+    async (text: string) => {
+      const trimmed = text.trim();
+      if (!trimmed || loading) return;
+      const history: HubChatMsg[] = [...messages, { role: "user", content: trimmed }];
+      setMessages(history);
+      setInput("");
+      setLoading(true);
+      try {
+        const res = await ask({
+          data: {
+            lessonTitle: "PSX investing basics",
+            messages: history.slice(-12),
+          },
+        });
+        setMessages((m) => [...m, { role: "assistant", content: res.reply }]);
+      } catch {
+        setMessages((m) => [...m, { role: "assistant", content: "Sorry, something went wrong. Please try again." }]);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [ask, messages, loading],
+  );
+
+  const showPresets = messages.length === 1;
+
+  return (
+    <div className="flex h-full flex-col overflow-hidden">
+      <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto p-3">
+        {messages.map((m, i) => (
+          <div key={i} className={cn("max-w-[88%]", m.role === "user" ? "ml-auto" : "")}>
+            <div
+              className={cn(
+                "px-3 py-2 text-sm leading-relaxed",
+                m.role === "user"
+                  ? "rounded-[12px] rounded-br-none bg-bull text-bull-foreground"
+                  : "rounded-[12px] rounded-bl-none bg-elevated text-text-primary",
+              )}
+            >
+              {m.content}
+            </div>
+          </div>
+        ))}
+
+        {showPresets && (
+          <div className="space-y-1.5 pt-1">
+            {HUB_PRESETS.map((p) => (
+              <button key={p} onClick={() => send(p)} className="block w-full rounded-full border border-border px-3 py-1.5 text-left text-[11px] text-text-secondary hover:border-bull hover:text-bull">
+                {p}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {loading && (
+          <div className="flex items-center gap-2 text-xs text-text-muted">
+            <Sparkles className="h-3.5 w-3.5 animate-pulse text-bull" /> Thinking…
+          </div>
+        )}
+      </div>
+
+      <div className="flex items-center gap-2 border-t border-border p-3">
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && send(input)}
+          placeholder="Ask about investing…"
+          className="flex-1 rounded-[8px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary outline-none placeholder:text-text-muted"
+        />
+        <button onClick={() => send(input)} disabled={loading} className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] bg-bull text-bull-foreground disabled:opacity-50">
+          <Send className="h-4 w-4" />
+        </button>
+      </div>
     </div>
   );
 }
