@@ -1246,9 +1246,10 @@ function FAQ() {
 
 function Landing() {
   return (
-    <div className="dot-grid relative isolate min-h-screen bg-background text-text-primary">
+    <div className="dot-grid relative min-h-screen bg-background text-text-primary">
       {/* Ambient drifting background — behind all content, decorative only */}
       <div className="ambient-bg pointer-events-none fixed inset-0 -z-10" aria-hidden="true" />
+
       <Nav />
 
       <Hero />
