@@ -403,13 +403,20 @@ function StatsStrip() {
 }
 
 /* ---------- nav ---------- */
+const NAV_LINKS = [
+  { label: "Features", href: "#features", to: undefined },
+  { label: "Haqeeqi Daulat", href: "#features", to: undefined },
+  { label: "Learn", href: undefined, to: "/learn" },
+  { label: "Plans", href: undefined, to: "/plans" },
+] as const;
+
 function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <motion.a
       href={href}
       whileHover={{ y: -2 }}
       transition={SPRING}
-      className="group relative hidden text-sm text-text-secondary transition hover:text-text-primary sm:inline"
+      className="group relative text-sm text-text-secondary transition hover:text-text-primary"
     >
       {children}
       <span className="absolute -bottom-1 left-0 h-px w-0 bg-bull transition-all duration-300 group-hover:w-full" />
@@ -419,31 +426,57 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
 
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
   return (
     <header
       className={cn(
         "fixed top-0 z-50 w-full transition-all duration-300",
-        scrolled
-          ? "border-b border-white/[0.06] bg-background/75 backdrop-blur-xl backdrop-saturate-150"
+        scrolled || open
+          ? "border-b border-white/[0.06] bg-background/80 backdrop-blur-xl backdrop-saturate-150"
           : "border-b border-transparent bg-transparent",
       )}
     >
       <div className="mx-auto flex h-14 max-w-[1200px] items-center justify-between px-6">
-        <div className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <img src={logo} alt="NafaIQ" width={26} height={26} className="rounded-[6px]" />
           <span className="font-display text-lg font-bold tracking-tight text-text-primary">Nafa<span className="text-gold">IQ</span></span>
-        </div>
-        <nav className="flex items-center gap-4 sm:gap-6">
-          <NavLink href="#features">Features</NavLink>
-          <NavLink href="#download">Download</NavLink>
+        </Link>
+
+        {/* center links — desktop */}
+        <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-7 md:flex">
+          {NAV_LINKS.map((l) =>
+            l.to ? (
+              <Link
+                key={l.label}
+                to={l.to}
+                className="group relative text-sm text-text-secondary transition hover:text-text-primary"
+              >
+                {l.label}
+                <span className="absolute -bottom-1 left-0 h-px w-0 bg-bull transition-all duration-300 group-hover:w-full" />
+              </Link>
+            ) : (
+              <NavLink key={l.label} href={l.href!}>
+                {l.label}
+              </NavLink>
+            ),
+          )}
+        </nav>
+
+        <div className="flex items-center gap-2">
           <Magnetic strength={0.4}>
-            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} transition={SPRING}>
+            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} transition={SPRING} className="hidden md:block">
               <Link
                 to="/app"
                 className="inline-flex items-center gap-1 rounded-[6px] bg-bull px-4 py-2 text-sm font-semibold text-bull-foreground transition hover:bg-[#00efc0] hover:shadow-[0_0_20px_rgba(0,212,170,0.3)]"
@@ -452,8 +485,51 @@ function Nav() {
               </Link>
             </motion.div>
           </Magnetic>
-        </nav>
+          <button
+            onClick={() => setOpen((v) => !v)}
+            aria-label={open ? "Close menu" : "Open menu"}
+            className="flex h-9 w-9 items-center justify-center rounded-[8px] border border-white/[0.08] text-text-primary md:hidden"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
+
+      {/* mobile drawer */}
+      {open && (
+        <div className="border-t border-white/[0.06] bg-background/95 px-6 py-6 backdrop-blur-xl md:hidden">
+          <nav className="flex flex-col gap-1">
+            {NAV_LINKS.map((l) =>
+              l.to ? (
+                <Link
+                  key={l.label}
+                  to={l.to}
+                  onClick={() => setOpen(false)}
+                  className="rounded-[8px] px-3 py-3 text-base font-medium text-text-secondary transition hover:bg-white/[0.04] hover:text-text-primary"
+                >
+                  {l.label}
+                </Link>
+              ) : (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  className="rounded-[8px] px-3 py-3 text-base font-medium text-text-secondary transition hover:bg-white/[0.04] hover:text-text-primary"
+                >
+                  {l.label}
+                </a>
+              ),
+            )}
+          </nav>
+          <Link
+            to="/app"
+            onClick={() => setOpen(false)}
+            className="mt-4 flex items-center justify-center gap-1 rounded-[8px] bg-bull px-4 py-3 text-sm font-semibold text-bull-foreground transition hover:bg-[#00efc0]"
+          >
+            Enter App <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      )}
     </header>
   );
 }
