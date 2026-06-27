@@ -55,6 +55,7 @@ import { TICKER_ITEMS, STOCKS } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import {
   Reveal,
+  fadeUp,
   staggerParent,
   perspectiveCard,
   Magnetic,
