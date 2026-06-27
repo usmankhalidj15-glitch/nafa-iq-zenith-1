@@ -150,7 +150,7 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
           onClick={() => setChatOpen(true)}
           className="hidden shrink-0 items-center gap-1.5 rounded-[6px] bg-bull/10 px-2.5 py-1 text-xs font-semibold text-bull hover:bg-bull/20 lg:inline-flex xl:hidden"
         >
-          💬 Ask AI
+          <MessageCircle className="h-3.5 w-3.5" strokeWidth={1.5} /> Ask AI
         </button>
         <button onClick={() => toggleBookmark(lesson.id)} aria-label="Bookmark" className="shrink-0 text-text-secondary hover:text-bull">
           {bookmarked ? <BookmarkCheck className="h-5 w-5 text-bull" /> : <Bookmark className="h-5 w-5" />}
