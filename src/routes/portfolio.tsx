@@ -78,6 +78,10 @@ function Portfolio() {
         <PortfolioAreaChart data={series(n)} height={280} />
       </Card>
 
+      <HaqeeqiDaulat />
+
+
+
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <h3 className="mb-2 text-sm font-semibold text-text-primary">Allocation by Sector</h3>
