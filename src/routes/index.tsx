@@ -219,7 +219,7 @@ function TickerStrip() {
 
 
 /* ---------- 3D phone with mouse tilt + float ---------- */
-function PhoneMockup() {
+function PhoneMockup({ startDelay = 0 }: { startDelay?: number }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const px = useMotionValue(0);
