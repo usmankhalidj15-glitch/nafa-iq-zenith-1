@@ -460,4 +460,27 @@
     font-family: var(--font-display);
     letter-spacing: -0.01em;
   }
+
+  /* Page-wide ambient background: very slow, subtle drifting glow.
+     Sits behind all content (negative z-index), no interaction, no layout
+     shift. GPU-composited transform only. */
+  .ambient-bg {
+    background:
+      radial-gradient(42% 42% at 22% 28%, rgba(0, 212, 170, 0.06), transparent 72%),
+      radial-gradient(38% 38% at 80% 72%, rgba(59, 130, 246, 0.05), transparent 72%),
+      radial-gradient(34% 34% at 60% 18%, rgba(212, 160, 23, 0.035), transparent 70%);
+    background-repeat: no-repeat;
+    will-change: transform;
+    transform: translate3d(-3%, -2%, 0) scale(1.12);
+    animation: ambient-drift 18s ease-in-out infinite alternate;
+  }
+  @keyframes ambient-drift {
+    0% { transform: translate3d(-3%, -2%, 0) scale(1.12); }
+    100% { transform: translate3d(3%, 2%, 0) scale(1.12); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ambient-bg {
+      animation: none;
+    }
+  }
 }
