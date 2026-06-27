@@ -69,7 +69,14 @@ export function CountUp({
 export const SPRING = { stiffness: 200, damping: 25, mass: 0.6 } as const;
 export const SOFT_SPRING = { stiffness: 120, damping: 22, mass: 0.8 } as const;
 
+/* ---------- centralized motion language ---------- */
+/** Single shared easing curve for the whole site (calm, settling ease-out). */
+export const EASE = [0.22, 1, 0.36, 1] as const;
+/** Duration family — keep transitions in the 0.2–0.5s confident range. */
+export const DUR = { fast: 0.2, base: 0.35, slow: 0.5 } as const;
+
 /* ---------- scroll-reveal variants ---------- */
+
 export const fadeUp: Variants = {
   hidden: { opacity: 0, y: 32, filter: "blur(6px)" },
   show: {

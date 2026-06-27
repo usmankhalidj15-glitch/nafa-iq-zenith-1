@@ -199,7 +199,9 @@ function AuthGate() {
   return (
     <>
       <AppShell>
-        <Outlet />
+        <PageTransition routeKey={pathname}>
+          <Outlet />
+        </PageTransition>
       </AppShell>
       {blocking && <Spinner />}
     </>

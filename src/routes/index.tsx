@@ -55,6 +55,7 @@ import { TICKER_ITEMS, STOCKS } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import {
   Reveal,
+  fadeUp,
   staggerParent,
   perspectiveCard,
   Magnetic,
@@ -455,7 +456,51 @@ function StatsStrip() {
   );
 }
 
-/* ---------- nav ---------- */
+/* ---------- trust / recognition strip (honest, no fabricated logos) ---------- */
+const TRUST_MARKERS: { Icon: LucideIcon; label: string; sub: string }[] = [
+  { Icon: LineChart, label: "Live PSX & KSE-100", sub: "Real market data" },
+  { Icon: CrescentIcon as unknown as LucideIcon, label: "Shariah Screening", sub: "Halal by design" },
+  { Icon: Lock, label: "Encrypted", sub: "In transit & at rest" },
+  { Icon: UserCheck, label: "No Account Needed", sub: "Explore free first" },
+];
+
+function TrustStrip() {
+  return (
+    <section className="border-b border-border bg-surface/40">
+      <div className="mx-auto max-w-[1200px] px-6 py-6">
+        <Reveal className="text-center">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-text-muted">
+            Built on real foundations
+          </p>
+        </Reveal>
+        <motion.div
+          variants={staggerParent}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.4 }}
+          className="mt-5 grid grid-cols-2 gap-4 md:grid-cols-4"
+        >
+          {TRUST_MARKERS.map((m) => (
+            <motion.div
+              key={m.label}
+              variants={fadeUp}
+              className="flex items-center justify-center gap-3 rounded-[12px] border border-white/[0.06] bg-white/[0.02] px-4 py-3"
+            >
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[9px] bg-bull/10 text-bull">
+                <m.Icon size={18} strokeWidth={1.75} />
+              </span>
+              <span className="min-w-0">
+                <span className="block truncate text-sm font-semibold text-text-primary">{m.label}</span>
+                <span className="block truncate text-xs text-text-muted">{m.sub}</span>
+              </span>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 const NAV_LINKS = [
   { label: "Features", href: "#features", to: undefined },
   { label: "Halal Investing", href: "#features", to: undefined },
@@ -1213,6 +1258,11 @@ function Landing() {
 
       {/* TICKER */}
       <TickerStrip />
+
+      {/* TRUST STRIP */}
+      <TrustStrip />
+
+
 
       {/* FEATURES */}
       <section id="features" className="gradient-mesh mx-auto max-w-[1200px] px-6 py-[60px] lg:py-[100px]">
