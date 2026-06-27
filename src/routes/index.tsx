@@ -293,8 +293,11 @@ function PhoneMockup() {
       </motion.div>
 
 
-      {/* phone frame */}
+      {/* phone frame — entrance fade-and-rise */}
       <motion.div
+        initial={reduce ? false : { opacity: 0, y: 28, scale: 0.96 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.7, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
         style={{ rotateY: ry, rotateX: rx, transformStyle: "preserve-3d" }}
         className="relative will-change-transform"
       >
