@@ -537,7 +537,7 @@ function QuizView({ lesson, onExit, onFinish }: { lesson: LessonContent; onExit:
       </div>
 
       <div className="mt-4 text-xs text-text-muted">{lesson.title}</div>
-      <h2 className="text-xl font-bold text-text-primary">🧠 Knowledge Check</h2>
+      <h2 className="flex items-center gap-2 text-xl font-bold text-text-primary"><Brain className="h-5 w-5" strokeWidth={1.5} /> Knowledge Check</h2>
       <div className="mt-3 flex items-center gap-3">
         <div className="flex gap-1.5">
           {questions.map((_, i) => (
