@@ -58,6 +58,8 @@ import { TICKER_ITEMS, STOCKS } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import {
   Reveal,
+  RevealItem,
+  RevealGroup,
   fadeUp,
   staggerParent,
   perspectiveCard,
@@ -67,6 +69,7 @@ import {
   SPRING_SOFT,
   CountUp,
 } from "@/components/animations";
+
 import { Tilt3D } from "@/components/Tilt3D";
 import { Particles } from "@/components/Particles";
 
