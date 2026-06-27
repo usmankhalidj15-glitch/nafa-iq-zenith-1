@@ -175,8 +175,8 @@ function Overview() {
             PKR <span ref={expenses.ref}>{expenses.formatted}</span>
           </div>
           <div className="mt-3 flex items-end justify-between gap-2">
-            <span className="text-[10px] text-bull/80 sm:text-[11px]">-12% vs last month</span>
-            <div className="w-14 shrink-0"><Sparkline data={[22000, 21200, 18675]} color="#f31260" /></div>
+            <span className="text-[10px] text-bear/90 sm:text-[11px]">-12% vs last month</span>
+            <div className="w-14 shrink-0"><Sparkline data={[22000, 21200, 18675]} color="#e5484d" /></div>
           </div>
         </KpiCard>
 
