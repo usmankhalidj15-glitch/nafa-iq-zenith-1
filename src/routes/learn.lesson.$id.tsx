@@ -264,7 +264,7 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
           <div className="relative h-[80vh] rounded-t-[16px] border-t border-border bg-sidebar" onClick={(e) => e.stopPropagation()}>
             <div className="mx-auto mt-2 h-1 w-10 rounded-full bg-border" />
             <div className="flex items-center justify-between border-b border-border px-4 py-3">
-              <span className="text-sm font-semibold text-text-primary">🤖 Ask AI Tutor</span>
+              <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-text-primary"><Cpu className="h-4 w-4 text-ai" strokeWidth={1.5} /> Ask AI Tutor</span>
               <button onClick={() => setChatOpen(false)}><X className="h-5 w-5 text-text-secondary" /></button>
             </div>
             <div className="h-[calc(80vh-56px)]">
