@@ -398,8 +398,19 @@ function ReadingView({
         </div>
       )}
 
+      {/* Video coming soon */}
+      {lesson.type === "video" && !lesson.videoUrl && (
+        <div className="mt-6 flex aspect-video w-full flex-col items-center justify-center gap-3 rounded-[12px] border border-dashed border-border bg-surface text-center">
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-elevated text-text-secondary"><Video className="h-6 w-6" strokeWidth={1.5} /></span>
+          <div>
+            <div className="text-sm font-semibold text-text-primary">Video coming soon</div>
+            <p className="mt-1 text-xs text-text-muted">A video walkthrough is in production. Read the full lesson below for now.</p>
+          </div>
+        </div>
+      )}
+
       {/* Article */}
-      {(lesson.type !== "video" || showArticle) && (
+      {(lesson.type !== "video" || !lesson.videoUrl || showArticle) && (
         <article className="mt-6">
           {lesson.sections.map((s) => (
             <section key={s.id} id={s.id} className="scroll-mt-[120px]">
