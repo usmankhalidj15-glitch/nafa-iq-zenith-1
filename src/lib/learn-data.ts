@@ -277,7 +277,6 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     duration: "6 min",
     level: "Intermediate",
     type: "video",
-    videoUrl: "https://www.youtube-nocookie.com/embed/dqT-Z3ncRqs?rel=0",
     presets: ["What's RSI divergence?", "Best RSI settings for PSX?", "Explain overbought vs oversold"],
     sections: [
       {
@@ -510,7 +509,6 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     duration: "8 min",
     level: "Intermediate",
     type: "video",
-    videoUrl: "https://www.youtube-nocookie.com/embed/HaUI-dLRRPQ?rel=0",
     presets: ["What is a Morning Star?", "How reliable are patterns?", "Bullish vs bearish engulfing?"],
     sections: placeholderSections("the five key candle patterns", "#8b5cf6"),
     quiz: genericQuiz("candle patterns"),
@@ -541,7 +539,6 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     duration: "9 min",
     level: "Beginner",
     type: "video",
-    videoUrl: "https://www.youtube-nocookie.com/embed/tQxN5J7tW0c?rel=0",
     presets: ["What is the KSE-100?", "How do I open a CDC account?", "What are trading hours?"],
     sections: placeholderSections("how the Pakistan Stock Exchange works", "#00d4aa"),
     quiz: genericQuiz("how PSX works"),
