@@ -188,7 +188,7 @@ function Dashboard() {
                   {s.price.toLocaleString()}
                 </div>
                 <div className="my-1">
-                  <Sparkline data={spark} color={s.changePct >= 0 ? "#00d4aa" : "#f31260"} />
+                  <Sparkline data={spark} color={s.changePct >= 0 ? "#00d4aa" : "#e5484d"} />
                 </div>
                 <SignalBadge signal={s.signal} />
               </Link>

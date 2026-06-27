@@ -201,7 +201,7 @@ export default function PSX() {
               {SECTORS.map((s) => {
                 const up = s.pct >= 0;
                 const intensity = Math.min(Math.abs(s.pct) / 2.6, 1);
-                const bg = up ? `rgba(0,212,170,${0.15 + intensity * 0.55})` : `rgba(255,77,77,${0.15 + intensity * 0.55})`;
+                const bg = up ? `rgba(0,212,170,${0.15 + intensity * 0.55})` : `rgba(229,72,77,${0.15 + intensity * 0.55})`;
                 return (
                   <div key={s.name} className="rounded-[6px] p-2" style={{ background: bg }}>
                     <div className="text-[10px] text-text-primary/90">{s.name}</div>

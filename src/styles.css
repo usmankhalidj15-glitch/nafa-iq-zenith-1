@@ -23,7 +23,7 @@
 
   --color-bull: #10b981;
   --color-bull-foreground: #020617;
-  --color-bear: #f31260;
+  --color-bear: #e5484d;
   --color-warning: #f5a524;
   --color-neutral: #64748b;
   --color-info: #00d4aa;
@@ -45,7 +45,7 @@
   --color-muted-foreground: #94a3b8;
   --color-accent: #111a2e;
   --color-accent-foreground: #ffffff;
-  --color-destructive: #f31260;
+  --color-destructive: #e5484d;
   --color-destructive-foreground: #ffffff;
 
   --color-text-primary: #ffffff;
@@ -80,7 +80,7 @@
     100% { background-color: transparent; }
   }
   @keyframes flash-down {
-    0% { background-color: rgba(255, 77, 77, 0.25); }
+    0% { background-color: rgba(229, 72, 77, 0.25); }
     100% { background-color: transparent; }
   }
   @keyframes ticker {

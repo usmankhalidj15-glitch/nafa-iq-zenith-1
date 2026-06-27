@@ -591,7 +591,7 @@ function QuizView({ lesson, onExit, onFinish }: { lesson: LessonContent; onExit:
         {answered && (
           <div
             className="learn-fade-in mt-5 rounded-[8px] p-4 text-sm leading-relaxed text-text-secondary"
-            style={{ background: q.options[selected]?.isCorrect ? "rgba(0,212,170,0.06)" : "rgba(255,77,77,0.06)" }}
+            style={{ background: q.options[selected]?.isCorrect ? "rgba(0,212,170,0.06)" : "rgba(229,72,77,0.06)" }}
           >
             <span className="font-semibold text-text-primary">{q.options[selected]?.isCorrect ? "Correct! " : "Not quite. "}</span>
             {q.q.explanation}

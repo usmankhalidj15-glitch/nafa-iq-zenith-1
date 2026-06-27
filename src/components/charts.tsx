@@ -33,7 +33,7 @@ const CandleShape = (props: any) => {
   if (y == null || height == null) return null;
   const { open, close, high, low } = payload;
   const up = close >= open;
-  const color = up ? "#00d4aa" : "#f31260";
+  const color = up ? "#00d4aa" : "#e5484d";
   const span = high - low || 1;
   const ratio = height / span;
   const yOpen = y + (high - open) * ratio;
@@ -106,7 +106,7 @@ export function CandlestickChart({
         <Tooltip content={<OHLCTooltip />} cursor={{ stroke: "#94a3b8", strokeDasharray: "4 4" }} />
         <Bar yAxisId="vol" dataKey="volume" isAnimationActive={false}>
           {enriched.map((c, i) => (
-            <Cell key={i} fill={c.close >= c.open ? "#00d4aa" : "#f31260"} fillOpacity={0.35} />
+            <Cell key={i} fill={c.close >= c.open ? "#00d4aa" : "#e5484d"} fillOpacity={0.35} />
           ))}
         </Bar>
         <Bar yAxisId="price" dataKey="range" shape={<CandleShape />} isAnimationActive={false} />
@@ -194,7 +194,7 @@ export function IncomeExpenseChart({
         <Tooltip contentStyle={{ background: "#1a2332", border: "1px solid #2a3a50", borderRadius: 8, fontSize: 12 }} labelStyle={{ color: "#94a3b8" }} cursor={{ fill: "#1f2d40", fillOpacity: 0.4 }} />
         <Legend wrapperStyle={{ fontSize: 12 }} />
         <Bar dataKey="income" name="Income" fill="#00d4aa" radius={[3, 3, 0, 0]} isAnimationActive={false} />
-        <Bar dataKey="expense" name="Expense" fill="#f31260" radius={[3, 3, 0, 0]} isAnimationActive={false} />
+        <Bar dataKey="expense" name="Expense" fill="#e5484d" radius={[3, 3, 0, 0]} isAnimationActive={false} />
       </ComposedChart>
     </ResponsiveContainer>
   );
