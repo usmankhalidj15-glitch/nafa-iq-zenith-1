@@ -291,12 +291,20 @@ function Transactions() {
 }
 
 function Budgets() {
+  const [offset, setOffset] = useState(0);
+  const base = new Date();
+  const current = new Date(base.getFullYear(), base.getMonth() + offset, 1);
+  const prev = new Date(current.getFullYear(), current.getMonth() - 1, 1);
+  const next = new Date(current.getFullYear(), current.getMonth() + 1, 1);
+  const shortMonth = (d: Date) => d.toLocaleString("en-US", { month: "short" });
+  const longLabel = current.toLocaleString("en-US", { month: "long", year: "numeric" });
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-center gap-4 text-sm text-text-secondary">
-        <button className="hover:text-text-primary">‹ May</button>
-        <span className="font-semibold text-text-primary">June 2025</span>
-        <button className="hover:text-text-primary">Jul ›</button>
+        <button onClick={() => setOffset((o) => o - 1)} className="hover:text-text-primary">‹ {shortMonth(prev)}</button>
+        <span className="font-semibold text-text-primary">{longLabel}</span>
+        <button onClick={() => setOffset((o) => o + 1)} className="hover:text-text-primary">{shortMonth(next)} ›</button>
       </div>
       <div className="grid gap-3 md:grid-cols-2">
         {BUDGETS.map((b) => {
