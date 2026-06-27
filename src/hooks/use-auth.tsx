@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
-import { nafaiqAuth } from "@/integrations/nafaiq/index";
 
 export type Profile = {
   id: string;
@@ -37,6 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const { data: sub } = supabase.auth.onAuthStateChange((_event, newSession) => {
       setSession(newSession);
       setUser(newSession?.user ?? null);
+
       if (newSession?.user) {
         setTimeout(() => loadProfile(newSession.user.id), 0);
       } else {
@@ -47,7 +47,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
       setUser(data.session?.user ?? null);
-      if (data.session?.user) loadProfile(data.session.user.id);
+
+      if (data.session?.user) {
+        loadProfile(data.session.user.id);
+      }
+
       setLoading(false);
     });
 
@@ -60,11 +64,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .select("id, display_name, plan, avatar_url")
       .eq("id", userId)
       .maybeSingle();
-    if (data) setProfile(data as Profile);
+
+    if (data) {
+      setProfile(data as Profile);
+    }
   }
 
-  const signInWithPassword: AuthContextValue["signInWithPassword"] = async (email, password) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const signInWithPassword: AuthContextValue["signInWithPassword"] = async (
+    email,
+    password,
+  ) => {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
     return { error: error?.message ?? null };
   };
 
@@ -77,19 +91,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       email,
       password,
       options: {
-        emailRedirectTo: window.location.origin,
-        data: { display_name: displayName },
+        emailRedirectTo: `${window.location.origin}/auth`,
+        data: {
+          display_name: displayName,
+        },
       },
     });
-    return { error: error?.message ?? null };
+
+    return {
+      error: error?.message ?? null,
+    };
   };
 
   const signInWithGoogle: AuthContextValue["signInWithGoogle"] = async () => {
-    const result = await nafaiqAuth.auth.signInWithOAuth("google", {
-      redirect_uri: `${window.location.origin}/auth`,
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/auth`,
+      },
     });
-    if (result.error) return { error: result.error.message ?? "Google sign-in failed" };
-    return { error: null };
+
+    return {
+      error: error?.message ?? null,
+    };
   };
 
   const signOut = async () => {
@@ -117,6 +141,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth() {
   const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used within AuthProvider");
+
+  if (!ctx) {
+    throw new Error("useAuth must be used within AuthProvider");
+  }
+
   return ctx;
 }
