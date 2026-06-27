@@ -176,32 +176,17 @@ function StoreButtons({ center = false }: { center?: boolean }) {
   );
 }
 
-/* ---------- scroll-velocity driven ticker ---------- */
+/* ---------- seamless scrolling ticker ---------- */
 function TickerStrip() {
-  const reduce = useReducedMotion();
-  // duplicate once so wrapping -50%..0 is perfectly seamless (no visible seam)
+  // duplicate once so translateX(-50%) restarts at an invisible seam
   const items = [...TICKER_ITEMS, ...TICKER_ITEMS];
-  const baseX = useMotionValue(0);
-  const x = useTransform(baseX, (v) => `${wrap(-50, 0, v)}%`);
-
-  useAnimationFrame((_, delta) => {
-    if (reduce) return;
-    // constant smooth velocity — no scroll coupling, so no stutter
-    baseX.set(baseX.get() - 2.2 * (delta / 1000));
-  });
 
   return (
     <div className="relative z-10 overflow-hidden border-y border-border bg-surface py-3">
-      {/* edge fade masks hide the wrap point */}
+      {/* edge fade masks */}
       <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-surface to-transparent" />
       <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-surface to-transparent" />
-      <motion.div
-        style={reduce ? undefined : { x }}
-        className={cn(
-          "flex w-max gap-8 whitespace-nowrap px-4 will-change-transform",
-          reduce && "animate-[ticker_40s_linear_infinite]",
-        )}
-      >
+      <div className="flex w-max animate-[ticker_40s_linear_infinite] gap-8 whitespace-nowrap px-4 will-change-transform">
         {items.map((it, i) => (
           <span key={i} className="flex items-center gap-2 text-sm">
             <span className="font-medium text-text-secondary">{it.label}</span>
@@ -212,7 +197,7 @@ function TickerStrip() {
             </span>
           </span>
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 }
