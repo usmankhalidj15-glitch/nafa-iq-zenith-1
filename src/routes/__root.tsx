@@ -10,6 +10,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { Loader2 } from "lucide-react";
 
 import appCss from "../styles.css?url";
