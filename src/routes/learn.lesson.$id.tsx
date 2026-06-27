@@ -383,7 +383,7 @@ function Blocks({ blocks, accent }: { blocks: ContentBlock[]; accent: string }) 
                   {line.split("=").map((part, k, all) => (
                     <span key={k}>
                       <span className="text-text-primary">{part}</span>
-                      {k < all.length - 1 && <span className="text-warning"> = </span>}
+                      {k < all.length - 1 && <span className="text-text-muted"> = </span>}
                     </span>
                   ))}
                 </div>
