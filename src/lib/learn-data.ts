@@ -666,8 +666,97 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
       "How reliable are patterns?",
       "Bullish vs bearish engulfing?",
     ],
-    sections: placeholderSections("the five key candle patterns", "#8b5cf6"),
-    quiz: genericQuiz("candle patterns"),
+    sections: [
+      {
+        id: "introduction",
+        heading: "Why Patterns Work",
+        blocks: [
+          {
+            type: "p",
+            text: "Candle patterns are short, repeatable shapes that hint at a shift in who's winning — buyers or sellers. They don't predict the future; they summarise a tug-of-war in price so you can act with more context than a single candle gives.",
+          },
+          {
+            type: "callout",
+            kind: "note",
+            text: "A pattern at a key level (support, resistance, a moving average) is far more meaningful than the same pattern in the middle of nowhere.",
+          },
+        ],
+      },
+      {
+        id: "the-core-idea",
+        heading: "The Five to Know",
+        blocks: [
+          {
+            type: "p",
+            text: "Master these five and you'll recognise the majority of high-probability setups on PSX charts.",
+          },
+          {
+            type: "table",
+            head: ["Pattern", "Signals", "What it means"],
+            rows: [
+              ["Bullish Engulfing", "Reversal up", "A big green candle swallows the prior red one"],
+              ["Bearish Engulfing", "Reversal down", "A big red candle swallows the prior green one"],
+              ["Hammer", "Reversal up", "Long lower wick — sellers pushed down, buyers won back"],
+              ["Shooting Star", "Reversal down", "Long upper wick — buyers pushed up, sellers reclaimed"],
+              ["Morning Star", "Reversal up", "Three candles: drop, pause, strong recovery"],
+            ],
+          },
+          {
+            type: "callout",
+            kind: "example",
+            text: "A hammer forming right at a stock's prior support level, on rising volume, is a classic 'buyers are stepping in' signal.",
+          },
+        ],
+      },
+      {
+        id: "why-it-matters",
+        heading: "Confirm Before You Act",
+        blocks: [
+          {
+            type: "p",
+            text: "A pattern is a hint, not a trigger. The strongest signals are confirmed by volume and by the next candle continuing in the expected direction. On a thin PSX small-cap, a single candle can be noise.",
+          },
+          {
+            type: "callout",
+            kind: "warning",
+            text: "Never trade a pattern in isolation. Wait for confirmation and always pair it with a stop-loss to cap the cost of being wrong.",
+          },
+        ],
+      },
+    ],
+    quiz: [
+      {
+        q: "What does a bullish engulfing pattern look like?",
+        options: [
+          "A small green candle inside a large red one",
+          "A large green candle that fully covers the prior red candle's body",
+          "Two red candles in a row",
+          "A single candle with no wicks",
+        ],
+        correct: 1,
+        explanation:
+          "Bullish engulfing is a large green candle whose body swallows the previous red candle — a reversal-up signal.",
+      },
+      {
+        q: "A candle with a long lower wick and small body near support is a…",
+        options: ["Shooting Star", "Hammer", "Bearish Engulfing", "Doji of no meaning"],
+        correct: 1,
+        explanation:
+          "A long lower wick means sellers pushed price down but buyers reclaimed it — a hammer, especially strong at support.",
+      },
+      {
+        q: "What makes a candle pattern more trustworthy?",
+        options: [
+          "Appearing in the middle of a range with low volume",
+          "Confirmation from volume and the following candle, at a key level",
+          "Being on a very thin small-cap",
+          "Ignoring all other signals",
+        ],
+        correct: 1,
+        explanation:
+          "Patterns are strongest when they form at key levels and are confirmed by volume and follow-through.",
+      },
+    ],
   },
 
   budget: {
