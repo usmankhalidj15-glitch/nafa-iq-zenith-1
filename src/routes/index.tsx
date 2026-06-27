@@ -406,8 +406,146 @@ function StatsStrip() {
 /* ---------- nav ---------- */
 const NAV_LINKS = [
   { label: "Features", href: "#features", to: undefined },
-  { label: "Pricing", href: undefined, to: "/plans" },
+  { label: "Halal Investing", href: "#features", to: undefined },
+  { label: "Plans", href: undefined, to: "/plans" },
 ] as const;
+
+function usePsxOpen() {
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const check = () => {
+      // PSX trades Mon–Fri, ~09:30–15:30 PKT (UTC+5)
+      const now = new Date();
+      const pkt = new Date(now.getTime() + (now.getTimezoneOffset() + 300) * 60000);
+      const day = pkt.getDay();
+      const mins = pkt.getHours() * 60 + pkt.getMinutes();
+      setOpen(day >= 1 && day <= 5 && mins >= 570 && mins <= 930);
+    };
+    check();
+    const id = setInterval(check, 60000);
+    return () => clearInterval(id);
+  }, []);
+  return open;
+}
+
+function StatusPill() {
+  const open = usePsxOpen();
+  return (
+    <span
+      className={cn(
+        "inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold",
+        open
+          ? "border-bull/25 bg-bull/10 text-bull"
+          : "border-bear/25 bg-bear/10 text-bear",
+      )}
+    >
+      <span className={cn("relative flex h-1.5 w-1.5")}>
+        {open && <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-bull opacity-75" />}
+        <span className={cn("relative inline-flex h-1.5 w-1.5 rounded-full", open ? "bg-bull" : "bg-bear")} />
+      </span>
+      PSX {open ? "Open" : "Closed"}
+    </span>
+  );
+}
+
+function NavSearch() {
+  const [active, setActive] = useState(false);
+  const [q, setQ] = useState("");
+  const ref = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  useEffect(() => {
+    function onClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setActive(false);
+    }
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
+  }, []);
+  const term = q.trim().toUpperCase();
+  const matches = term
+    ? Object.values(STOCKS)
+        .filter((s) => s.ticker.includes(term) || s.name.toUpperCase().includes(term))
+        .slice(0, 5)
+    : [];
+  function go(ticker: string) {
+    setActive(false);
+    setQ("");
+    navigate({ to: "/stock/$ticker", params: { ticker } });
+  }
+  return (
+    <div ref={ref} className="relative shrink-0">
+      {active ? (
+        <input
+          autoFocus
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && matches[0]) go(matches[0].ticker);
+            if (e.key === "Escape") setActive(false);
+          }}
+          placeholder="Search ticker…"
+          aria-label="Search stock ticker"
+          className="h-8 w-44 rounded-full border border-white/[0.12] bg-surface px-3 text-[13px] text-text-primary outline-none transition-all placeholder:text-text-muted focus:border-bull"
+        />
+      ) : (
+        <button
+          onClick={() => setActive(true)}
+          aria-label="Search stocks"
+          className="flex h-8 w-8 items-center justify-center rounded-full text-text-secondary transition-colors hover:bg-white/[0.06] hover:text-text-primary"
+        >
+          <Search className="h-4 w-4" />
+        </button>
+      )}
+      {active && matches.length > 0 && (
+        <div className="absolute right-0 top-10 z-50 w-60 overflow-hidden rounded-[12px] border border-white/[0.1] bg-background/95 shadow-2xl backdrop-blur-xl">
+          {matches.map((s) => (
+            <button
+              key={s.ticker}
+              onClick={() => go(s.ticker)}
+              className="flex w-full items-center justify-between gap-2 px-3 py-2.5 text-left transition-colors hover:bg-white/[0.05]"
+            >
+              <span className="min-w-0">
+                <span className="text-[13px] font-semibold text-text-primary">{s.ticker}</span>
+                <span className="block truncate text-[11px] text-text-muted">{s.name}</span>
+              </span>
+              <span className="shrink-0 text-right">
+                <span className="block font-mono text-[13px] tabular-nums text-text-primary">
+                  {s.price.toLocaleString()}
+                </span>
+                <span
+                  className={cn(
+                    "block font-mono text-[11px] tabular-nums",
+                    s.changePct >= 0 ? "text-bull" : "text-bear",
+                  )}
+                >
+                  {s.changePct >= 0 ? "+" : ""}
+                  {s.changePct.toFixed(2)}%
+                </span>
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function LangToggle({ className }: { className?: string }) {
+  const [lang, setLang] = useState<"EN" | "UR">("EN");
+  return (
+    <button
+      onClick={() => setLang((l) => (l === "EN" ? "UR" : "EN"))}
+      aria-label="Toggle language"
+      className={cn(
+        "shrink-0 rounded-full px-2 py-1 text-[12px] font-medium text-text-secondary transition-colors hover:text-text-primary",
+        className,
+      )}
+    >
+      <span className={cn(lang === "EN" && "text-text-primary")}>EN</span>
+      <span className="mx-1 text-text-muted">/</span>
+      <span className={cn("font-urdu", lang === "UR" && "text-text-primary")}>اردو</span>
+    </button>
+  );
+}
 
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -425,18 +563,16 @@ function Nav() {
     };
   }, [open]);
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:pt-4">
-      <motion.div
-        initial={false}
-        animate={{ maxWidth: scrolled ? 720 : 1120 }}
-        transition={SPRING}
-        className={cn(
-          "mx-auto flex items-center justify-between gap-4 rounded-full border px-3 py-2 pl-4 transition-colors duration-300",
-          scrolled || open
-            ? "border-white/[0.08] bg-background/70 shadow-[0_8px_40px_rgba(0,0,0,0.4)] backdrop-blur-xl backdrop-saturate-150"
-            : "border-white/[0.06] bg-white/[0.02] backdrop-blur-md",
-        )}
-      >
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
+        scrolled
+          ? "border-b border-white/[0.06] bg-[#060d1f]/85 backdrop-blur-xl backdrop-saturate-150"
+          : "border-b border-transparent bg-transparent",
+      )}
+    >
+      <div className="mx-auto flex h-14 max-w-[1200px] items-center gap-4 px-4 sm:px-6">
+        {/* logo */}
         <Link to="/" className="flex shrink-0 items-center gap-2">
           <img src={logo} alt="NafaIQ" width={26} height={26} className="rounded-[7px] ring-1 ring-bull/30" />
           <span className="font-display text-lg font-bold tracking-tight text-text-primary">
@@ -444,40 +580,58 @@ function Nav() {
           </span>
         </Link>
 
-        {/* center capsule — desktop */}
-        <nav className="hidden items-center gap-1 rounded-full border border-white/[0.06] bg-white/[0.03] p-1 md:flex">
+        {/* primary links — center-left */}
+        <nav className="hidden items-center gap-6 md:flex">
           {NAV_LINKS.map((l) =>
             l.to ? (
               <Link
                 key={l.label}
                 to={l.to}
-                className="rounded-full px-4 py-1.5 text-sm font-medium text-text-secondary transition-colors hover:bg-white/[0.06] hover:text-text-primary"
+                className="group relative text-sm font-medium text-text-secondary transition-colors hover:text-text-primary"
               >
                 {l.label}
+                <span className="absolute -bottom-1 left-0 h-px w-0 bg-bull transition-all duration-300 group-hover:w-full" />
               </Link>
             ) : (
               <a
                 key={l.label}
                 href={l.href}
-                className="rounded-full px-4 py-1.5 text-sm font-medium text-text-secondary transition-colors hover:bg-white/[0.06] hover:text-text-primary"
+                className="group relative text-sm font-medium text-text-secondary transition-colors hover:text-text-primary"
               >
                 {l.label}
+                <span className="absolute -bottom-1 left-0 h-px w-0 bg-bull transition-all duration-300 group-hover:w-full" />
               </a>
             ),
           )}
         </nav>
 
-        <div className="flex shrink-0 items-center gap-2">
+        {/* utility cluster — right */}
+        <div className="ml-auto flex items-center gap-2 sm:gap-3">
+          <StatusPill />
+          <div className="hidden items-center gap-3 md:flex">
+            <NavSearch />
+            <LangToggle />
+            <Link
+              to="/auth"
+              className="text-[13px] font-normal text-text-secondary transition-colors hover:text-text-primary"
+            >
+              Log In
+            </Link>
+          </div>
+
+          {/* Enter App — dominant CTA, always visible */}
           <Magnetic strength={0.4}>
-            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} transition={SPRING} className="hidden md:block">
+            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} transition={SPRING}>
               <Link
                 to="/app"
-                className="inline-flex items-center gap-1 rounded-full bg-bull px-4 py-2 text-sm font-semibold text-bull-foreground transition hover:bg-[#00efc0] hover:shadow-[0_0_22px_rgba(0,212,170,0.4)]"
+                className="inline-flex items-center gap-1 rounded-full bg-bull px-4 py-2 text-sm font-semibold text-bull-foreground shadow-[0_0_20px_rgba(0,212,170,0.25)] transition hover:bg-[#00efc0] hover:shadow-[0_0_28px_rgba(0,212,170,0.5)]"
               >
                 Enter App <ArrowRight className="h-4 w-4" />
               </Link>
             </motion.div>
           </Magnetic>
+
+          {/* hamburger */}
           <button
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? "Close menu" : "Open menu"}
@@ -486,19 +640,22 @@ function Nav() {
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
-      </motion.div>
+      </div>
 
-      {/* mobile drawer */}
+      {/* mobile full-screen drawer */}
       {open && (
-        <div className="mx-auto mt-2 max-w-[1120px] rounded-2xl border border-white/[0.08] bg-background/95 p-3 backdrop-blur-xl md:hidden">
-          <nav className="flex flex-col gap-1">
+        <div className="fixed inset-0 top-14 z-40 flex flex-col bg-[#060d1f]/98 px-6 py-8 backdrop-blur-xl md:hidden">
+          <div className="mb-6">
+            <NavSearch />
+          </div>
+          <nav className="flex flex-col gap-2">
             {NAV_LINKS.map((l) =>
               l.to ? (
                 <Link
                   key={l.label}
                   to={l.to}
                   onClick={() => setOpen(false)}
-                  className="rounded-[10px] px-3 py-3 text-base font-medium text-text-secondary transition hover:bg-white/[0.04] hover:text-text-primary"
+                  className="rounded-[12px] px-4 py-4 text-lg font-medium text-text-primary transition hover:bg-white/[0.05]"
                 >
                   {l.label}
                 </Link>
@@ -507,19 +664,29 @@ function Nav() {
                   key={l.label}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="rounded-[10px] px-3 py-3 text-base font-medium text-text-secondary transition hover:bg-white/[0.04] hover:text-text-primary"
+                  className="rounded-[12px] px-4 py-4 text-lg font-medium text-text-primary transition hover:bg-white/[0.05]"
                 >
                   {l.label}
                 </a>
               ),
             )}
+            <Link
+              to="/auth"
+              onClick={() => setOpen(false)}
+              className="rounded-[12px] px-4 py-4 text-lg font-medium text-text-secondary transition hover:bg-white/[0.05]"
+            >
+              Log In
+            </Link>
+            <div className="px-4 py-3">
+              <LangToggle className="px-0 text-base" />
+            </div>
           </nav>
           <Link
             to="/app"
             onClick={() => setOpen(false)}
-            className="mt-2 flex items-center justify-center gap-1 rounded-full bg-bull px-4 py-3 text-sm font-semibold text-bull-foreground transition hover:bg-[#00efc0]"
+            className="mt-auto flex items-center justify-center gap-1 rounded-full bg-bull px-4 py-4 text-base font-semibold text-bull-foreground transition hover:bg-[#00efc0]"
           >
-            Enter App <ArrowRight className="h-4 w-4" />
+            Enter App <ArrowRight className="h-5 w-5" />
           </Link>
         </div>
       )}
