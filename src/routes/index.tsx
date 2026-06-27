@@ -1494,25 +1494,27 @@ function Landing() {
             </p>
           </Reveal>
 
-          <Reveal delay={0.1} id="contact" className="scroll-mt-24">
-            <SectionLabel>Get in touch</SectionLabel>
-            <h2 className="mt-3 text-[28px] font-bold leading-[1.2] sm:text-[40px]">
-              We'd love to hear from you.
-            </h2>
-            <p className="mt-5 text-[15px] leading-relaxed text-text-secondary">
-              Questions, feedback, or partnership ideas? Reach out and our team will get back
-              to you.
-            </p>
-            <div className="mt-6 space-y-3 text-sm">
-              <a
-                href="mailto:hello@nafaiq.com"
-                className="inline-flex items-center gap-2 font-medium text-bull transition hover:text-[#00efc0]"
-              >
-                <Mail className="h-4 w-4" /> hello@nafaiq.com
-              </a>
-              <p className="text-text-secondary">Karachi, Pakistan</p>
-            </div>
-          </Reveal>
+          <div id="contact" className="scroll-mt-24">
+            <Reveal delay={0.1}>
+              <SectionLabel>Get in touch</SectionLabel>
+              <h2 className="mt-3 text-[28px] font-bold leading-[1.2] sm:text-[40px]">
+                We'd love to hear from you.
+              </h2>
+              <p className="mt-5 text-[15px] leading-relaxed text-text-secondary">
+                Questions, feedback, or partnership ideas? Reach out and our team will get back
+                to you.
+              </p>
+              <div className="mt-6 space-y-3 text-sm">
+                <a
+                  href="mailto:hello@nafaiq.com"
+                  className="inline-flex items-center gap-2 font-medium text-bull transition hover:text-[#00efc0]"
+                >
+                  <Mail className="h-4 w-4" /> hello@nafaiq.com
+                </a>
+                <p className="text-text-secondary">Karachi, Pakistan</p>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
