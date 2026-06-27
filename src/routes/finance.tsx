@@ -24,7 +24,7 @@ type Tab = (typeof TABS)[number];
 
 const CAT_COLOR: Record<string, string> = {
   Utilities: "#3b82f6", Income: "#00d4aa", "Food & Dining": "#f59e0b", Transport: "#8b5cf6",
-  Groceries: "#00d4aa", Subscriptions: "#ff4d4d", Shopping: "#8b5cf6", Savings: "#6b7280",
+  Groceries: "#00d4aa", Subscriptions: "#f31260", Shopping: "#8b5cf6", Savings: "#6b7280",
 };
 
 function Finance() {
@@ -176,7 +176,7 @@ function Overview() {
           </div>
           <div className="mt-3 flex items-end justify-between gap-2">
             <span className="text-[10px] text-bull/80 sm:text-[11px]">-12% vs last month</span>
-            <div className="w-14 shrink-0"><Sparkline data={[22000, 21200, 18675]} color="#ff4d4d" /></div>
+            <div className="w-14 shrink-0"><Sparkline data={[22000, 21200, 18675]} color="#f31260" /></div>
           </div>
         </KpiCard>
 
