@@ -525,7 +525,7 @@ function ReadingView({
               <h2 className="mt-10 border-b border-border pb-2 text-[22px] font-bold text-text-primary">
                 {s.heading}
               </h2>
-              <Blocks blocks={s.blocks} accent={lesson.accent} />
+              <Blocks blocks={s.blocks} accent={ACCENT} />
             </section>
           ))}
         </article>
