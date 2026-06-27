@@ -385,42 +385,20 @@ function useCountUp(target: number, start: boolean, decimals = 0, duration = 160
 }
 
 function StatsStrip() {
-  const [inView, setInView] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setInView(true);
-          obs.disconnect();
-        }
-      },
-      { threshold: 0.4 },
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-  const users = useCountUp(12000, inView);
-  const tracked = useCountUp(2.4, inView, 1);
-  const rating = useCountUp(4.8, inView, 1);
   const stats = [
-    [`${Math.round(users).toLocaleString()}+`, "Active Users"],
-    [`PKR ${tracked.toFixed(1)}B+`, "Tracked"],
-    [`${rating.toFixed(1)}★`, "Average Rating"],
+    ["Public Beta", "Live now — free to use"],
+    ["Real-Time", "PSX & KSE-100 data"],
+    ["Halal-Ready", "Shariah screening built in"],
   ];
   return (
-    <div
-      ref={ref}
-      className="grid grid-cols-1 divide-y divide-white/[0.08] sm:grid-cols-3 sm:divide-x sm:divide-y-0"
-    >
+    <div className="grid grid-cols-1 divide-y divide-white/[0.08] sm:grid-cols-3 sm:divide-x sm:divide-y-0">
       {stats.map(([v, l]) => (
         <div key={l} className="px-4 py-4 text-center">
-          <div className="font-mono text-3xl font-bold tabular-nums text-text-primary sm:text-[40px]">
+          <div className="font-display text-2xl font-bold tracking-tight text-text-primary sm:text-3xl">
             {v}
           </div>
-          <div className="mt-1 text-sm text-text-secondary">{l}</div>
+          <div className="mx-auto mt-2 h-0.5 w-8 rounded-full bg-gold/70" />
+          <div className="mt-2 text-sm text-text-secondary">{l}</div>
         </div>
       ))}
     </div>
