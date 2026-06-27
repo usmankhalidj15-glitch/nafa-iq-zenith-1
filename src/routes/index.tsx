@@ -1333,13 +1333,20 @@ function Landing() {
         />
         <div className="relative mx-auto grid max-w-[1200px] items-center gap-12 px-6 py-[60px] lg:grid-cols-2 lg:py-[100px]">
           <Reveal>
-            <span className="badge-shimmer inline-block overflow-hidden rounded-full text-[11px] font-semibold uppercase tracking-[0.15em] text-warning">
+            <span
+              className="badge-shimmer inline-block overflow-hidden rounded-full text-[11px] font-semibold uppercase tracking-[0.15em] text-bull"
+              style={{
+                background: "rgba(0,212,170,0.15)",
+                border: "1px solid rgba(0,212,170,0.3)",
+                padding: "3px 10px",
+              }}
+            >
               World-first feature
             </span>
             <h2 className="mt-3 text-[28px] font-bold leading-[1.2] sm:text-[40px]">
               The Truth About
               <br />
-              <span className="text-warning">Your PKR Gains</span>
+              <span className="text-bull" style={{ textShadow: "0 0 60px rgba(0,212,170,0.3)" }}>Your PKR Gains</span>
             </h2>
             <p className="mt-5 max-w-[520px] text-text-secondary">
               Most Pakistani investors don't realize their PSX gains are partly an illusion. When PKR
@@ -1353,7 +1360,7 @@ function Landing() {
                 '"What if" comparison: PSX vs USD cash vs Gold',
               ].map((t) => (
                 <li key={t} className="flex items-start gap-2.5 text-sm text-text-secondary">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-warning" />
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-bull" />
                   {t}
                 </li>
               ))}
@@ -1361,7 +1368,7 @@ function Landing() {
             <Magnetic strength={0.35}>
               <Link
                 to="/app"
-                className="mt-8 inline-flex items-center gap-1.5 rounded-[6px] border border-warning px-5 py-2.5 text-sm font-semibold text-warning transition hover:bg-warning/10"
+                className="mt-8 inline-flex items-center gap-1.5 rounded-[6px] bg-gradient-to-br from-[#00d4aa] to-[#00a88a] px-5 py-2.5 text-sm font-semibold text-bull-foreground shadow-[0_6px_24px_rgba(0,212,170,0.3)] transition hover:shadow-[0_10px_36px_rgba(0,212,170,0.5)]"
               >
                 See Haqeeqi Daulat <ArrowRight className="h-4 w-4" />
               </Link>
