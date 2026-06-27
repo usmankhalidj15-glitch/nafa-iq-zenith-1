@@ -626,16 +626,17 @@ function LangToggle({ className }: { className?: string }) {
       onClick={() => setLang((l) => (l === "EN" ? "UR" : "EN"))}
       aria-label="Toggle language"
       className={cn(
-        "shrink-0 rounded-full px-2 py-1 text-[12px] font-medium text-text-secondary transition-colors hover:text-text-primary",
+        "inline-flex shrink-0 items-center rounded-full px-2.5 py-1 text-[12px] font-medium leading-none text-text-secondary transition-colors hover:text-text-primary",
         className,
       )}
     >
       <span className={cn(lang === "EN" && "text-text-primary")}>EN</span>
       <span className="mx-1 text-text-muted">/</span>
-      <span className={cn("font-urdu", lang === "UR" && "text-text-primary")}>اردو</span>
+      <span className={cn("inline-block pe-1 font-urdu leading-none", lang === "UR" && "text-text-primary")}>اردو</span>
     </button>
   );
 }
+
 
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
