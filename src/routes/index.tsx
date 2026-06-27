@@ -247,9 +247,9 @@ function PhoneMockup({ startDelay = 0 }: { startDelay?: number }) {
     >
       {/* KSE-100 floating card — staggered entrance + float loop */}
       <motion.div
-        initial={reduce ? false : { opacity: 0, y: -24, scale: 0.9 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        initial={reduce ? false : { opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut", delay: startDelay + 0.15 }}
         className="absolute -top-8 -left-10 z-20"
       >
         <motion.div
@@ -272,9 +272,9 @@ function PhoneMockup({ startDelay = 0 }: { startDelay?: number }) {
 
       {/* Real Wealth floating card — staggered entrance + float loop */}
       <motion.div
-        initial={reduce ? false : { opacity: 0, y: 24, scale: 0.9 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.6, delay: 0.72, ease: [0.22, 1, 0.36, 1] }}
+        initial={reduce ? false : { opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut", delay: startDelay + 0.30 }}
         className="absolute -bottom-8 -right-8 z-20"
       >
         <motion.div
@@ -296,9 +296,9 @@ function PhoneMockup({ startDelay = 0 }: { startDelay?: number }) {
 
       {/* phone frame — entrance fade-and-rise */}
       <motion.div
-        initial={reduce ? false : { opacity: 0, y: 28, scale: 0.96 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.7, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+        initial={reduce ? false : { opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut", delay: startDelay }}
         style={{ rotateY: ry, rotateX: rx, transformStyle: "preserve-3d" }}
         className="relative will-change-transform"
       >
@@ -1042,9 +1042,9 @@ function Hero() {
             </p>
           </Reveal>
         </motion.div>
-        <Reveal delay={0.2} className="lg:col-span-2">
-          <PhoneMockup />
-        </Reveal>
+        <div className="lg:col-span-2">
+          <PhoneMockup startDelay={0.35} />
+        </div>
       </motion.div>
 
       {/* scroll to discover cue — fades out once user scrolls */}
