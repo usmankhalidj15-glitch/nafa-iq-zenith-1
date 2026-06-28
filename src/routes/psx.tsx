@@ -5,9 +5,16 @@ import {
   Plus,
   Star,
   Filter,
+  Info,
   CandlestickChart as CandleIcon,
   LineChart as LineIcon,
 } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Card } from "@/components/Card";
 import { Change } from "@/components/Change";
 import { SignalBadge } from "@/components/SignalBadge";
