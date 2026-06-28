@@ -101,8 +101,8 @@ export default function PSX() {
             <Card key={idx.name}>
               <div className="flex items-center gap-1.5">
                 <span className="text-xs font-medium text-text-secondary">{idx.name}</span>
-                <Tooltip>
-                  <TooltipTrigger asChild>
+                <Popover>
+                  <PopoverTrigger asChild>
                     <button
                       type="button"
                       aria-label={`What is ${idx.name}?`}
@@ -110,11 +110,12 @@ export default function PSX() {
                     >
                       <Info className="h-3.5 w-3.5" />
                     </button>
-                  </TooltipTrigger>
-                  <TooltipContent className="max-w-[220px] text-xs leading-relaxed">
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[240px] text-xs leading-relaxed text-text-secondary">
                     {idx.info}
-                  </TooltipContent>
-                </Tooltip>
+                  </PopoverContent>
+                </Popover>
+
               </div>
               <div className="mt-1 font-mono text-lg font-bold tabular-nums text-text-primary">
                 {fmtNum(idx.value)}
