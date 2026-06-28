@@ -281,7 +281,9 @@ export function DonutChart({
               border: "1px solid #2a3a50",
               borderRadius: 8,
               fontSize: 12,
+              color: "#e2e8f0",
             }}
+            itemStyle={{ color: "#e2e8f0" }}
           />
         </PieChart>
       </ResponsiveContainer>
