@@ -242,6 +242,7 @@ export const STOCK_LIST = Object.values(STOCKS);
 export const INDICES = [
   {
     name: "KSE-100",
+    info: "Pakistan Stock Exchange's benchmark index — tracks the 100 largest companies by market cap. The headline number quoted as 'the market'.",
     value: 78542.1,
     change: 968.3,
     changePct: 1.24,
@@ -251,6 +252,7 @@ export const INDICES = [
   },
   {
     name: "KSE-30",
+    info: "Tracks the 30 most liquid, large companies on the PSX using a free-float methodology — a snapshot of blue-chip performance.",
     value: 24115.45,
     change: 204.1,
     changePct: 0.85,
@@ -260,6 +262,7 @@ export const INDICES = [
   },
   {
     name: "KMI-30",
+    info: "The KSE-Meezan Index — 30 Sharia-compliant (Islamic) companies, screened to exclude interest-based and non-permissible businesses.",
     value: 19844.2,
     change: 156.8,
     changePct: 0.8,
@@ -269,6 +272,7 @@ export const INDICES = [
   },
   {
     name: "KSE All Share",
+    info: "Captures every eligible listed company on the PSX — the broadest measure of the whole market's direction.",
     value: 52180.6,
     change: 410.2,
     changePct: 0.79,
