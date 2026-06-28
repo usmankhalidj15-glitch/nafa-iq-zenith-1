@@ -130,7 +130,7 @@ export default function PSX() {
           );
         })}
       </div>
-      </TooltipProvider>
+
 
 
       <div className="grid min-w-0 gap-6 lg:grid-cols-[65fr_35fr]">
