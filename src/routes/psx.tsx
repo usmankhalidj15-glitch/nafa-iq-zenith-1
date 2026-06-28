@@ -91,7 +91,23 @@ export default function PSX() {
           const spark = generateOHLCV(idx.seed, idx.start, idx.end, 7).map((c) => c.close);
           return (
             <Card key={idx.name}>
-              <div className="text-xs font-medium text-text-secondary">{idx.name}</div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-medium text-text-secondary">{idx.name}</span>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      type="button"
+                      aria-label={`What is ${idx.name}?`}
+                      className="text-text-muted transition-colors hover:text-text-secondary"
+                    >
+                      <Info className="h-3.5 w-3.5" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-[220px] text-xs leading-relaxed">
+                    {idx.info}
+                  </TooltipContent>
+                </Tooltip>
+              </div>
               <div className="mt-1 font-mono text-lg font-bold tabular-nums text-text-primary">
                 {fmtNum(idx.value)}
               </div>
