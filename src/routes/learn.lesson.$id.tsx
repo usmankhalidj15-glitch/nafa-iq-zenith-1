@@ -1019,7 +1019,7 @@ function ChatPanel({
       } catch {
         setMessages((m) => [
           ...m,
-          { role: "assistant", content: "Sorry, something went wrong. Please try again." },
+          { role: "assistant", content: t("Sorry, something went wrong. Please try again.") },
         ]);
       } finally {
         setLoading(false);
