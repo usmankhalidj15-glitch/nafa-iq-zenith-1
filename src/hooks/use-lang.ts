@@ -78,6 +78,12 @@ const UR: Record<string, string> = {
   "Total Expenses": "کل اخراجات",
   "Net Savings": "خالص بچت",
   "Savings Rate": "بچت کی شرح",
+  Expenses: "اخراجات",
+  "vs last month": "پچھلے ماہ کے مقابلے",
+  Excellent: "بہترین",
+  "Goal: 65%": "ہدف: ۶۵٪",
+  "6-month totals": "۶ ماہ کے کل اعداد",
+  "in real terms": "حقیقی اعتبار سے",
 
   // ---- Dashboard ----
   "Explore PSX": "پی ایس ایکس دیکھیں",

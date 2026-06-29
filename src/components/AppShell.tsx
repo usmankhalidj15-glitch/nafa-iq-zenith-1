@@ -160,6 +160,7 @@ function Sidebar() {
 function StockSearch() {
   const [q, setQ] = useState("");
   const navigate = useNavigate();
+  const { t: tr } = useLang();
   function submit(e: React.FormEvent) {
     e.preventDefault();
     const t = q.trim().toUpperCase();
@@ -177,8 +178,8 @@ function StockSearch() {
       <input
         value={q}
         onChange={(e) => setQ(e.target.value)}
-        placeholder="Search stocks (e.g. HBL)…"
-        aria-label="Search stocks"
+        placeholder={tr("Search stocks (e.g. HBL)…")}
+        aria-label={tr("Search stocks")}
         className="h-8 w-full rounded-[8px] border border-white/[0.08] bg-surface ps-8 pe-3 text-[13px] text-text-primary outline-none transition-colors placeholder:text-text-muted focus:border-bull"
       />
     </form>
