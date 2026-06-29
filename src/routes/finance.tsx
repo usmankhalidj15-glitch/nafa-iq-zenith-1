@@ -555,9 +555,33 @@ function Budgets() {
 
 function Bills() {
   const { t } = useLang();
+  const { bills } = useFinanceStore();
+  const [open, setOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [amount, setAmount] = useState("");
+  const [due, setDue] = useState("");
+  const [err, setErr] = useState("");
+
+  const submit = () => {
+    setErr("");
+    const num = Number(amount);
+    if (!name.trim()) return setErr(t("Please enter a bill name."));
+    if (!amount || Number.isNaN(num) || num <= 0) return setErr(t("Please enter a valid amount."));
+    financeActions.addBill({
+      name: name.trim(),
+      amount: num,
+      due: due.trim() || "—",
+      status: "UPCOMING",
+    });
+    setName("");
+    setAmount("");
+    setDue("");
+    setOpen(false);
+  };
+
   return (
     <div className="space-y-3">
-      {BILLS.map((b) => (
+      {bills.map((b) => (
         <Card key={b.name} className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-elevated text-sm font-bold text-text-secondary">
             {b.name[0]}
@@ -579,15 +603,53 @@ function Bills() {
           >
             {t(b.status)}
           </span>
-          <button className="flex h-8 w-8 items-center justify-center rounded-full border border-bull text-bull hover:bg-bull/10">
+          <button
+            onClick={() => financeActions.markBillPaid(b.name)}
+            title={t("Mark as paid")}
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-bull text-bull hover:bg-bull/10"
+          >
             <Check className="h-4 w-4" />
           </button>
         </Card>
       ))}
-      <button className="flex w-full items-center justify-center gap-1.5 rounded-[6px] border border-dashed border-border py-3 text-sm font-medium text-text-secondary hover:border-bull hover:text-bull">
+      <button
+        onClick={() => setOpen(true)}
+        className="flex w-full items-center justify-center gap-1.5 rounded-[6px] border border-dashed border-border py-3 text-sm font-medium text-text-secondary hover:border-bull hover:text-bull"
+      >
         <Plus className="h-4 w-4" />
         {t("Add Bill")}
       </button>
+
+      <Modal open={open} onClose={() => setOpen(false)} title={t("Add Bill")}>
+        <div className="space-y-3">
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder={t("Bill name")}
+            className={fieldClass}
+          />
+          <input
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            inputMode="decimal"
+            placeholder={t("Amount (PKR)")}
+            className={fieldClass}
+          />
+          <input
+            value={due}
+            onChange={(e) => setDue(e.target.value)}
+            placeholder={t("Due date (e.g. Jun 25)")}
+            className={fieldClass}
+          />
+          {err && <div className="text-xs text-bear">{err}</div>}
+          <button
+            onClick={submit}
+            className="w-full rounded-[6px] bg-bull py-2 text-sm font-semibold text-bull-foreground hover:brightness-110"
+          >
+            {t("Add Bill")}
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 }
