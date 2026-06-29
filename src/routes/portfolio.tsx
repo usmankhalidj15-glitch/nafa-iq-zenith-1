@@ -158,7 +158,7 @@ function Portfolio() {
   const [form, setForm] = useState(emptyForm);
   const [formErr, setFormErr] = useState("");
 
-  const SIGNALS: Signal[] = ["STRONG BUY", "BUY", "HOLD", "SELL", "STRONG SELL"];
+  
 
   function openAdd() {
     setEditIdx(null);
