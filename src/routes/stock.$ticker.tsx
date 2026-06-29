@@ -53,11 +53,12 @@ const NEWS = [
 
 function StockDetail() {
   const { ticker } = useParams({ from: "/stock/$ticker" });
+  const { t } = useLang();
   const s = STOCKS[ticker] ?? STOCKS.HBL;
   const data = generateOHLCV(s.seed, s.start, s.price, 180, 100, 600);
   const chg = +(s.price * (s.changePct / 100)).toFixed(2);
 
-  const stats = [
+  const stats: [string, string][] = [
     ["Market Cap", `PKR ${s.marketCap}`],
     ["P/E Ratio", "8.4"],
     ["EPS", "PKR 16.97"],
