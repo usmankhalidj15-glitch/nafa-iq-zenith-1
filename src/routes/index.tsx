@@ -637,30 +637,8 @@ function NavSearch() {
   );
 }
 
-function LangToggle({ className }: { className?: string }) {
-  const [lang, setLang] = useState<"EN" | "UR">("EN");
-  return (
-    <button
-      onClick={() => setLang((l) => (l === "EN" ? "UR" : "EN"))}
-      aria-label="Toggle language"
-      className={cn(
-        "inline-flex shrink-0 items-center rounded-full px-2.5 py-1 text-[12px] font-medium leading-none text-text-secondary transition-colors hover:text-text-primary",
-        className,
-      )}
-    >
-      <span className={cn(lang === "EN" && "text-text-primary")}>EN</span>
-      <span className="mx-1 text-text-muted">/</span>
-      <span
-        className={cn(
-          "inline-block pe-1 font-urdu leading-none",
-          lang === "UR" && "text-text-primary",
-        )}
-      >
-        اردو
-      </span>
-    </button>
-  );
-}
+
+
 
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -729,7 +707,6 @@ function Nav() {
           <div className="hidden items-center gap-3 lg:flex">
             <StatusPill />
             <NavSearch />
-            <LangToggle />
           </div>
           <Link
             to="/auth"
@@ -800,9 +777,8 @@ function Nav() {
             >
               Log In
             </Link>
-            <div className="flex items-center justify-between px-4 py-3">
+            <div className="flex items-center px-4 py-3">
               <StatusPill />
-              <LangToggle className="px-0 text-base" />
             </div>
           </nav>
           <Link
