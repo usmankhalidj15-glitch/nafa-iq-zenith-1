@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Trash2, TrendingUp, Calendar, Wallet, Target } from "lucide-react";
 import { Card } from "@/components/Card";
 import { EmojiIcon } from "@/components/icons";
+import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/hooks/use-lang";
 import { useFinanceStore, financeActions } from "@/hooks/use-finance-store";
@@ -100,7 +101,7 @@ function Alerts() {
                 onClick={() => financeActions.toggleAlert(i)}
                 className={cn(
                   "relative h-5 w-9 rounded-full transition",
-                  a.on ? "bg-bull" : "bg-elevated",
+                  a.on ? "bg-bull" : "bg-elevated border border-white/20",
                 )}
               >
                 <span
@@ -194,20 +195,16 @@ function Alerts() {
           )}
           <div className="mt-3 flex flex-wrap gap-3 text-xs text-text-secondary">
             <label className="flex items-center gap-1.5">
-              <input
-                type="checkbox"
+              <Checkbox
                 checked={push}
-                onChange={(e) => setPush(e.target.checked)}
-                className="accent-[#00d4aa]"
+                onCheckedChange={(c) => setPush(c === true)}
               />
               {t("Push")}
             </label>
             <label className="flex items-center gap-1.5">
-              <input
-                type="checkbox"
+              <Checkbox
                 checked={email}
-                onChange={(e) => setEmail(e.target.checked)}
-                className="accent-[#00d4aa]"
+                onCheckedChange={(c) => setEmail(c === true)}
               />
               {t("Email")}
             </label>
