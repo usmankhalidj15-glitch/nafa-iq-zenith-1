@@ -139,6 +139,17 @@ function HaqeeqiDaulat() {
   );
 }
 
+function computeSignal(ticker: string, current: number, avgCost: number): Signal {
+  const stock = STOCKS[ticker.toUpperCase()];
+  if (stock) return stock.signal;
+  const gainPct = ((current - avgCost) / avgCost) * 100;
+  if (gainPct >= 15) return "STRONG BUY";
+  if (gainPct >= 5) return "BUY";
+  if (gainPct >= -5) return "HOLD";
+  if (gainPct >= -15) return "SELL";
+  return "STRONG SELL";
+}
+
 function Portfolio() {
   const { t } = useLang();
   const [range, setRange] = useState<(typeof RANGES)[number]>("6M");
