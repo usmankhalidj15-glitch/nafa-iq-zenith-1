@@ -154,7 +154,6 @@ function Portfolio() {
     shares: "",
     avgCost: "",
     current: "",
-    signal: "HOLD" as Signal,
   };
   const [form, setForm] = useState(emptyForm);
   const [formErr, setFormErr] = useState("");
