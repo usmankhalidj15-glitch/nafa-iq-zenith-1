@@ -322,7 +322,7 @@ function Transactions() {
         <div className="flex flex-1 items-center gap-2 rounded-[6px] border border-border bg-surface px-3 py-2">
           <Search className="h-4 w-4 text-text-muted" />
           <input
-            placeholder="Search transactions"
+            placeholder={tr("Search transactions")}
             className="w-full bg-transparent text-sm text-text-primary outline-none placeholder:text-text-muted"
           />
         </div>
