@@ -664,7 +664,8 @@ function Goals() {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [target, setTarget] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState<Date | undefined>(undefined);
+  const [dateOpen, setDateOpen] = useState(false);
   const [err, setErr] = useState("");
   const [contribGoal, setContribGoal] = useState<string | null>(null);
   const [contribAmount, setContribAmount] = useState("");
