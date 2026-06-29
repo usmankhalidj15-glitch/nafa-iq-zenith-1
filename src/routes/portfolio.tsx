@@ -329,7 +329,7 @@ function Portfolio() {
                       isSell && "border-l-2 border-l-bear bg-bear/[0.04]",
                     )}
                   >
-                    <td className="py-2 font-semibold text-bull">{h.ticker}</td>
+                    <td className={cn("py-2 font-semibold text-bull", isSell && "pl-3")}>{h.ticker}</td>
                     <td className="text-text-secondary">{t(h.sector)}</td>
                     <td className="text-right font-mono tabular-nums text-text-primary">
                       {h.shares.toLocaleString()}
