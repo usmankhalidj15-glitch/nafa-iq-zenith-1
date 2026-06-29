@@ -167,6 +167,7 @@ function KpiLabel({ children }: { children: React.ReactNode }) {
 }
 
 function Overview() {
+  const { t } = useLang();
   const income = useCountUp(47500);
   const expenses = useCountUp(18675);
   const savings = useCountUp(28825);
@@ -234,7 +235,7 @@ function Overview() {
             PKR <span ref={savings.ref}>{savings.formatted}</span>
           </div>
           <div className="mt-3 flex items-center justify-between gap-2">
-            <span className="text-[10px] text-text-muted sm:text-[11px]">Saved this month</span>
+            <span className="text-[10px] text-text-muted sm:text-[11px]">{t("Saved this month")}</span>
             <span className="text-[10px] text-bull/80 sm:text-[11px]">+PKR 4,825</span>
           </div>
         </KpiCard>
