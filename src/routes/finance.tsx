@@ -16,9 +16,11 @@ import { EmojiIcon } from "@/components/icons";
 import { Card } from "@/components/Card";
 import { IncomeExpenseChart, Sparkline } from "@/components/charts";
 import { fmtPKR } from "@/lib/data";
-import { TRANSACTIONS, BUDGETS, BILLS, GOALS, INCOME_EXPENSE } from "@/lib/finance-data";
+import { BUDGETS, INCOME_EXPENSE, type Goal } from "@/lib/finance-data";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/hooks/use-lang";
+import { useFinanceStore, financeActions } from "@/hooks/use-finance-store";
+import { Modal, fieldClass } from "@/components/Modal";
 
 export const Route = createFileRoute("/finance")({
   head: () => ({
