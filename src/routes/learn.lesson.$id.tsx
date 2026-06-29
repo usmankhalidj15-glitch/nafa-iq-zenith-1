@@ -67,17 +67,18 @@ function shuffle<T>(arr: T[]): T[] {
 function LessonPage() {
   const { id } = useParams({ from: "/learn/lesson/$id" });
   const lesson = LESSON_CONTENT[id];
+  const { t } = useLang();
 
   if (!lesson) {
     return (
       <div className="mx-auto max-w-md py-20 text-center">
         <Inbox className="mx-auto h-8 w-8 text-text-muted" strokeWidth={1.5} />
-        <h1 className="mt-3 text-lg font-semibold text-text-primary">Lesson not found</h1>
+        <h1 className="mt-3 text-lg font-semibold text-text-primary">{t("Lesson not found")}</h1>
         <Link
           to="/learn"
           className="mt-4 inline-block rounded-[8px] bg-bull px-4 py-2 text-sm font-semibold text-bull-foreground"
         >
-          Back to Learn Hub
+          {t("Back to Learn Hub")}
         </Link>
       </div>
     );
