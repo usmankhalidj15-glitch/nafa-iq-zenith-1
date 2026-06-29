@@ -186,7 +186,7 @@ function StockSearch() {
 }
 
 function NotificationBell() {
-  const { t, lang } = useLang();
+  const { t } = useLang();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -252,7 +252,7 @@ function NotificationBell() {
 
 function UserMenu() {
   const { profile, user, signOut } = useAuth();
-  const { t, lang } = useLang();
+  const { t } = useLang();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -287,7 +287,7 @@ function UserMenu() {
         <div
           className={cn(
             "glass-chrome absolute top-9 z-50 w-56 max-w-[calc(100vw-1.5rem)] overflow-hidden rounded-[12px] border border-white/[0.08] shadow-2xl",
-            lang === "ur" ? "left-0" : "right-0",
+            "end-0",
           )}
         >
           <div className="border-b border-white/[0.06] px-4 py-3">
@@ -468,7 +468,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <div className="ambient-glow -top-40 right-[-12%] h-[420px] w-[420px] bg-primary/[0.03]" />
 
       <Sidebar />
-      <div className="relative lg:pl-[212px]">
+      <div className="relative lg:ps-[212px]">
         <Header onMenu={() => setDrawer(true)} />
         <Breadcrumbs />
         <main className="px-3 pt-4 pb-24 sm:px-5 lg:px-6 lg:pb-8">{children}</main>
