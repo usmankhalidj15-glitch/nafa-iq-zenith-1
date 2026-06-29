@@ -118,13 +118,7 @@ function useCountUp(target: number, decimals = 0, duration = 1200) {
     return () => cancelAnimationFrame(raf);
   }, [inView, target, duration, reduce]);
 
-  const formatted =
-    decimals > 0
-      ? val.toLocaleString("en-PK", {
-          minimumFractionDigits: decimals,
-          maximumFractionDigits: decimals,
-        })
-      : Math.round(val).toLocaleString("en-PK");
+  const formatted = formatNumber(val, decimals);
   return { ref, formatted };
 }
 
