@@ -46,7 +46,7 @@ const TIMEFRAMES = ["1D", "1W", "1M", "3M", "6M", "1Y", "All"] as const;
 const INDICATORS = ["MA20", "MA50", "MA200"] as const;
 
 function tfDays(tf: string) {
-  return { "1D": 5, "1W": 14, "1M": 30, "3M": 90, "6M": 130, "1Y": 180, All: 180 }[tf] ?? 180;
+  return { "1D": 5, "1W": 14, "1M": 30, "3M": 90, "6M": 130, "1Y": 250, All: 250 }[tf] ?? 250;
 }
 
 function symbolMeta(sym: string) {
