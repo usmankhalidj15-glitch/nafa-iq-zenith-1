@@ -5,6 +5,7 @@ import { Card } from "@/components/Card";
 import { EmojiIcon } from "@/components/icons";
 import { ALERTS, NOTIFS } from "@/lib/finance-data";
 import { cn } from "@/lib/utils";
+import { useLang } from "@/hooks/use-lang";
 
 export const Route = createFileRoute("/alerts")({
   head: () => ({
@@ -27,15 +28,16 @@ const TYPES = [
 ];
 
 function Alerts() {
+  const { t } = useLang();
   const [alerts, setAlerts] = useState(ALERTS);
   const [type, setType] = useState("Stock Price");
 
   return (
     <div className="mx-auto max-w-4xl space-y-6">
-      <h1 className="text-2xl font-bold text-text-primary sm:text-3xl">Alerts</h1>
+      <h1 className="text-2xl font-bold text-text-primary sm:text-3xl">{t("Alerts")}</h1>
 
       <section>
-        <h3 className="mb-3 text-sm font-semibold text-text-primary">Active Alerts</h3>
+        <h3 className="mb-3 text-sm font-semibold text-text-primary">{t("Active Alerts")}</h3>
         <div className="space-y-2">
           {alerts.map((a, i) => (
             <Card key={i} className="flex items-center gap-3">
