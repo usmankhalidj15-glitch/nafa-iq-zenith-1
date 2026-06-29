@@ -251,7 +251,7 @@ function Dashboard() {
       {/* Savings goals */}
       <section>
         <h3 className="mb-3 text-sm font-semibold text-text-primary">Savings Goals</h3>
-        <div className="scrollbar-none flex gap-4 overflow-x-auto pb-1 lg:grid lg:grid-cols-3">
+        <div className="scrollbar-none flex gap-4 overflow-x-auto py-3 lg:grid lg:grid-cols-3">
           {GOALS.slice(0, 3).map((g) => {
             const pct = Math.round((g.saved / g.target) * 100);
             return (
