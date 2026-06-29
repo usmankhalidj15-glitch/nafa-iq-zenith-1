@@ -254,7 +254,7 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
         )}
 
         {/* Main content */}
-        <main className="min-w-0 flex-1 xl:max-w-[760px]">
+        <main className={cn("min-w-0 flex-1", mode === "reading" && "xl:max-w-[760px]")}>
           {mode === "reading" && (
             <ReadingView
               lesson={lesson}
@@ -275,6 +275,7 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
             <QuizView
               lesson={lesson}
               onExit={() => setMode("reading")}
+              onBackToHub={() => navigate({ to: "/learn" })}
               onFinish={(correct) => {
                 const gain = onQuizFinish(correct);
                 setMode("results");
