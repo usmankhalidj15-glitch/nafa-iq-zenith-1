@@ -774,12 +774,33 @@ function Goals() {
             placeholder={t("Target amount (PKR)")}
             className={fieldClass}
           />
-          <input
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            placeholder={t("Target date (optional)")}
-            className={fieldClass}
-          />
+          <Popover open={dateOpen} onOpenChange={setDateOpen}>
+            <PopoverTrigger asChild>
+              <button
+                type="button"
+                className={cn(
+                  fieldClass,
+                  "flex items-center gap-2 text-left",
+                  !date && "text-text-muted",
+                )}
+              >
+                <CalendarIcon className="h-4 w-4 shrink-0" />
+                {date ? format(date, "MMM d, yyyy") : t("Target date (optional)")}
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={(d) => {
+                  setDate(d);
+                  setDateOpen(false);
+                }}
+                initialFocus
+                className="pointer-events-auto p-3"
+              />
+            </PopoverContent>
+          </Popover>
           {err && <div className="text-xs text-bear">{err}</div>}
           <button
             onClick={submit}
