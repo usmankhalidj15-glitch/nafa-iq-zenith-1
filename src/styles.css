@@ -700,8 +700,8 @@
 }
 
 /* ============================================================
-   Always-dark market data strip (PSX live ticker). Dense
-   financial data reads better on a dark surface in any theme.
+   Market data strip (PSX live ticker). Dark by default;
+   light theme flips to a light surface with dark text.
    ============================================================ */
 .market-strip {
   background: #0b1120;
@@ -711,6 +711,17 @@
 }
 .market-strip .market-strip-muted {
   color: #94a3b8;
+}
+
+/* Light theme ticker override */
+.theme-light .market-strip {
+  background: var(--color-surface-alt);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+.theme-light .market-strip .market-strip-muted {
+  color: var(--color-text-muted);
 }
 
 /* ============================================================
