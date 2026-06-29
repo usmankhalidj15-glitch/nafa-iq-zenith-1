@@ -699,6 +699,18 @@
    Light-mode-only accent calming. Dark theme untouched.
    ============================================================ */
 
+/* Primary CTA accent system — teal is the single primary action color.
+   Orange stays reserved for warning/attention, purple (--color-ai) for AI.
+   .cta-primary normalizes any non-teal primary CTA to teal in light mode. */
+.theme-light .cta-primary {
+  background: var(--color-primary);
+  color: var(--color-primary-foreground);
+}
+.theme-light .cta-primary:hover {
+  background: color-mix(in oklab, var(--color-primary) 88%, #000);
+}
+
+
 /* HOLD signal badge — neutral outline, consistent with BUY style */
 .theme-light .signal-hold {
   background: transparent;
