@@ -101,7 +101,7 @@ function Alerts() {
                 onClick={() => financeActions.toggleAlert(i)}
                 className={cn(
                   "relative h-5 w-9 rounded-full transition",
-                  a.on ? "bg-bull" : "bg-elevated",
+                  a.on ? "bg-bull" : "bg-elevated border border-white/20",
                 )}
               >
                 <span
