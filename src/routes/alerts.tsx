@@ -116,14 +116,14 @@ function Alerts() {
           ) : (
             <div className="grid gap-3 sm:grid-cols-2">
               <select className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary">
-                <option>SNGPL Gas</option>
-                <option>PTCL Internet</option>
-                <option>Apartment Rent</option>
+                <option>{t("SNGPL Gas")}</option>
+                <option>{t("PTCL Internet")}</option>
+                <option>{t("Apartment Rent")}</option>
               </select>
               <select className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary">
-                <option>1 day before</option>
-                <option>3 days before</option>
-                <option>7 days before</option>
+                <option>{t("1 day before")}</option>
+                <option>{t("3 days before")}</option>
+                <option>{t("7 days before")}</option>
               </select>
             </div>
           )}
