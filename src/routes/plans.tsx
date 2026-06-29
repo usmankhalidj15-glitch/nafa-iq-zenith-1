@@ -117,13 +117,13 @@ function PlansPage() {
               to="/"
               className="hidden items-center gap-1 text-sm text-text-secondary transition hover:text-text-primary sm:inline-flex"
             >
-              <ArrowLeft className="h-4 w-4" /> Home
+              <ArrowLeft className="h-4 w-4" /> {t("Home")}
             </Link>
             <Link
               to="/app"
               className="inline-flex items-center gap-1 rounded-[6px] bg-bull px-4 py-2 text-sm font-semibold text-bull-foreground transition hover:bg-[#00efc0]"
             >
-              Enter App <ArrowRight className="h-4 w-4" />
+              {t("Enter App")} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
