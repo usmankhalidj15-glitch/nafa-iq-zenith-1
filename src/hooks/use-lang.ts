@@ -583,8 +583,6 @@ const UR: Record<string, string> = {
   "Monthly Expenses": "ماہانہ اخراجات",
   "Search stocks (e.g. HBL)": "اسٹاکس تلاش کریں (مثلاً HBL)",
   Symbol: "علامت",
-  Signal: "سگنل",
-  Change: "تبدیلی",
   "AI Suggestion": "اے آئی تجویز",
   "Back to Dashboard": "ڈیش بورڈ پر واپس",
   "Urdu QA Preview": "اردو کیو اے پیش منظر",
