@@ -683,7 +683,7 @@ function Goals() {
       target: num,
       saved: 0,
       color: "bull",
-      date: date.trim() || undefined,
+      date: date ? format(date, "MMM d, yyyy") : undefined,
       ai: t("New goal created. Start contributing to track your progress."),
     };
     financeActions.addGoal(goal);
