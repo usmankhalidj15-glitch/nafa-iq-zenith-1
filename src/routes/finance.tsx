@@ -184,7 +184,7 @@ function Overview() {
             <ArrowUpRight className="h-5 w-5 text-bull" />
           </div>
           <KpiLabel>Monthly Income</KpiLabel>
-          <div className="mt-1 font-mono text-lg font-semibold tracking-tight text-bull tabular-nums sm:text-xl">
+          <div dir="ltr" className="mt-1 font-mono text-lg font-semibold tracking-tight text-bull tabular-nums sm:text-xl">
             PKR <span ref={income.ref}>{income.formatted}</span>
           </div>
           <div className="mt-3 flex items-end justify-between gap-2">
@@ -206,7 +206,7 @@ function Overview() {
             <ArrowDownRight className="h-5 w-5 text-bear" />
           </div>
           <KpiLabel>Total Expenses</KpiLabel>
-          <div className="mt-1 font-mono text-lg font-semibold tracking-tight text-bear tabular-nums sm:text-xl">
+          <div dir="ltr" className="mt-1 font-mono text-lg font-semibold tracking-tight text-bear tabular-nums sm:text-xl">
             PKR <span ref={expenses.ref}>{expenses.formatted}</span>
           </div>
           <div className="mt-3 flex items-end justify-between gap-2">
@@ -226,7 +226,7 @@ function Overview() {
             <PiggyBank className="h-5 w-5 text-ai" />
           </div>
           <KpiLabel>Net Savings</KpiLabel>
-          <div className="kpi-value-neutral mt-1 font-mono text-lg font-semibold tracking-tight text-ai tabular-nums sm:text-xl">
+          <div dir="ltr" className="kpi-value-neutral mt-1 font-mono text-lg font-semibold tracking-tight text-ai tabular-nums sm:text-xl">
             PKR <span ref={savings.ref}>{savings.formatted}</span>
           </div>
           <div className="mt-3 flex items-center justify-between gap-2">
@@ -244,7 +244,7 @@ function Overview() {
             <Percent className="h-5 w-5 text-warning" />
           </div>
           <KpiLabel>Savings Rate</KpiLabel>
-          <div className="kpi-value-neutral mt-1 font-mono text-lg font-semibold tracking-tight text-warning tabular-nums sm:text-xl">
+          <div dir="ltr" className="kpi-value-neutral mt-1 font-mono text-lg font-semibold tracking-tight text-warning tabular-nums sm:text-xl">
             <span ref={rate.ref}>{rate.formatted}</span>%
           </div>
           <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-white/5">
