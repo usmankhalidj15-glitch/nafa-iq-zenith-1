@@ -140,6 +140,74 @@ function Portfolio() {
   const [reportState, setReportState] = useState<"idle" | "loading" | "open">("idle");
   const n = range === "1M" ? 2 : range === "3M" ? 3 : 6;
 
+  const [holdings, setHoldings] = useState<Holding[]>(HOLDINGS);
+  const [formOpen, setFormOpen] = useState(false);
+  const [editIdx, setEditIdx] = useState<number | null>(null);
+  const emptyForm = {
+    ticker: "",
+    sector: "",
+    shares: "",
+    avgCost: "",
+    current: "",
+    signal: "HOLD" as Signal,
+  };
+  const [form, setForm] = useState(emptyForm);
+  const [formErr, setFormErr] = useState("");
+
+  const SIGNALS: Signal[] = ["STRONG BUY", "BUY", "HOLD", "SELL", "STRONG SELL"];
+
+  function openAdd() {
+    setEditIdx(null);
+    setForm(emptyForm);
+    setFormErr("");
+    setFormOpen(true);
+  }
+
+  function openEdit(idx: number) {
+    const h = holdings[idx];
+    setEditIdx(idx);
+    setForm({
+      ticker: h.ticker,
+      sector: h.sector,
+      shares: String(h.shares),
+      avgCost: String(h.avgCost),
+      current: String(h.current),
+      signal: h.signal,
+    });
+    setFormErr("");
+    setFormOpen(true);
+  }
+
+  function remove(idx: number) {
+    setHoldings((prev) => prev.filter((_, i) => i !== idx));
+  }
+
+  function saveHolding() {
+    setFormErr("");
+    const shares = Number(form.shares);
+    const avgCost = Number(form.avgCost);
+    const current = Number(form.current);
+    if (!form.ticker.trim()) return setFormErr(t("Please enter a stock symbol."));
+    if (!form.sector.trim()) return setFormErr(t("Please enter a sector."));
+    if (!form.shares || Number.isNaN(shares) || shares <= 0)
+      return setFormErr(t("Please enter a valid number of shares."));
+    if (!form.avgCost || Number.isNaN(avgCost) || avgCost <= 0)
+      return setFormErr(t("Please enter a valid average cost."));
+    const cur = !form.current || Number.isNaN(current) || current <= 0 ? avgCost : current;
+    const entry: Holding = {
+      ticker: form.ticker.trim().toUpperCase(),
+      sector: form.sector.trim(),
+      shares,
+      avgCost,
+      current: cur,
+      signal: form.signal,
+    };
+    setHoldings((prev) =>
+      editIdx == null ? [...prev, entry] : prev.map((h, i) => (i === editIdx ? entry : h)),
+    );
+    setFormOpen(false);
+  }
+
   function generate() {
     setReportState("loading");
     setTimeout(() => setReportState("open"), 2000);
