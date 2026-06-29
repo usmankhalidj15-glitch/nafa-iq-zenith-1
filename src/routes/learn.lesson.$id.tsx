@@ -349,7 +349,7 @@ function Blocks({ blocks, accent }: { blocks: ContentBlock[]; accent: string }) 
       {blocks.map((b, i) => {
         if (b.type === "p") {
           return (
-            <p key={i} className="my-4 text-[16px] leading-[1.8] text-[#cbd5e1]">
+            <p key={i} className="my-4 text-[16px] leading-[1.8] text-text-secondary">
               {b.text}
             </p>
           );
@@ -368,7 +368,7 @@ function Blocks({ blocks, accent }: { blocks: ContentBlock[]; accent: string }) 
               >
                 <EmojiIcon emoji={m.emoji} size={13} /> {m.label}
               </div>
-              <p className="mt-1.5 text-sm leading-relaxed text-[#cbd5e1]">{b.text}</p>
+              <p className="mt-1.5 text-sm leading-relaxed text-text-secondary">{b.text}</p>
             </div>
           );
         }
@@ -376,7 +376,7 @@ function Blocks({ blocks, accent }: { blocks: ContentBlock[]; accent: string }) 
           return (
             <div
               key={i}
-              className="my-6 rounded-[8px] border border-border bg-[#0d1421] p-5 font-mono text-sm"
+              className="my-6 rounded-[8px] border border-border bg-elevated p-5 font-mono text-sm"
             >
               {b.lines.map((line, j) => (
                 <div key={j} className="text-bull">
@@ -458,7 +458,7 @@ function ReadingView({
     <div className="learn-fade-in">
       {/* Hero banner */}
       <div
-        className="rounded-[12px] bg-gradient-to-br from-surface to-[#0d1421] p-8"
+        className="rounded-[12px] bg-gradient-to-br from-surface to-elevated p-8"
         style={{ borderLeft: `4px solid ${ACCENT}` }}
       >
         <div
@@ -584,7 +584,7 @@ function ReadingView({
 function VideoPlayer({ url }: { url: string }) {
   const [failed, setFailed] = useState(false);
   return (
-    <div className="relative aspect-video w-full overflow-hidden rounded-[12px] border border-border bg-[#0d1421]">
+    <div className="relative aspect-video w-full overflow-hidden rounded-[12px] border border-border bg-elevated">
       {failed ? (
         <div className="flex h-full flex-col items-center justify-center gap-2 text-text-muted">
           <Video className="h-8 w-8" strokeWidth={1.5} />
@@ -724,7 +724,7 @@ function QuizView({
         <div className="space-y-3">
           {q.options.map((opt, i) => {
             const labels = ["A", "B", "C", "D"];
-            let stateCls = "border-border bg-[#0d1421]";
+            let stateCls = "border-border bg-elevated";
             let circleCls = "bg-elevated text-text-muted";
             let icon: React.ReactNode = null;
             if (answered) {
@@ -874,7 +874,7 @@ function ResultsView({
 
       <div className="relative mx-auto mt-6 h-32 w-32">
         <svg className="h-full w-full -rotate-90" viewBox="0 0 120 120">
-          <circle cx="60" cy="60" r={r} fill="none" stroke="#1e2a3a" strokeWidth="10" />
+          <circle cx="60" cy="60" r={r} fill="none" stroke="currentColor" className="text-border" strokeWidth="10" />
           <circle
             cx="60"
             cy="60"

@@ -79,7 +79,14 @@ function Learn() {
     [statusOf],
   );
 
-  const terms = GLOSSARY.filter((t) => t.en.toLowerCase().includes(search.toLowerCase()));
+  const q = search.trim().toLowerCase();
+  const terms = GLOSSARY.filter(
+    (t) =>
+      !q ||
+      t.en.toLowerCase().includes(q) ||
+      t.ur.toLowerCase().includes(q) ||
+      t.def.toLowerCase().includes(q),
+  );
   const xpPct = Math.min(100, Math.round((xp / XP_GOAL) * 100));
 
   return (
@@ -251,7 +258,13 @@ function Learn() {
               <p className="mt-2 text-xs leading-relaxed text-text-secondary">{t.def}</p>
             </details>
           ))}
+          {terms.length === 0 && (
+            <div className="rounded-[8px] border border-dashed border-border bg-surface p-6 text-center text-sm text-text-muted">
+              No terms found for “{search}”
+            </div>
+          )}
         </div>
+
       </section>
 
       {flashcards && <FlashcardModal onClose={() => setFlashcards(false)} />}
