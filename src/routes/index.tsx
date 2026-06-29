@@ -957,7 +957,7 @@ function Hero() {
         style={{
           y: reduce ? 0 : bgY,
           background:
-            "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,45,45,0.95) 0%, #0A0E1A 60%)",
+            "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(8,55,55,0.92) 0%, #0F1528 60%)",
         }}
       />
 
