@@ -11,7 +11,11 @@ import {
   PiggyBank,
   Percent,
   Lightbulb,
+  CalendarIcon,
 } from "lucide-react";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { EmojiIcon } from "@/components/icons";
 import { Card } from "@/components/Card";
 import { IncomeExpenseChart, Sparkline } from "@/components/charts";
@@ -660,7 +664,8 @@ function Goals() {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [target, setTarget] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState<Date | undefined>(undefined);
+  const [dateOpen, setDateOpen] = useState(false);
   const [err, setErr] = useState("");
   const [contribGoal, setContribGoal] = useState<string | null>(null);
   const [contribAmount, setContribAmount] = useState("");
@@ -678,13 +683,13 @@ function Goals() {
       target: num,
       saved: 0,
       color: "bull",
-      date: date.trim() || undefined,
+      date: date ? format(date, "MMM d, yyyy") : undefined,
       ai: t("New goal created. Start contributing to track your progress."),
     };
     financeActions.addGoal(goal);
     setName("");
     setTarget("");
-    setDate("");
+    setDate(undefined);
     setOpen(false);
   };
 
@@ -769,12 +774,33 @@ function Goals() {
             placeholder={t("Target amount (PKR)")}
             className={fieldClass}
           />
-          <input
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            placeholder={t("Target date (optional)")}
-            className={fieldClass}
-          />
+          <Popover open={dateOpen} onOpenChange={setDateOpen}>
+            <PopoverTrigger asChild>
+              <button
+                type="button"
+                className={cn(
+                  fieldClass,
+                  "flex items-center gap-2 text-left",
+                  !date && "text-text-muted",
+                )}
+              >
+                <CalendarIcon className="h-4 w-4 shrink-0" />
+                {date ? format(date, "MMM d, yyyy") : t("Target date (optional)")}
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={(d) => {
+                  setDate(d);
+                  setDateOpen(false);
+                }}
+                initialFocus
+                className="pointer-events-auto p-3"
+              />
+            </PopoverContent>
+          </Popover>
           {err && <div className="text-xs text-bear">{err}</div>}
           <button
             onClick={submit}
