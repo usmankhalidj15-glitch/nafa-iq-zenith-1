@@ -36,9 +36,14 @@ export const Route = createFileRoute("/portfolio")({
 
 const RANGES = ["1M", "3M", "6M", "1Y"] as const;
 
+const MONTHS = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+];
+
 function series(n: number) {
   const base = 761190;
-  return ["Jan", "Feb", "Mar", "Apr", "May", "Jun"].slice(6 - n).map((label, i, a) => {
+  return MONTHS.slice(12 - n).map((label, i, a) => {
     const f = i / (a.length - 1 || 1);
     return {
       label,
