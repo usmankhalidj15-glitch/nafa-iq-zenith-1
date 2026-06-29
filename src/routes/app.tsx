@@ -83,10 +83,10 @@ function Dashboard() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0">
           <h1 className="truncate text-xl font-bold text-text-primary sm:text-2xl">
-            Asalam-o-Alaikum, {firstName}
+            {t("Asalam-o-Alaikum,")} {firstName}
           </h1>
           <p className="mt-0.5 text-[13px] text-text-secondary">
-            {formatToday()} · KSE-100 <span className="font-mono text-bull">+1.24%</span> today
+            {formatToday()} · KSE-100 <span className="font-mono text-bull">+1.24%</span> {t("today")}
           </p>
         </div>
         <div className="flex shrink-0 gap-2">
@@ -120,11 +120,12 @@ function Dashboard() {
                 </span>
               </div>
               <p className="mt-1.5 text-[13px] font-medium text-text-primary">
-                Redirect PKR 5,000 from dining to your Hajj Fund.
+                {t("Redirect PKR 5,000 from dining to your Hajj Fund.")}
               </p>
               <p className="mt-1 text-xs leading-relaxed text-text-secondary">
-                You spent 15% more on dining this month — reallocating brings your goal 3 months
-                closer. HBL is also flashing a Strong Buy, up 2.41% on rising volume.
+                {t(
+                  "You spent 15% more on dining this month — reallocating brings your goal 3 months closer. HBL is also flashing a Strong Buy, up 2.41% on rising volume.",
+                )}
               </p>
             </div>
             <div className="flex shrink-0 gap-2">
@@ -199,7 +200,7 @@ function Dashboard() {
           <div className="mt-2 flex gap-4 text-xs text-text-muted">
             <span className="flex items-center gap-1.5">
               <span className="h-2 w-2 rounded-full bg-bull" />
-              Portfolio
+              {t("Portfolio")}
             </span>
             <span className="flex items-center gap-1.5">
               <span className="h-0.5 w-4 bg-text-secondary" />
@@ -222,7 +223,7 @@ function Dashboard() {
                         : s.color,
                   }}
                 />
-                {s.name} {s.value}%
+                {t(s.name)} {s.value}%
               </span>
             ))}
           </div>
@@ -272,7 +273,7 @@ function Dashboard() {
                   <span className="flex h-9 w-9 items-center justify-center rounded-[8px] border border-bull/20 bg-bull/[0.08] text-bull">
                     <EmojiIcon emoji={g.emoji} size={16} />
                   </span>
-                  <span className="font-semibold text-text-primary">{g.name}</span>
+                  <span className="font-semibold text-text-primary">{t(g.name)}</span>
                   <span className="ml-auto font-mono text-sm font-bold tabular-nums text-bull">
                     {pct}%
                   </span>
@@ -289,7 +290,7 @@ function Dashboard() {
                     style={{ width: `${pct}%` }}
                   />
                 </div>
-                <p className="mt-2 text-[11px] leading-relaxed text-text-muted">{g.ai}</p>
+                <p className="mt-2 text-[11px] leading-relaxed text-text-muted">{t(g.ai)}</p>
               </Card>
             );
           })}

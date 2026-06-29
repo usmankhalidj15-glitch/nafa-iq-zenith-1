@@ -117,7 +117,7 @@ function HaqeeqiDaulat() {
                 </span>
               </div>
               <p className="mt-1.5 max-w-md text-[11px] text-text-secondary">
-                34% of portfolio in Oil &amp; Gas provides partial hedge against rupee weakness.
+                {t("34% of portfolio in Oil & Gas provides partial hedge against rupee weakness.")}
               </p>
             </div>
             <button className="flex items-center gap-1.5 rounded-[8px] bg-gold px-3.5 py-2 text-sm font-semibold text-gold-foreground transition hover:bg-gold-hover">
@@ -191,7 +191,7 @@ function Portfolio() {
             {SECTOR_ALLOC.map((s) => (
               <span key={s.name} className="flex items-center gap-1.5 text-text-secondary">
                 <span className="h-2 w-2 rounded-full" style={{ background: s.color }} />
-                {s.name} {s.value}%
+                {t(s.name)} {s.value}%
               </span>
             ))}
           </div>
@@ -203,7 +203,7 @@ function Portfolio() {
             {STOCK_ALLOC.map((s) => (
               <span key={s.name} className="flex items-center gap-1.5 text-text-secondary">
                 <span className="h-2 w-2 rounded-full" style={{ background: s.color }} />
-                {s.name} {s.value}%
+                {t(s.name)} {s.value}%
               </span>
             ))}
           </div>
@@ -219,7 +219,7 @@ function Portfolio() {
               {HOLDINGS.filter((h) => h.signal === "SELL" || h.signal === "STRONG SELL")
                 .map((h) => h.ticker)
                 .join(", ")}{" "}
-              — AI signals suggest reviewing these positions.
+              {t("— AI signals suggest reviewing these positions.")}
             </span>
           </div>
         )}
@@ -253,7 +253,7 @@ function Portfolio() {
                     )}
                   >
                     <td className="py-2 font-semibold text-bull">{h.ticker}</td>
-                    <td className="text-text-secondary">{h.sector}</td>
+                    <td className="text-text-secondary">{t(h.sector)}</td>
                     <td className="text-right font-mono tabular-nums text-text-primary">
                       {h.shares.toLocaleString()}
                     </td>
@@ -365,7 +365,7 @@ function ReportModal({ onClose }: { onClose: () => void }) {
       >
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-base font-semibold text-text-primary">
-            Your Portfolio Report — June 2025
+            {t("Your Portfolio Report — June 2025")}
           </h3>
           <button onClick={onClose}>
             <X className="h-5 w-5 text-text-secondary" />
@@ -386,10 +386,10 @@ function ReportModal({ onClose }: { onClose: () => void }) {
           {sections.map((s) => (
             <div key={s.title} className="rounded-[8px] border border-border bg-surface-alt p-3">
               <div className="flex items-center gap-1.5 text-sm font-semibold text-text-primary">
-                <EmojiIcon emoji={s.icon} size={15} className="text-text-secondary" /> {s.title}
+                <EmojiIcon emoji={s.icon} size={15} className="text-text-secondary" /> {t(s.title)}
               </div>
               <p className="mt-1 whitespace-pre-line text-xs leading-relaxed text-text-secondary">
-                {s.body}
+                {t(s.body)}
               </p>
             </div>
           ))}

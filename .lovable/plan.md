@@ -1,26 +1,42 @@
-## Problem
+## Goal
+Make Urdu mode actually translate the entire authenticated app. Today large areas stay English because (a) several screens never call `t()`, (b) many JSX strings inside "translated" screens are hardcoded, and (c) data-driven labels (categories, goal text, chart legends, signals) are never passed through `t()`. The public landing page (`index.tsx`) stays English.
 
-On the PSX Market chart, the toolbar buttons (candle/line type and MA20/MA50/MA200) highlight when clicked but the chart itself never changes. Two real bugs cause this:
+## Root causes (from the screenshots)
+- **Savings Goals**: goal names (Honda City, Emergency Fund, Hajj Fund) and AI advice sentences come from `finance-data.ts` and are rendered raw — never translated.
+- **Spending donut**: legend labels (Food, Transport, Utilities, Shopping, Other), "PKR total" tooltip/center, and tooltip text in `charts.tsx` are hardcoded; `charts.tsx` doesn't use `useLang`.
+- **PSX**: "KSE All Share", the info tooltip paragraph, "LIVE", index names, timeframe buttons (All/1Y/6M/3M/1M/1W/1D), "Watchlist", "+ Add Stock", "STRONG BUY" etc. are hardcoded.
+- Whole screens with **no** `t()`: `learn.tsx`, `learn.index.tsx`, `learn.lesson.$id.tsx`, `plans.tsx`, `stock.$ticker.tsx`, plus `charts.tsx` and `SignalBadge.tsx`.
 
-1. **Candle vs. Line toggle does nothing.** The component tracks a `type` state (`"candle" | "line"`), but the render always shows `<CandlestickChart>` regardless of `type` (`src/routes/psx.tsx:253`). There is no line-chart variant, so switching type has zero effect on the chart.
+## Plan
 
-2. **MA200 toggle does nothing visible.** The price series is generated with only 180 data points (`src/routes/psx.tsx:105`, and `tfDays` caps at 180). A 200-period moving average needs ≥200 points, so `sma(data, 200)` returns all-empty values and the MA200 line never appears. MA20/MA50 do work — but MA200 looks broken.
+### 1. Expand the dictionary (`src/hooks/use-lang.ts`)
+Add Urdu entries for every user-facing string surfaced across the app, grouped by section. This includes:
+- Remaining static UI labels in app/portfolio/psx/finance/alerts/settings not yet present.
+- **Learn** hub + lesson screens (titles, levels Beginner/Intermediate/Advanced, statuses Locked/Completed, durations suffix "min", buttons, descriptions).
+- **Plans** screen (plan names, feature bullets, CTA, billing labels).
+- **Stock detail** screen (section headings, stats, signal labels, buttons).
+- **Charts**: legend category names, "PKR total", tooltip labels, axis/series names, timeframe codes.
+- **Signals**: STRONG BUY / BUY / HOLD / SELL / STRONG SELL.
+- **Data-driven enumerable labels**: spending categories (Food & Dining, Transport, Utilities, Shopping, Groceries, Subscriptions, Savings, Income, Other), sectors, account names, goal names, and the specific AI/goal advice sentences + transaction merchant names used in the dummy data (since data is fixed sample content, each distinct string gets an entry).
+- PSX index names + the KSE All Share tooltip paragraph + "LIVE".
 
-## Fix
+### 2. Route every rendered string through `t()`
+For each app screen, wrap hardcoded JSX text and data-bound display strings with `t(...)`:
+- `learn.tsx`, `learn.index.tsx`, `learn.lesson.$id.tsx` — add `useLang`, wrap all labels and map lesson data fields (title/level/status) through `t()`.
+- `plans.tsx` — add `useLang`, wrap all plan copy.
+- `stock.$ticker.tsx` — add `useLang`, wrap headings/labels/buttons.
+- `charts.tsx` — add `useLang`, translate legend names, center "PKR total", and tooltip labels.
+- `SignalBadge.tsx` — translate the signal text.
+- `app.tsx`, `portfolio.tsx`, `psx.tsx`, `finance.tsx`, `alerts.tsx`, `settings.tsx` — audit and wrap any remaining hardcoded strings (timeframes, tooltips, watchlist, "LIVE", section captions, goal cards, transaction categories, etc.).
 
-### 1. Add a line-chart variant (`src/components/charts.tsx`)
-- Add a new `PriceLineChart` export that renders the closing price as a single line (theme-aware teal, reusing the existing `useChartTheme`), with the same axes, grid, tooltip, and MA20/MA50/MA200 overlays the candlestick chart already supports (driven by the same `mas` prop).
-- Keep `CandlestickChart` unchanged for dark theme parity; the line chart reuses the same color tokens.
+### 3. Translate data labels at the render boundary
+Where components render values from `data.ts` / `finance-data.ts` (categories, sectors, signals, goal names, goal AI text, merchant names), apply `t(value)` at render time rather than mutating the data files. Unknown strings fall back to the original via the existing `translate()` fallback, so English data degrades gracefully.
 
-### 2. Switch chart by type (`src/routes/psx.tsx`)
-- Import `PriceLineChart`.
-- Replace the single `<CandlestickChart .../>` render with a conditional: render `PriceLineChart` when `type === "line"`, otherwise `CandlestickChart`. Both receive the same `data`, `height`, and `mas` props.
+### 4. Verify
+- Typecheck.
+- Toggle Urdu in Settings and spot-check Dashboard (goals + donut legend/tooltip), PSX (ticker tape, KSE cards, tooltip, timeframes, watchlist), Finance, Portfolio, Learn, Plans, Stock detail, Alerts — confirm no stray English UI labels remain (numbers/tickers like HBL, PKR figures intentionally stay).
 
-### 3. Make MA200 produce a visible line (`src/routes/psx.tsx`)
-- Increase the generated full series length from 180 to ~250 days so a 200-period average has enough data.
-- Update `tfDays` so the longer ranges expose enough points for MA200 (e.g. `1Y` and `All` map to ~250). Shorter timeframes (1D–6M) stay as-is; on those, MA200 legitimately has little/no data, which is expected behavior on a short window.
-
-## Result
-- Clicking the candle icon shows candles; clicking the line icon shows a clean price line — both with the active MA overlays.
-- MA20 / MA50 / MA200 each visibly add/remove their line (MA200 now has data on 1Y/All).
-- No changes to the dark theme look or to any other screen.
+## Notes / scope
+- Landing page (`index.tsx`), `__root.tsx`, and raw stock tickers / numeric values are intentionally left as-is.
+- Proper nouns that are normally kept in English (PSX, KSE-100, stock symbols) stay; only descriptive labels are translated.
+- No backend or business-logic changes — this is presentation/i18n only.

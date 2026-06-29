@@ -56,6 +56,7 @@ function symbolMeta(sym: string) {
 }
 
 function MarketTicker() {
+  const { t } = useLang();
   // Always-dark dense data strip — same in dark & light themes.
   const row = [...STOCK_LIST, ...STOCK_LIST];
   return (
@@ -63,7 +64,7 @@ function MarketTicker() {
       <div className="flex items-stretch">
         <div className="market-strip flex shrink-0 items-center gap-1.5 rounded-none border-y-0 border-l-0 px-3 text-[11px] font-semibold uppercase tracking-wide">
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-bull" />
-          <span className="text-bull">Live</span>
+          <span className="text-bull">{t("Live")}</span>
         </div>
         <div className="flex-1 overflow-hidden py-2">
           <div className="flex w-max animate-ticker gap-6 pl-6">
@@ -148,7 +149,7 @@ export default function PSX() {
                     </button>
                   </PopoverTrigger>
                   <PopoverContent className="w-[240px] text-xs leading-relaxed text-text-secondary">
-                    {idx.info}
+                    {t(idx.info)}
                   </PopoverContent>
                 </Popover>
               </div>
@@ -179,7 +180,7 @@ export default function PSX() {
               >
                 {SYMBOLS.map((s) => (
                   <option key={s} value={s}>
-                    {s === "KSE-100" ? "KSE-100 Index" : `${s} · ${STOCKS[s].name}`}
+                    {s === "KSE-100" ? t("KSE-100 Index") : `${s} · ${STOCKS[s].name}`}
                   </option>
                 ))}
               </select>
@@ -263,20 +264,22 @@ export default function PSX() {
             <div className="flex flex-col gap-3 md:flex-row md:items-center">
               <div className="flex items-center gap-2 text-sm font-semibold text-ai">
                 <Sparkles className="h-4 w-4" />
-                AI Analysis
+                {t("AI Analysis")}
               </div>
               <p className="flex-1 text-xs leading-relaxed text-text-secondary">
-                KSE-100 is trading above both MA20 and MA50 with strong volume confirmation. RSI at
-                58 — bullish momentum without being overbought. Banking and Tech sectors leading
-                gains today.
+                {t(
+                  "KSE-100 is trading above both MA20 and MA50 with strong volume confirmation. RSI at 58 — bullish momentum without being overbought. Banking and Tech sectors leading gains today.",
+                )}
               </p>
               <div className="text-right">
                 <SignalBadge signal="STRONG BUY" />
-                <div className="mt-1 text-xs font-medium text-bull">BULLISH · Confidence 72%</div>
+                <div className="mt-1 text-xs font-medium text-bull">
+                  {t("BULLISH · Confidence 72%")}
+                </div>
               </div>
             </div>
             <p className="mt-2 text-[10px] italic text-text-muted">
-              Based on technical indicators only. Not financial advice.
+              {t("Based on technical indicators only. Not financial advice.")}
             </p>
           </div>
 
@@ -300,7 +303,7 @@ export default function PSX() {
                       : "border border-border text-text-secondary hover:bg-hover",
                   )}
                 >
-                  {f}
+                  {t(f)}
                 </button>
               ))}
             </div>
@@ -352,7 +355,7 @@ export default function PSX() {
                                 ? "text-bull"
                                 : "text-text-secondary",
                           )}
-                          title={s.rsi > 70 ? "Overbought" : s.rsi < 30 ? "Oversold" : "Neutral"}
+                          title={s.rsi > 70 ? t("Overbought") : s.rsi < 30 ? t("Oversold") : t("Neutral")}
                         >
                           {s.rsi}
                           {s.rsi > 70 ? " OB" : s.rsi < 30 ? " OS" : ""}
@@ -412,16 +415,16 @@ export default function PSX() {
 
           <Card>
             <div className="mb-2 flex gap-1">
-              {(["Gainers", "Losers", "Most Active"] as const).map((t) => (
+              {(["Gainers", "Losers", "Most Active"] as const).map((tab) => (
                 <button
-                  key={t}
-                  onClick={() => setMoverTab(t)}
+                  key={tab}
+                  onClick={() => setMoverTab(tab)}
                   className={cn(
                     "rounded-[6px] px-2.5 py-1 text-xs font-medium",
-                    moverTab === t ? "bg-bull/15 text-bull" : "text-text-secondary hover:bg-hover",
+                    moverTab === tab ? "bg-bull/15 text-bull" : "text-text-secondary hover:bg-hover",
                   )}
                 >
-                  {t}
+                  {t(tab)}
                 </button>
               ))}
             </div>
@@ -457,7 +460,7 @@ export default function PSX() {
                   : `rgba(229,72,77,${0.15 + intensity * 0.55})`;
                 return (
                   <div key={s.name} className="rounded-[6px] p-2" style={{ background: bg }}>
-                    <div className="text-[10px] text-text-primary/90">{s.name}</div>
+                    <div className="text-[10px] text-text-primary/90">{t(s.name)}</div>
                     <div className="font-mono text-sm font-bold tabular-nums text-text-primary">
                       {up ? "+" : ""}
                       {s.pct.toFixed(1)}%

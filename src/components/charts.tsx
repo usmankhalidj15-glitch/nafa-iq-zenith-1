@@ -17,6 +17,7 @@ import {
 } from "recharts";
 import { type Candle, fmtNum, sma } from "@/lib/data";
 import { useTheme } from "@/hooks/use-theme";
+import { useLang } from "@/hooks/use-lang";
 
 /** Theme-aware chart colors. Dark values are unchanged from the original design. */
 function useChartTheme() {
@@ -230,6 +231,7 @@ export function PriceLineChart({
   mas?: string[];
 }) {
   const ct = useChartTheme();
+  const { t } = useLang();
   const ma20 = sma(data, 20);
   const ma50 = sma(data, 50);
   const ma200 = sma(data, 200);
@@ -289,7 +291,7 @@ export function PriceLineChart({
           yAxisId="price"
           type="monotone"
           dataKey="close"
-          name="Price"
+          name={t("Price")}
           stroke={ct.teal}
           strokeWidth={2}
           fill="url(#priceLineFill)"
@@ -344,6 +346,7 @@ export function PortfolioAreaChart({
   showBenchmark?: boolean;
 }) {
   const ct = useChartTheme();
+  const { t } = useLang();
   return (
     <ResponsiveContainer width="100%" height={height}>
       <AreaChart data={data} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
@@ -374,7 +377,7 @@ export function PortfolioAreaChart({
         <Area
           type="monotone"
           dataKey="value"
-          name="Portfolio"
+          name={t("Portfolio")}
           stroke={ct.teal}
           strokeWidth={2}
           fill="url(#tealFill)"
@@ -407,14 +410,16 @@ export function DonutChart({
   centerValue?: string;
 }) {
   const ct = useChartTheme();
+  const { t } = useLang();
   // Harmonious, desaturated palette for white cards in light mode.
   const lightPalette = DONUT_LIGHT_PALETTE;
+  const tdata = data.map((d) => ({ ...d, name: t(d.name) }));
   return (
     <div className="relative">
       <ResponsiveContainer width="100%" height={220}>
         <PieChart>
           <Pie
-            data={data}
+            data={tdata}
             dataKey="value"
             nameKey="name"
             innerRadius={62}
@@ -439,7 +444,7 @@ export function DonutChart({
           <span className="font-mono text-sm font-bold tabular-nums text-text-primary">
             {centerValue}
           </span>
-          {centerLabel && <span className="text-[10px] text-text-muted">{centerLabel}</span>}
+          {centerLabel && <span className="text-[10px] text-text-muted">{t(centerLabel)}</span>}
         </div>
       )}
     </div>
@@ -452,6 +457,7 @@ export function IncomeExpenseChart({
   data: { month: string; income: number; expense: number }[];
 }) {
   const ct = useChartTheme();
+  const { t } = useLang();
   return (
     <ResponsiveContainer width="100%" height={280}>
       <ComposedChart data={data} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
@@ -477,14 +483,14 @@ export function IncomeExpenseChart({
         <Legend wrapperStyle={{ fontSize: 12 }} />
         <Bar
           dataKey="income"
-          name="Income"
+          name={t("Income")}
           fill={ct.teal}
           radius={[3, 3, 0, 0]}
           isAnimationActive={false}
         />
         <Bar
           dataKey="expense"
-          name="Expense"
+          name={t("Expense")}
           fill={ct.expense}
           radius={[3, 3, 0, 0]}
           isAnimationActive={false}

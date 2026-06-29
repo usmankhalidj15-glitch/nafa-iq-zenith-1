@@ -186,6 +186,7 @@ function StockSearch() {
 }
 
 function NotificationBell() {
+  const { t } = useLang();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -210,13 +211,13 @@ function NotificationBell() {
       {open && (
         <div className="glass-chrome absolute right-0 top-9 z-50 w-72 overflow-hidden rounded-[12px] border border-white/[0.08] shadow-2xl">
           <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-2.5">
-            <span className="text-[13px] font-semibold text-text-primary">Notifications</span>
+            <span className="text-[13px] font-semibold text-text-primary">{t("Notifications")}</span>
             <Link
               to="/alerts"
               onClick={() => setOpen(false)}
               className="text-[11px] text-bull hover:underline"
             >
-              View all
+              {t("View all")}
             </Link>
           </div>
           <ul className="max-h-72 overflow-y-auto">

@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import type { Signal } from "@/lib/data";
+import { useLang } from "@/hooks/use-lang";
 
 const styles: Record<Signal, string> = {
   "STRONG BUY": "bg-bull text-bull-foreground font-bold",
@@ -10,6 +11,7 @@ const styles: Record<Signal, string> = {
 };
 
 export function SignalBadge({ signal, className }: { signal: Signal; className?: string }) {
+  const { t } = useLang();
   return (
     <span
       className={cn(
@@ -18,7 +20,7 @@ export function SignalBadge({ signal, className }: { signal: Signal; className?:
         className,
       )}
     >
-      {signal}
+      {t(signal)}
     </span>
   );
 }

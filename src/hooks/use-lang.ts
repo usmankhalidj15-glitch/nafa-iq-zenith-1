@@ -154,6 +154,264 @@ const UR: Record<string, string> = {
   "Goal Milestone": "ہدف سنگ میل",
   "Create Alert": "الرٹ بنائیں",
   Push: "پش",
+
+  // ---- Common / shell ----
+  today: "آج",
+  "Asalam-o-Alaikum,": "السلام علیکم،",
+  Live: "لائیو",
+  Notifications: "اطلاعات",
+  "View all": "سب دیکھیں",
+  Free: "مفت",
+  plan: "پلان",
+  "Search stocks (e.g. HBL)…": "اسٹاکس تلاش کریں (مثلاً HBL)…",
+  "Search stocks": "اسٹاکس تلاش کریں",
+  "Search transactions": "ٹرانزیکشنز تلاش کریں",
+  "Search terms": "اصطلاحات تلاش کریں",
+  Indicator: "اشارہ",
+  Value: "قدر",
+  Reading: "ریڈنگ",
+  Neutral: "غیر جانبدار",
+  Overbought: "اوور باٹ",
+  Oversold: "اوور سولڈ",
+
+  // ---- Signals ----
+  "STRONG BUY": "اسٹرانگ بائی",
+  BUY: "بائی",
+  HOLD: "ہولڈ",
+  SELL: "سیل",
+  "STRONG SELL": "اسٹرانگ سیل",
+  All: "تمام",
+  Gainers: "بڑھنے والے",
+  Losers: "گھٹنے والے",
+  "Most Active": "سب سے فعال",
+
+  // ---- Sectors ----
+  Banking: "بینکنگ",
+  Cement: "سیمنٹ",
+  "Oil & Gas": "آئل اینڈ گیس",
+  Fertilizer: "فرٹیلائزر",
+  Textile: "ٹیکسٹائل",
+  Power: "پاور",
+  Pharma: "فارما",
+  Tech: "ٹیک",
+  Auto: "آٹو",
+
+  // ---- Spending categories ----
+  Food: "کھانا",
+  Utilities: "یوٹیلیٹیز",
+  Transport: "ٹرانسپورٹ",
+  Shopping: "شاپنگ",
+  Other: "دیگر",
+  "Food & Dining": "کھانا اور ڈائننگ",
+  Groceries: "گروسری",
+  Subscriptions: "سبسکرپشنز",
+  Savings: "بچت",
+  Income: "آمدنی",
+  Expense: "اخراجات",
+
+  // ---- Dashboard ----
+  "Redirect PKR 5,000 from dining to your Hajj Fund.":
+    "کھانے سے PKR 5,000 اپنے حج فنڈ کی طرف منتقل کریں۔",
+  "You spent 15% more on dining this month — reallocating brings your goal 3 months closer. HBL is also flashing a Strong Buy, up 2.41% on rising volume.":
+    "آپ نے اس ماہ کھانے پر 15% زیادہ خرچ کیا — دوبارہ تقسیم آپ کے ہدف کو 3 ماہ قریب لے آتی ہے۔ HBL بھی اسٹرانگ بائی دکھا رہا ہے، بڑھتے حجم پر 2.41% اوپر۔",
+
+  // ---- Goal names + AI advice ----
+  "Hajj Fund": "حج فنڈ",
+  "Emergency Fund": "ایمرجنسی فنڈ",
+  "Honda City": "ہونڈا سٹی",
+  "Umrah 2026": "عمرہ 2026",
+  "At PKR 25,000/month you'll reach this goal in 31 months. June dining overspend delayed this by ~6 days.":
+    "PKR 25,000 ماہانہ پر آپ یہ ہدف 31 ماہ میں حاصل کر لیں گے۔ جون میں کھانے کے زیادہ اخراجات نے اسے ~6 دن مؤخر کر دیا۔",
+  "Almost there! PKR 120,000 remaining. At current rate: 5 months.":
+    "تقریباً پہنچ گئے! PKR 120,000 باقی ہیں۔ موجودہ رفتار پر: 5 ماہ۔",
+  "This goal needs attention. Consider increasing monthly contribution by PKR 5,000.":
+    "اس ہدف پر توجہ درکار ہے۔ ماہانہ رقم میں PKR 5,000 اضافے پر غور کریں۔",
+  "You need to save PKR 15,833/month to reach this goal by your target.":
+    "ہدف تک پہنچنے کے لیے آپ کو PKR 15,833 ماہانہ بچانا ہوگا۔",
+
+  // ---- Finance ----
+  "6-Month Overview": "6 ماہ کا جائزہ",
+  In: "آمد",
+  Out: "اخراج",
+  "Add Bill": "بل شامل کریں",
+  "Add Goal": "ہدف شامل کریں",
+  Due: "واجب الادا",
+  "Target date:": "ہدف کی تاریخ:",
+  Target: "ہدف",
+  Saved: "بچایا",
+  "DUE SOON": "جلد واجب",
+  UPCOMING: "آنے والا",
+  "SNGPL Gas": "ایس این جی پی ایل گیس",
+  "PTCL Internet": "پی ٹی سی ایل انٹرنیٹ",
+  "Apartment Rent": "اپارٹمنٹ کرایہ",
+  "Credit Card": "کریڈٹ کارڈ",
+  "You've exceeded your dining budget by PKR 3,000. This is delaying your Hajj Fund goal by approximately 6 days.":
+    "آپ نے کھانے کا بجٹ PKR 3,000 سے تجاوز کر لیا ہے۔ یہ آپ کے حج فنڈ ہدف کو تقریباً 6 دن مؤخر کر رہا ہے۔",
+  "Shopping is PKR 3,050 over budget. Trimming this next month frees up cash for your Emergency Fund.":
+    "شاپنگ بجٹ سے PKR 3,050 زیادہ ہے۔ اگلے ماہ اسے کم کرنے سے آپ کے ایمرجنسی فنڈ کے لیے رقم بچے گی۔",
+
+  // ---- Alerts data ----
+  "Stock Price Alert": "اسٹاک قیمت الرٹ",
+  "Budget Alert": "بجٹ الرٹ",
+  "HBL above PKR 150": "HBL، PKR 150 سے اوپر",
+  "SNGPL Gas due in 3 days": "ایس این جی پی ایل گیس 3 دن میں واجب",
+  "Food & Dining 80% of budget": "کھانا اور ڈائننگ بجٹ کا 80%",
+  "Hajj Fund 50% reached": "حج فنڈ 50% مکمل",
+  "LUCK below PKR 800": "LUCK، PKR 800 سے نیچے",
+  "Created Jun 10": "10 جون کو بنایا",
+  "Created Jun 12": "12 جون کو بنایا",
+  "Recurring monthly": "ماہانہ تکرار",
+  "June 2025": "جون 2025",
+  "One-time": "ایک بار",
+  "1 day before": "1 دن پہلے",
+  "3 days before": "3 دن پہلے",
+  "7 days before": "7 دن پہلے",
+  "HBL crossed above MA50 — Strong Buy signal triggered":
+    "HBL نے MA50 عبور کر لیا — اسٹرانگ بائی سگنل فعال",
+  "K-Electric bill due in 3 days — PKR 18,420":
+    "کے-الیکٹرک بل 3 دن میں واجب — PKR 18,420",
+  "Food & Dining budget 92% used — PKR 32,340 of 35,000":
+    "کھانا اور ڈائننگ بجٹ کا 92% استعمال — 35,000 میں سے PKR 32,340",
+  "Great news! Emergency Fund reached 60% of target":
+    "خوشخبری! ایمرجنسی فنڈ ہدف کے 60% تک پہنچ گیا",
+
+  // ---- PSX ----
+  "KSE-100 Index": "کے ایس ای-100 انڈیکس",
+  "AI Analysis": "اے آئی تجزیہ",
+  "KSE-100 is trading above both MA20 and MA50 with strong volume confirmation. RSI at 58 — bullish momentum without being overbought. Banking and Tech sectors leading gains today.":
+    "کے ایس ای-100 مضبوط حجم کی تصدیق کے ساتھ MA20 اور MA50 دونوں سے اوپر ٹریڈ کر رہا ہے۔ RSI 58 پر — اوور باٹ ہوئے بغیر تیزی کی رفتار۔ بینکنگ اور ٹیک شعبے آج برتری میں ہیں۔",
+  "Based on technical indicators only. Not financial advice.":
+    "صرف تکنیکی اشاروں کی بنیاد پر۔ مالی مشورہ نہیں۔",
+  "Pakistan Stock Exchange's benchmark index — tracks the 100 largest companies by market cap. The headline number quoted as 'the market'.":
+    "پاکستان اسٹاک ایکسچینج کا بینچ مارک انڈیکس — مارکیٹ کیپ کے لحاظ سے 100 سب سے بڑی کمپنیوں کو ٹریک کرتا ہے۔ یہی نمبر 'مارکیٹ' کے طور پر پیش کیا جاتا ہے۔",
+  "Tracks the 30 most liquid, large companies on the PSX using a free-float methodology — a snapshot of blue-chip performance.":
+    "فری-فلوٹ طریقہ کار سے PSX کی 30 سب سے زیادہ لیکویڈ، بڑی کمپنیوں کو ٹریک کرتا ہے — بلیو چپ کارکردگی کا منظر۔",
+  "The KSE-Meezan Index — 30 Sharia-compliant (Islamic) companies, screened to exclude interest-based and non-permissible businesses.":
+    "کے ایس ای-میزان انڈیکس — 30 شریعت کے مطابق (اسلامی) کمپنیاں، جو سودی اور ناجائز کاروبار کو خارج کر کے منتخب کی گئی ہیں۔",
+  "Captures every eligible listed company on the PSX — the broadest measure of the whole market's direction.":
+    "PSX کی ہر اہل لسٹڈ کمپنی کو شامل کرتا ہے — پوری مارکیٹ کی سمت کا سب سے وسیع پیمانہ۔",
+
+  // ---- Learn Hub ----
+  "From KSE basics to technical analysis — in plain Urdu and English.":
+    "کے ایس ای کی بنیادی باتوں سے تکنیکی تجزیے تک — سادہ اردو اور انگریزی میں۔",
+  "Beginner Investor": "ابتدائی سرمایہ کار",
+  "Learning Paths": "سیکھنے کے راستے",
+  "Follow a structured track or explore freely": "ایک منظم راستہ اپنائیں یا آزادانہ دریافت کریں",
+  Lessons: "اسباق",
+  Glossary: "لغت",
+  "Flashcard Mode": "فلیش کارڈ موڈ",
+  Flashcards: "فلیش کارڈز",
+  "Continue Path": "راستہ جاری رکھیں",
+  "Start Path": "راستہ شروع کریں",
+  "Video + Article": "ویڈیو + مضمون",
+  Article: "مضمون",
+  "In Progress": "جاری",
+  "Tap to flip": "پلٹنے کے لیے ٹیپ کریں",
+  "Got it": "سمجھ گیا",
+  "Review Again": "دوبارہ دیکھیں",
+  "Ask AI Tutor": "اے آئی ٹیوٹر سے پوچھیں",
+  "Ask AI": "اے آئی سے پوچھیں",
+  "Thinking…": "سوچ رہا ہے…",
+  "Lesson not found": "سبق نہیں ملا",
+  "Back to Learn Hub": "لرن ہب پر واپس",
+  "In This Lesson": "اس سبق میں",
+  "Bookmark Lesson": "سبق بک مارک کریں",
+  Bookmarked: "بک مارک شدہ",
+  Beginner: "ابتدائی",
+  Intermediate: "درمیانہ",
+  Complete: "مکمل",
+  Locked: "مقفل",
+  "PSX Investor Starter": "PSX سرمایہ کار آغاز",
+  "From zero to your first trade": "صفر سے آپ کی پہلی ٹریڈ تک",
+  "Technical Analysis": "تکنیکی تجزیہ",
+  "Charts, patterns, and indicators": "چارٹس، پیٹرنز اور اشارے",
+  "Islamic Finance": "اسلامی مالیات",
+  "Halal investing principles": "حلال سرمایہ کاری کے اصول",
+  "Budget, save, and grow": "بجٹ بنائیں، بچائیں اور بڑھائیں",
+  "What is a Candlestick?": "کینڈل اسٹک کیا ہے؟",
+  "Understanding RSI": "آر ایس آئی کو سمجھنا",
+  "Sector Heatmap Guide": "سیکٹر ہیٹ میپ گائیڈ",
+  "What is a Stop-Loss?": "اسٹاپ لاس کیا ہے؟",
+  "Dividend Yield": "ڈیویڈنڈ یِلڈ",
+  "5 Candle Patterns": "5 کینڈل پیٹرنز",
+  "50/30/20 Budget Rule": "50/30/20 بجٹ اصول",
+  "How PSX Works": "PSX کیسے کام کرتا ہے",
+  "Halal Investing & Islamic Finance": "حلال سرمایہ کاری اور اسلامی مالیات",
+  "Understanding P/E Ratio": "قیمت آمدنی تناسب کو سمجھنا",
+
+  // ---- Plans ----
+  "Enter App": "ایپ میں داخل ہوں",
+  "Simple, honest pricing": "سادہ، ایماندار قیمتیں",
+  "Start free. Upgrade when you're ready for real-time data and unlimited AI insights.":
+    "مفت شروع کریں۔ جب آپ ریئل ٹائم ڈیٹا اور لامحدود اے آئی بصیرت کے لیے تیار ہوں تو اپ گریڈ کریں۔",
+  Monthly: "ماہانہ",
+  Yearly: "سالانہ",
+  "SAVE 20%": "20% بچائیں",
+  "MOST POPULAR": "سب سے مقبول",
+  "/ mo": "/ ماہ",
+  "Billed annually — 20% off": "سالانہ بل — 20% رعایت",
+  "Compare plans": "پلانز کا موازنہ",
+  Feature: "خصوصیت",
+  Pro: "پرو",
+  Premium: "پریمیم",
+  Custom: "حسبِ ضرورت",
+  "Get Started": "شروع کریں",
+  "Contact Us": "ہم سے رابطہ کریں",
+  "Get started with the essentials": "بنیادی چیزوں کے ساتھ آغاز کریں",
+  "For serious investors": "سنجیدہ سرمایہ کاروں کے لیے",
+  "For families & power users": "خاندانوں اور پاور صارفین کے لیے",
+  "Delayed PSX data": "تاخیر سے PSX ڈیٹا",
+  "1 portfolio": "1 پورٹ فولیو",
+  "Basic finance tracker": "بنیادی فنانس ٹریکر",
+  "Zakat calculator": "زکوٰۃ کیلکولیٹر",
+  "3 AI Advisor queries / month": "3 اے آئی ایڈوائزر سوالات / ماہ",
+  "Real-time PSX data": "ریئل ٹائم PSX ڈیٹا",
+  "Unlimited AI Advisor": "لامحدود اے آئی ایڈوائزر",
+  "Full Haqeeqi Daulat breakdown": "مکمل حقیقی دولت تفصیل",
+  "Unlimited portfolios & watchlists": "لامحدود پورٹ فولیوز اور واچ لسٹس",
+  "Halal screening filters": "حلال اسکریننگ فلٹرز",
+  "Priority alerts": "ترجیحی الرٹس",
+  "Everything in Pro": "پرو کی ہر چیز",
+  "Multi-account / family tracking": "ملٹی اکاؤنٹ / فیملی ٹریکنگ",
+  "Advanced data export": "ایڈوانس ڈیٹا ایکسپورٹ",
+  "Priority support": "ترجیحی سپورٹ",
+
+  // ---- Stock detail ----
+  "Back to Market": "مارکیٹ پر واپس",
+  "AI Technical Analysis": "اے آئی تکنیکی تجزیہ",
+  "Recent News": "حالیہ خبریں",
+  "Add to Watchlist": "واچ لسٹ میں شامل کریں",
+  "Add to Portfolio": "پورٹ فولیو میں شامل کریں",
+  "Set Price Alert": "قیمت الرٹ سیٹ کریں",
+  "Market Cap": "مارکیٹ کیپ",
+  "P/E Ratio": "قیمت آمدنی تناسب",
+  EPS: "ای پی ایس",
+  "52W High": "52 ہفتہ بلند",
+  "52W Low": "52 ہفتہ کم",
+  "Avg Volume": "اوسط حجم",
+  "Book Value": "بک ویلیو",
+  "This is AI-generated technical analysis only. Not financial advice.":
+    "یہ صرف اے آئی سے تیار کردہ تکنیکی تجزیہ ہے۔ مالی مشورہ نہیں۔",
+
+  // ---- Portfolio report + misc ----
+  "— AI signals suggest reviewing these positions.":
+    "— اے آئی سگنلز ان پوزیشنز کا جائزہ لینے کی تجویز دیتے ہیں۔",
+  "Your Portfolio Report — June 2025": "آپ کی پورٹ فولیو رپورٹ — جون 2025",
+  "Diversification Analysis": "تنوع کا تجزیہ",
+  "Risk Assessment": "خطرے کا جائزہ",
+  Opportunities: "مواقع",
+  "Suggested Actions": "تجویز کردہ اقدامات",
+  "Your portfolio is moderately diversified across 4 sectors. However, Oil & Gas represents 34% of your holdings which increases sector concentration risk. Consider adding a Tech or FMCG stock to balance exposure.":
+    "آپ کا پورٹ فولیو 4 شعبوں میں معتدل طور پر متنوع ہے۔ تاہم، آئل اینڈ گیس آپ کی ملکیت کا 34% ہے جو شعبہ ارتکاز کا خطرہ بڑھاتا ہے۔ توازن کے لیے ایک ٹیک یا ایف ایم سی جی اسٹاک شامل کرنے پر غور کریں۔",
+  "Medium risk profile. FFC is showing a SELL signal with RSI at 38 — consider reviewing this position. LUCK (HOLD) is underperforming vs sector avg.":
+    "درمیانہ خطرہ پروفائل۔ FFC، RSI 38 کے ساتھ سیل سگنل دکھا رہا ہے — اس پوزیشن کا جائزہ لیں۔ LUCK (ہولڈ) شعبے کی اوسط کے مقابلے میں کمزور کارکردگی دکھا رہا ہے۔",
+  "HBL and UBL in the Banking sector are both showing Strong Buy signals. Your existing HBL position is +20.4% — consider whether to take partial profits.":
+    "بینکنگ شعبے میں HBL اور UBL دونوں اسٹرانگ بائی سگنل دکھا رہے ہیں۔ آپ کی موجودہ HBL پوزیشن +20.4% ہے — جزوی منافع لینے پر غور کریں۔",
+  "1. Review FFC position (SELL signal active)\n2. Consider reducing Oil & Gas concentration below 25%\n3. HBL approaching resistance at 150 — set a price alert":
+    "1۔ FFC پوزیشن کا جائزہ لیں (سیل سگنل فعال)\n2۔ آئل اینڈ گیس ارتکاز 25% سے کم کرنے پر غور کریں\n3۔ HBL، 150 پر مزاحمت کے قریب — قیمت الرٹ سیٹ کریں",
+  "34% of portfolio in Oil & Gas provides partial hedge against rupee weakness.":
+    "پورٹ فولیو کا 34% آئل اینڈ گیس میں روپے کی کمزوری کے خلاف جزوی تحفظ فراہم کرتا ہے۔",
+  "BULLISH · Confidence 72%": "تیزی · اعتماد 72%",
 };
 
 export function translate(lang: Lang, key: string): string {

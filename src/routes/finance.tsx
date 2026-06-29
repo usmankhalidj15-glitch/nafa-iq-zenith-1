@@ -284,18 +284,18 @@ function Overview() {
         <div className="relative z-10 flex items-end justify-between">
           <div>
             <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-text-secondary">
-              6-Month Overview
+              {t("6-Month Overview")}
             </div>
             <div className="mt-0.5 text-[11px] text-text-muted">Jan 2026 — Jun 2026</div>
           </div>
           <div className="flex items-center gap-3 text-[11px] font-medium text-text-secondary">
             <span className="flex items-center gap-1.5">
               <span className="h-2 w-2 rounded-full bg-bull" />
-              In
+              {t("In")}
             </span>
             <span className="flex items-center gap-1.5">
               <span className="h-2 w-2 rounded-full bg-bear" />
-              Out
+              {t("Out")}
             </span>
           </div>
         </div>
@@ -311,6 +311,7 @@ function Overview() {
 }
 
 function Transactions() {
+  const { t: tr } = useLang();
   const grouped = TRANSACTIONS.reduce<Record<string, typeof TRANSACTIONS>>((acc, t) => {
     (acc[t.date] ??= []).push(t);
     return acc;
@@ -321,7 +322,7 @@ function Transactions() {
         <div className="flex flex-1 items-center gap-2 rounded-[6px] border border-border bg-surface px-3 py-2">
           <Search className="h-4 w-4 text-text-muted" />
           <input
-            placeholder="Search transactions"
+            placeholder={tr("Search transactions")}
             className="w-full bg-transparent text-sm text-text-primary outline-none placeholder:text-text-muted"
           />
         </div>
@@ -344,7 +345,7 @@ function Transactions() {
                 <div className="flex-1">
                   <div className="text-sm text-text-primary">{t.merchant}</div>
                   <div className="flex items-center gap-1.5 text-[11px] text-text-muted">
-                    <span className="rounded-[4px] bg-elevated px-1.5 py-0.5">{t.category}</span>
+                    <span className="rounded-[4px] bg-elevated px-1.5 py-0.5">{tr(t.category)}</span>
                     {t.account}
                   </div>
                 </div>
@@ -367,6 +368,7 @@ function Transactions() {
 }
 
 function Budgets() {
+  const { t } = useLang();
   const [offset, setOffset] = useState(0);
   const base = new Date();
   const current = new Date(base.getFullYear(), base.getMonth() + offset, 1);
@@ -400,7 +402,7 @@ function Budgets() {
           return (
             <Card key={b.category}>
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-text-primary">{b.category}</span>
+                <span className="text-sm font-medium text-text-primary">{t(b.category)}</span>
                 <span
                   className={cn(
                     "font-mono text-xs tabular-nums",
@@ -419,7 +421,7 @@ function Budgets() {
               {b.tip && (
                 <div className="mt-2 flex items-start gap-1.5 rounded-[6px] border-l-2 border-ai bg-ai-tint px-2.5 py-1.5 text-[11px] text-text-secondary">
                   <Lightbulb className="mt-0.5 h-3 w-3 shrink-0 text-ai" strokeWidth={1.5} />
-                  {b.tip}
+                  {t(b.tip)}
                 </div>
               )}
             </Card>
@@ -431,6 +433,7 @@ function Budgets() {
 }
 
 function Bills() {
+  const { t } = useLang();
   return (
     <div className="space-y-3">
       {BILLS.map((b) => (
@@ -439,8 +442,8 @@ function Bills() {
             {b.name[0]}
           </div>
           <div className="flex-1">
-            <div className="text-sm font-medium text-text-primary">{b.name}</div>
-            <div className="text-[11px] text-text-muted">Due {b.due}</div>
+            <div className="text-sm font-medium text-text-primary">{t(b.name)}</div>
+            <div className="text-[11px] text-text-muted">{t("Due")} {b.due}</div>
           </div>
           <span className="font-mono text-sm font-medium tabular-nums text-text-primary">
             {fmtPKR(b.amount)}
@@ -453,7 +456,7 @@ function Bills() {
                 : "bg-elevated text-text-secondary",
             )}
           >
-            {b.status}
+            {t(b.status)}
           </span>
           <button className="flex h-8 w-8 items-center justify-center rounded-full border border-bull text-bull hover:bg-bull/10">
             <Check className="h-4 w-4" />
@@ -462,13 +465,14 @@ function Bills() {
       ))}
       <button className="flex w-full items-center justify-center gap-1.5 rounded-[6px] border border-dashed border-border py-3 text-sm font-medium text-text-secondary hover:border-bull hover:text-bull">
         <Plus className="h-4 w-4" />
-        Add Bill
+        {t("Add Bill")}
       </button>
     </div>
   );
 }
 
 function Goals() {
+  const { t } = useLang();
   return (
     <div className="grid gap-4 md:grid-cols-2">
       {GOALS.map((g) => {
@@ -479,13 +483,13 @@ function Goals() {
               <span className="flex h-9 w-9 items-center justify-center rounded-[8px] border border-bull/20 bg-bull/[0.08] text-bull">
                 <EmojiIcon emoji={g.emoji} size={16} />
               </span>
-              <span className="font-semibold text-text-primary">{g.name}</span>
+              <span className="font-semibold text-text-primary">{t(g.name)}</span>
               <span className="ml-auto font-mono text-sm font-bold tabular-nums text-bull">
                 {pct}%
               </span>
             </div>
             <div className="mt-2 font-mono text-xs tabular-nums text-text-secondary">
-              Target {fmtPKR(g.target)} · Saved {fmtPKR(g.saved)}
+              {t("Target")} {fmtPKR(g.target)} · {t("Saved")} {fmtPKR(g.saved)}
             </div>
             <div className="mt-2 h-2 overflow-hidden rounded-full bg-elevated">
               <div
@@ -494,18 +498,18 @@ function Goals() {
               />
             </div>
             {g.date && (
-              <div className="mt-2 text-[11px] text-text-muted">Target date: {g.date}</div>
+              <div className="mt-2 text-[11px] text-text-muted">{t("Target date:")} {g.date}</div>
             )}
             <div className="mt-2 rounded-[6px] border-l-2 border-ai bg-ai-tint px-2.5 py-1.5 text-[11px] text-text-secondary">
               <Sparkles className="mr-1 inline h-3 w-3 text-ai" />
-              {g.ai}
+              {t(g.ai)}
             </div>
           </Card>
         );
       })}
       <button className="flex min-h-[120px] items-center justify-center gap-1.5 rounded-[8px] border border-dashed border-border text-sm font-medium text-text-secondary hover:border-bull hover:text-bull">
         <Plus className="h-4 w-4" />
-        Add Goal
+        {t("Add Goal")}
       </button>
     </div>
   );
