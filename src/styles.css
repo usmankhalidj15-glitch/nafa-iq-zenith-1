@@ -732,6 +732,10 @@
   line-height: 2;
   letter-spacing: 0;
   word-spacing: 0.05em;
+  /* Naskh x-height is smaller than Latin at the same font-size, so Urdu looks
+     tiny. font-size-adjust inherits to every child and scales glyphs up to a
+     consistent apparent size relative to each element's own font-size. */
+  font-size-adjust: 0.62;
 }
 .font-nastaliq {
   font-family: var(--font-nastaliq);
