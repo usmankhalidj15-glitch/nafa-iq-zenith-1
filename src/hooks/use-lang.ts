@@ -235,6 +235,8 @@ const UR: Record<string, string> = {
   Out: "اخراج",
   "Add Bill": "بل شامل کریں",
   "Add Goal": "ہدف شامل کریں",
+  "Amount (PKR)": "رقم (روپے)",
+  "Please enter a valid amount.": "براہ کرم درست رقم درج کریں۔",
   Due: "واجب الادا",
   "Target date:": "ہدف کی تاریخ:",
   Target: "ہدف",
