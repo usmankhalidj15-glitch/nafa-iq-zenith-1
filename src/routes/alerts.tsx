@@ -88,7 +88,10 @@ function Alerts() {
         <div className="space-y-2">
           {alerts.map((a, i) => (
             <Card key={i} className="flex items-center gap-3">
-              <span className="flex h-9 w-9 items-center justify-center rounded-[8px] border border-white/[0.06] bg-elevated text-text-secondary">
+              <span className={cn(
+                "flex h-9 w-9 items-center justify-center rounded-[8px] border border-white/[0.06] bg-elevated text-text-secondary",
+                a.type.includes("Goal") ? "badge-positive" : a.type.includes("Bill") || a.type.includes("Budget") ? "badge-negative" : "badge-neutral",
+              )}>
                 <EmojiIcon emoji={a.emoji} size={16} />
               </span>
               <div className="flex-1">
