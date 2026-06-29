@@ -35,6 +35,7 @@ import {
 } from "@/lib/learn-data";
 import { askTutor } from "@/lib/learn-ai.functions";
 import { useLearn } from "@/hooks/use-learn";
+import { useLang } from "@/hooks/use-lang";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/learn/lesson/$id")({
