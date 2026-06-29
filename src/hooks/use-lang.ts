@@ -412,6 +412,77 @@ const UR: Record<string, string> = {
   "34% of portfolio in Oil & Gas provides partial hedge against rupee weakness.":
     "پورٹ فولیو کا 34% آئل اینڈ گیس میں روپے کی کمزوری کے خلاف جزوی تحفظ فراہم کرتا ہے۔",
   "BULLISH · Confidence 72%": "تیزی · اعتماد 72%",
+
+  // ---- Learn Hub (extended) ----
+  "lessons complete": "اسباق مکمل",
+  "5 Day Streak": "5 دن کا تسلسل",
+  "Lessons Done": "اسباق مکمل",
+  "XP Earned": "ایکس پی حاصل",
+  "Beginner Level": "ابتدائی سطح",
+  lessons: "اسباق",
+  "Est:": "تخمینہ:",
+  min: "منٹ",
+  "complete": "مکمل",
+  "No terms found for": "کوئی اصطلاح نہیں ملی",
+  "Deck Complete!": "ڈیک مکمل!",
+  "You reviewed all": "آپ نے تمام",
+  terms: "اصطلاحات",
+  "terms.": "اصطلاحات کا جائزہ لیا۔",
+  "Restart Deck": "ڈیک دوبارہ شروع کریں",
+  Exit: "باہر نکلیں",
+  "Ask about investing…": "سرمایہ کاری کے بارے میں پوچھیں…",
+  "What is the KSE-100 index?": "کے ایس ای-100 انڈیکس کیا ہے؟",
+  "How do I start investing in PSX?": "میں پی ایس ایکس میں سرمایہ کاری کیسے شروع کروں؟",
+  "Explain candlestick charts simply": "کینڈل اسٹک چارٹس آسان الفاظ میں سمجھائیں",
+  "Hi! I'm your NafaIQ tutor. Ask me anything about PSX investing, terms, or strategies.":
+    "سلام! میں آپ کا نفع آئی کیو ٹیوٹر ہوں۔ پی ایس ایکس سرمایہ کاری، اصطلاحات یا حکمت عملی کے بارے میں کچھ بھی پوچھیں۔",
+  "Sorry, something went wrong. Please try again.":
+    "معذرت، کچھ غلط ہو گیا۔ براہ کرم دوبارہ کوشش کریں۔",
+
+  // ---- Lesson page ----
+  Bookmark: "بک مارک",
+  read: "پڑھنے کا وقت",
+  Hide: "چھپائیں",
+  Read: "پڑھیں",
+  "Article Version": "مضمون ورژن",
+  "Mark Video as Watched": "ویڈیو کو دیکھا ہوا نشان زد کریں",
+  "Watch at least 80% of the video to mark as complete":
+    "مکمل کے طور پر نشان زد کرنے کے لیے کم از کم 80% ویڈیو دیکھیں",
+  "Test Your Understanding — Take the Quiz":
+    "اپنی سمجھ بوجھ آزمائیں — کوئز دیں",
+  questions: "سوالات",
+  "Earn up to 50 XP": "50 ایکس پی تک حاصل کریں",
+  "You've completed this lesson": "آپ نے یہ سبق مکمل کر لیا ہے",
+  Previous: "پچھلا",
+  Next: "اگلا",
+  "Video loading…": "ویڈیو لوڈ ہو رہی ہے…",
+  "Back to Lesson": "سبق پر واپس",
+  "Up to 50 XP": "50 ایکس پی تک",
+  "Knowledge Check": "علم کی جانچ",
+  Question: "سوال",
+  of: "میں سے",
+  "Correct! ": "درست! ",
+  "Not quite. ": "بالکل نہیں۔ ",
+  "See Results": "نتائج دیکھیں",
+  "Next Question": "اگلا سوال",
+  "Quiz Results": "کوئز کے نتائج",
+  "Added to your profile": "آپ کے پروفائل میں شامل",
+  "XP total": "کل ایکس پی",
+  "Continue Learning": "سیکھنا جاری رکھیں",
+  "Retake Quiz": "کوئز دوبارہ دیں",
+  "Perfect Score! Ustād level understanding!":
+    "بہترین اسکور! استاد جیسی سمجھ بوجھ!",
+  "Great work! One more review and you'll nail it.":
+    "بہترین کام! ایک اور جائزہ اور آپ کامیاب!",
+  "📖 Keep learning — review the lesson and retry.":
+    "📖 سیکھتے رہیں — سبق کا جائزہ لیں اور دوبارہ کوشش کریں۔",
+  "💪 Don't give up — re-read and try again!":
+    "💪 ہمت نہ ہاریں — دوبارہ پڑھیں اور کوشش کریں!",
+  "AI Tutor": "اے آئی ٹیوٹر",
+  "Ask anything about this lesson": "اس سبق کے بارے میں کچھ بھی پوچھیں",
+  "Powered by AI": "اے آئی سے چلایا گیا",
+  "just now": "ابھی",
+  "Ask about this lesson…": "اس سبق کے بارے میں پوچھیں…",
 };
 
 export function translate(lang: Lang, key: string): string {

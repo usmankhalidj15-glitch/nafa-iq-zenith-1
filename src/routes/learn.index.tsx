@@ -21,6 +21,7 @@ import { useLearn } from "@/hooks/use-learn";
 import { useServerFn } from "@tanstack/react-start";
 import { askTutor } from "@/lib/learn-ai.functions";
 import { cn } from "@/lib/utils";
+import { useLang } from "@/hooks/use-lang";
 
 export const Route = createFileRoute("/learn/")({
   head: () => ({
@@ -70,6 +71,7 @@ function CompletionRing({ status }: { status: string }) {
 
 function Learn() {
   const { xp, statusOf, pathProgress } = useLearn();
+  const { t } = useLang();
   const [search, setSearch] = useState("");
   const [flashcards, setFlashcards] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
@@ -96,11 +98,11 @@ function Learn() {
         <h1 className="font-urdu text-2xl text-text-primary">سمجھو، سیکھو، بڑھو</h1>
         <p className="text-sm font-semibold text-text-primary">Samjho, Seekho, Barho</p>
         <p className="mt-1 text-sm text-text-secondary">
-          From KSE basics to technical analysis — in plain Urdu and English.
+          {t("From KSE basics to technical analysis — in plain Urdu and English.")}
         </p>
         <div className="mt-3 flex flex-wrap items-center gap-3">
           <span className="rounded-[4px] bg-elevated px-2 py-1 text-xs text-text-secondary">
-            Beginner Investor · {lessonsDone} lessons complete
+            {t("Beginner Investor")} · {lessonsDone} {t("lessons complete")}
           </span>
           <div className="flex items-center gap-2">
             <div className="h-2 w-40 overflow-hidden rounded-full bg-elevated">
@@ -117,18 +119,18 @@ function Learn() {
 
         {/* Learning stats bar */}
         <div className="mt-4 flex flex-wrap gap-2">
-          <StatChip emoji="🔥" label="5 Day Streak" color="#f59e0b" />
-          <StatChip emoji="✅" label={`${lessonsDone} Lessons Done`} color="#00d4aa" />
-          <StatChip emoji="⭐" label={`${xp} XP Earned`} color="#eab308" />
-          <StatChip emoji="🏆" label="Beginner Level" color="#8b5cf6" />
+          <StatChip emoji="🔥" label={t("5 Day Streak")} color="#f59e0b" />
+          <StatChip emoji="✅" label={`${lessonsDone} ${t("Lessons Done")}`} color="#00d4aa" />
+          <StatChip emoji="⭐" label={`${xp} ${t("XP Earned")}`} color="#eab308" />
+          <StatChip emoji="🏆" label={t("Beginner Level")} color="#8b5cf6" />
         </div>
       </Card>
 
       {/* Learning Paths */}
       <section>
-        <h3 className="text-sm font-semibold text-text-primary">Learning Paths</h3>
+        <h3 className="text-sm font-semibold text-text-primary">{t("Learning Paths")}</h3>
         <p className="mb-3 text-xs text-text-secondary">
-          Follow a structured track or explore freely
+          {t("Follow a structured track or explore freely")}
         </p>
         <div className="scrollbar-none flex gap-3 overflow-x-auto pb-2">
           {LEARNING_PATHS.map((p) => {
@@ -147,10 +149,10 @@ function Learn() {
                 >
                   <EmojiIcon emoji={p.emoji} size={18} />
                 </div>
-                <div className="mt-2 text-sm font-semibold text-text-primary">{p.title}</div>
-                <div className="mt-0.5 text-xs text-text-secondary">{p.description}</div>
+                <div className="mt-2 text-sm font-semibold text-text-primary">{t(p.title)}</div>
+                <div className="mt-0.5 text-xs text-text-secondary">{t(p.description)}</div>
                 <div className="mt-2 font-mono text-[11px] text-text-muted">
-                  {p.lessonIds.length} lessons · Est: {p.estMin} min
+                  {p.lessonIds.length} {t("lessons")} · {t("Est:")} {p.estMin} {t("min")}
                 </div>
                 <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-elevated">
                   <div
@@ -159,7 +161,7 @@ function Learn() {
                   />
                 </div>
                 <div className="mt-1 text-[10px] font-medium text-text-muted">
-                  {progress}% complete
+                  {progress}% {t("complete")}
                 </div>
                 <Link
                   to="/learn/lesson/$id"
@@ -167,7 +169,7 @@ function Learn() {
                   className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-[8px] px-3 py-2 text-xs font-semibold transition-colors"
                   style={{ background: `${p.accent}1a`, color: p.accent }}
                 >
-                  {progress > 0 ? "Continue Path" : "Start Path"}
+                  {progress > 0 ? t("Continue Path") : t("Start Path")}
                   <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
@@ -178,7 +180,7 @@ function Learn() {
 
       {/* Lessons */}
       <section>
-        <h3 className="mb-3 text-sm font-semibold text-text-primary">Lessons</h3>
+        <h3 className="mb-3 text-sm font-semibold text-text-primary">{t("Lessons")}</h3>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {LESSONS.map((l) => {
             const id = LESSON_ID_BY_TITLE[l.title];
@@ -193,13 +195,13 @@ function Learn() {
                       <EmojiIcon emoji={l.emoji} size={18} />
                     </span>
                     <div className="flex-1">
-                      <div className="text-sm font-medium text-text-primary">{l.title}</div>
+                      <div className="text-sm font-medium text-text-primary">{t(l.title)}</div>
                       <div className="mt-1 flex items-center gap-1.5 text-[10px]">
                         <span className="rounded-[4px] bg-elevated px-1.5 py-0.5 text-text-muted">
                           {l.duration}
                         </span>
                         <span className="rounded-[4px] bg-elevated px-1.5 py-0.5 text-text-muted">
-                          {l.level}
+                          {t(l.level)}
                         </span>
                       </div>
                     </div>
@@ -209,16 +211,16 @@ function Learn() {
                     <span className="inline-flex items-center gap-1 rounded-[4px] bg-elevated px-2 py-0.5 text-[10px] text-text-secondary">
                       {isVideo ? (
                         <>
-                          <Video className="h-3 w-3" strokeWidth={1.5} /> Video + Article
+                          <Video className="h-3 w-3" strokeWidth={1.5} /> {t("Video + Article")}
                         </>
                       ) : (
                         <>
-                          <BookOpen className="h-3 w-3" strokeWidth={1.5} /> Article
+                          <BookOpen className="h-3 w-3" strokeWidth={1.5} /> {t("Article")}
                         </>
                       )}
                     </span>
                     {status === "in-progress" && (
-                      <span className="text-[10px] font-medium text-warning">In Progress</span>
+                      <span className="text-[10px] font-medium text-warning">{t("In Progress")}</span>
                     )}
                   </div>
                 </Card>
@@ -231,12 +233,12 @@ function Learn() {
       {/* Glossary */}
       <section>
         <div className="mb-3 flex items-center justify-between gap-2">
-          <h3 className="text-sm font-semibold text-text-primary">Glossary</h3>
+          <h3 className="text-sm font-semibold text-text-primary">{t("Glossary")}</h3>
           <button
             onClick={() => setFlashcards(true)}
             className="inline-flex items-center gap-1.5 rounded-[6px] border border-bull/40 bg-bull/10 px-3 py-1.5 text-xs font-semibold text-bull hover:bg-bull/20"
           >
-            <Layers className="h-3.5 w-3.5" /> Flashcard Mode
+            <Layers className="h-3.5 w-3.5" /> {t("Flashcard Mode")}
           </button>
         </div>
         <div className="mb-3 flex items-center gap-2 rounded-[6px] border border-border bg-surface px-3 py-2">
@@ -244,23 +246,23 @@ function Learn() {
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search terms"
+            placeholder={t("Search terms")}
             className="w-full bg-transparent text-sm text-text-primary outline-none placeholder:text-text-muted"
           />
         </div>
         <div className="space-y-2">
-          {terms.map((t) => (
-            <details key={t.en} className="group rounded-[8px] border border-border bg-surface p-3">
+          {terms.map((term) => (
+            <details key={term.en} className="group rounded-[8px] border border-border bg-surface p-3">
               <summary className="flex cursor-pointer items-center justify-between text-sm font-medium text-text-primary">
-                <span>{t.en}</span>
-                <span className="font-urdu text-base text-text-secondary">{t.ur}</span>
+                <span>{term.en}</span>
+                <span className="font-urdu text-base text-text-secondary">{term.ur}</span>
               </summary>
-              <p className="mt-2 text-xs leading-relaxed text-text-secondary">{t.def}</p>
+              <p className="mt-2 text-xs leading-relaxed text-text-secondary">{term.def}</p>
             </details>
           ))}
           {terms.length === 0 && (
             <div className="rounded-[8px] border border-dashed border-border bg-surface p-6 text-center text-sm text-text-muted">
-              No terms found for “{search}”
+              {t("No terms found for")} “{search}”
             </div>
           )}
         </div>
@@ -273,7 +275,7 @@ function Learn() {
       <button
         onClick={() => setChatOpen(true)}
         className="fixed right-4 bottom-20 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-bull text-bull-foreground shadow-[0_4px_24px_rgba(0,0,0,0.5)] hover:brightness-110 lg:bottom-8"
-        aria-label="Ask AI Tutor"
+        aria-label={t("Ask AI Tutor")}
       >
         <Bot className="h-6 w-6" />
       </button>
@@ -292,7 +294,7 @@ function Learn() {
             <div className="mx-auto mt-2 h-1 w-10 rounded-full bg-border sm:hidden" />
             <div className="flex items-center justify-between border-b border-border px-4 py-3">
               <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-text-primary">
-                <Bot className="h-4 w-4 text-bull" strokeWidth={1.5} /> Ask AI Tutor
+                <Bot className="h-4 w-4 text-bull" strokeWidth={1.5} /> {t("Ask AI Tutor")}
               </span>
               <button onClick={() => setChatOpen(false)} aria-label="Close">
                 <X className="h-5 w-5 text-text-secondary" />
@@ -321,11 +323,13 @@ const HUB_PRESETS = [
 
 function HubChatPanel() {
   const ask = useServerFn(askTutor);
+  const { t } = useLang();
   const [messages, setMessages] = useState<HubChatMsg[]>([
     {
       role: "assistant",
-      content:
+      content: t(
         "Hi! I'm your NafaIQ tutor. Ask me anything about PSX investing, terms, or strategies.",
+      ),
     },
   ]);
   const [input, setInput] = useState("");
@@ -355,7 +359,7 @@ function HubChatPanel() {
       } catch {
         setMessages((m) => [
           ...m,
-          { role: "assistant", content: "Sorry, something went wrong. Please try again." },
+          { role: "assistant", content: t("Sorry, something went wrong. Please try again.") },
         ]);
       } finally {
         setLoading(false);
@@ -392,7 +396,7 @@ function HubChatPanel() {
                 onClick={() => send(p)}
                 className="block w-full rounded-full border border-border px-3 py-1.5 text-left text-[11px] text-text-secondary hover:border-bull hover:text-bull"
               >
-                {p}
+                {t(p)}
               </button>
             ))}
           </div>
@@ -400,7 +404,7 @@ function HubChatPanel() {
 
         {loading && (
           <div className="flex items-center gap-2 text-xs text-text-muted">
-            <Sparkles className="h-3.5 w-3.5 animate-pulse text-bull" /> Thinking…
+            <Sparkles className="h-3.5 w-3.5 animate-pulse text-bull" /> {t("Thinking…")}
           </div>
         )}
       </div>
@@ -410,7 +414,7 @@ function HubChatPanel() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && send(input)}
-          placeholder="Ask about investing…"
+          placeholder={t("Ask about investing…")}
           className="flex-1 rounded-[8px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary outline-none placeholder:text-text-muted"
         />
         <button
@@ -426,6 +430,7 @@ function HubChatPanel() {
 }
 
 function FlashcardModal({ onClose }: { onClose: () => void }) {
+  const { t } = useLang();
   const [deck, setDeck] = useState(FLASHCARDS.map((_, i) => i));
   const [pos, setPos] = useState(0);
   const [flipped, setFlipped] = useState(false);
