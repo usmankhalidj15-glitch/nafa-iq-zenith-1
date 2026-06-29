@@ -575,6 +575,19 @@ const UR: Record<string, string> = {
   "Score 2+ to complete this lesson.": "سبق مکمل کرنے کے لیے 2 یا زیادہ درست کریں۔",
   Explanation: "وضاحت",
   Correct: "درست",
+  // Urdu QA preview
+  "Understand, Learn, Grow": "سمجھو، سیکھو، بڑھو",
+  "Your net worth at a glance": "ایک نظر میں آپ کی کل مالیت",
+  "Track your portfolio, spending and PSX signals in one calm place.":
+    "اپنے پورٹ فولیو، اخراجات اور پی ایس ایکس سگنلز کو ایک پُرسکون جگہ پر دیکھیں۔",
+  "Monthly Expenses": "ماہانہ اخراجات",
+  "Search stocks (e.g. HBL)": "اسٹاکس تلاش کریں (مثلاً HBL)",
+  Symbol: "علامت",
+  Signal: "سگنل",
+  Change: "تبدیلی",
+  "AI Suggestion": "اے آئی تجویز",
+  "Back to Dashboard": "ڈیش بورڈ پر واپس",
+  "Urdu QA Preview": "اردو کیو اے پیش منظر",
 };
 
 
