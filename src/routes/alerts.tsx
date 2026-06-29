@@ -75,22 +75,22 @@ function Alerts() {
       </section>
 
       <section>
-        <h3 className="mb-3 text-sm font-semibold text-text-primary">Add New Alert</h3>
+        <h3 className="mb-3 text-sm font-semibold text-text-primary">{t("Add New Alert")}</h3>
         <Card>
           <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
-            {TYPES.map((t) => (
+            {TYPES.map((ty) => (
               <button
-                key={t.label}
-                onClick={() => setType(t.label)}
+                key={ty.label}
+                onClick={() => setType(ty.label)}
                 className={cn(
                   "flex flex-col items-center gap-1.5 rounded-[10px] border p-3 text-xs font-medium transition",
-                  type === t.label
+                  type === ty.label
                     ? "border-primary/40 bg-primary/10 text-primary"
                     : "border-white/[0.06] text-text-secondary hover:bg-white/[0.04]",
                 )}
               >
-                <t.icon className="h-5 w-5" strokeWidth={1.75} />
-                {t.label}
+                <ty.icon className="h-5 w-5" strokeWidth={1.75} />
+                {t(ty.label)}
               </button>
             ))}
           </div>
