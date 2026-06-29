@@ -957,7 +957,7 @@ function Hero() {
         style={{
           y: reduce ? 0 : bgY,
           background:
-            "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,45,45,0.95) 0%, #0A0E1A 60%)",
+            "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(8,55,55,0.92) 0%, #0F1528 60%)",
         }}
       />
 
@@ -1090,7 +1090,7 @@ function Hero() {
       {/* bottom fade mask */}
       <div
         className="pointer-events-none absolute bottom-0 left-0 right-0 z-[1] h-[200px]"
-        style={{ background: "linear-gradient(to bottom, transparent, #0A0E1A)" }}
+        style={{ background: "linear-gradient(to bottom, transparent, #0F1528)" }}
       />
     </section>
   );
