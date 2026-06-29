@@ -442,8 +442,8 @@ function Bills() {
             {b.name[0]}
           </div>
           <div className="flex-1">
-            <div className="text-sm font-medium text-text-primary">{b.name}</div>
-            <div className="text-[11px] text-text-muted">Due {b.due}</div>
+            <div className="text-sm font-medium text-text-primary">{t(b.name)}</div>
+            <div className="text-[11px] text-text-muted">{t("Due")} {b.due}</div>
           </div>
           <span className="font-mono text-sm font-medium tabular-nums text-text-primary">
             {fmtPKR(b.amount)}
@@ -456,7 +456,7 @@ function Bills() {
                 : "bg-elevated text-text-secondary",
             )}
           >
-            {b.status}
+            {t(b.status)}
           </span>
           <button className="flex h-8 w-8 items-center justify-center rounded-full border border-bull text-bull hover:bg-bull/10">
             <Check className="h-4 w-4" />
@@ -465,7 +465,7 @@ function Bills() {
       ))}
       <button className="flex w-full items-center justify-center gap-1.5 rounded-[6px] border border-dashed border-border py-3 text-sm font-medium text-text-secondary hover:border-bull hover:text-bull">
         <Plus className="h-4 w-4" />
-        Add Bill
+        {t("Add Bill")}
       </button>
     </div>
   );
