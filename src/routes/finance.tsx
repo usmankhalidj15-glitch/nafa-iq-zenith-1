@@ -402,7 +402,7 @@ function Budgets() {
           return (
             <Card key={b.category}>
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-text-primary">{b.category}</span>
+                <span className="text-sm font-medium text-text-primary">{t(b.category)}</span>
                 <span
                   className={cn(
                     "font-mono text-xs tabular-nums",
