@@ -36,9 +36,14 @@ export const Route = createFileRoute("/portfolio")({
 
 const RANGES = ["1M", "3M", "6M", "1Y"] as const;
 
+const MONTHS = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+];
+
 function series(n: number) {
   const base = 761190;
-  return ["Jan", "Feb", "Mar", "Apr", "May", "Jun"].slice(6 - n).map((label, i, a) => {
+  return MONTHS.slice(12 - n).map((label, i, a) => {
     const f = i / (a.length - 1 || 1);
     return {
       label,
@@ -138,7 +143,7 @@ function Portfolio() {
   const { t } = useLang();
   const [range, setRange] = useState<(typeof RANGES)[number]>("6M");
   const [reportState, setReportState] = useState<"idle" | "loading" | "open">("idle");
-  const n = range === "1M" ? 2 : range === "3M" ? 3 : 6;
+  const n = range === "1M" ? 2 : range === "3M" ? 3 : range === "6M" ? 6 : 12;
 
   const [holdings, setHoldings] = useState<Holding[]>(HOLDINGS);
   const [formOpen, setFormOpen] = useState(false);
