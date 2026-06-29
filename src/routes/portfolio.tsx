@@ -512,7 +512,7 @@ function ReportModal({ onClose }: { onClose: () => void }) {
     >
       <div className="absolute inset-0 bg-black/70" />
       <div
-        className="safe-bottom relative max-h-[88vh] w-full max-w-lg overflow-y-auto rounded-t-[16px] border border-border bg-surface p-5 sm:rounded-[12px]"
+        className="safe-bottom relative max-h-[88vh] w-full max-w-lg overflow-y-auto rounded-t-[16px] border border-border bg-surface p-5 pb-8 sm:rounded-[12px]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-4 flex items-center justify-between">
