@@ -233,7 +233,11 @@ function Portfolio() {
       <h1 className="text-2xl font-bold text-text-primary sm:text-3xl">{t("Portfolio")}</h1>
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <StatCard label="Portfolio Value" value={fmtPKR(858054)} sub="Total Invested PKR 761,190" />
+        <StatCard
+          label="Portfolio Value"
+          value={fmtPKR(858054)}
+          sub={`${t("Total Invested")} ${fmtPKR(761190)}`}
+        />
         <StatCard label="Total Invested" value={fmtPKR(761190)} />
         <StatCard label="Total Gain" value="+PKR 96,864" sub="+12.73%" subColor="text-bull" />
         <StatCard label="Today's P/L" value="+PKR 17,480" sub="+1.42%" subColor="text-bull" />
