@@ -480,7 +480,7 @@ export function IncomeExpenseChart({
           labelStyle={{ color: ct.tooltipLabel }}
           cursor={{ fill: ct.cursorBar, fillOpacity: ct.light ? 1 : 0.4 }}
         />
-        <Legend wrapperStyle={{ fontSize: 12 }} />
+        {!ct.light && <Legend wrapperStyle={{ fontSize: 12 }} />}
         <Bar
           dataKey="income"
           name={t("In")}
