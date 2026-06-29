@@ -553,9 +553,17 @@
   color: var(--color-foreground);
 }
 
-/* ---- Cards: depth through layered shadows, not borders ---- */
+/* ---- Card elevation system (light): TWO standardized styles ----
+   Static info cards (.glass-card alone): flat — visible border, no shadow.
+   Interactive/clickable cards (.glass-card-hover): one soft shadow,
+   deepening slightly on hover. Applied app-wide via the shared utilities. */
 .theme-light .glass-card {
   background: var(--color-surface);
+  border-color: rgba(15, 23, 42, 0.08);
+  box-shadow: none;
+}
+/* Interactive cards opt into soft elevation at rest */
+.theme-light .glass-card-hover {
   border-color: transparent;
   box-shadow:
     0 0 0 1px rgba(15, 23, 42, 0.04),
