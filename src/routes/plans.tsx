@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Check, Minus, Star, ArrowRight, ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.png";
+import { useLang } from "@/hooks/use-lang";
 
 export const Route = createFileRoute("/plans")({
   head: () => ({
