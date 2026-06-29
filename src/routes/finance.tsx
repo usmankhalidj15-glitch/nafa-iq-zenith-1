@@ -177,7 +177,7 @@ function Overview() {
       <div className="relative z-10 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
         {/* Monthly Income */}
         <KpiCard index={0} accent="rgba(0,212,170,0.5)">
-          <div className="icon-badge-positive mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]">
+          <div className="badge-positive mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]">
             <ArrowUpRight className="h-5 w-5 text-bull" />
           </div>
           <KpiLabel>Monthly Income</KpiLabel>
