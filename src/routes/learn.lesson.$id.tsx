@@ -153,43 +153,47 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
 
   return (
     <div className="-mx-3 -mt-4 -mb-24 sm:-mx-5 lg:-mx-6 lg:-mb-8">
-      {/* Reading progress bar */}
-      <div className="sticky top-[52px] z-20 h-[3px] w-full bg-border">
-        <div
-          className="h-full bg-bull transition-[width] duration-150"
-          style={{ width: `${mode === "reading" ? progress : 100}%` }}
-        />
-      </div>
+      {/* Reading progress + top bar — only in reading mode; quiz/results own their nav */}
+      {mode === "reading" && (
+        <>
+          <div className="sticky top-[52px] z-20 h-[3px] w-full bg-border">
+            <div
+              className="h-full bg-bull transition-[width] duration-150"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
 
-      {/* Top bar */}
-      <div className="sticky top-[55px] z-20 flex items-center gap-3 border-b border-border bg-sidebar px-3 py-2.5 lg:px-6">
-        <Link
-          to="/learn"
-          className="flex shrink-0 items-center gap-1.5 text-sm font-medium text-text-secondary hover:text-text-primary"
-        >
-          <ArrowLeft className="h-4 w-4" /> <span className="hidden sm:inline">{t("Learn Hub")}</span>
-        </Link>
-        <div className="flex-1 truncate text-center text-sm font-semibold text-text-primary">
-          {t(lesson.title)}
-        </div>
-        <button
-          onClick={() => setChatOpen(true)}
-          className="hidden shrink-0 items-center gap-1.5 rounded-[6px] bg-bull/10 px-2.5 py-1 text-xs font-semibold text-bull hover:bg-bull/20 lg:inline-flex xl:hidden"
-        >
-          <MessageCircle className="h-3.5 w-3.5" strokeWidth={1.5} /> {t("Ask AI")}
-        </button>
-        <button
-          onClick={() => toggleBookmark(lesson.id)}
-          aria-label="Bookmark"
-          className="shrink-0 text-text-secondary hover:text-bull"
-        >
-          {bookmarked ? (
-            <BookmarkCheck className="h-5 w-5 text-bull" />
-          ) : (
-            <Bookmark className="h-5 w-5" />
-          )}
-        </button>
-      </div>
+          <div className="sticky top-[55px] z-20 flex items-center gap-3 border-b border-border bg-sidebar px-3 py-2.5 lg:px-6">
+            <Link
+              to="/learn"
+              className="flex shrink-0 items-center gap-1.5 text-sm font-medium text-text-secondary hover:text-text-primary"
+            >
+              <ArrowLeft className="h-4 w-4" />{" "}
+              <span className="hidden sm:inline">{t("Learn Hub")}</span>
+            </Link>
+            <div className="flex-1 truncate text-center text-sm font-semibold text-text-primary">
+              {t(lesson.title)}
+            </div>
+            <button
+              onClick={() => setChatOpen(true)}
+              className="hidden shrink-0 items-center gap-1.5 rounded-[6px] bg-bull/10 px-2.5 py-1 text-xs font-semibold text-bull hover:bg-bull/20 lg:inline-flex xl:hidden"
+            >
+              <MessageCircle className="h-3.5 w-3.5" strokeWidth={1.5} /> {t("Ask AI")}
+            </button>
+            <button
+              onClick={() => toggleBookmark(lesson.id)}
+              aria-label="Bookmark"
+              className="shrink-0 text-text-secondary hover:text-bull"
+            >
+              {bookmarked ? (
+                <BookmarkCheck className="h-5 w-5 text-bull" />
+              ) : (
+                <Bookmark className="h-5 w-5" />
+              )}
+            </button>
+          </div>
+        </>
+      )}
 
       <div className="mx-auto flex max-w-[1600px] gap-6 px-3 py-5 lg:px-6">
         {/* Left TOC */}
