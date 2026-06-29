@@ -320,9 +320,14 @@ function UserMenu() {
 }
 
 function Header({ onMenu }: { onMenu: () => void }) {
-  const { t } = useLang();
+  const { t, isUrdu } = useLang();
   return (
-    <header className="glass-chrome sticky top-0 z-20 flex h-[52px] items-center gap-2 border-b border-white/[0.06] px-3 sm:gap-3 lg:pl-6">
+    <header
+      className={cn(
+        "glass-chrome sticky top-0 z-20 flex h-[52px] items-center gap-2 border-b border-white/[0.06] px-3 sm:gap-3 lg:ps-6",
+        isUrdu && "flex-row-reverse",
+      )}
+    >
       <button onClick={onMenu} className="text-text-secondary lg:hidden" aria-label="Menu">
         <Menu className="h-5 w-5" strokeWidth={1.75} />
       </button>
