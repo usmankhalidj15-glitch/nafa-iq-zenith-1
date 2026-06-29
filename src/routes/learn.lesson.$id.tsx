@@ -1042,12 +1042,12 @@ function ChatPanel({
           <span className="flex h-6 w-6 items-center justify-center rounded-full bg-bull/15 text-bull">
             <Bot className="h-3.5 w-3.5" />
           </span>
-          AI Tutor
+          {t("AI Tutor")}
         </div>
         <div className="mt-0.5 flex items-center gap-2">
-          <span className="text-[11px] text-text-secondary">Ask anything about this lesson</span>
+          <span className="text-[11px] text-text-secondary">{t("Ask anything about this lesson")}</span>
           <span className="rounded-full bg-ai/15 px-1.5 py-0.5 text-[9px] font-semibold text-ai">
-            Powered by AI
+            {t("Powered by AI")}
           </span>
         </div>
       </div>
