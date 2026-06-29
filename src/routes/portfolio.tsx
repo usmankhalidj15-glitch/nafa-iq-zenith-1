@@ -176,7 +176,6 @@ function Portfolio() {
       shares: String(h.shares),
       avgCost: String(h.avgCost),
       current: String(h.current),
-      signal: h.signal,
     });
     setFormErr("");
     setFormOpen(true);
