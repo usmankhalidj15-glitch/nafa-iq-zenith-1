@@ -456,6 +456,7 @@ function ReadingView({
 }) {
   const prev = prevId ? LESSON_CONTENT[prevId] : null;
   const next = nextId ? LESSON_CONTENT[nextId] : null;
+  const { t } = useLang();
 
   return (
     <div className="learn-fade-in">
