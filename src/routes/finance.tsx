@@ -689,7 +689,7 @@ function Goals() {
     financeActions.addGoal(goal);
     setName("");
     setTarget("");
-    setDate("");
+    setDate(undefined);
     setOpen(false);
   };
 
