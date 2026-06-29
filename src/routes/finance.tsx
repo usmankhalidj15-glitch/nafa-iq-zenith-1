@@ -297,8 +297,9 @@ function Overview() {
         <div className="relative z-10 mt-4">
           <IncomeExpenseChart data={INCOME_EXPENSE} />
         </div>
-        <div className="relative z-10 mt-3 text-center text-[11px] text-text-muted">
-          6-month totals: Income PKR 2,85,000 · Expenses PKR 1,12,050 · Saved PKR 1,72,950
+        <div dir="ltr" className="relative z-10 mt-3 text-center text-[11px] text-text-muted">
+          {t("6-month totals")}: {t("Income")} {formatPKR(285000)} · {t("Expenses")}{" "}
+          {formatPKR(112050)} · {t("Saved")} {formatPKR(172950)}
         </div>
       </motion.div>
     </div>
