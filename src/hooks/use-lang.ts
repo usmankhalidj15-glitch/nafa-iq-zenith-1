@@ -565,6 +565,16 @@ const UR: Record<string, string> = {
   // Lessons
   Advanced: "ماہر",
   // Alerts
+  // Quiz
+  "correct so far": "اب تک درست",
+  "correct out of": "درست از",
+  answered: "حل شدہ",
+  "Time left": "باقی وقت",
+  "Why this matters": "یہ کیوں اہم ہے",
+  "Your progress": "آپ کی پیش رفت",
+  "Score 2+ to complete this lesson.": "سبق مکمل کرنے کے لیے 2 یا زیادہ درست کریں۔",
+  Explanation: "وضاحت",
+  Correct: "درست",
 };
 
 
