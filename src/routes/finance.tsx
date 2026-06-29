@@ -177,10 +177,7 @@ function Overview() {
       <div className="relative z-10 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
         {/* Monthly Income */}
         <KpiCard index={0} accent="rgba(0,212,170,0.5)">
-          <div
-            className="mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]"
-            style={{ background: "rgba(0,212,170,0.12)" }}
-          >
+          <div className="badge-positive mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]">
             <ArrowUpRight className="h-5 w-5 text-bull" />
           </div>
           <KpiLabel>Monthly Income</KpiLabel>
@@ -199,10 +196,7 @@ function Overview() {
 
         {/* Total Expenses */}
         <KpiCard index={1} accent="rgba(229,72,77,0.45)">
-          <div
-            className="mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]"
-            style={{ background: "rgba(229,72,77,0.12)" }}
-          >
+          <div className="badge-negative mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]">
             <ArrowDownRight className="h-5 w-5 text-bear" />
           </div>
           <KpiLabel>Total Expenses</KpiLabel>
@@ -219,10 +213,7 @@ function Overview() {
 
         {/* Net Savings */}
         <KpiCard index={2} accent="rgba(139,92,246,0.45)">
-          <div
-            className="mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]"
-            style={{ background: "rgba(139,92,246,0.12)" }}
-          >
+          <div className="badge-neutral mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]">
             <PiggyBank className="h-5 w-5 text-ai" />
           </div>
           <KpiLabel>Net Savings</KpiLabel>
@@ -237,10 +228,7 @@ function Overview() {
 
         {/* Savings Rate */}
         <KpiCard index={3} accent="rgba(245,158,11,0.45)">
-          <div
-            className="mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]"
-            style={{ background: "rgba(245,158,11,0.12)" }}
-          >
+          <div className="badge-neutral mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]">
             <Percent className="h-5 w-5 text-warning" />
           </div>
           <KpiLabel>Savings Rate</KpiLabel>

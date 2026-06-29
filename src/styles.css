@@ -718,6 +718,20 @@
   background: color-mix(in oklab, var(--color-primary) 88%, #000);
 }
 
+/* ---- Semantic icon badge system (light theme only) ---- */
+.theme-light .badge-positive {
+  background: rgba(5, 150, 105, 0.12) !important;
+  color: var(--color-bull) !important;
+}
+.theme-light .badge-negative {
+  background: rgba(220, 38, 38, 0.12) !important;
+  color: var(--color-bear) !important;
+}
+.theme-light .badge-neutral {
+  background: rgba(13, 148, 136, 0.12) !important;
+  color: var(--color-info) !important;
+}
+
 
 /* HOLD signal badge — neutral outline, consistent with BUY style */
 .theme-light .signal-hold {
