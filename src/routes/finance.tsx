@@ -261,9 +261,9 @@ function Overview() {
               className="rounded-full border border-warning/30 px-2 py-0.5 text-[10px] font-semibold text-warning"
               style={{ background: "rgba(245,158,11,0.1)" }}
             >
-              Excellent
+              {t("Excellent")}
             </span>
-            <span className="text-[10px] text-text-muted sm:text-[11px]">Goal: 65%</span>
+            <span className="text-[10px] text-text-muted sm:text-[11px]">{t("Goal: 65%")}</span>
           </div>
         </KpiCard>
       </div>
