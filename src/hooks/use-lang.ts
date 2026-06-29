@@ -559,6 +559,53 @@ const UR: Record<string, string> = {
   "Please enter a valid target amount.": "براہ کرم درست ہدف رقم درج کریں۔",
   "Target amount (PKR)": "ہدف رقم (PKR)",
   "Target date (optional)": "ہدف کی تاریخ (اختیاری)",
+  // Goals
+  "Hajj Fund": "حج فنڈ",
+  "Emergency Fund": "ایمرجنسی فنڈ",
+  "Honda City": "ہونڈا سٹی",
+  "Umrah 2026": "عمرہ 2026",
+  "At PKR 25,000/month you'll reach this goal in 31 months. June dining overspend delayed this by ~6 days.":
+    "PKR 25,000 ماہانہ پر آپ یہ ہدف 31 ماہ میں حاصل کر لیں گے۔ جون میں کھانے پر زیادہ خرچ نے اسے ~6 دن مؤخر کیا۔",
+  "Almost there! PKR 120,000 remaining. At current rate: 5 months.":
+    "تقریباً پہنچ گئے! PKR 120,000 باقی ہیں۔ موجودہ رفتار پر: 5 ماہ۔",
+  "This goal needs attention. Consider increasing monthly contribution by PKR 5,000.":
+    "اس ہدف پر توجہ درکار ہے۔ ماہانہ رقم PKR 5,000 بڑھانے پر غور کریں۔",
+  "You need to save PKR 15,833/month to reach this goal by your target.":
+    "ہدف کی تاریخ تک پہنچنے کے لیے آپ کو PKR 15,833 ماہانہ بچانے ہوں گے۔",
+  // Bills
+  "SNGPL Gas": "ایس این جی پی ایل گیس",
+  "PTCL Internet": "پی ٹی سی ایل انٹرنیٹ",
+  "Apartment Rent": "اپارٹمنٹ کرایہ",
+  "Credit Card": "کریڈٹ کارڈ",
+  "DUE SOON": "جلد واجب",
+  UPCOMING: "آنے والا",
+  // Budget categories
+  Food: "کھانا",
+  Utilities: "یوٹیلٹیز",
+  Transport: "ٹرانسپورٹ",
+  Shopping: "خریداری",
+  Other: "دیگر",
+  // Lessons
+  "What is a Candlestick?": "کینڈل اسٹک کیا ہے؟",
+  "Understanding RSI": "آر ایس آئی کو سمجھنا",
+  "Sector Heatmap Guide": "سیکٹر ہیٹ میپ گائیڈ",
+  "What is a Stop-Loss?": "اسٹاپ لاس کیا ہے؟",
+  "Dividend Yield": "ڈیویڈنڈ یلڈ",
+  "5 Candle Patterns": "5 کینڈل پیٹرنز",
+  "50/30/20 Budget Rule": "50/30/20 بجٹ اصول",
+  "How PSX Works": "پی ایس ایکس کیسے کام کرتا ہے",
+  "Halal Investing & Islamic Finance": "حلال سرمایہ کاری اور اسلامی مالیات",
+  "Understanding P/E Ratio": "پی/ای ریشو کو سمجھنا",
+  Beginner: "ابتدائی",
+  Intermediate: "درمیانہ",
+  Advanced: "ماہر",
+  Locked: "مقفل",
+  // Alerts
+  "HBL above PKR 150": "HBL، PKR 150 سے اوپر",
+  "SNGPL Gas due in 3 days": "ایس این جی پی ایل گیس 3 دن میں واجب",
+  "Food & Dining 80% of budget": "کھانا و طعام بجٹ کا 80%",
+  "Hajj Fund 50% reached": "حج فنڈ 50% مکمل",
+  "LUCK below PKR 800": "LUCK، PKR 800 سے نیچے",
 };
 
 
