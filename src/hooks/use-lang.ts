@@ -485,7 +485,55 @@ const UR: Record<string, string> = {
   "Ask about this lesson…": "اس سبق کے بارے میں پوچھیں…",
   "Hi! I'm here to help you understand": "سلام! میں آپ کی مدد کے لیے حاضر ہوں",
   "What would you like to know?": "آپ کیا جاننا چاہیں گے؟",
+
+  // ---- Stock detail (extended) ----
+  Confidence: "اعتماد",
+  "Confidence 5/6 indicators": "اعتماد 5/6 اشارے",
+  "RSI (14)": "آر ایس آئی (14)",
+  "MA20 vs Price": "MA20 بمقابلہ قیمت",
+  "MA50 vs Price": "MA50 بمقابلہ قیمت",
+  MACD: "ایم اے سی ڈی",
+  "Volume Trend": "حجم کا رجحان",
+  "Bollinger Band": "بولنگر بینڈ",
+  "Neutral-Bullish": "غیر جانبدار-تیزی",
+  "Price > MA20": "قیمت > MA20",
+  "Price > MA50": "قیمت > MA50",
+  "Bullish cross": "تیزی کا کراس",
+  Rising: "بڑھ رہا",
+  "Mid-upper": "درمیانی-اوپر",
+  "Room to grow": "بڑھنے کی گنجائش",
+  "Overall: STRONG BUY · 5 of 6 indicators bullish":
+    "مجموعی: اسٹرانگ بائی · 6 میں سے 5 اشارے تیزی میں",
+  "is showing strong bullish momentum. Price has broken above MA50 with significantly above-average volume — a classic confirmation signal. RSI at 61 leaves room before overbought territory. The only caution is Bollinger Band position suggesting the move may slow near 148–150. Consider a stop-loss at the MA20 level (~136).":
+    "مضبوط تیزی کی رفتار دکھا رہا ہے۔ قیمت نمایاں طور پر اوسط سے زیادہ حجم کے ساتھ MA50 سے اوپر نکل گئی ہے — ایک کلاسک تصدیقی سگنل۔ RSI 61 پر اوور باٹ ہونے سے پہلے گنجائش چھوڑتا ہے۔ واحد احتیاط بولنگر بینڈ کی پوزیشن ہے جو بتاتی ہے کہ حرکت 148–150 کے قریب سست ہو سکتی ہے۔ MA20 سطح (~136) پر اسٹاپ لاس پر غور کریں۔",
+  "Banking sector rallies as policy rate held steady":
+    "پالیسی ریٹ مستحکم رہنے پر بینکنگ شعبے میں تیزی",
+  "Foreign inflows lift PSX to fresh highs":
+    "غیر ملکی سرمایہ PSX کو نئی بلندیوں پر لے گیا",
+  "Analysts eye resistance near key levels":
+    "ماہرین کلیدی سطحوں کے قریب مزاحمت پر نظر رکھے ہوئے",
+  Positive: "مثبت",
+  "2h ago": "2 گھنٹے پہلے",
+  "5h ago": "5 گھنٹے پہلے",
+  "1d ago": "1 دن پہلے",
+
+  // ---- Plans (extended) ----
+  "Data delay": "ڈیٹا تاخیر",
+  Portfolios: "پورٹ فولیوز",
+  "AI Advisor queries": "اے آئی ایڈوائزر سوالات",
+  Watchlists: "واچ لسٹس",
+  "Halal screening": "حلال اسکریننگ",
+  "Support tier": "سپورٹ درجہ",
+  "15 min delayed": "15 منٹ تاخیر",
+  "Real-time": "ریئل ٹائم",
+  Unlimited: "لامحدود",
+  "3 / month": "3 / ماہ",
+  Basic: "بنیادی",
+  Priority: "ترجیحی",
+  Community: "کمیونٹی",
+  Standard: "معیاری",
 };
+
 
 export function translate(lang: Lang, key: string): string {
   if (lang === "en") return key;
