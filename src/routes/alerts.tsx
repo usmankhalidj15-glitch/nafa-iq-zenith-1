@@ -3,9 +3,10 @@ import { useState } from "react";
 import { Trash2, TrendingUp, Calendar, Wallet, Target } from "lucide-react";
 import { Card } from "@/components/Card";
 import { EmojiIcon } from "@/components/icons";
-import { ALERTS, NOTIFS } from "@/lib/finance-data";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/hooks/use-lang";
+import { useFinanceStore, financeActions } from "@/hooks/use-finance-store";
+import { type Alert } from "@/lib/finance-data";
 
 export const Route = createFileRoute("/alerts")({
   head: () => ({
@@ -21,16 +22,61 @@ export const Route = createFileRoute("/alerts")({
 });
 
 const TYPES = [
-  { label: "Stock Price", icon: TrendingUp },
-  { label: "Bill Reminder", icon: Calendar },
-  { label: "Budget", icon: Wallet },
-  { label: "Goal Milestone", icon: Target },
+  { label: "Stock Price", icon: TrendingUp, emoji: "🔔" },
+  { label: "Bill Reminder", icon: Calendar, emoji: "📅" },
+  { label: "Budget", icon: Wallet, emoji: "💸" },
+  { label: "Goal Milestone", icon: Target, emoji: "🎯" },
 ];
+
+const STOCKS = ["HBL", "ENGRO", "LUCK", "OGDC"];
+const BILLS_OPTS = ["SNGPL Gas", "PTCL Internet", "Apartment Rent"];
 
 function Alerts() {
   const { t } = useLang();
-  const [alerts, setAlerts] = useState(ALERTS);
+  const { alerts, notifications } = useFinanceStore();
   const [type, setType] = useState("Stock Price");
+
+  // form state
+  const [stock, setStock] = useState(STOCKS[0]);
+  const [direction, setDirection] = useState("Above");
+  const [price, setPrice] = useState("");
+  const [bill, setBill] = useState(BILLS_OPTS[0]);
+  const [timing, setTiming] = useState("1 day before");
+  const [push, setPush] = useState(true);
+  const [email, setEmail] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleCreate = () => {
+    setError("");
+    const ty = TYPES.find((x) => x.label === type)!;
+    let title = "";
+    let meta = "";
+
+    if (type === "Stock Price") {
+      const num = Number(price);
+      if (!price || Number.isNaN(num) || num <= 0) {
+        setError(t("Please enter a valid price."));
+        return;
+      }
+      title = `${stock} ${direction.toLowerCase()} PKR ${num}`;
+      meta = "Created " + new Date().toLocaleString("en-US", { month: "short", day: "numeric" });
+    } else if (type === "Bill Reminder") {
+      title = `${bill} — ${timing}`;
+      meta = "Recurring monthly";
+    } else if (type === "Budget") {
+      title = `${bill} budget alert`;
+      meta = "Monthly";
+    } else {
+      title = `Goal milestone alert`;
+      meta = "One-time";
+    }
+
+    const channels = [push && "Push", email && "Email"].filter(Boolean).join(" + ") || "In-app";
+    const alert: Alert = { emoji: ty.emoji, title, type: `${type} Alert`, meta, on: true };
+    financeActions.addAlert(alert, `New alert created: ${title} (${channels})`);
+    setPrice("");
+    setError("");
+  };
 
   return (
     <div className="mx-auto max-w-4xl space-y-6">
@@ -51,9 +97,7 @@ function Alerts() {
                 </div>
               </div>
               <button
-                onClick={() =>
-                  setAlerts((p) => p.map((x, j) => (j === i ? { ...x, on: !x.on } : x)))
-                }
+                onClick={() => financeActions.toggleAlert(i)}
                 className={cn(
                   "relative h-5 w-9 rounded-full transition",
                   a.on ? "bg-bull" : "bg-elevated",
@@ -66,7 +110,10 @@ function Alerts() {
                   )}
                 />
               </button>
-              <button className="text-text-muted hover:text-bear">
+              <button
+                onClick={() => financeActions.removeAlert(i)}
+                className="text-text-muted hover:text-bear"
+              >
                 <Trash2 className="h-4 w-4" />
               </button>
             </Card>
@@ -96,18 +143,28 @@ function Alerts() {
           </div>
           {type === "Stock Price" ? (
             <div className="grid gap-3 sm:grid-cols-2">
-              <select className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary">
-                <option>HBL</option>
-                <option>ENGRO</option>
-                <option>LUCK</option>
-                <option>OGDC</option>
+              <select
+                value={stock}
+                onChange={(e) => setStock(e.target.value)}
+                className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary"
+              >
+                {STOCKS.map((s) => (
+                  <option key={s}>{s}</option>
+                ))}
               </select>
               <div className="flex gap-2">
-                <select className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary">
-                  <option>{t("Above")}</option>
-                  <option>{t("Below")}</option>
+                <select
+                  value={direction}
+                  onChange={(e) => setDirection(e.target.value)}
+                  className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary"
+                >
+                  <option value="Above">{t("Above")}</option>
+                  <option value="Below">{t("Below")}</option>
                 </select>
                 <input
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  inputMode="decimal"
                   placeholder={t("Price")}
                   className="w-full rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary outline-none placeholder:text-text-muted"
                 />
@@ -115,12 +172,20 @@ function Alerts() {
             </div>
           ) : (
             <div className="grid gap-3 sm:grid-cols-2">
-              <select className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary">
-                <option>{t("SNGPL Gas")}</option>
-                <option>{t("PTCL Internet")}</option>
-                <option>{t("Apartment Rent")}</option>
+              <select
+                value={bill}
+                onChange={(e) => setBill(e.target.value)}
+                className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary"
+              >
+                {BILLS_OPTS.map((b) => (
+                  <option key={b}>{b}</option>
+                ))}
               </select>
-              <select className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary">
+              <select
+                value={timing}
+                onChange={(e) => setTiming(e.target.value)}
+                className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary"
+              >
                 <option>{t("1 day before")}</option>
                 <option>{t("3 days before")}</option>
                 <option>{t("7 days before")}</option>
@@ -129,15 +194,29 @@ function Alerts() {
           )}
           <div className="mt-3 flex flex-wrap gap-3 text-xs text-text-secondary">
             <label className="flex items-center gap-1.5">
-              <input type="checkbox" defaultChecked className="accent-[#00d4aa]" />
+              <input
+                type="checkbox"
+                checked={push}
+                onChange={(e) => setPush(e.target.checked)}
+                className="accent-[#00d4aa]"
+              />
               {t("Push")}
             </label>
             <label className="flex items-center gap-1.5">
-              <input type="checkbox" className="accent-[#00d4aa]" />
+              <input
+                type="checkbox"
+                checked={email}
+                onChange={(e) => setEmail(e.target.checked)}
+                className="accent-[#00d4aa]"
+              />
               {t("Email")}
             </label>
           </div>
-          <button className="mt-4 w-full rounded-[6px] bg-bull py-2 text-sm font-semibold text-bull-foreground hover:brightness-110">
+          {error && <div className="mt-2 text-xs text-bear">{error}</div>}
+          <button
+            onClick={handleCreate}
+            className="mt-4 w-full rounded-[6px] bg-bull py-2 text-sm font-semibold text-bull-foreground hover:brightness-110"
+          >
             {t("Create Alert")}
           </button>
         </Card>
@@ -146,7 +225,7 @@ function Alerts() {
       <section>
         <h3 className="mb-3 text-sm font-semibold text-text-primary">{t("Notification History")}</h3>
         <Card className="divide-y divide-border/50 p-0" hover={false}>
-          {NOTIFS.map((n, i) => (
+          {notifications.map((n, i) => (
             <div key={i} className="flex items-center gap-3 px-3 py-3">
               <span className="flex h-8 w-8 items-center justify-center rounded-[8px] border border-white/[0.06] bg-elevated text-text-secondary">
                 <EmojiIcon emoji={n.emoji} size={15} />
