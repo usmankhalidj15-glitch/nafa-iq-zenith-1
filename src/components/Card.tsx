@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { useLang } from "@/hooks/use-lang";
 
 export function Card({
   className,
@@ -27,9 +28,10 @@ export function StatCard({
   sub?: string;
   subColor?: string;
 }) {
+  const { t } = useLang();
   return (
     <Card>
-      <div className="text-xs font-medium text-text-secondary">{label}</div>
+      <div className="text-xs font-medium text-text-secondary">{t(label)}</div>
       <div className="mt-2 font-mono text-xl font-bold tabular-nums text-text-primary md:text-2xl">
         {value}
       </div>

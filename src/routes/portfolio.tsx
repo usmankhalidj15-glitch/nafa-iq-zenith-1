@@ -18,6 +18,7 @@ import { DonutChart, PortfolioAreaChart } from "@/components/charts";
 import { HOLDINGS, fmtPKR, fmtNum } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { EmojiIcon } from "@/components/icons";
+import { useLang } from "@/hooks/use-lang";
 
 export const Route = createFileRoute("/portfolio")({
   head: () => ({
@@ -61,6 +62,7 @@ const STOCK_ALLOC = [
 ];
 
 function HaqeeqiDaulat() {
+  const { t } = useLang();
   return (
     <Card hover={false} className="relative overflow-hidden border-gold/20">
       <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gold/10 blur-3xl" />
@@ -69,32 +71,32 @@ function HaqeeqiDaulat() {
           <div className="flex items-center gap-2">
             <ShieldAlert className="h-5 w-5 text-gold" strokeWidth={1.75} />
             <h3 className="font-display text-sm font-bold text-text-primary">
-              Haqeeqi Daulat™ — Your REAL Returns
+              {t("Haqeeqi Daulat™ — Your REAL Returns")}
             </h3>
           </div>
           <span className="rounded-full border border-gold/35 bg-gold/[0.12] px-2.5 py-0.5 text-[10px] font-semibold text-gold">
-            After 16.2% PKR devaluation
+            {t("After 16.2% PKR devaluation")}
           </span>
         </div>
 
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
           <div className="rounded-[10px] border border-white/[0.06] bg-surface-alt p-4">
             <div className="font-mono text-xl font-bold tabular-nums text-bull">+12.73%</div>
-            <div className="mt-1 text-[11px] text-text-muted">Nominal PKR Gain</div>
+            <div className="mt-1 text-[11px] text-text-muted">{t("Nominal PKR Gain")}</div>
             <div className="mt-2 font-mono text-xs tabular-nums text-text-secondary">
               +PKR 96,864
             </div>
           </div>
           <div className="rounded-[10px] border border-white/[0.06] bg-surface-alt p-4">
             <div className="font-mono text-xl font-bold tabular-nums text-bear">-16.2%</div>
-            <div className="mt-1 text-[11px] text-text-muted">PKR Devaluation</div>
+            <div className="mt-1 text-[11px] text-text-muted">{t("PKR Devaluation")}</div>
             <div className="mt-2 font-mono text-xs tabular-nums text-text-secondary">
               -PKR 102,722 eroded
             </div>
           </div>
           <div className="rounded-[10px] border border-white/[0.06] bg-surface-alt p-4">
             <div className="font-mono text-xl font-bold tabular-nums text-bear">-3.2%</div>
-            <div className="mt-1 text-[11px] text-text-muted">Real USD Return</div>
+            <div className="mt-1 text-[11px] text-text-muted">{t("Real USD Return")}</div>
             <div className="mt-2 font-mono text-xs tabular-nums text-text-secondary">
               $-180 in real terms
             </div>
@@ -105,13 +107,13 @@ function HaqeeqiDaulat() {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <div className="text-[11px] font-semibold uppercase tracking-wide text-text-muted">
-                Devaluation Shield Score
+                {t("Devaluation Shield Score")}
               </div>
               <div className="mt-1 flex items-baseline gap-2">
                 <span className="font-mono text-2xl font-bold tabular-nums text-gold">38</span>
                 <span className="font-mono text-sm text-text-muted">/ 100</span>
                 <span className="rounded-full border border-gold/35 bg-gold/[0.12] px-2 py-0.5 text-[10px] font-semibold text-gold">
-                  Moderate risk
+                  {t("Moderate risk")}
                 </span>
               </div>
               <p className="mt-1.5 max-w-md text-[11px] text-text-secondary">
@@ -119,7 +121,7 @@ function HaqeeqiDaulat() {
               </p>
             </div>
             <button className="flex items-center gap-1.5 rounded-[8px] bg-gold px-3.5 py-2 text-sm font-semibold text-gold-foreground transition hover:bg-gold-hover">
-              Improve Score <ArrowRight className="h-4 w-4" />
+              {t("Improve Score")} <ArrowRight className="h-4 w-4" />
             </button>
           </div>
           <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/5">
@@ -132,6 +134,7 @@ function HaqeeqiDaulat() {
 }
 
 function Portfolio() {
+  const { t } = useLang();
   const [range, setRange] = useState<(typeof RANGES)[number]>("6M");
   const [reportState, setReportState] = useState<"idle" | "loading" | "open">("idle");
   const n = range === "1M" ? 2 : range === "3M" ? 3 : 6;
@@ -143,7 +146,7 @@ function Portfolio() {
 
   return (
     <div className="mx-auto max-w-7xl space-y-6">
-      <h1 className="text-2xl font-bold text-text-primary sm:text-3xl">Portfolio</h1>
+      <h1 className="text-2xl font-bold text-text-primary sm:text-3xl">{t("Portfolio")}</h1>
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <StatCard label="Portfolio Value" value={fmtPKR(858054)} sub="Total Invested PKR 761,190" />
@@ -155,8 +158,8 @@ function Portfolio() {
       <Card>
         <div className="mb-3 flex items-center justify-between">
           <div>
-            <h3 className="text-sm font-semibold text-text-primary">Performance vs KSE-100</h3>
-            <span className="text-xs text-bull">Outperforming benchmark by +3.2%</span>
+        <h3 className="text-sm font-semibold text-text-primary">{t("Performance vs KSE-100")}</h3>
+            <span className="text-xs text-bull">{t("Outperforming benchmark by +3.2%")}</span>
           </div>
           <div className="flex gap-1">
             {RANGES.map((r) => (
@@ -182,7 +185,7 @@ function Portfolio() {
 
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
-          <h3 className="mb-2 text-sm font-semibold text-text-primary">Allocation by Sector</h3>
+          <h3 className="mb-2 text-sm font-semibold text-text-primary">{t("Allocation by Sector")}</h3>
           <DonutChart data={SECTOR_ALLOC} centerValue="4 sectors" />
           <div className="mt-2 grid grid-cols-2 gap-1 text-xs">
             {SECTOR_ALLOC.map((s) => (
@@ -194,7 +197,7 @@ function Portfolio() {
           </div>
         </Card>
         <Card>
-          <h3 className="mb-2 text-sm font-semibold text-text-primary">Allocation by Stock</h3>
+          <h3 className="mb-2 text-sm font-semibold text-text-primary">{t("Allocation by Stock")}</h3>
           <DonutChart data={STOCK_ALLOC} centerValue="5 stocks" />
           <div className="mt-2 grid grid-cols-2 gap-1 text-xs">
             {STOCK_ALLOC.map((s) => (
@@ -208,7 +211,7 @@ function Portfolio() {
       </div>
 
       <Card>
-        <h3 className="mb-3 text-sm font-semibold text-text-primary">Holdings</h3>
+        <h3 className="mb-3 text-sm font-semibold text-text-primary">{t("Holdings")}</h3>
         {HOLDINGS.some((h) => h.signal === "SELL" || h.signal === "STRONG SELL") && (
           <div className="mb-3 flex items-center gap-2 rounded-[8px] border border-bear/30 bg-bear/10 px-3 py-2 text-xs text-bear">
             <AlertTriangle className="h-4 w-4 shrink-0" strokeWidth={1.75} />
@@ -224,15 +227,15 @@ function Portfolio() {
           <table className="w-full min-w-[760px] text-xs">
             <thead>
               <tr className="border-b border-border text-left text-text-muted">
-                <th className="py-2">Stock</th>
-                <th>Sector</th>
-                <th className="text-right">Shares</th>
-                <th className="text-right">Avg Cost</th>
-                <th className="text-right">Current</th>
-                <th className="text-right">Mkt Value</th>
-                <th className="text-right">Gain/Loss</th>
-                <th className="text-center">Signal</th>
-                <th className="text-right">Action</th>
+                <th className="py-2">{t("Stock")}</th>
+                <th>{t("Sector")}</th>
+                <th className="text-right">{t("Shares")}</th>
+                <th className="text-right">{t("Avg Cost")}</th>
+                <th className="text-right">{t("Current")}</th>
+                <th className="text-right">{t("Mkt Value")}</th>
+                <th className="text-right">{t("Gain/Loss")}</th>
+                <th className="text-center">{t("Signal")}</th>
+                <th className="text-right">{t("Action")}</th>
               </tr>
             </thead>
             <tbody>
@@ -287,7 +290,7 @@ function Portfolio() {
         </div>
         <button className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-[6px] bg-bull py-2 text-sm font-semibold text-bull-foreground hover:brightness-110">
           <Plus className="h-4 w-4" />
-          Add Holding
+          {t("Add Holding")}
         </button>
       </Card>
 
@@ -296,10 +299,11 @@ function Portfolio() {
         <div className="flex flex-col gap-3 md:flex-row md:items-center">
           <Sparkles className="h-5 w-5 shrink-0 text-ai" />
           <div className="flex-1">
-            <h3 className="text-sm font-semibold text-text-primary">AI Portfolio Report</h3>
+            <h3 className="text-sm font-semibold text-text-primary">{t("AI Portfolio Report")}</h3>
             <p className="text-sm text-text-secondary">
-              Get a plain-English analysis — diversification score, risk assessment, top
-              opportunities, and suggested rebalancing.
+              {t(
+                "Get a plain-English analysis — diversification score, risk assessment, top opportunities, and suggested rebalancing.",
+              )}
             </p>
           </div>
           <button
@@ -310,10 +314,10 @@ function Portfolio() {
             {reportState === "loading" ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" />
-                Analyzing…
+                {t("Analyzing…")}
               </>
             ) : (
-              "Generate Report"
+              t("Generate Report")
             )}
           </button>
         </div>
@@ -325,6 +329,7 @@ function Portfolio() {
 }
 
 function ReportModal({ onClose }: { onClose: () => void }) {
+  const { t } = useLang();
   const sections = [
     {
       icon: "📊",
@@ -373,7 +378,7 @@ function ReportModal({ onClose }: { onClose: () => void }) {
           >
             <div className="flex h-20 w-20 flex-col items-center justify-center rounded-full bg-surface">
               <span className="font-mono text-2xl font-bold tabular-nums text-bull">{score}</span>
-              <span className="text-[10px] text-text-muted">Health Score</span>
+              <span className="text-[10px] text-text-muted">{t("Health Score")}</span>
             </div>
           </div>
         </div>
@@ -391,13 +396,13 @@ function ReportModal({ onClose }: { onClose: () => void }) {
         </div>
         <div className="mt-4 flex gap-2">
           <button className="flex-1 rounded-[10px] bg-primary py-2 text-sm font-semibold text-primary-foreground transition-all duration-200 hover:brightness-110">
-            Export as PDF
+            {t("Export as PDF")}
           </button>
           <button
             onClick={onClose}
             className="flex-1 rounded-[10px] border border-white/[0.08] bg-surface py-2 text-sm font-semibold text-text-primary transition-colors hover:border-white/[0.16]"
           >
-            Close
+            {t("Close")}
           </button>
         </div>
       </div>

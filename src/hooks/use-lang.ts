@@ -65,6 +65,82 @@ const UR: Record<string, string> = {
   Name: "نام",
   Email: "ای میل",
   Plan: "پلان",
+
+  // ---- Shared stat / metric labels ----
+  "Portfolio Value": "پورٹ فولیو ویلیو",
+  "Total Invested": "کل سرمایہ کاری",
+  "Total Gain": "کل منافع",
+  "Today's P/L": "آج کا نفع/نقصان",
+  "Today's PSX P/L": "آج کا پی ایس ایکس نفع/نقصان",
+  "Monthly Spending": "ماہانہ اخراجات",
+  "Total Net Worth": "کل مجموعی مالیت",
+  "Monthly Income": "ماہانہ آمدنی",
+  "Total Expenses": "کل اخراجات",
+  "Net Savings": "خالص بچت",
+  "Savings Rate": "بچت کی شرح",
+
+  // ---- Dashboard ----
+  "Explore PSX": "پی ایس ایکس دیکھیں",
+  "Add Transaction": "ٹرانزیکشن شامل کریں",
+  "AI Recommendation": "اے آئی تجویز",
+  View: "دیکھیں",
+  Dismiss: "نظر انداز کریں",
+  "Spending Breakdown": "اخراجات کی تفصیل",
+  Watchlist: "واچ لسٹ",
+  "Savings Goals": "بچت کے اہداف",
+  "PKR total": "کل روپے",
+
+  // ---- Portfolio ----
+  "Performance vs KSE-100": "کارکردگی بمقابلہ کے ایس ای-100",
+  "Outperforming benchmark by +3.2%": "بینچ مارک سے +3.2% بہتر کارکردگی",
+  "Haqeeqi Daulat™ — Your REAL Returns": "حقیقی دولت™ — آپ کا اصل منافع",
+  "After 16.2% PKR devaluation": "16.2% روپے کی قدر میں کمی کے بعد",
+  "Nominal PKR Gain": "برائے نام روپے منافع",
+  "PKR Devaluation": "روپے کی قدر میں کمی",
+  "Real USD Return": "اصل ڈالر منافع",
+  "Devaluation Shield Score": "قدر کمی شیلڈ اسکور",
+  "Moderate risk": "درمیانہ خطرہ",
+  "Improve Score": "اسکور بہتر بنائیں",
+  "Allocation by Sector": "شعبے کے لحاظ سے تقسیم",
+  "Allocation by Stock": "اسٹاک کے لحاظ سے تقسیم",
+  Holdings: "ملکیتی اسٹاکس",
+  Stock: "اسٹاک",
+  Sector: "شعبہ",
+  Shares: "حصص",
+  "Avg Cost": "اوسط لاگت",
+  Current: "موجودہ",
+  "Mkt Value": "مارکیٹ ویلیو",
+  "Gain/Loss": "نفع/نقصان",
+  Signal: "سگنل",
+  Action: "ایکشن",
+  "Add Holding": "ہولڈنگ شامل کریں",
+  "AI Portfolio Report": "اے آئی پورٹ فولیو رپورٹ",
+  "Get a plain-English analysis — diversification score, risk assessment, top opportunities, and suggested rebalancing.":
+    "سادہ زبان میں تجزیہ حاصل کریں — تنوع اسکور، خطرے کا جائزہ، بہترین مواقع اور تجویز کردہ ری بیلنسنگ۔",
+  "Generate Report": "رپورٹ بنائیں",
+  "Analyzing…": "تجزیہ ہو رہا ہے…",
+  "Health Score": "ہیلتھ اسکور",
+  "Export as PDF": "پی ڈی ایف ایکسپورٹ کریں",
+  Close: "بند کریں",
+
+  // ---- PSX ----
+  "Stock Screener": "اسٹاک اسکرینر",
+  Price: "قیمت",
+  Change: "تبدیلی",
+  Volume: "حجم",
+  "Mkt Cap": "مارکیٹ کیپ",
+  "Sector Heatmap": "سیکٹر ہیٹ میپ",
+
+  // ---- Finance ----
+  "Saved this month": "اس ماہ بچایا",
+  "Net Savings Rate": "خالص بچت کی شرح",
+
+  // ---- Alerts ----
+  "Active Alerts": "فعال الرٹس",
+  "Add New Alert": "نیا الرٹ شامل کریں",
+  Above: "اوپر",
+  Below: "نیچے",
+  "Notification History": "اطلاعات کی تاریخ",
 };
 
 export function translate(lang: Lang, key: string): string {
