@@ -290,6 +290,8 @@ export function DonutChart({
   centerValue?: string;
 }) {
   const ct = useChartTheme();
+  // Harmonious, desaturated palette for white cards in light mode.
+  const lightPalette = ["#0d8a7e", "#5b7aa6", "#c08a4a", "#9b7aa6", "#94a3b8"];
   return (
     <div className="relative">
       <ResponsiveContainer width="100%" height={220}>
@@ -306,7 +308,7 @@ export function DonutChart({
             isAnimationActive={false}
           >
             {data.map((d, i) => (
-              <Cell key={i} fill={d.color} />
+              <Cell key={i} fill={ct.light ? lightPalette[i % lightPalette.length] : d.color} />
             ))}
           </Pie>
           <Tooltip
