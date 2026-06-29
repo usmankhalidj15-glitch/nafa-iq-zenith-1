@@ -784,6 +784,31 @@ function Goals() {
           </button>
         </div>
       </Modal>
+
+      <Modal
+        open={contribGoal != null}
+        onClose={() => setContribGoal(null)}
+        title={`${t("Add Contribution")}${contribGoal ? ` — ${t(contribGoal)}` : ""}`}
+      >
+        <div className="space-y-3">
+          <input
+            value={contribAmount}
+            onChange={(e) => setContribAmount(e.target.value)}
+            inputMode="decimal"
+            autoFocus
+            placeholder={t("Amount (PKR)")}
+            className={fieldClass}
+            onKeyDown={(e) => e.key === "Enter" && submitContribute()}
+          />
+          {contribErr && <div className="text-xs text-bear">{contribErr}</div>}
+          <button
+            onClick={submitContribute}
+            className="w-full rounded-[6px] bg-bull py-2 text-sm font-semibold text-bull-foreground hover:brightness-110"
+          >
+            {t("Add Contribution")}
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 }
