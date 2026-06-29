@@ -1090,7 +1090,7 @@ function Hero() {
       {/* bottom fade mask */}
       <div
         className="pointer-events-none absolute bottom-0 left-0 right-0 z-[1] h-[200px]"
-        style={{ background: "linear-gradient(to bottom, transparent, #0A0E1A)" }}
+        style={{ background: "linear-gradient(to bottom, transparent, #0F1528)" }}
       />
     </section>
   );
