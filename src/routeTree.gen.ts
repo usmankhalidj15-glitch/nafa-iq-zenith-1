@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UrduQaRouteImport } from './routes/urdu-qa'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as PsxRouteImport } from './routes/psx'
@@ -24,6 +25,11 @@ import { Route as LearnIndexRouteImport } from './routes/learn.index'
 import { Route as StockTickerRouteImport } from './routes/stock.$ticker'
 import { Route as LearnLessonIdRouteImport } from './routes/learn.lesson.$id'
 
+const UrduQaRoute = UrduQaRouteImport.update({
+  id: '/urdu-qa',
+  path: '/urdu-qa',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -107,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/psx': typeof PsxRoute
   '/settings': typeof SettingsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/urdu-qa': typeof UrduQaRoute
   '/stock/$ticker': typeof StockTickerRoute
   '/learn/': typeof LearnIndexRoute
   '/learn/lesson/$id': typeof LearnLessonIdRoute
@@ -122,6 +129,7 @@ export interface FileRoutesByTo {
   '/psx': typeof PsxRoute
   '/settings': typeof SettingsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/urdu-qa': typeof UrduQaRoute
   '/stock/$ticker': typeof StockTickerRoute
   '/learn': typeof LearnIndexRoute
   '/learn/lesson/$id': typeof LearnLessonIdRoute
@@ -139,6 +147,7 @@ export interface FileRoutesById {
   '/psx': typeof PsxRoute
   '/settings': typeof SettingsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/urdu-qa': typeof UrduQaRoute
   '/stock/$ticker': typeof StockTickerRoute
   '/learn/': typeof LearnIndexRoute
   '/learn/lesson/$id': typeof LearnLessonIdRoute
@@ -157,6 +166,7 @@ export interface FileRouteTypes {
     | '/psx'
     | '/settings'
     | '/sitemap.xml'
+    | '/urdu-qa'
     | '/stock/$ticker'
     | '/learn/'
     | '/learn/lesson/$id'
@@ -172,6 +182,7 @@ export interface FileRouteTypes {
     | '/psx'
     | '/settings'
     | '/sitemap.xml'
+    | '/urdu-qa'
     | '/stock/$ticker'
     | '/learn'
     | '/learn/lesson/$id'
@@ -188,6 +199,7 @@ export interface FileRouteTypes {
     | '/psx'
     | '/settings'
     | '/sitemap.xml'
+    | '/urdu-qa'
     | '/stock/$ticker'
     | '/learn/'
     | '/learn/lesson/$id'
@@ -205,11 +217,19 @@ export interface RootRouteChildren {
   PsxRoute: typeof PsxRoute
   SettingsRoute: typeof SettingsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  UrduQaRoute: typeof UrduQaRoute
   StockTickerRoute: typeof StockTickerRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/urdu-qa': {
+      id: '/urdu-qa'
+      path: '/urdu-qa'
+      fullPath: '/urdu-qa'
+      preLoaderRoute: typeof UrduQaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -335,6 +355,7 @@ const rootRouteChildren: RootRouteChildren = {
   PsxRoute: PsxRoute,
   SettingsRoute: SettingsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  UrduQaRoute: UrduQaRoute,
   StockTickerRoute: StockTickerRoute,
 }
 export const routeTree = rootRouteImport
