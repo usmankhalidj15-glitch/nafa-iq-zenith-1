@@ -227,7 +227,10 @@ function Alerts() {
         <Card className="divide-y divide-border/50 p-0" hover={false}>
           {notifications.map((n, i) => (
             <div key={i} className="flex items-center gap-3 px-3 py-3">
-              <span className="flex h-8 w-8 items-center justify-center rounded-[8px] border border-white/[0.06] bg-elevated text-text-secondary">
+              <span className={cn(
+                "flex h-8 w-8 items-center justify-center rounded-[8px] border border-white/[0.06] bg-elevated text-text-secondary",
+                n.emoji === "🎯" || n.emoji === "📈" ? "badge-positive" : n.emoji === "📅" || n.emoji === "💸" ? "badge-negative" : "badge-neutral",
+              )}>
                 <EmojiIcon emoji={n.emoji} size={15} />
               </span>
               <div className="flex-1">
