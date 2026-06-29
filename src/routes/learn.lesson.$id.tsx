@@ -1,6 +1,7 @@
 import { VideoPlaceholder } from "@/components/VideoPlaceholder";
 import { createFileRoute, Link, useNavigate, useParams } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
+import { motion, AnimatePresence } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowLeft,
@@ -12,13 +13,16 @@ import {
   Check,
   CheckCircle2,
   ChevronDown,
+  ChevronRight,
   FileText,
   Inbox,
+  Lightbulb,
   MessageCircle,
   Send,
   Sparkles,
   Star,
   Target,
+  Trophy,
   Video,
   BookOpen,
   Cpu,
@@ -149,43 +153,47 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
 
   return (
     <div className="-mx-3 -mt-4 -mb-24 sm:-mx-5 lg:-mx-6 lg:-mb-8">
-      {/* Reading progress bar */}
-      <div className="sticky top-[52px] z-20 h-[3px] w-full bg-border">
-        <div
-          className="h-full bg-bull transition-[width] duration-150"
-          style={{ width: `${mode === "reading" ? progress : 100}%` }}
-        />
-      </div>
+      {/* Reading progress + top bar — only in reading mode; quiz/results own their nav */}
+      {mode === "reading" && (
+        <>
+          <div className="sticky top-[52px] z-20 h-[3px] w-full bg-border">
+            <div
+              className="h-full bg-bull transition-[width] duration-150"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
 
-      {/* Top bar */}
-      <div className="sticky top-[55px] z-20 flex items-center gap-3 border-b border-border bg-sidebar px-3 py-2.5 lg:px-6">
-        <Link
-          to="/learn"
-          className="flex shrink-0 items-center gap-1.5 text-sm font-medium text-text-secondary hover:text-text-primary"
-        >
-          <ArrowLeft className="h-4 w-4" /> <span className="hidden sm:inline">{t("Learn Hub")}</span>
-        </Link>
-        <div className="flex-1 truncate text-center text-sm font-semibold text-text-primary">
-          {t(lesson.title)}
-        </div>
-        <button
-          onClick={() => setChatOpen(true)}
-          className="hidden shrink-0 items-center gap-1.5 rounded-[6px] bg-bull/10 px-2.5 py-1 text-xs font-semibold text-bull hover:bg-bull/20 lg:inline-flex xl:hidden"
-        >
-          <MessageCircle className="h-3.5 w-3.5" strokeWidth={1.5} /> {t("Ask AI")}
-        </button>
-        <button
-          onClick={() => toggleBookmark(lesson.id)}
-          aria-label="Bookmark"
-          className="shrink-0 text-text-secondary hover:text-bull"
-        >
-          {bookmarked ? (
-            <BookmarkCheck className="h-5 w-5 text-bull" />
-          ) : (
-            <Bookmark className="h-5 w-5" />
-          )}
-        </button>
-      </div>
+          <div className="sticky top-[55px] z-20 flex items-center gap-3 border-b border-border bg-sidebar px-3 py-2.5 lg:px-6">
+            <Link
+              to="/learn"
+              className="flex shrink-0 items-center gap-1.5 text-sm font-medium text-text-secondary hover:text-text-primary"
+            >
+              <ArrowLeft className="h-4 w-4" />{" "}
+              <span className="hidden sm:inline">{t("Learn Hub")}</span>
+            </Link>
+            <div className="flex-1 truncate text-center text-sm font-semibold text-text-primary">
+              {t(lesson.title)}
+            </div>
+            <button
+              onClick={() => setChatOpen(true)}
+              className="hidden shrink-0 items-center gap-1.5 rounded-[6px] bg-bull/10 px-2.5 py-1 text-xs font-semibold text-bull hover:bg-bull/20 lg:inline-flex xl:hidden"
+            >
+              <MessageCircle className="h-3.5 w-3.5" strokeWidth={1.5} /> {t("Ask AI")}
+            </button>
+            <button
+              onClick={() => toggleBookmark(lesson.id)}
+              aria-label="Bookmark"
+              className="shrink-0 text-text-secondary hover:text-bull"
+            >
+              {bookmarked ? (
+                <BookmarkCheck className="h-5 w-5 text-bull" />
+              ) : (
+                <Bookmark className="h-5 w-5" />
+              )}
+            </button>
+          </div>
+        </>
+      )}
 
       <div className="mx-auto flex max-w-[1600px] gap-6 px-3 py-5 lg:px-6">
         {/* Left TOC */}
@@ -246,7 +254,7 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
         )}
 
         {/* Main content */}
-        <main className="min-w-0 flex-1 xl:max-w-[760px]">
+        <main className={cn("min-w-0 flex-1", mode === "reading" && "xl:max-w-[760px]")}>
           {mode === "reading" && (
             <ReadingView
               lesson={lesson}
@@ -267,6 +275,7 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
             <QuizView
               lesson={lesson}
               onExit={() => setMode("reading")}
+              onBackToHub={() => navigate({ to: "/learn" })}
               onFinish={(correct) => {
                 const gain = onQuizFinish(correct);
                 setMode("results");
@@ -626,10 +635,12 @@ function buildShuffled(quiz: QuizQuestion[]): ShuffledQ[] {
 function QuizView({
   lesson,
   onExit,
+  onBackToHub,
   onFinish,
 }: {
   lesson: LessonContent;
   onExit: () => void;
+  onBackToHub: () => void;
   onFinish: (correct: number) => void;
 }) {
   const { t } = useLang();
@@ -679,123 +690,225 @@ function QuizView({
   }
 
   const answered = selected !== null;
+  const isLast = current + 1 >= total;
+  const wasCorrect = answered && q.options[selected]?.isCorrect;
+  const answeredCount = current + (answered ? 1 : 0);
+  const progressPct = (answeredCount / total) * 100;
   const timerColor = timeLeft > 15 ? "#00d4aa" : timeLeft > 7 ? "#f59e0b" : "#ff4d4d";
+  const labels = ["A", "B", "C", "D"];
 
   return (
-    <div className="learn-fade-in mx-auto max-w-2xl">
-      <div className="flex items-center justify-between">
-        <button
-          onClick={onExit}
-          className="flex items-center gap-1.5 text-xs text-text-secondary hover:text-text-primary"
-        >
-          <ArrowLeft className="h-4 w-4" /> {t("Back to Lesson")}
-        </button>
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-bull/10 px-3 py-1 text-xs font-semibold text-bull">
+    <div className="learn-fade-in mx-auto max-w-[1100px]">
+      {/* Single breadcrumb + one back action */}
+      <div className="flex items-center justify-between gap-3">
+        <nav className="flex min-w-0 items-center gap-1.5 text-xs text-text-secondary">
+          <button onClick={onBackToHub} className="shrink-0 hover:text-text-primary">
+            {t("Learn Hub")}
+          </button>
+          <ChevronRight className="h-3.5 w-3.5 shrink-0 text-text-muted" />
+          <span className="hidden shrink-0 sm:inline">{t(lesson.category)}</span>
+          <ChevronRight className="hidden h-3.5 w-3.5 shrink-0 text-text-muted sm:inline" />
+          <button
+            onClick={onExit}
+            className="truncate font-medium text-text-primary hover:text-bull"
+          >
+            {t(lesson.title)}
+          </button>
+        </nav>
+        <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-bull/10 px-3 py-1 text-xs font-semibold text-bull">
           <Star className="h-3.5 w-3.5" strokeWidth={1.5} /> {t("Up to 50 XP")}
         </span>
       </div>
 
-      <div className="mt-4 text-xs text-text-muted">{t(lesson.title)}</div>
-      <h2 className="flex items-center gap-2 text-xl font-bold text-text-primary">
-        <Brain className="h-5 w-5" strokeWidth={1.5} /> {t("Knowledge Check")}
+      {/* Header */}
+      <h2 className="mt-4 flex items-center gap-2 text-xl font-bold text-text-primary">
+        <Brain className="h-5 w-5 text-bull" strokeWidth={1.5} /> {t("Knowledge Check")}
       </h2>
-      <div className="mt-3 flex items-center gap-3">
-        <div className="flex gap-1.5">
-          {questions.map((_, i) => (
-            <span
-              key={i}
-              className={cn(
-                "h-2.5 w-2.5 rounded-full",
-                i < current ? "bg-bull" : i === current ? "bg-bull/60" : "bg-border",
-              )}
-            />
-          ))}
-        </div>
-        <span className="text-xs text-text-secondary">
-          {t("Question")} {current + 1} {t("of")} {total}
-        </span>
-      </div>
 
-      <div className="mt-5 rounded-[16px] border border-border bg-surface p-6 sm:p-8">
-        {/* Timer */}
-        <div className="mb-5 h-1.5 w-full overflow-hidden rounded-full bg-border">
-          <div
-            className="h-full transition-all duration-1000 ease-linear"
-            style={{ width: `${(timeLeft / 30) * 100}%`, background: timerColor }}
+      {/* Single progress indicator + running score */}
+      <div className="mt-3">
+        <div className="flex items-center justify-between text-xs">
+          <span className="font-medium text-text-secondary">
+            {t("Question")} {current + 1} {t("of")} {total}
+          </span>
+          <span className="inline-flex items-center gap-1.5 font-medium text-bull">
+            <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2} />
+            {correctCount} {t("correct so far")}
+          </span>
+        </div>
+        <div className="mt-2 h-2.5 w-full overflow-hidden rounded-full bg-border">
+          <motion.div
+            className="h-full rounded-full bg-bull"
+            initial={false}
+            animate={{ width: `${progressPct}%` }}
+            transition={{ type: "spring", stiffness: 160, damping: 22 }}
           />
         </div>
+      </div>
 
-        <div className="mb-6 text-[20px] font-semibold text-text-primary">{q.q.q}</div>
+      <div className="mt-5 grid gap-6 xl:grid-cols-[minmax(0,1fr)_300px]">
+        {/* Quiz card */}
+        <div className="mx-auto w-full max-w-[680px] rounded-[16px] border border-border bg-surface p-6 sm:p-8">
+          {/* Timer (distinct from progress) */}
+          <div className="mb-1.5 flex items-center justify-between text-[11px] font-medium text-text-muted">
+            <span>{t("Time left")}</span>
+            <span style={{ color: timerColor }}>{answered ? "—" : `${timeLeft}s`}</span>
+          </div>
+          <div className="mb-6 h-1.5 w-full overflow-hidden rounded-full bg-border">
+            <div
+              className="h-full transition-all duration-1000 ease-linear"
+              style={{ width: `${answered ? 0 : (timeLeft / 30) * 100}%`, background: timerColor }}
+            />
+          </div>
 
-        <div className="space-y-3">
-          {q.options.map((opt, i) => {
-            const labels = ["A", "B", "C", "D"];
-            let stateCls = "border-border bg-elevated";
-            let circleCls = "bg-elevated text-text-muted";
-            let icon: React.ReactNode = null;
-            if (answered) {
-              if (opt.isCorrect) {
-                stateCls = "border-bull bg-bull/10";
-                circleCls = "bg-bull text-bull-foreground";
-                icon = <Check className="h-4 w-4 text-bull" />;
-              } else if (i === selected) {
-                stateCls = "border-bear bg-bear/10";
-                circleCls = "bg-bear text-white";
-                icon = <X className="h-4 w-4 text-bear" />;
-              }
-            }
-            const dim = answered && !opt.isCorrect && i !== selected;
-            return (
-              <button
-                key={i}
-                disabled={answered}
-                onClick={() => answer(i)}
-                className={cn(
-                  "flex w-full items-center gap-3 rounded-[10px] border px-5 py-4 text-left transition-all",
-                  stateCls,
-                  dim && "opacity-40",
-                )}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+            >
+              <div className="mb-6 text-[20px] font-semibold leading-snug text-text-primary">
+                {q.q.q}
+              </div>
+
+              <div className="space-y-3">
+                {q.options.map((opt, i) => {
+                  const isSelectedWrong = answered && i === selected && !opt.isCorrect;
+                  const isCorrectAns = answered && opt.isCorrect;
+                  const isInactive = answered && !opt.isCorrect && i !== selected;
+
+                  let stateCls =
+                    "border-border bg-elevated hover:border-bull/50 hover:bg-bull/[0.04]";
+                  let circleCls = "bg-surface text-text-secondary";
+                  if (isCorrectAns) {
+                    stateCls = "border-bull bg-bull/10";
+                    circleCls = "bg-bull text-bull-foreground";
+                  } else if (isSelectedWrong) {
+                    stateCls = "border-bear bg-bear/10";
+                    circleCls = "bg-bear text-white";
+                  } else if (isInactive) {
+                    // Legible inactive style — lighter, not low-opacity gray-on-gray
+                    stateCls = "border-border/70 bg-elevated/50";
+                    circleCls = "bg-surface text-text-muted";
+                  }
+
+                  return (
+                    <motion.button
+                      key={i}
+                      disabled={answered}
+                      onClick={() => answer(i)}
+                      whileTap={answered ? undefined : { scale: 0.985 }}
+                      animate={isCorrectAns ? { scale: [1, 1.015, 1] } : { scale: 1 }}
+                      transition={{ duration: 0.3 }}
+                      className={cn(
+                        "flex w-full items-center gap-3 rounded-[10px] border px-5 py-4 text-left transition-colors",
+                        stateCls,
+                      )}
+                    >
+                      <span
+                        className={cn(
+                          "flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold transition-colors",
+                          circleCls,
+                        )}
+                      >
+                        {labels[i]}
+                      </span>
+                      <span
+                        className={cn(
+                          "flex-1 text-sm",
+                          isInactive ? "text-text-secondary" : "text-text-primary",
+                          isCorrectAns && "font-semibold",
+                        )}
+                      >
+                        {opt.text}
+                      </span>
+                      {isCorrectAns && (
+                        <CheckCircle2 className="h-5 w-5 shrink-0 text-bull" strokeWidth={2.5} />
+                      )}
+                      {isSelectedWrong && <X className="h-4 w-4 shrink-0 text-bear" strokeWidth={2.5} />}
+                    </motion.button>
+                  );
+                })}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Feedback / teaching moment */}
+          <AnimatePresence>
+            {answered && (
+              <motion.div
+                initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                animate={{ opacity: 1, height: "auto", marginTop: 20 }}
+                exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="overflow-hidden"
               >
-                <span
-                  className={cn(
-                    "flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold",
-                    circleCls,
-                  )}
+                <div
+                  className="rounded-[10px] border p-4"
+                  style={{
+                    background: "var(--color-elevated)",
+                    borderColor: wasCorrect ? "rgba(0,212,170,0.35)" : "rgba(229,72,77,0.35)",
+                    borderLeftWidth: 3,
+                    borderLeftColor: wasCorrect ? "#00d4aa" : "#e5484d",
+                  }}
                 >
-                  {labels[i]}
-                </span>
-                <span className="flex-1 text-sm text-text-primary">{opt.text}</span>
-                {icon}
-              </button>
-            );
-          })}
+                  <div
+                    className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide"
+                    style={{ color: wasCorrect ? "#00d4aa" : "#e5484d" }}
+                  >
+                    <Lightbulb className="h-4 w-4" strokeWidth={2} />
+                    {wasCorrect ? t("Correct") : t("Explanation")}
+                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-text-primary">{q.q.explanation}</p>
+                </div>
+
+                {isLast && (
+                  <div className="mt-3 rounded-[8px] bg-bull/[0.08] px-3 py-2 text-center text-xs font-medium text-text-secondary">
+                    {correctCount} {t("correct out of")} {total} {t("answered")}
+                  </div>
+                )}
+
+                <button
+                  onClick={nextQuestion}
+                  className="mt-4 inline-flex items-center gap-1.5 rounded-[8px] bg-bull px-5 py-2.5 text-sm font-semibold text-bull-foreground hover:brightness-110"
+                >
+                  {isLast ? t("See Results") : t("Next Question")}{" "}
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
-        {answered && (
-          <div
-            className="learn-fade-in mt-5 rounded-[8px] p-4 text-sm leading-relaxed text-text-secondary"
-            style={{
-              background: q.options[selected]?.isCorrect
-                ? "rgba(0,212,170,0.06)"
-                : "rgba(229,72,77,0.06)",
-            }}
-          >
-            <span className="font-semibold text-text-primary">
-              {q.options[selected]?.isCorrect ? t("Correct! ") : t("Not quite. ")}
-            </span>
-            {q.q.explanation}
-          </div>
-        )}
+        {/* Side panel — uses the empty space for something useful */}
+        <aside className="hidden xl:block">
+          <div className="sticky top-[80px] space-y-4">
+            <div className="rounded-[12px] border border-border bg-surface p-5">
+              <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-bull">
+                <Sparkles className="h-3.5 w-3.5" strokeWidth={2} /> {t("Why this matters")}
+              </div>
+              <p className="mt-2 text-sm leading-relaxed text-text-secondary">
+                {t(lesson.subtitle)}
+              </p>
+            </div>
 
-        {answered && (
-          <button
-            onClick={nextQuestion}
-            className="mt-5 inline-flex items-center gap-1.5 rounded-[8px] bg-bull px-5 py-2.5 text-sm font-semibold text-bull-foreground hover:brightness-110"
-          >
-            {current + 1 >= total ? t("See Results") : t("Next Question")}{" "}
-            <ArrowRight className="h-4 w-4" />
-          </button>
-        )}
+            <div className="rounded-[12px] border border-border bg-surface p-5">
+              <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-text-muted">
+                <Trophy className="h-3.5 w-3.5" strokeWidth={2} /> {t("Your progress")}
+              </div>
+              <div className="mt-3 flex items-baseline gap-1.5 font-mono">
+                <span className="text-2xl font-bold tabular-nums text-bull">{correctCount}</span>
+                <span className="text-sm text-text-muted">/ {answeredCount} {t("answered")}</span>
+              </div>
+              <div className="mt-3 flex items-center gap-1.5 text-xs text-text-secondary">
+                <Target className="h-3.5 w-3.5 shrink-0" strokeWidth={1.5} />
+                {t("Score 2+ to complete this lesson.")}
+              </div>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   );
