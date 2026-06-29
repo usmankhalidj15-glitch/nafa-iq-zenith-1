@@ -249,7 +249,7 @@ function Overview() {
             <Percent className="h-5 w-5 text-warning" />
           </div>
           <KpiLabel>Savings Rate</KpiLabel>
-          <div className="mt-1 font-mono text-lg font-semibold tracking-tight text-warning tabular-nums sm:text-xl">
+          <div className="kpi-value-neutral mt-1 font-mono text-lg font-semibold tracking-tight text-warning tabular-nums sm:text-xl">
             <span ref={rate.ref}>{rate.formatted}</span>%
           </div>
           <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-white/5">
