@@ -143,7 +143,7 @@ function Portfolio() {
   const { t } = useLang();
   const [range, setRange] = useState<(typeof RANGES)[number]>("6M");
   const [reportState, setReportState] = useState<"idle" | "loading" | "open">("idle");
-  const n = range === "1M" ? 2 : range === "3M" ? 3 : 6;
+  const n = range === "1M" ? 2 : range === "3M" ? 3 : range === "6M" ? 6 : 12;
 
   const [holdings, setHoldings] = useState<Holding[]>(HOLDINGS);
   const [formOpen, setFormOpen] = useState(false);
