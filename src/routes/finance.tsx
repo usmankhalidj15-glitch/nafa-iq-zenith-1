@@ -188,8 +188,8 @@ function Overview() {
             PKR <span ref={income.ref}>{income.formatted}</span>
           </div>
           <div className="mt-3 flex items-end justify-between gap-2">
-            <span className="text-[10px] text-bull/80 sm:text-[11px]">
-              +PKR 2,500 vs last month
+            <span dir="ltr" className="text-[10px] text-bull/80 sm:text-[11px]">
+              {formatSignedPKR(2500)} {t("vs last month")}
             </span>
             <div className="w-14 shrink-0">
               <Sparkline data={[43000, 45000, 47500]} color="#00d4aa" />
@@ -210,7 +210,7 @@ function Overview() {
             PKR <span ref={expenses.ref}>{expenses.formatted}</span>
           </div>
           <div className="mt-3 flex items-end justify-between gap-2">
-            <span className="text-[10px] text-bear/90 sm:text-[11px]">-12% vs last month</span>
+            <span dir="ltr" className="text-[10px] text-bear/90 sm:text-[11px]">-12% {t("vs last month")}</span>
             <div className="w-14 shrink-0">
               <Sparkline data={[22000, 21200, 18675]} color="#e5484d" />
             </div>
@@ -231,7 +231,7 @@ function Overview() {
           </div>
           <div className="mt-3 flex items-center justify-between gap-2">
             <span className="text-[10px] text-text-muted sm:text-[11px]">{t("Saved this month")}</span>
-            <span className="text-[10px] text-bull/80 sm:text-[11px]">+PKR 4,825</span>
+            <span dir="ltr" className="text-[10px] text-bull/80 sm:text-[11px]">{formatSignedPKR(4825)}</span>
           </div>
         </KpiCard>
 
