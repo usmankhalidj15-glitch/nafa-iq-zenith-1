@@ -15,7 +15,7 @@ import { Card, StatCard } from "@/components/Card";
 import { Change } from "@/components/Change";
 import { SignalBadge } from "@/components/SignalBadge";
 import { DonutChart, PortfolioAreaChart } from "@/components/charts";
-import { HOLDINGS, fmtPKR, fmtNum, type Holding, type Signal } from "@/lib/data";
+import { HOLDINGS, STOCKS, fmtPKR, fmtNum, type Holding, type Signal } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { EmojiIcon } from "@/components/icons";
 import { useLang } from "@/hooks/use-lang";
@@ -139,6 +139,17 @@ function HaqeeqiDaulat() {
   );
 }
 
+function computeSignal(ticker: string, current: number, avgCost: number): Signal {
+  const stock = STOCKS[ticker.toUpperCase()];
+  if (stock) return stock.signal;
+  const gainPct = ((current - avgCost) / avgCost) * 100;
+  if (gainPct >= 15) return "STRONG BUY";
+  if (gainPct >= 5) return "BUY";
+  if (gainPct >= -5) return "HOLD";
+  if (gainPct >= -15) return "SELL";
+  return "STRONG SELL";
+}
+
 function Portfolio() {
   const { t } = useLang();
   const [range, setRange] = useState<(typeof RANGES)[number]>("6M");
@@ -154,12 +165,11 @@ function Portfolio() {
     shares: "",
     avgCost: "",
     current: "",
-    signal: "HOLD" as Signal,
   };
   const [form, setForm] = useState(emptyForm);
   const [formErr, setFormErr] = useState("");
 
-  const SIGNALS: Signal[] = ["STRONG BUY", "BUY", "HOLD", "SELL", "STRONG SELL"];
+  
 
   function openAdd() {
     setEditIdx(null);
@@ -177,7 +187,6 @@ function Portfolio() {
       shares: String(h.shares),
       avgCost: String(h.avgCost),
       current: String(h.current),
-      signal: h.signal,
     });
     setFormErr("");
     setFormOpen(true);
@@ -199,13 +208,14 @@ function Portfolio() {
     if (!form.avgCost || Number.isNaN(avgCost) || avgCost <= 0)
       return setFormErr(t("Please enter a valid average cost."));
     const cur = !form.current || Number.isNaN(current) || current <= 0 ? avgCost : current;
+    const signal = computeSignal(form.ticker.trim().toUpperCase(), cur, avgCost);
     const entry: Holding = {
       ticker: form.ticker.trim().toUpperCase(),
       sector: form.sector.trim(),
       shares,
       avgCost,
       current: cur,
-      signal: form.signal,
+      signal,
     };
     setHoldings((prev) =>
       editIdx == null ? [...prev, entry] : prev.map((h, i) => (i === editIdx ? entry : h)),
@@ -430,17 +440,6 @@ function Portfolio() {
             placeholder={t("Current price (PKR, optional)")}
             className={fieldClass}
           />
-          <select
-            value={form.signal}
-            onChange={(e) => setForm({ ...form, signal: e.target.value as Signal })}
-            className={fieldClass}
-          >
-            {SIGNALS.map((s) => (
-              <option key={s} value={s}>
-                {t(s)}
-              </option>
-            ))}
-          </select>
           {formErr && <div className="text-xs text-bear">{formErr}</div>}
           <button
             onClick={saveHolding}
