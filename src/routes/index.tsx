@@ -729,7 +729,6 @@ function Nav() {
           <div className="hidden items-center gap-3 lg:flex">
             <StatusPill />
             <NavSearch />
-            <LangToggle />
           </div>
           <Link
             to="/auth"
@@ -800,9 +799,8 @@ function Nav() {
             >
               Log In
             </Link>
-            <div className="flex items-center justify-between px-4 py-3">
+            <div className="flex items-center px-4 py-3">
               <StatusPill />
-              <LangToggle className="px-0 text-base" />
             </div>
           </nav>
           <Link
