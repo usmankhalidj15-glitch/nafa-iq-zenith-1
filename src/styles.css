@@ -665,6 +665,26 @@
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.16);
 }
+
+/* ---- Form controls: consistent custom checkbox (light theme) ---- */
+.theme-light [role="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-primary);
+  box-shadow: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.theme-light [role="checkbox"][data-state="checked"] {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+}
+.theme-light [role="checkbox"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.16);
+}
+
 .theme-light :disabled,
 .theme-light [aria-disabled="true"],
 .theme-light [data-disabled] {
