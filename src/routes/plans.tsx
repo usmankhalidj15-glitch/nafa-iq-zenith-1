@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Check, Minus, Star, ArrowRight, ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.png";
+import { useLang } from "@/hooks/use-lang";
 
 export const Route = createFileRoute("/plans")({
   head: () => ({
@@ -98,6 +99,7 @@ function price(tier: (typeof TIERS)[number], billing: Billing) {
 
 function PlansPage() {
   const [billing, setBilling] = useState<Billing>("monthly");
+  const { t } = useLang();
 
   return (
     <div className="min-h-screen bg-background">
@@ -115,13 +117,13 @@ function PlansPage() {
               to="/"
               className="hidden items-center gap-1 text-sm text-text-secondary transition hover:text-text-primary sm:inline-flex"
             >
-              <ArrowLeft className="h-4 w-4" /> Home
+              <ArrowLeft className="h-4 w-4" /> {t("Home")}
             </Link>
             <Link
               to="/app"
               className="inline-flex items-center gap-1 rounded-[6px] bg-bull px-4 py-2 text-sm font-semibold text-bull-foreground transition hover:bg-[#00efc0]"
             >
-              Enter App <ArrowRight className="h-4 w-4" />
+              {t("Enter App")} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
@@ -130,10 +132,10 @@ function PlansPage() {
       <main className="mx-auto max-w-[1100px] px-6 py-14">
         <div className="text-center">
           <h1 className="font-display text-3xl font-extrabold tracking-tight text-text-primary sm:text-5xl">
-            Simple, honest pricing
+            {t("Simple, honest pricing")}
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-text-secondary">
-            Start free. Upgrade when you're ready for real-time data and unlimited AI insights.
+            {t("Start free. Upgrade when you're ready for real-time data and unlimited AI insights.")}
           </p>
 
           {/* billing toggle */}
@@ -147,7 +149,7 @@ function PlansPage() {
                   : "text-text-secondary hover:text-text-primary",
               )}
             >
-              Monthly
+              {t("Monthly")}
             </button>
             <button
               onClick={() => setBilling("yearly")}
@@ -158,9 +160,9 @@ function PlansPage() {
                   : "text-text-secondary hover:text-text-primary",
               )}
             >
-              Yearly
+              {t("Yearly")}
               <span className="rounded-full bg-gold/15 px-2 py-0.5 text-[10px] font-bold text-gold">
-                SAVE 20%
+                {t("SAVE 20%")}
               </span>
             </button>
           </div>
@@ -180,21 +182,21 @@ function PlansPage() {
             >
               {tier.highlight && (
                 <span className="absolute -top-3 left-1/2 inline-flex -translate-x-1/2 items-center gap-1 rounded-full bg-bull px-3 py-1 text-[11px] font-bold text-bull-foreground">
-                  <Star className="h-3 w-3 fill-current" /> MOST POPULAR
+                  <Star className="h-3 w-3 fill-current" /> {t("MOST POPULAR")}
                 </span>
               )}
-              <div className="text-lg font-bold text-text-primary">{tier.name}</div>
-              <div className="mt-1 text-sm text-text-secondary">{tier.tagline}</div>
+              <div className="text-lg font-bold text-text-primary">{t(tier.name)}</div>
+              <div className="mt-1 text-sm text-text-secondary">{t(tier.tagline)}</div>
               <div className="mt-5 flex items-baseline gap-1.5">
                 <span className="font-mono text-3xl font-bold tabular-nums text-text-primary">
-                  {price(tier, billing)}
+                  {t(price(tier, billing))}
                 </span>
                 {tier.monthly !== null && tier.monthly !== 0 && (
-                  <span className="text-sm text-text-muted">/ mo</span>
+                  <span className="text-sm text-text-muted">{t("/ mo")}</span>
                 )}
               </div>
               {billing === "yearly" && tier.yearly !== null && tier.yearly !== 0 && (
-                <div className="mt-1 text-[11px] text-gold">Billed annually — 20% off</div>
+                <div className="mt-1 text-[11px] text-gold">{t("Billed annually — 20% off")}</div>
               )}
 
               {tier.ctaTo ? (
@@ -207,14 +209,14 @@ function PlansPage() {
                       : "border border-white/[0.1] bg-surface text-text-primary hover:border-white/[0.2]",
                   )}
                 >
-                  {tier.cta}
+                  {t(tier.cta)}
                 </Link>
               ) : (
                 <a
                   href="mailto:hello@nafaiq.com?subject=NafaIQ%20Premium%20Inquiry"
                   className="mt-6 flex items-center justify-center rounded-[10px] border border-white/[0.1] bg-surface px-4 py-2.5 text-sm font-semibold text-text-primary transition hover:border-white/[0.2]"
                 >
-                  {tier.cta}
+                  {t(tier.cta)}
                 </a>
               )}
 
@@ -222,7 +224,7 @@ function PlansPage() {
                 {tier.features.map((f) => (
                   <li key={f} className="flex items-start gap-2.5 text-sm text-text-secondary">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-bull" strokeWidth={2.25} />
-                    {f}
+                    {t(f)}
                   </li>
                 ))}
               </ul>
@@ -233,18 +235,18 @@ function PlansPage() {
         {/* comparison table */}
         <div className="mt-16">
           <h2 className="text-center font-display text-2xl font-bold text-text-primary">
-            Compare plans
+            {t("Compare plans")}
           </h2>
           <div className="mt-6 overflow-x-auto rounded-[16px] border border-white/[0.07]">
             <table className="w-full min-w-[560px] text-sm">
               <thead>
                 <tr className="border-b border-white/[0.07] bg-surface">
                   <th className="px-5 py-4 text-left text-[11px] font-semibold uppercase tracking-wide text-text-muted">
-                    Feature
+                    {t("Feature")}
                   </th>
-                  <th className="px-5 py-4 text-center font-semibold text-text-primary">Free</th>
-                  <th className="px-5 py-4 text-center font-semibold text-bull">Pro</th>
-                  <th className="px-5 py-4 text-center font-semibold text-text-primary">Premium</th>
+                  <th className="px-5 py-4 text-center font-semibold text-text-primary">{t("Free")}</th>
+                  <th className="px-5 py-4 text-center font-semibold text-bull">{t("Pro")}</th>
+                  <th className="px-5 py-4 text-center font-semibold text-text-primary">{t("Premium")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -253,7 +255,7 @@ function PlansPage() {
                     key={row.label}
                     className={cn("border-b border-white/[0.04]", i % 2 === 1 && "bg-white/[0.02]")}
                   >
-                    <td className="px-5 py-3.5 text-text-secondary">{row.label}</td>
+                    <td className="px-5 py-3.5 text-text-secondary">{t(row.label)}</td>
                     {[row.free, row.pro, row.premium].map((cell, idx) => (
                       <td
                         key={idx}
@@ -264,7 +266,7 @@ function PlansPage() {
                         ) : cell === "—" ? (
                           <Minus className="mx-auto h-4 w-4 text-text-muted" />
                         ) : (
-                          cell
+                          t(cell)
                         )}
                       </td>
                     ))}
