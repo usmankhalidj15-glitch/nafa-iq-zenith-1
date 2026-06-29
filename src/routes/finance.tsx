@@ -196,7 +196,7 @@ function Overview() {
 
         {/* Total Expenses */}
         <KpiCard index={1} accent="rgba(229,72,77,0.45)">
-          <div className="icon-badge-negative mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]">
+          <div className="badge-negative mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]">
             <ArrowDownRight className="h-5 w-5 text-bear" />
           </div>
           <KpiLabel>Total Expenses</KpiLabel>
@@ -213,7 +213,7 @@ function Overview() {
 
         {/* Net Savings */}
         <KpiCard index={2} accent="rgba(139,92,246,0.45)">
-          <div className="icon-badge-neutral mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]">
+          <div className="badge-neutral mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]">
             <PiggyBank className="h-5 w-5 text-ai" />
           </div>
           <KpiLabel>Net Savings</KpiLabel>
@@ -228,7 +228,7 @@ function Overview() {
 
         {/* Savings Rate */}
         <KpiCard index={3} accent="rgba(245,158,11,0.45)">
-          <div className="icon-badge-neutral mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]">
+          <div className="badge-neutral mb-4 flex h-9 w-9 items-center justify-center rounded-[10px]">
             <Percent className="h-5 w-5 text-warning" />
           </div>
           <KpiLabel>Savings Rate</KpiLabel>
