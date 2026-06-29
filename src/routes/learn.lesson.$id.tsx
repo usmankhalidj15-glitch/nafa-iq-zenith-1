@@ -913,7 +913,6 @@ function QuizView({
     </div>
   );
 }
-}
 
 /* ---------------- Results View ---------------- */
 
