@@ -483,6 +483,8 @@ const UR: Record<string, string> = {
   "Powered by AI": "اے آئی سے چلایا گیا",
   "just now": "ابھی",
   "Ask about this lesson…": "اس سبق کے بارے میں پوچھیں…",
+  "Hi! I'm here to help you understand": "سلام! میں آپ کی مدد کے لیے حاضر ہوں",
+  "What would you like to know?": "آپ کیا جاننا چاہیں گے؟",
 };
 
 export function translate(lang: Lang, key: string): string {
