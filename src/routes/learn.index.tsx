@@ -95,7 +95,7 @@ function Learn() {
     <div className="mx-auto max-w-6xl space-y-6">
       {/* Hero */}
       <Card hover={false} className="bg-gradient-to-br from-ai-tint to-surface">
-        <h1 className="font-urdu text-2xl text-text-primary">سمجھو، سیکھو، بڑھو</h1>
+        <h1 className="font-nastaliq text-2xl text-text-primary">سمجھو، سیکھو، بڑھو</h1>
         <p className="text-sm font-semibold text-text-primary">Samjho, Seekho, Barho</p>
         <p className="mt-1 text-sm text-text-secondary">
           {t("From KSE basics to technical analysis — in plain Urdu and English.")}
