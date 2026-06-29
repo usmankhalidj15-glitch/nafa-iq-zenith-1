@@ -104,7 +104,7 @@ function HaqeeqiDaulat() {
             <div className="font-mono text-xl font-bold tabular-nums text-bear">-3.2%</div>
             <div className="mt-1 text-[11px] text-text-muted">{t("Real USD Return")}</div>
             <div className="mt-2 font-mono text-xs tabular-nums text-text-secondary">
-              $-180 in real terms
+              <span dir="ltr">$-180</span> {t("in real terms")}
             </div>
           </div>
         </div>
