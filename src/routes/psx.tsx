@@ -191,7 +191,7 @@ export default function PSX() {
                     className={cn(
                       "rounded-[6px] px-2 py-1 text-xs font-medium",
                       tf === t
-                        ? "bg-bull text-bull-foreground"
+                        ? "tf-active bg-bull text-bull-foreground"
                         : "text-text-secondary hover:bg-hover",
                     )}
                   >
