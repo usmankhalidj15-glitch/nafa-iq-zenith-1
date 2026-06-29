@@ -235,18 +235,18 @@ function PlansPage() {
         {/* comparison table */}
         <div className="mt-16">
           <h2 className="text-center font-display text-2xl font-bold text-text-primary">
-            Compare plans
+            {t("Compare plans")}
           </h2>
           <div className="mt-6 overflow-x-auto rounded-[16px] border border-white/[0.07]">
             <table className="w-full min-w-[560px] text-sm">
               <thead>
                 <tr className="border-b border-white/[0.07] bg-surface">
                   <th className="px-5 py-4 text-left text-[11px] font-semibold uppercase tracking-wide text-text-muted">
-                    Feature
+                    {t("Feature")}
                   </th>
-                  <th className="px-5 py-4 text-center font-semibold text-text-primary">Free</th>
-                  <th className="px-5 py-4 text-center font-semibold text-bull">Pro</th>
-                  <th className="px-5 py-4 text-center font-semibold text-text-primary">Premium</th>
+                  <th className="px-5 py-4 text-center font-semibold text-text-primary">{t("Free")}</th>
+                  <th className="px-5 py-4 text-center font-semibold text-bull">{t("Pro")}</th>
+                  <th className="px-5 py-4 text-center font-semibold text-text-primary">{t("Premium")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -255,7 +255,7 @@ function PlansPage() {
                     key={row.label}
                     className={cn("border-b border-white/[0.04]", i % 2 === 1 && "bg-white/[0.02]")}
                   >
-                    <td className="px-5 py-3.5 text-text-secondary">{row.label}</td>
+                    <td className="px-5 py-3.5 text-text-secondary">{t(row.label)}</td>
                     {[row.free, row.pro, row.premium].map((cell, idx) => (
                       <td
                         key={idx}
@@ -266,7 +266,7 @@ function PlansPage() {
                         ) : cell === "—" ? (
                           <Minus className="mx-auto h-4 w-4 text-text-muted" />
                         ) : (
-                          cell
+                          t(cell)
                         )}
                       </td>
                     ))}
