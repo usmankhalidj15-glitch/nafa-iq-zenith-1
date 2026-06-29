@@ -20,6 +20,7 @@ import { EmojiIcon } from "@/components/icons";
 import { Card } from "@/components/Card";
 import { IncomeExpenseChart, Sparkline } from "@/components/charts";
 import { fmtPKR } from "@/lib/data";
+import { formatNumber, formatPKR, formatSignedPKR } from "@/lib/format";
 import { BUDGETS, INCOME_EXPENSE, type Goal } from "@/lib/finance-data";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/hooks/use-lang";
@@ -117,13 +118,7 @@ function useCountUp(target: number, decimals = 0, duration = 1200) {
     return () => cancelAnimationFrame(raf);
   }, [inView, target, duration, reduce]);
 
-  const formatted =
-    decimals > 0
-      ? val.toLocaleString("en-PK", {
-          minimumFractionDigits: decimals,
-          maximumFractionDigits: decimals,
-        })
-      : Math.round(val).toLocaleString("en-PK");
+  const formatted = formatNumber(val, decimals);
   return { ref, formatted };
 }
 
@@ -189,12 +184,12 @@ function Overview() {
             <ArrowUpRight className="h-5 w-5 text-bull" />
           </div>
           <KpiLabel>Monthly Income</KpiLabel>
-          <div className="mt-1 font-mono text-lg font-semibold tracking-tight text-bull tabular-nums sm:text-xl">
+          <div dir="ltr" className="mt-1 font-mono text-lg font-semibold tracking-tight text-bull tabular-nums sm:text-xl">
             PKR <span ref={income.ref}>{income.formatted}</span>
           </div>
           <div className="mt-3 flex items-end justify-between gap-2">
-            <span className="text-[10px] text-bull/80 sm:text-[11px]">
-              +PKR 2,500 vs last month
+            <span dir="ltr" className="text-[10px] text-bull/80 sm:text-[11px]">
+              {formatSignedPKR(2500)} {t("vs last month")}
             </span>
             <div className="w-14 shrink-0">
               <Sparkline data={[43000, 45000, 47500]} color="#00d4aa" />
@@ -211,11 +206,11 @@ function Overview() {
             <ArrowDownRight className="h-5 w-5 text-bear" />
           </div>
           <KpiLabel>Total Expenses</KpiLabel>
-          <div className="mt-1 font-mono text-lg font-semibold tracking-tight text-bear tabular-nums sm:text-xl">
+          <div dir="ltr" className="mt-1 font-mono text-lg font-semibold tracking-tight text-bear tabular-nums sm:text-xl">
             PKR <span ref={expenses.ref}>{expenses.formatted}</span>
           </div>
           <div className="mt-3 flex items-end justify-between gap-2">
-            <span className="text-[10px] text-bear/90 sm:text-[11px]">-12% vs last month</span>
+            <span dir="ltr" className="text-[10px] text-bear/90 sm:text-[11px]">-12% {t("vs last month")}</span>
             <div className="w-14 shrink-0">
               <Sparkline data={[22000, 21200, 18675]} color="#e5484d" />
             </div>
@@ -231,12 +226,12 @@ function Overview() {
             <PiggyBank className="h-5 w-5 text-ai" />
           </div>
           <KpiLabel>Net Savings</KpiLabel>
-          <div className="kpi-value-neutral mt-1 font-mono text-lg font-semibold tracking-tight text-ai tabular-nums sm:text-xl">
+          <div dir="ltr" className="kpi-value-neutral mt-1 font-mono text-lg font-semibold tracking-tight text-ai tabular-nums sm:text-xl">
             PKR <span ref={savings.ref}>{savings.formatted}</span>
           </div>
           <div className="mt-3 flex items-center justify-between gap-2">
             <span className="text-[10px] text-text-muted sm:text-[11px]">{t("Saved this month")}</span>
-            <span className="text-[10px] text-bull/80 sm:text-[11px]">+PKR 4,825</span>
+            <span dir="ltr" className="text-[10px] text-bull/80 sm:text-[11px]">{formatSignedPKR(4825)}</span>
           </div>
         </KpiCard>
 
@@ -249,7 +244,7 @@ function Overview() {
             <Percent className="h-5 w-5 text-warning" />
           </div>
           <KpiLabel>Savings Rate</KpiLabel>
-          <div className="kpi-value-neutral mt-1 font-mono text-lg font-semibold tracking-tight text-warning tabular-nums sm:text-xl">
+          <div dir="ltr" className="kpi-value-neutral mt-1 font-mono text-lg font-semibold tracking-tight text-warning tabular-nums sm:text-xl">
             <span ref={rate.ref}>{rate.formatted}</span>%
           </div>
           <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-white/5">
@@ -302,8 +297,9 @@ function Overview() {
         <div className="relative z-10 mt-4">
           <IncomeExpenseChart data={INCOME_EXPENSE} />
         </div>
-        <div className="relative z-10 mt-3 text-center text-[11px] text-text-muted">
-          6-month totals: Income PKR 2,85,000 · Expenses PKR 1,12,050 · Saved PKR 1,72,950
+        <div dir="ltr" className="relative z-10 mt-3 text-center text-[11px] text-text-muted">
+          {t("6-month totals")}: {t("Income")} {formatPKR(285000)} · {t("Expenses")}{" "}
+          {formatPKR(112050)} · {t("Saved")} {formatPKR(172950)}
         </div>
       </motion.div>
     </div>

@@ -1,4 +1,5 @@
 // Central dummy data + deterministic OHLCV generation for NafaIQ
+import { formatNumber, formatPKR } from "@/lib/format";
 
 export type Signal = "STRONG BUY" | "BUY" | "HOLD" | "SELL" | "STRONG SELL";
 
@@ -353,11 +354,9 @@ export const HOLDINGS: Holding[] = [
 export const WATCHLIST = ["HBL", "ENGRO", "LUCK", "OGDC", "FFC"];
 
 export function fmtPKR(n: number, dp = 0) {
-  return (
-    "PKR " + n.toLocaleString("en-PK", { minimumFractionDigits: dp, maximumFractionDigits: dp })
-  );
+  return formatPKR(n, dp);
 }
 
 export function fmtNum(n: number, dp = 2) {
-  return n.toLocaleString("en-US", { minimumFractionDigits: dp, maximumFractionDigits: dp });
+  return formatNumber(n, dp);
 }
