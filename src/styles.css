@@ -727,16 +727,52 @@
 }
 
 /* Urdu readability: Naskh body with generous line-height + word spacing.
-   Nastaliq stays only for decorative display headings via .font-nastaliq. */
+   Nastaliq stays only for decorative display headings via .font-nastaliq.
+
+   Naskh x-height is smaller than Latin at the same font-size, so Urdu looks
+   tiny. font-size-adjust inherits to every child and scales glyphs up to a
+   consistent apparent size relative to each element's own font-size.
+
+   Values are tuned per breakpoint so Urdu never feels cramped: on small
+   screens glyphs are scaled up the most with the most breathing room, easing
+   off as viewport width grows. */
 .font-urdu {
-  line-height: 2;
-  letter-spacing: 0;
-  word-spacing: 0.05em;
-  /* Naskh x-height is smaller than Latin at the same font-size, so Urdu looks
-     tiny. font-size-adjust inherits to every child and scales glyphs up to a
-     consistent apparent size relative to each element's own font-size. */
-  font-size-adjust: 0.62;
+  font-size-adjust: 0.66;
+  line-height: 2.05;
+  letter-spacing: 0.01em;
+  word-spacing: 0.08em;
 }
+
+/* sm */
+@media (min-width: 640px) {
+  .font-urdu {
+    font-size-adjust: 0.64;
+    line-height: 2;
+    letter-spacing: 0.005em;
+    word-spacing: 0.06em;
+  }
+}
+
+/* lg */
+@media (min-width: 1024px) {
+  .font-urdu {
+    font-size-adjust: 0.62;
+    line-height: 1.95;
+    letter-spacing: 0;
+    word-spacing: 0.05em;
+  }
+}
+
+/* xl */
+@media (min-width: 1280px) {
+  .font-urdu {
+    font-size-adjust: 0.6;
+    line-height: 1.9;
+    letter-spacing: 0;
+    word-spacing: 0.04em;
+  }
+}
+
 .font-nastaliq {
   font-family: var(--font-nastaliq);
   line-height: 2.1;
