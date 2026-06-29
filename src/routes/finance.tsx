@@ -472,6 +472,7 @@ function Bills() {
 }
 
 function Goals() {
+  const { t } = useLang();
   return (
     <div className="grid gap-4 md:grid-cols-2">
       {GOALS.map((g) => {
