@@ -117,24 +117,24 @@ function StockDetail() {
       <Card>
         <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-text-primary">
           <Sparkles className="h-4 w-4 text-ai" />
-          AI Technical Analysis
+          {t("AI Technical Analysis")}
         </h3>
         <div className="scrollbar-none overflow-x-auto">
           <table className="w-full min-w-[480px] text-xs">
             <thead>
               <tr className="border-b border-border text-left text-text-muted">
-                <th className="py-2">Indicator</th>
-                <th>Value</th>
-                <th>Reading</th>
-                <th className="text-right">Signal</th>
+                <th className="py-2">{t("Indicator")}</th>
+                <th>{t("Value")}</th>
+                <th>{t("Reading")}</th>
+                <th className="text-right">{t("Signal")}</th>
               </tr>
             </thead>
             <tbody>
               {SIGNAL_ROWS.map((r) => (
                 <tr key={r.ind} className="border-b border-border/50">
-                  <td className="py-2 text-text-primary">{r.ind}</td>
-                  <td className="font-mono tabular-nums text-text-secondary">{r.value}</td>
-                  <td className="text-text-secondary">{r.reading}</td>
+                  <td className="py-2 text-text-primary">{t(r.ind)}</td>
+                  <td className="font-mono tabular-nums text-text-secondary">{t(r.value)}</td>
+                  <td className="text-text-secondary">{t(r.reading)}</td>
                   <td className="text-right">
                     <span
                       className={cn(
@@ -150,7 +150,7 @@ function StockDetail() {
                             : "fill-text-muted text-text-muted",
                         )}
                       />{" "}
-                      {r.sig}
+                      {t(r.sig)}
                     </span>
                   </td>
                 </tr>
@@ -159,16 +159,16 @@ function StockDetail() {
           </table>
         </div>
         <div className="mt-3 rounded-[6px] bg-bull/10 px-3 py-2 text-sm font-semibold text-bull">
-          Overall: STRONG BUY · 5 of 6 indicators bullish
+          {t("Overall: STRONG BUY · 5 of 6 indicators bullish")}
         </div>
         <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-          {s.ticker} is showing strong bullish momentum. Price has broken above MA50 with
-          significantly above-average volume — a classic confirmation signal. RSI at 61 leaves room
-          before overbought territory. The only caution is Bollinger Band position suggesting the
-          move may slow near 148–150. Consider a stop-loss at the MA20 level (~136).
+          {s.ticker}{" "}
+          {t(
+            "is showing strong bullish momentum. Price has broken above MA50 with significantly above-average volume — a classic confirmation signal. RSI at 61 leaves room before overbought territory. The only caution is Bollinger Band position suggesting the move may slow near 148–150. Consider a stop-loss at the MA20 level (~136).",
+          )}
         </p>
         <p className="mt-2 text-[11px] italic text-text-muted">
-          This is AI-generated technical analysis only. Not financial advice.
+          {t("This is AI-generated technical analysis only. Not financial advice.")}
         </p>
       </Card>
 
