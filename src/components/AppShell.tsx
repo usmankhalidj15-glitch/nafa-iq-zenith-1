@@ -79,6 +79,7 @@ function SidebarLink({
   icon: typeof LayoutDashboard;
   active: boolean;
 }) {
+  const { t } = useLang();
   return (
     <Link
       to={to}
@@ -103,7 +104,7 @@ function SidebarLink({
         )}
         strokeWidth={1.75}
       />
-      {label}
+      {t(label)}
     </Link>
   );
 }
