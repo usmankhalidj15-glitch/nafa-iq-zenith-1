@@ -440,17 +440,6 @@ function Portfolio() {
             placeholder={t("Current price (PKR, optional)")}
             className={fieldClass}
           />
-          <select
-            value={form.signal}
-            onChange={(e) => setForm({ ...form, signal: e.target.value as Signal })}
-            className={fieldClass}
-          >
-            {SIGNALS.map((s) => (
-              <option key={s} value={s}>
-                {t(s)}
-              </option>
-            ))}
-          </select>
           {formErr && <div className="text-xs text-bear">{formErr}</div>}
           <button
             onClick={saveHolding}
