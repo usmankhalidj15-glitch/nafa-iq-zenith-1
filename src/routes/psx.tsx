@@ -14,7 +14,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Card } from "@/components/Card";
 import { Change } from "@/components/Change";
 import { SignalBadge } from "@/components/SignalBadge";
-import { CandlestickChart, Sparkline } from "@/components/charts";
+import { CandlestickChart, PriceLineChart, Sparkline } from "@/components/charts";
 import {
   INDICES,
   STOCKS,
@@ -46,7 +46,7 @@ const TIMEFRAMES = ["1D", "1W", "1M", "3M", "6M", "1Y", "All"] as const;
 const INDICATORS = ["MA20", "MA50", "MA200"] as const;
 
 function tfDays(tf: string) {
-  return { "1D": 5, "1W": 14, "1M": 30, "3M": 90, "6M": 130, "1Y": 180, All: 180 }[tf] ?? 180;
+  return { "1D": 5, "1W": 14, "1M": 30, "3M": 90, "6M": 130, "1Y": 250, All: 250 }[tf] ?? 250;
 }
 
 function symbolMeta(sym: string) {
@@ -102,7 +102,7 @@ export default function PSX() {
 
   const meta = symbolMeta(sym);
   const full = useMemo(
-    () => generateOHLCV(meta.seed, meta.start, meta.end, 180, meta.vMin, meta.vMax),
+    () => generateOHLCV(meta.seed, meta.start, meta.end, 250, meta.vMin, meta.vMax),
     [sym],
   );
   const data = full.slice(-tfDays(tf));
@@ -250,7 +250,11 @@ export default function PSX() {
             </div>
 
             <div className="h-[300px] lg:h-[480px]">
-              <CandlestickChart data={data} height={9999} mas={mas} />
+              {type === "line" ? (
+                <PriceLineChart data={data} height={9999} mas={mas} />
+              ) : (
+                <CandlestickChart data={data} height={9999} mas={mas} />
+              )}
             </div>
           </Card>
 
