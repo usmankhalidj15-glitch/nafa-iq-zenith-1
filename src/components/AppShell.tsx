@@ -93,7 +93,7 @@ function SidebarLink({
       {/* left-edge accent bar */}
       <span
         className={cn(
-          "absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r-full bg-bull transition-opacity duration-200",
+          "absolute start-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-e-full bg-bull transition-opacity duration-200",
           active ? "opacity-100" : "opacity-0",
         )}
       />
@@ -120,7 +120,7 @@ function Sidebar() {
   }
   const isActive = (to: string) => path === to || path.startsWith(to + "/");
   return (
-    <aside className="glass-chrome fixed top-0 left-0 z-30 hidden h-screen w-[212px] flex-col border-r border-white/[0.06] shadow-[1px_0_0_rgba(255,255,255,0.02),4px_0_24px_rgba(0,0,0,0.25)] lg:flex">
+    <aside className="glass-chrome fixed top-0 start-0 z-30 hidden h-screen w-[212px] flex-col border-e border-white/[0.06] shadow-[1px_0_0_rgba(255,255,255,0.02),4px_0_24px_rgba(0,0,0,0.25)] lg:flex">
       <div className="flex h-[56px] items-center border-b border-white/[0.06] px-5">
         <Logo />
       </div>
@@ -173,13 +173,13 @@ function StockSearch() {
   }
   return (
     <form onSubmit={submit} className="relative hidden w-full max-w-xs shrink-0 sm:block">
-      <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted" />
+      <Search className="pointer-events-none absolute start-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted" />
       <input
         value={q}
         onChange={(e) => setQ(e.target.value)}
         placeholder="Search stocks (e.g. HBL)…"
         aria-label="Search stocks"
-        className="h-8 w-full rounded-[8px] border border-white/[0.08] bg-surface pl-8 pr-3 text-[13px] text-text-primary outline-none transition-colors placeholder:text-text-muted focus:border-bull"
+        className="h-8 w-full rounded-[8px] border border-white/[0.08] bg-surface ps-8 pe-3 text-[13px] text-text-primary outline-none transition-colors placeholder:text-text-muted focus:border-bull"
       />
     </form>
   );
@@ -204,7 +204,7 @@ function NotificationBell() {
         aria-label="Notifications"
       >
         <Bell className="h-[18px] w-[18px]" strokeWidth={1.75} />
-        <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-bear text-[9px] font-bold text-white">
+        <span className="absolute -top-1.5 -end-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-bear text-[9px] font-bold text-white">
           {NOTIFICATIONS.length}
         </span>
       </button>
@@ -212,7 +212,7 @@ function NotificationBell() {
         <div
           className={cn(
             "glass-chrome absolute top-9 z-50 w-72 max-w-[calc(100vw-1.5rem)] overflow-hidden rounded-[12px] border border-white/[0.08] shadow-2xl",
-            lang === "ur" ? "left-0" : "right-0",
+            "end-0",
           )}
         >
           <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-2.5">
