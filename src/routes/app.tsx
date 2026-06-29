@@ -146,7 +146,7 @@ function Dashboard() {
       {/* Metric cards — Net Worth primary, rest secondary */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
         <Card className="lg:col-span-6">
-          <div className="text-[13px] font-medium text-text-secondary">Total Net Worth</div>
+          <div className="text-[13px] font-medium text-text-secondary">{t("Total Net Worth")}</div>
           <div className="mt-3 font-mono text-4xl font-bold tabular-nums text-text-primary">
             {fmtPKR(4280500)}
           </div>
@@ -175,7 +175,7 @@ function Dashboard() {
       <div className="grid gap-4 lg:grid-cols-5">
         <Card className="lg:col-span-3">
           <div className="mb-3 flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-text-primary">Portfolio Value</h3>
+            <h3 className="text-sm font-semibold text-text-primary">{t("Portfolio Value")}</h3>
             <div className="flex gap-1">
               {RANGES.map((r) => (
                 <button
@@ -206,7 +206,7 @@ function Dashboard() {
           </div>
         </Card>
         <Card className="lg:col-span-2">
-          <h3 className="mb-3 text-sm font-semibold text-text-primary">Spending Breakdown</h3>
+          <h3 className="mb-3 text-sm font-semibold text-text-primary">{t("Spending Breakdown")}</h3>
           <DonutChart data={SPENDING} centerValue="112,050" centerLabel="PKR total" />
           <div className="mt-2 grid grid-cols-2 gap-1.5 text-xs">
             {SPENDING.map((s) => (
