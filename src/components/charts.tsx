@@ -411,9 +411,38 @@ export function DonutChart({
 }) {
   const ct = useChartTheme();
   const { t } = useLang();
-  // Harmonious, desaturated palette for white cards in light mode.
   const lightPalette = DONUT_LIGHT_PALETTE;
   const tdata = data.map((d) => ({ ...d, name: t(d.name) }));
+
+  const renderSliceLabel = (props: {
+    cx: number;
+    cy: number;
+    midAngle: number;
+    innerRadius: number;
+    outerRadius: number;
+    percent: number;
+  }) => {
+    const { cx, cy, midAngle, innerRadius, outerRadius, percent } = props;
+    if (percent < 0.12) return null;
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const RADIAN = Math.PI / 180;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+    return (
+      <text
+        x={x}
+        y={y}
+        fill={ct.light ? "#0f172a" : "#ffffff"}
+        textAnchor="middle"
+        dominantBaseline="central"
+        fontSize={ct.light ? 13 : 10}
+        fontWeight={600}
+      >
+        {`${(percent * 100).toFixed(0)}%`}
+      </text>
+    );
+  };
+
   return (
     <div className="relative">
       <ResponsiveContainer width="100%" height={220}>
@@ -428,6 +457,8 @@ export function DonutChart({
             stroke={ct.light ? "#ffffff" : "none"}
             strokeWidth={ct.light ? 2 : 0}
             isAnimationActive={false}
+            label={renderSliceLabel}
+            labelLine={false}
           >
             {data.map((d, i) => (
               <Cell key={i} fill={ct.light ? lightPalette[i % lightPalette.length] : d.color} />
