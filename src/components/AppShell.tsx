@@ -246,6 +246,7 @@ function NotificationBell() {
 
 function UserMenu() {
   const { profile, user, signOut } = useAuth();
+  const { t } = useLang();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -291,14 +292,14 @@ function UserMenu() {
                 className="flex items-center gap-2.5 rounded-[8px] px-3 py-2 text-[13px] text-text-secondary transition hover:bg-white/[0.04] hover:text-text-primary"
               >
                 <it.icon className="h-4 w-4" strokeWidth={1.75} />
-                {it.label}
+                {t(it.label)}
               </Link>
             ))}
             <button
               onClick={handleSignOut}
               className="flex w-full items-center gap-2.5 rounded-[8px] px-3 py-2 text-[13px] text-bear transition hover:bg-bear/10"
             >
-              <LogOut className="h-4 w-4" strokeWidth={1.75} /> Logout
+              <LogOut className="h-4 w-4" strokeWidth={1.75} /> {t("Logout")}
             </button>
           </nav>
         </div>
