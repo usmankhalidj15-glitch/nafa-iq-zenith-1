@@ -252,7 +252,7 @@ function NotificationBell() {
 
 function UserMenu() {
   const { profile, user, signOut } = useAuth();
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
