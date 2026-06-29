@@ -195,20 +195,16 @@ function Alerts() {
           )}
           <div className="mt-3 flex flex-wrap gap-3 text-xs text-text-secondary">
             <label className="flex items-center gap-1.5">
-              <input
-                type="checkbox"
+              <Checkbox
                 checked={push}
-                onChange={(e) => setPush(e.target.checked)}
-                className="accent-[#00d4aa]"
+                onCheckedChange={(c) => setPush(c === true)}
               />
               {t("Push")}
             </label>
             <label className="flex items-center gap-1.5">
-              <input
-                type="checkbox"
+              <Checkbox
                 checked={email}
-                onChange={(e) => setEmail(e.target.checked)}
-                className="accent-[#00d4aa]"
+                onCheckedChange={(c) => setEmail(c === true)}
               />
               {t("Email")}
             </label>
