@@ -483,14 +483,14 @@ export function IncomeExpenseChart({
         <Legend wrapperStyle={{ fontSize: 12 }} />
         <Bar
           dataKey="income"
-          name={t("Income")}
+          name={t("In")}
           fill={ct.teal}
           radius={[3, 3, 0, 0]}
           isAnimationActive={false}
         />
         <Bar
           dataKey="expense"
-          name={t("Expense")}
+          name={t("Out")}
           fill={ct.expense}
           radius={[3, 3, 0, 0]}
           isAnimationActive={false}
