@@ -160,6 +160,7 @@ function Sidebar() {
 function StockSearch() {
   const [q, setQ] = useState("");
   const navigate = useNavigate();
+  const { t: tr } = useLang();
   function submit(e: React.FormEvent) {
     e.preventDefault();
     const t = q.trim().toUpperCase();
