@@ -23,6 +23,7 @@ import { TICKER_ITEMS, STOCKS } from "@/lib/data";
 import { LEARNING_PATHS, LESSON_CONTENT } from "@/lib/learn-data";
 import { useAuth } from "@/hooks/use-auth";
 import { useTheme } from "@/hooks/use-theme";
+import { useLang } from "@/hooks/use-lang";
 
 const NAV = [
   { to: "/app", label: "Dashboard", icon: LayoutDashboard, mobile: "Home" },
@@ -78,6 +79,7 @@ function SidebarLink({
   icon: typeof LayoutDashboard;
   active: boolean;
 }) {
+  const { t } = useLang();
   return (
     <Link
       to={to}
@@ -102,7 +104,7 @@ function SidebarLink({
         )}
         strokeWidth={1.75}
       />
-      {label}
+      {t(label)}
     </Link>
   );
 }
@@ -244,6 +246,7 @@ function NotificationBell() {
 
 function UserMenu() {
   const { profile, user, signOut } = useAuth();
+  const { t } = useLang();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -289,14 +292,14 @@ function UserMenu() {
                 className="flex items-center gap-2.5 rounded-[8px] px-3 py-2 text-[13px] text-text-secondary transition hover:bg-white/[0.04] hover:text-text-primary"
               >
                 <it.icon className="h-4 w-4" strokeWidth={1.75} />
-                {it.label}
+                {t(it.label)}
               </Link>
             ))}
             <button
               onClick={handleSignOut}
               className="flex w-full items-center gap-2.5 rounded-[8px] px-3 py-2 text-[13px] text-bear transition hover:bg-bear/10"
             >
-              <LogOut className="h-4 w-4" strokeWidth={1.75} /> Logout
+              <LogOut className="h-4 w-4" strokeWidth={1.75} /> {t("Logout")}
             </button>
           </nav>
         </div>
@@ -306,6 +309,7 @@ function UserMenu() {
 }
 
 function Header({ onMenu }: { onMenu: () => void }) {
+  const { t } = useLang();
   return (
     <header className="glass-chrome sticky top-0 z-20 flex h-[52px] items-center gap-2 border-b border-white/[0.06] px-3 sm:gap-3 lg:pl-6">
       <button onClick={onMenu} className="text-text-secondary lg:hidden" aria-label="Menu">
@@ -327,7 +331,7 @@ function Header({ onMenu }: { onMenu: () => void }) {
           to="/plans"
           className="hidden shrink-0 items-center gap-1.5 rounded-[8px] border border-bull/40 bg-bull/10 px-3 py-1.5 text-[12px] font-semibold text-bull transition hover:border-bull/60 hover:bg-bull/15 sm:inline-flex"
         >
-          <Sparkles className="h-3.5 w-3.5" /> Upgrade to Pro
+          <Sparkles className="h-3.5 w-3.5" /> {t("Upgrade to Pro")}
         </Link>
         <Link
           to="/plans"
@@ -344,6 +348,7 @@ function Header({ onMenu }: { onMenu: () => void }) {
 }
 
 function Breadcrumbs() {
+  const { t } = useLang();
   const path = useRouterState({ select: (s) => s.location.pathname });
   const segments = path.split("/").filter(Boolean);
   if (segments.length < 2) return null;
@@ -378,9 +383,9 @@ function Breadcrumbs() {
           <li key={c.href} className="flex items-center gap-1.5">
             {i > 0 && <ChevronRight className="h-3 w-3 text-text-muted" />}
             {c.last ? (
-              <span className="font-medium text-text-primary">{c.label}</span>
+              <span className="font-medium text-text-primary">{t(c.label)}</span>
             ) : (
-              <span className="text-text-secondary">{c.label}</span>
+              <span className="text-text-secondary">{t(c.label)}</span>
             )}
           </li>
         ))}
@@ -390,6 +395,7 @@ function Breadcrumbs() {
 }
 
 function BottomNav() {
+  const { t: tr } = useLang();
   const path = useRouterState({ select: (s) => s.location.pathname });
   const tabs = NAV.slice(0, 5);
   return (
@@ -417,7 +423,7 @@ function BottomNav() {
             <span
               className={cn("text-[10px] font-medium", active ? "text-gold" : "text-text-muted")}
             >
-              {label}
+              {tr(label)}
             </span>
           </Link>
         );
@@ -430,6 +436,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const [drawer, setDrawer] = useState(false);
   const { profile, user, signOut } = useAuth();
   const { theme } = useTheme();
+  const { t, isUrdu } = useLang();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   async function handleSignOut() {
@@ -439,9 +446,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }
   return (
     <div
+      dir={isUrdu ? "rtl" : "ltr"}
       className={cn(
         "relative min-h-screen overflow-x-hidden bg-background",
         theme === "light" && "theme-light",
+        isUrdu && "font-urdu",
       )}
     >
       {/* ambient depth — very subtle brand wash */}
@@ -463,7 +472,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mb-3 flex items-center justify-between">
-              <span className="text-sm font-semibold text-text-primary">More</span>
+              <span className="text-sm font-semibold text-text-primary">{t("More")}</span>
               <button onClick={() => setDrawer(false)}>
                 <X className="h-5 w-5 text-text-secondary" />
               </button>
@@ -476,7 +485,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 className="flex items-center gap-3 rounded-[6px] px-3 py-3 text-sm text-text-primary hover:bg-hover"
               >
                 <n.icon className="h-5 w-5 text-text-secondary" />
-                {n.label}
+                {t(n.label)}
               </Link>
             ))}
             <Link
@@ -484,7 +493,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               onClick={() => setDrawer(false)}
               className="flex items-center gap-3 rounded-[6px] border border-bull/40 bg-bull/10 px-3 py-3 text-sm font-semibold text-bull hover:bg-bull/15"
             >
-              <Sparkles className="h-5 w-5" /> Upgrade to Pro
+              <Sparkles className="h-5 w-5" /> {t("Upgrade to Pro")}
             </Link>
             <div className="mt-2 flex items-center gap-3 border-t border-border px-3 pt-3">
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-bull/20 text-sm font-semibold text-bull">
@@ -500,7 +509,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 onClick={handleSignOut}
                 className="flex items-center gap-1.5 rounded-[6px] px-2.5 py-1.5 text-sm font-medium text-bear hover:bg-hover"
               >
-                <LogOut className="h-4 w-4" /> Sign out
+                <LogOut className="h-4 w-4" /> {t("Sign out")}
               </button>
             </div>
           </div>
