@@ -208,13 +208,14 @@ function Portfolio() {
     if (!form.avgCost || Number.isNaN(avgCost) || avgCost <= 0)
       return setFormErr(t("Please enter a valid average cost."));
     const cur = !form.current || Number.isNaN(current) || current <= 0 ? avgCost : current;
+    const signal = computeSignal(form.ticker.trim().toUpperCase(), cur, avgCost);
     const entry: Holding = {
       ticker: form.ticker.trim().toUpperCase(),
       sector: form.sector.trim(),
       shares,
       avgCost,
       current: cur,
-      signal: form.signal,
+      signal,
     };
     setHoldings((prev) =>
       editIdx == null ? [...prev, entry] : prev.map((h, i) => (i === editIdx ? entry : h)),
