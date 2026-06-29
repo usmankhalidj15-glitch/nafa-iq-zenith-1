@@ -336,7 +336,7 @@ export default function PSX() {
                           {s.ticker}
                         </Link>
                       </td>
-                      <td className="text-text-secondary">{s.sector}</td>
+                      <td className="text-text-secondary">{t(s.sector)}</td>
                       <td className="text-right font-mono tabular-nums text-text-primary">
                         {fmtNum(s.price)}
                       </td>
