@@ -57,7 +57,6 @@ function symbolMeta(sym: string) {
 
 function MarketTicker() {
   const { t } = useLang();
-  // Always-dark dense data strip — same in dark & light themes.
   const row = [...STOCK_LIST, ...STOCK_LIST];
   return (
     <div className="market-strip overflow-hidden rounded-[10px]">
@@ -70,7 +69,7 @@ function MarketTicker() {
           <div className="flex w-max animate-ticker gap-6 pl-6">
             {row.map((s, i) => (
               <span key={i} className="flex items-center gap-2 whitespace-nowrap text-[12px]">
-                <span className="font-semibold text-[#e2e8f0]">{s.ticker}</span>
+                <span className="font-semibold text-text-primary">{s.ticker}</span>
                 <span className="font-mono tabular-nums market-strip-muted">
                   {fmtNum(s.price)}
                 </span>
