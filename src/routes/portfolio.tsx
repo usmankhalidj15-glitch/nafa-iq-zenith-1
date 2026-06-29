@@ -126,7 +126,7 @@ function HaqeeqiDaulat() {
                 {t("34% of portfolio in Oil & Gas provides partial hedge against rupee weakness.")}
               </p>
             </div>
-            <button className="flex items-center gap-1.5 rounded-[8px] bg-gold px-3.5 py-2 text-sm font-semibold text-gold-foreground transition hover:bg-gold-hover">
+            <button className="cta-primary flex items-center gap-1.5 rounded-[8px] bg-gold px-3.5 py-2 text-sm font-semibold text-gold-foreground transition hover:bg-gold-hover">
               {t("Improve Score")} <ArrowRight className="h-4 w-4" />
             </button>
           </div>
