@@ -546,6 +546,19 @@ const UR: Record<string, string> = {
   Priority: "ترجیحی",
   Community: "کمیونٹی",
   Standard: "معیاری",
+  "Add Contribution": "رقم جمع کریں",
+  "Bill name": "بل کا نام",
+  "Due date (e.g. Jun 25)": "آخری تاریخ (مثلاً 25 جون)",
+  "Goal name": "ہدف کا نام",
+  "Mark as paid": "ادا شدہ نشان زد کریں",
+  "New goal created. Start contributing to track your progress.":
+    "نیا ہدف بن گیا۔ پیش رفت دیکھنے کے لیے رقم جمع کرنا شروع کریں۔",
+  "Please enter a bill name.": "براہ کرم بل کا نام درج کریں۔",
+  "Please enter a goal name.": "براہ کرم ہدف کا نام درج کریں۔",
+  "Please enter a valid price.": "براہ کرم درست قیمت درج کریں۔",
+  "Please enter a valid target amount.": "براہ کرم درست ہدف رقم درج کریں۔",
+  "Target amount (PKR)": "ہدف رقم (PKR)",
+  "Target date (optional)": "ہدف کی تاریخ (اختیاری)",
 };
 
 
