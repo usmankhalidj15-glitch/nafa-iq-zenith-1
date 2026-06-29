@@ -20,6 +20,7 @@ import { EmojiIcon } from "@/components/icons";
 import { Card } from "@/components/Card";
 import { IncomeExpenseChart, Sparkline } from "@/components/charts";
 import { fmtPKR } from "@/lib/data";
+import { formatNumber, formatPKR, formatSignedPKR } from "@/lib/format";
 import { BUDGETS, INCOME_EXPENSE, type Goal } from "@/lib/finance-data";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/hooks/use-lang";
