@@ -67,6 +67,7 @@ function formatToday() {
 function Dashboard() {
   const { profile, user } = useAuth();
   const { t } = useLang();
+  const { theme } = useTheme();
   const firstName = (profile?.display_name || user?.email?.split("@")[0] || "Investor").split(
     " ",
   )[0];
