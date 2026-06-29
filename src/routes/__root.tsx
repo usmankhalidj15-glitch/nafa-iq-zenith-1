@@ -206,7 +206,8 @@ function AuthGate() {
   const isAuthRoute = pathname === "/auth";
   const isLanding = pathname === "/";
   const isPlans = pathname === "/plans";
-  const isPublic = isAuthRoute || isLanding || isPlans;
+  const isUrduQa = pathname === "/urdu-qa";
+  const isPublic = isAuthRoute || isLanding || isPlans || isUrduQa;
 
   useEffect(() => {
     if (loading) return;
