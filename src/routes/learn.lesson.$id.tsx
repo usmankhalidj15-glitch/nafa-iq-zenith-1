@@ -842,6 +842,7 @@ function ResultsView({
   onBackToLesson: () => void;
   onContinue: () => void;
 }) {
+  const { t } = useLang();
   const total = lesson.quiz.length;
   const pct = (correct / total) * 100;
   const ringColor = correct >= total ? "#00d4aa" : correct >= 2 ? "#f59e0b" : "#ff4d4d";
