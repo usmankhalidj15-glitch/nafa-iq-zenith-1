@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Trash2, TrendingUp, Calendar, Wallet, Target } from "lucide-react";
 import { Card } from "@/components/Card";
 import { EmojiIcon } from "@/components/icons";
+import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/hooks/use-lang";
 import { useFinanceStore, financeActions } from "@/hooks/use-finance-store";
