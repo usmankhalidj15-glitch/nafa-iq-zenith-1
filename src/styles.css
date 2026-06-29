@@ -725,3 +725,15 @@
 .theme-light .kpi-value-neutral {
   color: var(--color-text-primary);
 }
+
+/* Urdu readability: Naskh body with generous line-height + word spacing.
+   Nastaliq stays only for decorative display headings via .font-nastaliq. */
+.font-urdu {
+  line-height: 2;
+  letter-spacing: 0;
+  word-spacing: 0.05em;
+}
+.font-nastaliq {
+  font-family: var(--font-nastaliq);
+  line-height: 2.1;
+}
