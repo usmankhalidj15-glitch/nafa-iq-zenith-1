@@ -1,6 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Sparkles, ArrowRight } from "lucide-react";
+import {
+  Sparkles,
+  ArrowRight,
+  Plus,
+  TrendingUp,
+  Calendar,
+  Wallet,
+  Target,
+} from "lucide-react";
+import { toast } from "sonner";
 import { Card, StatCard } from "@/components/Card";
 import { Change } from "@/components/Change";
 import { SignalBadge } from "@/components/SignalBadge";
@@ -12,6 +21,9 @@ import { SPENDING, GOALS } from "@/lib/finance-data";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
 import { useLang } from "@/hooks/use-lang";
+import { useFinanceStore, financeActions } from "@/hooks/use-finance-store";
+import { Modal, fieldClass } from "@/components/Modal";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export const Route = createFileRoute("/app")({
   head: () => ({
