@@ -11,6 +11,7 @@ import {
   type Bill,
   type Goal,
 } from "@/lib/finance-data";
+import { HOLDINGS, type Holding, type Signal } from "@/lib/data";
 
 const KEY = "nafaiq:finance:v1";
 
