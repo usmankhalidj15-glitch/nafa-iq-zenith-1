@@ -59,6 +59,13 @@ const CAT_COLOR: Record<string, string> = {
 function Finance() {
   const { t: tr } = useLang();
   const [tab, setTab] = useState<Tab>("Overview");
+  const [reportState, setReportState] = useState<"idle" | "loading" | "open">("idle");
+
+  function generate() {
+    setReportState("loading");
+    setTimeout(() => setReportState("open"), 2000);
+  }
+
   return (
     <div className="mx-auto max-w-6xl space-y-6">
       <div className="flex items-center justify-between">
@@ -91,6 +98,37 @@ function Finance() {
       {tab === "Budgets" && <Budgets />}
       {tab === "Bills" && <Bills />}
       {tab === "Goals" && <Goals />}
+
+      {/* AI report */}
+      <div className="rounded-[8px] border border-border border-l-4 border-l-ai bg-ai-tint p-4">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center">
+          <Sparkles className="h-5 w-5 shrink-0 text-ai" />
+          <div className="flex-1">
+            <h3 className="text-sm font-semibold text-text-primary">{tr("AI Finance Report")}</h3>
+            <p className="text-sm text-text-secondary">
+              {tr(
+                "Get a plain-English analysis — income vs expense trends, budget health, savings rate assessment, and personalized money tips.",
+              )}
+            </p>
+          </div>
+          <button
+            onClick={generate}
+            disabled={reportState === "loading"}
+            className="flex items-center gap-2 rounded-[6px] bg-ai px-4 py-2 text-sm font-semibold text-white hover:brightness-110 disabled:opacity-70"
+          >
+            {reportState === "loading" ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                {tr("Analyzing…")}
+              </>
+            ) : (
+              tr("Generate Report")
+            )}
+          </button>
+        </div>
+      </div>
+
+      {reportState === "open" && <FinanceReportModal onClose={() => setReportState("idle")} />}
     </div>
   );
 }
