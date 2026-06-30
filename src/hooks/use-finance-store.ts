@@ -21,6 +21,7 @@ export interface FinanceState {
   transactions: Txn[];
   bills: Bill[];
   goals: Goal[];
+  holdings: Holding[];
 }
 
 function seed(): FinanceState {
