@@ -110,7 +110,7 @@ function PlansPage() {
       {/* simple header */}
       <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex h-14 max-w-[1100px] items-center justify-between px-6">
-          <Link to="/" className="flex items-center gap-2">
+          <Link to={backTo} className="flex items-center gap-2">
             <img src={logo} alt="NafaIQ" width={26} height={26} className="rounded-[6px]" />
             <span className="font-display text-lg font-bold tracking-tight text-text-primary">
               Nafa<span className="text-primary">IQ</span>
