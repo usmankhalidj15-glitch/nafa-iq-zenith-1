@@ -153,11 +153,11 @@ function computeSignal(ticker: string, current: number, avgCost: number): Signal
 
 function Portfolio() {
   const { t } = useLang();
+  const { holdings } = useFinanceStore();
   const [range, setRange] = useState<(typeof RANGES)[number]>("6M");
   const [reportState, setReportState] = useState<"idle" | "loading" | "open">("idle");
   const n = range === "1M" ? 2 : range === "3M" ? 3 : range === "6M" ? 6 : 12;
 
-  const [holdings, setHoldings] = useState<Holding[]>(HOLDINGS);
   const [formOpen, setFormOpen] = useState(false);
   const [editIdx, setEditIdx] = useState<number | null>(null);
   const emptyForm = {
@@ -169,8 +169,6 @@ function Portfolio() {
   };
   const [form, setForm] = useState(emptyForm);
   const [formErr, setFormErr] = useState("");
-
-  
 
   function openAdd() {
     setEditIdx(null);
@@ -194,7 +192,7 @@ function Portfolio() {
   }
 
   function remove(idx: number) {
-    setHoldings((prev) => prev.filter((_, i) => i !== idx));
+    financeActions.removeHolding(idx);
   }
 
   function saveHolding() {
@@ -218,9 +216,11 @@ function Portfolio() {
       current: cur,
       signal,
     };
-    setHoldings((prev) =>
-      editIdx == null ? [...prev, entry] : prev.map((h, i) => (i === editIdx ? entry : h)),
-    );
+    if (editIdx == null) {
+      financeActions.addHolding(entry);
+    } else {
+      financeActions.updateHolding(editIdx, entry);
+    }
     setFormOpen(false);
   }
 
