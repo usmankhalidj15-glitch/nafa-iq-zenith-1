@@ -15,10 +15,11 @@ import { Card, StatCard } from "@/components/Card";
 import { Change } from "@/components/Change";
 import { SignalBadge } from "@/components/SignalBadge";
 import { DonutChart, PortfolioAreaChart } from "@/components/charts";
-import { HOLDINGS, STOCKS, fmtPKR, fmtNum, type Holding, type Signal } from "@/lib/data";
+import { STOCKS, fmtPKR, fmtNum, type Holding, type Signal } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { EmojiIcon } from "@/components/icons";
 import { useLang } from "@/hooks/use-lang";
+import { useFinanceStore, financeActions } from "@/hooks/use-finance-store";
 import { Modal, fieldClass } from "@/components/Modal";
 
 export const Route = createFileRoute("/portfolio")({
