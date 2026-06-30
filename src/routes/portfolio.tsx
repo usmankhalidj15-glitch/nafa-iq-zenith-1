@@ -555,7 +555,7 @@ function ReportModal({ onClose }: { onClose: () => void }) {
             </div>
           ))}
         </div>
-        <div className="mt-4 flex gap-2">
+        <div className="mt-4 mb-6 flex gap-2">
           <button className="flex-1 rounded-[10px] bg-primary py-2 text-sm font-semibold text-primary-foreground transition-all duration-200 hover:brightness-110">
             {t("Export as PDF")}
           </button>
