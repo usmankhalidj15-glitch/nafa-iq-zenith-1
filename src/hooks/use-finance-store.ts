@@ -31,6 +31,7 @@ function seed(): FinanceState {
     transactions: TRANSACTIONS.map((t) => ({ ...t })),
     bills: BILLS.map((b) => ({ ...b })),
     goals: GOALS.map((g) => ({ ...g })),
+    holdings: HOLDINGS.map((h) => ({ ...h })),
   };
 }
 
@@ -47,6 +48,7 @@ function load(): FinanceState {
       transactions: parsed.transactions ?? base.transactions,
       bills: parsed.bills ?? base.bills,
       goals: parsed.goals ?? base.goals,
+      holdings: parsed.holdings ?? base.holdings,
     };
   } catch {
     return seed();
