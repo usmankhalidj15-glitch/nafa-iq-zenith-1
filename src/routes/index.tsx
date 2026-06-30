@@ -16,7 +16,6 @@ import {
   ShieldCheck,
   Check,
   Star,
-  Twitter,
   Linkedin,
   Github,
   Zap,
