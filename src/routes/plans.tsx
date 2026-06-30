@@ -127,10 +127,10 @@ function PlansPage() {
 
       <main className="mx-auto max-w-[1100px] px-6 py-14">
         <Link
-          to="/"
+          to={backTo}
           className="mb-4 inline-flex items-center gap-1 text-sm text-text-secondary transition hover:text-text-primary"
         >
-          <ArrowLeft className="h-4 w-4" /> {t("Home")}
+          <ArrowLeft className="h-4 w-4" /> {isLoggedIn ? t("Dashboard") : t("Home")}
         </Link>
         <div className="text-center">
           <h1 className="font-display text-3xl font-extrabold tracking-tight text-text-primary sm:text-5xl">
