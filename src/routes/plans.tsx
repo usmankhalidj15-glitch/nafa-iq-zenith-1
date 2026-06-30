@@ -101,6 +101,9 @@ function price(tier: (typeof TIERS)[number], billing: Billing) {
 function PlansPage() {
   const [billing, setBilling] = useState<Billing>("monthly");
   const { t } = useLang();
+  const { user } = useAuth();
+  const isLoggedIn = !!user;
+  const backTo = isLoggedIn ? "/app" : "/";
 
   return (
     <div className="min-h-screen bg-background">
