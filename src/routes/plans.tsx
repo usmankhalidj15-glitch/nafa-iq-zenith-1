@@ -4,6 +4,7 @@ import { Check, Minus, Star, ArrowRight, ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.png";
 import { useLang } from "@/hooks/use-lang";
+import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/plans")({
   head: () => ({
@@ -100,13 +101,16 @@ function price(tier: (typeof TIERS)[number], billing: Billing) {
 function PlansPage() {
   const [billing, setBilling] = useState<Billing>("monthly");
   const { t } = useLang();
+  const { user } = useAuth();
+  const isLoggedIn = !!user;
+  const backTo = isLoggedIn ? "/app" : "/";
 
   return (
     <div className="min-h-screen bg-background">
       {/* simple header */}
       <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex h-14 max-w-[1100px] items-center justify-between px-6">
-          <Link to="/" className="flex items-center gap-2">
+          <Link to={backTo} className="flex items-center gap-2">
             <img src={logo} alt="NafaIQ" width={26} height={26} className="rounded-[6px]" />
             <span className="font-display text-lg font-bold tracking-tight text-text-primary">
               Nafa<span className="text-primary">IQ</span>
@@ -123,10 +127,10 @@ function PlansPage() {
 
       <main className="mx-auto max-w-[1100px] px-6 py-14">
         <Link
-          to="/"
+          to={backTo}
           className="mb-4 inline-flex items-center gap-1 text-sm text-text-secondary transition hover:text-text-primary"
         >
-          <ArrowLeft className="h-4 w-4" /> {t("Home")}
+          <ArrowLeft className="h-4 w-4" /> {isLoggedIn ? t("Dashboard") : t("Home")}
         </Link>
         <div className="text-center">
           <h1 className="font-display text-3xl font-extrabold tracking-tight text-text-primary sm:text-5xl">
