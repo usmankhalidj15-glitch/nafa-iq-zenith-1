@@ -325,6 +325,10 @@ function Dashboard() {
           })}
         </div>
       </section>
+
+      <QuickAddTransactionModal open={txOpen} onClose={() => setTxOpen(false)} />
+      <QuickAddHoldingModal open={holdingOpen} onClose={() => setHoldingOpen(false)} />
+      <QuickAddAlertModal open={alertOpen} onClose={() => setAlertOpen(false)} />
     </div>
   );
 }
