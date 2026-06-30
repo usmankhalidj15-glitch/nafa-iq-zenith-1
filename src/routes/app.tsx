@@ -442,10 +442,8 @@ function QuickAddTransactionModal({ open, onClose }: { open: boolean; onClose: (
 function QuickAddHoldingModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { t } = useLang();
   const [ticker, setTicker] = useState("");
-  const [sector, setSector] = useState("");
   const [shares, setShares] = useState("");
   const [avgCost, setAvgCost] = useState("");
-  const [current, setCurrent] = useState("");
   const [err, setErr] = useState("");
 
   function computeSignal(sym: string, cur: number, cost: number) {
@@ -463,28 +461,27 @@ function QuickAddHoldingModal({ open, onClose }: { open: boolean; onClose: () =>
     setErr("");
     const s = Number(shares);
     const ac = Number(avgCost);
-    const cp = Number(current);
     if (!ticker.trim()) return setErr(t("Please enter a stock symbol."));
-    if (!sector.trim()) return setErr(t("Please enter a sector."));
     if (!shares || Number.isNaN(s) || s <= 0)
       return setErr(t("Please enter a valid number of shares."));
     if (!avgCost || Number.isNaN(ac) || ac <= 0)
-      return setErr(t("Please enter a valid average cost."));
-    const cur = !current || Number.isNaN(cp) || cp <= 0 ? ac : cp;
+      return setErr(t("Please enter a valid buy price."));
+    const sym = ticker.trim().toUpperCase();
+    const stock = STOCKS[sym];
+    // Current price comes from market data when known, otherwise falls back to buy price.
+    const cur = stock?.price ?? ac;
     financeActions.addHolding({
-      ticker: ticker.trim().toUpperCase(),
-      sector: sector.trim(),
+      ticker: sym,
+      sector: stock?.sector ?? "—",
       shares: s,
       avgCost: ac,
       current: cur,
-      signal: computeSignal(ticker.trim(), cur, ac),
+      signal: computeSignal(sym, cur, ac),
     });
     toast.success(t("Holding added"));
     setTicker("");
-    setSector("");
     setShares("");
     setAvgCost("");
-    setCurrent("");
     onClose();
   };
 
@@ -498,12 +495,6 @@ function QuickAddHoldingModal({ open, onClose }: { open: boolean; onClose: () =>
           className={fieldClass}
         />
         <input
-          value={sector}
-          onChange={(e) => setSector(e.target.value)}
-          placeholder={t("Sector")}
-          className={fieldClass}
-        />
-        <input
           value={shares}
           onChange={(e) => setShares(e.target.value)}
           inputMode="decimal"
@@ -514,14 +505,7 @@ function QuickAddHoldingModal({ open, onClose }: { open: boolean; onClose: () =>
           value={avgCost}
           onChange={(e) => setAvgCost(e.target.value)}
           inputMode="decimal"
-          placeholder={t("Avg Cost (PKR)")}
-          className={fieldClass}
-        />
-        <input
-          value={current}
-          onChange={(e) => setCurrent(e.target.value)}
-          inputMode="decimal"
-          placeholder={t("Current price (PKR, optional)")}
+          placeholder={t("Buy price (PKR)")}
           className={fieldClass}
         />
         {err && <div className="text-xs text-bear">{err}</div>}
