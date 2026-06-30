@@ -16,7 +16,6 @@ import {
   ShieldCheck,
   Check,
   Star,
-  Twitter,
   Linkedin,
   Github,
   Zap,
@@ -1569,18 +1568,28 @@ function Landing() {
               Pakistan's Financial Intelligence Terminal
             </p>
             <div className="mt-4 flex gap-3">
-              {[Twitter, Linkedin, Github].map((Icon, i) => (
-                <motion.a
-                  key={i}
-                  href="#"
-                  whileHover={{ scale: 1.18, rotate: 6 }}
-                  whileTap={{ scale: 0.92 }}
-                  transition={SPRING_UI}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.05] text-text-secondary transition hover:border-bull hover:bg-bull/10 hover:text-bull hover:shadow-[0_0_18px_rgba(0,212,170,0.35)]"
-                >
-                  <Icon className="h-4 w-4" />
-                </motion.a>
-              ))}
+              <motion.a
+                href="https://www.linkedin.com/in/usman-khalid-j10?utm_source=share_via&utm_content=profile&utm_medium=member_ios"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.18, rotate: 6 }}
+                whileTap={{ scale: 0.92 }}
+                transition={SPRING_UI}
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.05] text-text-secondary transition hover:border-bull hover:bg-bull/10 hover:text-bull hover:shadow-[0_0_18px_rgba(0,212,170,0.35)]"
+              >
+                <Linkedin className="h-4 w-4" />
+              </motion.a>
+              <motion.a
+                href="https://github.com/usmankhalidj15-glitch"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.18, rotate: 6 }}
+                whileTap={{ scale: 0.92 }}
+                transition={SPRING_UI}
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.05] text-text-secondary transition hover:border-bull hover:bg-bull/10 hover:text-bull hover:shadow-[0_0_18px_rgba(0,212,170,0.35)]"
+              >
+                <Github className="h-4 w-4" />
+              </motion.a>
             </div>
           </div>
           <div>
