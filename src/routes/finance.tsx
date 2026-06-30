@@ -6,6 +6,8 @@ import {
   Search,
   Check,
   Sparkles,
+  Loader2,
+  X,
   ArrowUpRight,
   ArrowDownRight,
   PiggyBank,
