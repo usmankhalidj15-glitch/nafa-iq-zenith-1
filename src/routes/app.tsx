@@ -89,6 +89,11 @@ function Dashboard() {
   console.log("Dashboard profile:", profile);
   console.log("Dashboard user:", user);
 
+  /* Quick-add modal state */
+  const [txOpen, setTxOpen] = useState(false);
+  const [holdingOpen, setHoldingOpen] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
+
   return (
     <div className="mx-auto max-w-7xl space-y-8">
       {/* Greeting — compact hero */}
@@ -101,19 +106,31 @@ function Dashboard() {
             {formatToday()} · KSE-100 <span className="font-mono text-bull">+1.24%</span> {t("today")}
           </p>
         </div>
-        <div className="flex shrink-0 gap-2">
+        <div className="flex shrink-0 flex-wrap gap-2">
           <Link
             to="/psx"
             className="rounded-lg bg-primary px-3.5 py-2 text-[13px] font-semibold text-primary-foreground transition-all duration-200 hover:-translate-y-0.5 hover:brightness-110"
           >
             {t("Explore PSX")}
           </Link>
-          <Link
-            to="/finance"
+          <button
+            onClick={() => setTxOpen(true)}
             className="rounded-lg border border-white/[0.08] bg-surface px-3.5 py-2 text-[13px] font-semibold text-text-primary transition-all duration-200 hover:-translate-y-0.5 hover:border-white/[0.16]"
           >
             {t("Add Transaction")}
-          </Link>
+          </button>
+          <button
+            onClick={() => setHoldingOpen(true)}
+            className="rounded-lg border border-white/[0.08] bg-surface px-3.5 py-2 text-[13px] font-semibold text-text-primary transition-all duration-200 hover:-translate-y-0.5 hover:border-white/[0.16]"
+          >
+            {t("Add Holding")}
+          </button>
+          <button
+            onClick={() => setAlertOpen(true)}
+            className="rounded-lg border border-white/[0.08] bg-surface px-3.5 py-2 text-[13px] font-semibold text-text-primary transition-all duration-200 hover:-translate-y-0.5 hover:border-white/[0.16]"
+          >
+            {t("Add Alert")}
+          </button>
         </div>
       </div>
 
