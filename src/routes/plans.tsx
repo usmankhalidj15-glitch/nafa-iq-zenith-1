@@ -112,24 +112,22 @@ function PlansPage() {
               Nafa<span className="text-primary">IQ</span>
             </span>
           </Link>
-          <div className="flex items-center gap-3">
-            <Link
-              to="/"
-              className="hidden items-center gap-1 text-sm text-text-secondary transition hover:text-text-primary sm:inline-flex"
-            >
-              <ArrowLeft className="h-4 w-4" /> {t("Home")}
-            </Link>
-            <Link
-              to="/app"
-              className="inline-flex items-center gap-1 rounded-[6px] bg-bull px-4 py-2 text-sm font-semibold text-bull-foreground transition hover:bg-[#00efc0]"
-            >
-              {t("Enter App")} <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
+          <Link
+            to="/app"
+            className="inline-flex items-center gap-1 rounded-[6px] bg-bull px-4 py-2 text-sm font-semibold text-bull-foreground transition hover:bg-[#00efc0]"
+          >
+            {t("Enter App")} <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </header>
 
       <main className="mx-auto max-w-[1100px] px-6 py-14">
+        <Link
+          to="/"
+          className="mb-4 inline-flex items-center gap-1 text-sm text-text-secondary transition hover:text-text-primary"
+        >
+          <ArrowLeft className="h-4 w-4" /> {t("Home")}
+        </Link>
         <div className="text-center">
           <h1 className="font-display text-3xl font-extrabold tracking-tight text-text-primary sm:text-5xl">
             {t("Simple, honest pricing")}
