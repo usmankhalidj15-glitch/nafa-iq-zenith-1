@@ -720,8 +720,16 @@ function QuizView({
         </span>
       </div>
 
-      {/* Header */}
-      <h2 className="mt-4 flex items-center gap-2 text-xl font-bold text-text-primary">
+      {/* Header with back to lesson */}
+      <div className="mt-4 flex items-center gap-3">
+        <button
+          onClick={onExit}
+          className="flex shrink-0 items-center gap-1.5 text-sm font-medium text-text-secondary hover:text-text-primary"
+        >
+          <ArrowLeft className="h-4 w-4" /> {t("Back to Lesson")}
+        </button>
+      </div>
+      <h2 className="mt-3 flex items-center gap-2 text-xl font-bold text-text-primary">
         <Brain className="h-5 w-5 text-bull" strokeWidth={1.5} /> {t("Knowledge Check")}
       </h2>
 
