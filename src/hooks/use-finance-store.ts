@@ -11,6 +11,7 @@ import {
   type Bill,
   type Goal,
 } from "@/lib/finance-data";
+import { HOLDINGS, type Holding, type Signal } from "@/lib/data";
 
 const KEY = "nafaiq:finance:v1";
 
@@ -20,6 +21,7 @@ export interface FinanceState {
   transactions: Txn[];
   bills: Bill[];
   goals: Goal[];
+  holdings: Holding[];
 }
 
 function seed(): FinanceState {
@@ -29,6 +31,7 @@ function seed(): FinanceState {
     transactions: TRANSACTIONS.map((t) => ({ ...t })),
     bills: BILLS.map((b) => ({ ...b })),
     goals: GOALS.map((g) => ({ ...g })),
+    holdings: HOLDINGS.map((h) => ({ ...h })),
   };
 }
 
@@ -45,6 +48,7 @@ function load(): FinanceState {
       transactions: parsed.transactions ?? base.transactions,
       bills: parsed.bills ?? base.bills,
       goals: parsed.goals ?? base.goals,
+      holdings: parsed.holdings ?? base.holdings,
     };
   } catch {
     return seed();
@@ -158,6 +162,18 @@ export const financeActions = {
         ...p.transactions,
       ],
     }));
+  },
+  addHolding(holding: Holding) {
+    setState((p) => ({ ...p, holdings: [...p.holdings, holding] }));
+  },
+  updateHolding(index: number, holding: Holding) {
+    setState((p) => ({
+      ...p,
+      holdings: p.holdings.map((h, i) => (i === index ? holding : h)),
+    }));
+  },
+  removeHolding(index: number) {
+    setState((p) => ({ ...p, holdings: p.holdings.filter((_, i) => i !== index) }));
   },
 };
 

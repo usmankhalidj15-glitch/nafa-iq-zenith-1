@@ -1,6 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Sparkles, ArrowRight } from "lucide-react";
+import {
+  Sparkles,
+  ArrowRight,
+  Plus,
+  TrendingUp,
+  Calendar,
+  Wallet,
+  Target,
+} from "lucide-react";
+import { toast } from "sonner";
 import { Card, StatCard } from "@/components/Card";
 import { Change } from "@/components/Change";
 import { SignalBadge } from "@/components/SignalBadge";
@@ -12,6 +21,9 @@ import { SPENDING, GOALS } from "@/lib/finance-data";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
 import { useLang } from "@/hooks/use-lang";
+import { useFinanceStore, financeActions } from "@/hooks/use-finance-store";
+import { Modal, fieldClass } from "@/components/Modal";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export const Route = createFileRoute("/app")({
   head: () => ({
@@ -77,6 +89,11 @@ function Dashboard() {
   console.log("Dashboard profile:", profile);
   console.log("Dashboard user:", user);
 
+  /* Quick-add modal state */
+  const [txOpen, setTxOpen] = useState(false);
+  const [holdingOpen, setHoldingOpen] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
+
   return (
     <div className="mx-auto max-w-7xl space-y-8">
       {/* Greeting — compact hero */}
@@ -89,19 +106,31 @@ function Dashboard() {
             {formatToday()} · KSE-100 <span className="font-mono text-bull">+1.24%</span> {t("today")}
           </p>
         </div>
-        <div className="flex shrink-0 gap-2">
+        <div className="flex shrink-0 flex-wrap gap-2">
           <Link
             to="/psx"
             className="rounded-lg bg-primary px-3.5 py-2 text-[13px] font-semibold text-primary-foreground transition-all duration-200 hover:-translate-y-0.5 hover:brightness-110"
           >
             {t("Explore PSX")}
           </Link>
-          <Link
-            to="/finance"
+          <button
+            onClick={() => setTxOpen(true)}
             className="rounded-lg border border-white/[0.08] bg-surface px-3.5 py-2 text-[13px] font-semibold text-text-primary transition-all duration-200 hover:-translate-y-0.5 hover:border-white/[0.16]"
           >
             {t("Add Transaction")}
-          </Link>
+          </button>
+          <button
+            onClick={() => setHoldingOpen(true)}
+            className="rounded-lg border border-white/[0.08] bg-surface px-3.5 py-2 text-[13px] font-semibold text-text-primary transition-all duration-200 hover:-translate-y-0.5 hover:border-white/[0.16]"
+          >
+            {t("Add Holding")}
+          </button>
+          <button
+            onClick={() => setAlertOpen(true)}
+            className="rounded-lg border border-white/[0.08] bg-surface px-3.5 py-2 text-[13px] font-semibold text-text-primary transition-all duration-200 hover:-translate-y-0.5 hover:border-white/[0.16]"
+          >
+            {t("Add Alert")}
+          </button>
         </div>
       </div>
 
@@ -296,6 +325,364 @@ function Dashboard() {
           })}
         </div>
       </section>
+
+      <QuickAddTransactionModal open={txOpen} onClose={() => setTxOpen(false)} />
+      <QuickAddHoldingModal open={holdingOpen} onClose={() => setHoldingOpen(false)} />
+      <QuickAddAlertModal open={alertOpen} onClose={() => setAlertOpen(false)} />
     </div>
+  );
+}
+
+/* ---------- Quick-Add Transaction Modal ---------- */
+const TX_CATEGORIES = [
+  "Food & Dining",
+  "Groceries",
+  "Transport",
+  "Utilities",
+  "Shopping",
+  "Subscriptions",
+  "Savings",
+  "Income",
+];
+const TX_ACCOUNTS = ["HBL Current", "Meezan Debit", "Easypaisa", "Meezan Savings"];
+
+function QuickAddTransactionModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { t } = useLang();
+  const [kind, setKind] = useState<"expense" | "income">("expense");
+  const [merchant, setMerchant] = useState("");
+  const [amount, setAmount] = useState("");
+  const [category, setCategory] = useState(TX_CATEGORIES[0]);
+  const [account, setAccount] = useState(TX_ACCOUNTS[0]);
+  const [err, setErr] = useState("");
+
+  const submit = () => {
+    setErr("");
+    const num = Number(amount);
+    if (!merchant.trim()) return setErr(t("Please enter a merchant name."));
+    if (!amount || Number.isNaN(num) || num <= 0) return setErr(t("Please enter a valid amount."));
+    financeActions.addTransaction({
+      merchant: merchant.trim(),
+      category: kind === "income" ? "Income" : category,
+      account,
+      amount: kind === "income" ? num : -num,
+    });
+    toast.success(t("Transaction added"));
+    setMerchant("");
+    setAmount("");
+    setKind("expense");
+    setCategory(TX_CATEGORIES[0]);
+    onClose();
+  };
+
+  return (
+    <Modal open={open} onClose={onClose} title={t("Add Transaction")}>
+      <div className="space-y-3">
+        <div className="flex gap-2">
+          {(["expense", "income"] as const).map((k) => (
+            <button
+              key={k}
+              onClick={() => setKind(k)}
+              className={cn(
+                "flex-1 rounded-[6px] border py-2 text-sm font-medium capitalize transition",
+                kind === k
+                  ? "border-primary/40 bg-primary/10 text-primary"
+                  : "border-border text-text-secondary",
+              )}
+            >
+              {t(k === "expense" ? "Expense" : "Income")}
+            </button>
+          ))}
+        </div>
+        <input
+          value={merchant}
+          onChange={(e) => setMerchant(e.target.value)}
+          placeholder={t("Merchant / description")}
+          className={fieldClass}
+        />
+        <input
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          inputMode="decimal"
+          placeholder={t("Amount (PKR)")}
+          className={fieldClass}
+        />
+        {kind === "expense" && (
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className={fieldClass}
+          >
+            {TX_CATEGORIES.filter((c) => c !== "Income").map((c) => (
+              <option key={c} value={c}>
+                {t(c)}
+              </option>
+            ))}
+          </select>
+        )}
+        <select value={account} onChange={(e) => setAccount(e.target.value)} className={fieldClass}>
+          {TX_ACCOUNTS.map((a) => (
+            <option key={a} value={a}>
+              {a}
+            </option>
+          ))}
+        </select>
+        {err && <div className="text-xs text-bear">{err}</div>}
+        <button
+          onClick={submit}
+          className="w-full rounded-[6px] bg-bull py-2 text-sm font-semibold text-bull-foreground hover:brightness-110"
+        >
+          {t("Add Transaction")}
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ---------- Quick-Add Holding Modal ---------- */
+function QuickAddHoldingModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { t } = useLang();
+  const [ticker, setTicker] = useState("");
+  const [sector, setSector] = useState("");
+  const [shares, setShares] = useState("");
+  const [avgCost, setAvgCost] = useState("");
+  const [current, setCurrent] = useState("");
+  const [err, setErr] = useState("");
+
+  function computeSignal(sym: string, cur: number, cost: number) {
+    const stock = STOCKS[sym.toUpperCase()];
+    if (stock) return stock.signal;
+    const gainPct = ((cur - cost) / cost) * 100;
+    if (gainPct >= 15) return "STRONG BUY";
+    if (gainPct >= 5) return "BUY";
+    if (gainPct >= -5) return "HOLD";
+    if (gainPct >= -15) return "SELL";
+    return "STRONG SELL";
+  }
+
+  const submit = () => {
+    setErr("");
+    const s = Number(shares);
+    const ac = Number(avgCost);
+    const cp = Number(current);
+    if (!ticker.trim()) return setErr(t("Please enter a stock symbol."));
+    if (!sector.trim()) return setErr(t("Please enter a sector."));
+    if (!shares || Number.isNaN(s) || s <= 0)
+      return setErr(t("Please enter a valid number of shares."));
+    if (!avgCost || Number.isNaN(ac) || ac <= 0)
+      return setErr(t("Please enter a valid average cost."));
+    const cur = !current || Number.isNaN(cp) || cp <= 0 ? ac : cp;
+    financeActions.addHolding({
+      ticker: ticker.trim().toUpperCase(),
+      sector: sector.trim(),
+      shares: s,
+      avgCost: ac,
+      current: cur,
+      signal: computeSignal(ticker.trim(), cur, ac),
+    });
+    toast.success(t("Holding added"));
+    setTicker("");
+    setSector("");
+    setShares("");
+    setAvgCost("");
+    setCurrent("");
+    onClose();
+  };
+
+  return (
+    <Modal open={open} onClose={onClose} title={t("Add Holding")}>
+      <div className="space-y-3">
+        <input
+          value={ticker}
+          onChange={(e) => setTicker(e.target.value)}
+          placeholder={t("Stock symbol (e.g. HBL)")}
+          className={fieldClass}
+        />
+        <input
+          value={sector}
+          onChange={(e) => setSector(e.target.value)}
+          placeholder={t("Sector")}
+          className={fieldClass}
+        />
+        <input
+          value={shares}
+          onChange={(e) => setShares(e.target.value)}
+          inputMode="decimal"
+          placeholder={t("Shares")}
+          className={fieldClass}
+        />
+        <input
+          value={avgCost}
+          onChange={(e) => setAvgCost(e.target.value)}
+          inputMode="decimal"
+          placeholder={t("Avg Cost (PKR)")}
+          className={fieldClass}
+        />
+        <input
+          value={current}
+          onChange={(e) => setCurrent(e.target.value)}
+          inputMode="decimal"
+          placeholder={t("Current price (PKR, optional)")}
+          className={fieldClass}
+        />
+        {err && <div className="text-xs text-bear">{err}</div>}
+        <button
+          onClick={submit}
+          className="w-full rounded-[6px] bg-bull py-2 text-sm font-semibold text-bull-foreground hover:brightness-110"
+        >
+          {t("Add Holding")}
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+/* ---------- Quick-Add Alert Modal ---------- */
+const ALERT_TYPES = [
+  { label: "Stock Price", icon: TrendingUp, emoji: "🔔" },
+  { label: "Bill Reminder", icon: Calendar, emoji: "📅" },
+  { label: "Budget", icon: Wallet, emoji: "💸" },
+  { label: "Goal Milestone", icon: Target, emoji: "🎯" },
+];
+const ALERT_STOCKS = ["HBL", "ENGRO", "LUCK", "OGDC"];
+const ALERT_BILLS = ["SNGPL Gas", "PTCL Internet", "Apartment Rent"];
+
+function QuickAddAlertModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { t } = useLang();
+  const [type, setType] = useState("Stock Price");
+  const [stock, setStock] = useState(ALERT_STOCKS[0]);
+  const [direction, setDirection] = useState("Above");
+  const [price, setPrice] = useState("");
+  const [bill, setBill] = useState(ALERT_BILLS[0]);
+  const [timing, setTiming] = useState("1 day before");
+  const [push, setPush] = useState(true);
+  const [email, setEmail] = useState(false);
+  const [err, setErr] = useState("");
+
+  const submit = () => {
+    setErr("");
+    const ty = ALERT_TYPES.find((x) => x.label === type)!;
+    let title = "";
+    let meta = "";
+
+    if (type === "Stock Price") {
+      const num = Number(price);
+      if (!price || Number.isNaN(num) || num <= 0) {
+        setErr(t("Please enter a valid price."));
+        return;
+      }
+      title = `${stock} ${direction.toLowerCase()} PKR ${num}`;
+      meta = "Created " + new Date().toLocaleString("en-US", { month: "short", day: "numeric" });
+    } else if (type === "Bill Reminder") {
+      title = `${bill} — ${timing}`;
+      meta = "Recurring monthly";
+    } else if (type === "Budget") {
+      title = `${bill} budget alert`;
+      meta = "Monthly";
+    } else {
+      title = `Goal milestone alert`;
+      meta = "One-time";
+    }
+
+    const channels = [push && "Push", email && "Email"].filter(Boolean).join(" + ") || "In-app";
+    financeActions.addAlert(
+      { emoji: ty.emoji, title, type: `${type} Alert`, meta, on: true },
+      `New alert created: ${title} (${channels})`,
+    );
+    toast.success(t("Alert created"));
+    setPrice("");
+    setErr("");
+    onClose();
+  };
+
+  return (
+    <Modal open={open} onClose={onClose} title={t("Add Alert")}>
+      <div className="space-y-3">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+          {ALERT_TYPES.map((ty) => (
+            <button
+              key={ty.label}
+              onClick={() => setType(ty.label)}
+              className={cn(
+                "flex flex-col items-center gap-1.5 rounded-[10px] border p-3 text-xs font-medium transition",
+                type === ty.label
+                  ? "border-primary/40 bg-primary/10 text-primary"
+                  : "border-white/[0.06] text-text-secondary hover:bg-white/[0.04]",
+              )}
+            >
+              <ty.icon className="h-5 w-5" strokeWidth={1.75} />
+              {t(ty.label)}
+            </button>
+          ))}
+        </div>
+        {type === "Stock Price" ? (
+          <div className="grid gap-3 sm:grid-cols-2">
+            <select
+              value={stock}
+              onChange={(e) => setStock(e.target.value)}
+              className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary"
+            >
+              {ALERT_STOCKS.map((s) => (
+                <option key={s}>{s}</option>
+              ))}
+            </select>
+            <div className="flex gap-2">
+              <select
+                value={direction}
+                onChange={(e) => setDirection(e.target.value)}
+                className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary"
+              >
+                <option value="Above">{t("Above")}</option>
+                <option value="Below">{t("Below")}</option>
+              </select>
+              <input
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                inputMode="decimal"
+                placeholder={t("Price")}
+                className="w-full rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary outline-none placeholder:text-text-muted"
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="grid gap-3 sm:grid-cols-2">
+            <select
+              value={bill}
+              onChange={(e) => setBill(e.target.value)}
+              className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary"
+            >
+              {ALERT_BILLS.map((b) => (
+                <option key={b}>{b}</option>
+              ))}
+            </select>
+            <select
+              value={timing}
+              onChange={(e) => setTiming(e.target.value)}
+              className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary"
+            >
+              <option>{t("1 day before")}</option>
+              <option>{t("3 days before")}</option>
+              <option>{t("7 days before")}</option>
+            </select>
+          </div>
+        )}
+        <div className="flex flex-wrap gap-3 text-xs text-text-secondary">
+          <label className="flex items-center gap-1.5">
+            <Checkbox checked={push} onCheckedChange={(c) => setPush(c === true)} />
+            {t("Push")}
+          </label>
+          <label className="flex items-center gap-1.5">
+            <Checkbox checked={email} onCheckedChange={(c) => setEmail(c === true)} />
+            {t("Email")}
+          </label>
+        </div>
+        {err && <div className="text-xs text-bear">{err}</div>}
+        <button
+          onClick={submit}
+          className="w-full rounded-[6px] bg-bull py-2 text-sm font-semibold text-bull-foreground hover:brightness-110"
+        >
+          {t("Create Alert")}
+        </button>
+      </div>
+    </Modal>
   );
 }
