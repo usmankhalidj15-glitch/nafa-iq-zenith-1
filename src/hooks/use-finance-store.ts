@@ -163,6 +163,18 @@ export const financeActions = {
       ],
     }));
   },
+  addHolding(holding: Holding) {
+    setState((p) => ({ ...p, holdings: [...p.holdings, holding] }));
+  },
+  updateHolding(index: number, holding: Holding) {
+    setState((p) => ({
+      ...p,
+      holdings: p.holdings.map((h, i) => (i === index ? holding : h)),
+    }));
+  },
+  removeHolding(index: number) {
+    setState((p) => ({ ...p, holdings: p.holdings.filter((_, i) => i !== index) }));
+  },
 };
 
 const serverState = seed();
