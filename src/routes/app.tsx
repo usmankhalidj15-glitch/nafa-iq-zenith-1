@@ -16,6 +16,7 @@ import { SignalBadge } from "@/components/SignalBadge";
 import { EmojiIcon } from "@/components/icons";
 import { DonutChart, PortfolioAreaChart, Sparkline, DONUT_LIGHT_PALETTE } from "@/components/charts";
 import { CountUpNumber, AnimatedBar } from "@/components/CountUpNumber";
+import { Typewriter } from "@/components/Typewriter";
 import { useTheme } from "@/hooks/use-theme";
 import { STOCKS, WATCHLIST, generateOHLCV, fmtPKR } from "@/lib/data";
 import { SPENDING, GOALS } from "@/lib/finance-data";
