@@ -37,6 +37,7 @@ import {
   UserCheck,
   AlertTriangle,
   ChevronDown,
+  Plus,
   Mail,
   type LucideIcon,
 } from "lucide-react";
@@ -1504,37 +1505,90 @@ const FAQS: { Icon: LucideIcon; q: string; a: string }[] = [
 ];
 
 function FAQ() {
+  const [open, setOpen] = useState<number | null>(0);
+
   return (
-    <section className="mx-auto max-w-3xl px-6 py-[60px] lg:py-[100px]">
-      <Reveal className="text-center">
-        <SectionLabel>Questions</SectionLabel>
-        <h2 className="mt-3 text-[28px] font-bold leading-[1.2] sm:text-[40px]">
-          Everything you might be wondering
-        </h2>
-      </Reveal>
-      <Reveal className="mt-10">
-        <Accordion type="single" collapsible className="w-full">
-          {FAQS.map((f, i) => (
-            <AccordionItem
-              key={i}
-              value={`faq-${i}`}
-              className="mb-3 overflow-hidden rounded-[14px] border border-white/[0.07] bg-[rgba(17,24,39,0.5)] px-5 backdrop-blur-md"
+    <section className="mx-auto max-w-[1200px] px-6 py-[60px] lg:py-[100px]">
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-20">
+        {/* Left: heading + contact */}
+        <Reveal>
+          <div className="lg:sticky lg:top-28">
+            <SectionLabel>FAQ</SectionLabel>
+            <h2 className="mt-4 text-[34px] font-bold leading-[1.05] tracking-tight sm:text-[46px]">
+              Got questions?
+              <br />
+              <span className="text-bull">We&apos;ve got answers.</span>
+            </h2>
+            <p className="mt-6 text-sm text-text-secondary">Didn&apos;t find your answer?</p>
+            <div className="mt-4 h-px w-16 bg-white/10" />
+            <Link
+              to="/"
+              className="story-link mt-4 inline-flex items-center gap-2 text-sm font-semibold text-bull"
             >
-              <AccordionTrigger className="hover:no-underline">
-                <span className="flex items-center gap-3 text-left text-base font-semibold text-text-primary">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[8px] bg-bull/10 text-bull">
-                    <f.Icon size={16} strokeWidth={1.75} />
+              Contact us <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </Reveal>
+
+        {/* Right: accordion */}
+        <Reveal className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
+          {FAQS.map((f, i) => {
+            const isOpen = open === i;
+            return (
+              <div key={i}>
+                <button
+                  type="button"
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  aria-expanded={isOpen}
+                  className="group flex w-full items-center justify-between gap-6 py-6 text-left"
+                >
+                  <span className="flex items-center gap-4">
+                    <span
+                      className={cn(
+                        "flex h-9 w-9 shrink-0 items-center justify-center rounded-[9px] transition-colors duration-300",
+                        isOpen ? "bg-bull/15 text-bull" : "bg-white/[0.04] text-text-secondary",
+                      )}
+                    >
+                      <f.Icon size={16} strokeWidth={1.75} />
+                    </span>
+                    <span
+                      className={cn(
+                        "text-base font-semibold transition-colors duration-300 sm:text-lg",
+                        isOpen ? "text-text-primary" : "text-text-primary/90",
+                      )}
+                    >
+                      {f.q}
+                    </span>
                   </span>
-                  {f.q}
-                </span>
-              </AccordionTrigger>
-              <AccordionContent className="pl-11 text-sm leading-relaxed text-text-secondary">
-                {f.a}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-      </Reveal>
+                  <span
+                    className={cn(
+                      "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all duration-300",
+                      isOpen
+                        ? "rotate-45 border-bull/40 bg-bull/10 text-bull"
+                        : "border-white/10 text-text-secondary group-hover:border-white/25",
+                    )}
+                  >
+                    <Plus className="h-4 w-4" />
+                  </span>
+                </button>
+                <div
+                  className="grid transition-all duration-300 ease-out"
+                  style={{
+                    gridTemplateRows: isOpen ? "1fr" : "0fr",
+                    opacity: isOpen ? 1 : 0,
+                  }}
+                >
+                  <div className="overflow-hidden">
+                    <p className="pb-6 pl-[52px] pr-6 text-sm leading-relaxed text-text-secondary">
+                      {f.a}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </Reveal>
+      </div>
     </section>
   );
 }
