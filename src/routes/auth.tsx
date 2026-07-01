@@ -384,15 +384,6 @@ function AuthPage() {
                 </div>
               </div>
             )}
-            <div className="flex justify-center pt-2">
-              <Link
-                to="/"
-                className="inline-flex items-center gap-1.5 text-xs font-medium text-text-muted transition-colors duration-200 hover:text-text-primary"
-              >
-                <ArrowLeft className="h-3.5 w-3.5" />
-                Back to home
-              </Link>
-            </div>
           </div>
         </motion.div>
       </div>
