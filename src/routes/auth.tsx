@@ -4,7 +4,7 @@ import { motion, type Variants } from "framer-motion";
 import { Loader2, Chrome, Eye, EyeOff, Check, ArrowLeft, MailCheck } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/use-auth";
-import authBg from "@/assets/auth-bg.png.asset.json";
+
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>): { redirect?: string } => ({
