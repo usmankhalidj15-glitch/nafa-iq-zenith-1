@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as CountUpModule from "react-countup";
 import { cn } from "@/lib/utils";
 
@@ -51,26 +51,69 @@ export function CountUpNumber({
 }
 
 /**
- * Fill bar that animates its width from 0 -> `value`% on mount
- * with a 0.8s ease-out transition. Drop in as the inner fill of a track.
+ * Fill bar that animates its width from 0 -> `value`% the first time it
+ * scrolls into view, with a smooth ease-out transition and a soft leading
+ * glow (matching the brand "filling line" motion). Drop in as the inner
+ * fill of a rounded track.
  */
 export function AnimatedBar({
   value,
   className,
+  style,
+  duration = 900,
+  glow = true,
 }: {
   value: number;
   className?: string;
+  style?: React.CSSProperties;
+  duration?: number;
+  glow?: boolean;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
   const [w, setW] = useState(0);
+  const started = useRef(false);
+
   useEffect(() => {
-    const id = requestAnimationFrame(() => setW(value));
-    return () => cancelAnimationFrame(id);
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !started.current) {
+            started.current = true;
+            requestAnimationFrame(() => setW(value));
+          }
+        });
+      },
+      { threshold: 0.2 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Once it has appeared, keep width synced if the value prop changes.
+  useEffect(() => {
+    if (started.current) setW(value);
   }, [value]);
+
   return (
     <div
-      className={cn("h-full rounded-full transition-[width] duration-[800ms] ease-out", className)}
-      style={{ width: `${w}%` }}
-    />
+      ref={ref}
+      className={cn(
+        "relative h-full rounded-full transition-[width] ease-out",
+        className,
+      )}
+      style={{
+        width: `${w}%`,
+        transitionDuration: `${duration}ms`,
+        ...style,
+      }}
+    >
+      {glow && (
+        <span className="pointer-events-none absolute right-0 top-1/2 h-full w-3 -translate-y-1/2 rounded-full bg-white/50 blur-[3px]" />
+      )}
+    </div>
   );
 }
+
 

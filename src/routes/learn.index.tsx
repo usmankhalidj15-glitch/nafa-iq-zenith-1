@@ -21,6 +21,7 @@ import { useLearn } from "@/hooks/use-learn";
 import { useServerFn } from "@tanstack/react-start";
 import { askTutor } from "@/lib/learn-ai.functions";
 import { cn } from "@/lib/utils";
+import { AnimatedBar } from "@/components/CountUpNumber";
 import { useLang } from "@/hooks/use-lang";
 
 export const Route = createFileRoute("/learn/")({
@@ -106,10 +107,7 @@ function Learn() {
           </span>
           <div className="flex items-center gap-2">
             <div className="h-2 w-40 overflow-hidden rounded-full bg-elevated">
-              <div
-                className="h-full rounded-full bg-bull transition-all duration-700"
-                style={{ width: `${xpPct}%` }}
-              />
+              <AnimatedBar value={xpPct} className="bg-bull" />
             </div>
             <span className="font-mono text-xs tabular-nums text-text-muted">
               {xp} / {XP_GOAL} XP
@@ -155,10 +153,7 @@ function Learn() {
                   {p.lessonIds.length} {t("lessons")} · {t("Est:")} {p.estMin} {t("min")}
                 </div>
                 <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-elevated">
-                  <div
-                    className="h-full rounded-full transition-all duration-700"
-                    style={{ width: `${progress}%`, background: p.accent }}
-                  />
+                  <AnimatedBar value={progress} style={{ background: p.accent }} glow={false} />
                 </div>
                 <div className="mt-1 text-[10px] font-medium text-text-muted">
                   {progress}% {t("complete")}

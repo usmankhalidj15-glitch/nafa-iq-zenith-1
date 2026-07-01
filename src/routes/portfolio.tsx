@@ -16,6 +16,7 @@ import { Change } from "@/components/Change";
 import { SignalBadge } from "@/components/SignalBadge";
 import { DonutChart, PortfolioAreaChart } from "@/components/charts";
 import { CountUpNumber, AnimatedBar } from "@/components/CountUpNumber";
+import { Typewriter } from "@/components/Typewriter";
 import { STOCKS, fmtPKR, fmtNum, type Holding, type Signal } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { EmojiIcon } from "@/components/icons";
@@ -572,7 +573,7 @@ function ReportModal({ onClose }: { onClose: () => void }) {
                 <EmojiIcon emoji={s.icon} size={15} className="text-text-secondary" /> {t(s.title)}
               </div>
               <p className="mt-1 whitespace-pre-line text-xs leading-relaxed text-text-secondary">
-                {t(s.body)}
+                <Typewriter id={`portfolio-report-${s.title}`} speed={8} text={t(s.body)} />
               </p>
             </div>
           ))}

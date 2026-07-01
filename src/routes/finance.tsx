@@ -20,7 +20,9 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { EmojiIcon } from "@/components/icons";
 import { Card } from "@/components/Card";
+import { AnimatedBar } from "@/components/CountUpNumber";
 import { IncomeExpenseChart, Sparkline } from "@/components/charts";
+import { Typewriter } from "@/components/Typewriter";
 import { fmtPKR } from "@/lib/data";
 import { formatNumber, formatPKR, formatSignedPKR } from "@/lib/format";
 import { BUDGETS, INCOME_EXPENSE, type Goal } from "@/lib/finance-data";
@@ -562,10 +564,7 @@ function Budgets() {
                 </span>
               </div>
               <div className="mt-2 h-2 overflow-hidden rounded-full bg-elevated">
-                <div
-                  className={cn("h-full rounded-full", color)}
-                  style={{ width: `${Math.min(pct, 100)}%` }}
-                />
+                <AnimatedBar value={Math.min(pct, 100)} className={color} />
               </div>
               {b.tip && (
                 <div className="mt-2 flex items-start gap-1.5 rounded-[6px] border-l-2 border-ai bg-ai-tint px-2.5 py-1.5 text-[11px] text-text-secondary">
@@ -753,10 +752,7 @@ function Goals() {
               {t("Target")} {fmtPKR(g.target)} · {t("Saved")} {fmtPKR(g.saved)}
             </div>
             <div className="mt-2 h-2 overflow-hidden rounded-full bg-elevated">
-              <div
-                className={cn("h-full rounded-full", g.color === "bull" ? "bg-bull" : "bg-warning")}
-                style={{ width: `${pct}%` }}
-              />
+              <AnimatedBar value={pct} className={g.color === "bull" ? "bg-bull" : "bg-warning"} />
             </div>
             {g.date && (
               <div className="mt-2 text-[11px] text-text-muted">{t("Target date:")} {g.date}</div>
@@ -924,7 +920,7 @@ function FinanceReportModal({ onClose }: { onClose: () => void }) {
                 <EmojiIcon emoji={s.icon} size={15} className="text-text-secondary" /> {t(s.title)}
               </div>
               <p className="mt-1 whitespace-pre-line text-xs leading-relaxed text-text-secondary">
-                {t(s.body)}
+                <Typewriter id={`finance-report-${s.title}`} speed={8} text={t(s.body)} />
               </p>
             </div>
           ))}

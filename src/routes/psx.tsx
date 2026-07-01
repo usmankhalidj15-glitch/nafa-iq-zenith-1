@@ -12,6 +12,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 import { Card } from "@/components/Card";
+import { Typewriter } from "@/components/Typewriter";
 import { Change } from "@/components/Change";
 import { SignalBadge } from "@/components/SignalBadge";
 import { CandlestickChart, PriceLineChart, Sparkline } from "@/components/charts";
@@ -266,9 +267,12 @@ export default function PSX() {
                 {t("AI Analysis")}
               </div>
               <p className="flex-1 text-xs leading-relaxed text-text-secondary">
-                {t(
-                  "KSE-100 is trading above both MA20 and MA50 with strong volume confirmation. RSI at 58 — bullish momentum without being overbought. Banking and Tech sectors leading gains today.",
-                )}
+                <Typewriter
+                  id="psx-ai-analysis"
+                  text={t(
+                    "KSE-100 is trading above both MA20 and MA50 with strong volume confirmation. RSI at 58 — bullish momentum without being overbought. Banking and Tech sectors leading gains today.",
+                  )}
+                />
               </p>
               <div className="text-right">
                 <SignalBadge signal="STRONG BUY" />
