@@ -35,6 +35,36 @@ const item: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
+function LogoIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      {/* Rounded square border */}
+      <rect
+        x="1.5"
+        y="1.5"
+        width="29"
+        height="29"
+        rx="7"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        fill="none"
+      />
+      {/* 4 vertical bars with rounded tops */}
+      <rect x="7" y="20" width="2.5" height="4" rx="1.25" fill="currentColor" />
+      <rect x="11.5" y="16" width="2.5" height="8" rx="1.25" fill="currentColor" />
+      <rect x="16" y="12" width="2.5" height="12" rx="1.25" fill="currentColor" />
+      <rect x="20.5" y="8" width="2.5" height="16" rx="1.25" fill="currentColor" />
+      {/* Horizontal baseline */}
+      <rect x="6.5" y="24.5" width="19" height="1.5" rx="0.75" fill="currentColor" />
+    </svg>
+  );
+}
+
 function AuthPage() {
   const { user, loading, signInWithPassword, signUpWithPassword, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
