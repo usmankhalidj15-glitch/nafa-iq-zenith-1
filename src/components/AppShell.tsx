@@ -16,6 +16,8 @@ import {
   Settings,
   CreditCard,
   ChevronRight,
+  Sun,
+  Moon,
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
@@ -320,6 +322,24 @@ function UserMenu() {
   );
 }
 
+function ThemeToggle() {
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === "dark";
+  return (
+    <button
+      onClick={toggleTheme}
+      aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[8px] text-text-secondary transition-colors hover:bg-white/[0.04] hover:text-text-primary"
+    >
+      {isDark ? (
+        <Sun className="h-[18px] w-[18px]" strokeWidth={1.75} />
+      ) : (
+        <Moon className="h-[18px] w-[18px]" strokeWidth={1.75} />
+      )}
+    </button>
+  );
+}
+
 function Header({ onMenu }: { onMenu: () => void }) {
   const { t, isUrdu } = useLang();
   return (
@@ -357,6 +377,7 @@ function Header({ onMenu }: { onMenu: () => void }) {
         >
           <Sparkles className="h-4 w-4" />
         </Link>
+        <ThemeToggle />
         <NotificationBell />
         <UserMenu />
       </div>
