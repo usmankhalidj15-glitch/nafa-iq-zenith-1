@@ -152,14 +152,6 @@ function AuthPage() {
 
   return (
     <main className="relative flex min-h-screen w-full flex-col-reverse bg-background p-2 transition-all duration-500 selection:bg-primary/30 md:flex-row-reverse md:p-4">
-      {/* Back to home — top left */}
-      <Link
-        to="/"
-        className="absolute right-4 top-4 z-30 inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface/70 px-3 py-1.5 text-xs font-medium text-text-secondary backdrop-blur-md transition-all duration-200 hover:border-border-hover hover:text-text-primary"
-      >
-        <ArrowLeft className="h-3.5 w-3.5" />
-        Back to home
-      </Link>
 
       {/* ---------- Left column: form ---------- */}
       <div className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-10 sm:px-8 md:py-10 lg:px-12">
