@@ -16,6 +16,7 @@ import { SignalBadge } from "@/components/SignalBadge";
 import { EmojiIcon } from "@/components/icons";
 import { DonutChart, PortfolioAreaChart, Sparkline, DONUT_LIGHT_PALETTE } from "@/components/charts";
 import { CountUpNumber, AnimatedBar } from "@/components/CountUpNumber";
+import { Typewriter } from "@/components/Typewriter";
 import { useTheme } from "@/hooks/use-theme";
 import { STOCKS, WATCHLIST, generateOHLCV, fmtPKR } from "@/lib/data";
 import { SPENDING, GOALS } from "@/lib/finance-data";
@@ -153,9 +154,12 @@ function Dashboard() {
                 {t("Redirect PKR 5,000 from dining to your Hajj Fund.")}
               </p>
               <p className="mt-1 text-xs leading-relaxed text-text-secondary">
-                {t(
-                  "You spent 15% more on dining this month — reallocating brings your goal 3 months closer. HBL is also flashing a Strong Buy, up 2.41% on rising volume.",
-                )}
+                <Typewriter
+                  id="dashboard-ai-recommendation"
+                  text={t(
+                    "You spent 15% more on dining this month — reallocating brings your goal 3 months closer. HBL is also flashing a Strong Buy, up 2.41% on rising volume.",
+                  )}
+                />
               </p>
             </div>
             <div className="flex shrink-0 gap-2">
