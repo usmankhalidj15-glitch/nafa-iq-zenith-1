@@ -176,8 +176,7 @@ function AuthPage() {
 
   return (
     <main
-      className="relative flex min-h-screen w-full flex-col overflow-hidden p-2 transition-all duration-500 selection:bg-primary/30 md:p-4"
-      style={{ backgroundColor: "#031310" }}
+      className="relative flex min-h-screen w-full flex-col overflow-hidden bg-black p-2 transition-all duration-500 selection:bg-primary/30 md:p-4"
     >
 
       {/* ---------- Top nav (spans both columns) ---------- */}
