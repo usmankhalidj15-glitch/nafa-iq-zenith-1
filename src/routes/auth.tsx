@@ -93,23 +93,137 @@ function AuthPage() {
   const isSignup = mode === "signup";
 
   return (
-    <main className="flex min-h-screen w-full bg-background p-2 transition-all duration-500 selection:bg-primary/30 lg:h-screen lg:overflow-hidden lg:p-4">
-      {/* ---------- Left column: hero + video ---------- */}
-      <div className="relative hidden h-full w-[52%] flex-col items-center justify-end overflow-hidden rounded-3xl border border-border px-12 pb-32 shadow-2xl lg:flex">
-        <video
-          className="absolute inset-0 h-full w-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
+    <main className="flex min-h-screen w-full flex-col-reverse bg-background p-2 transition-all duration-500 selection:bg-primary/30 lg:flex-row lg:p-4">
+      {/* ---------- Left column: form ---------- */}
+      <div className="flex flex-1 flex-col items-center justify-center px-4 py-12 sm:px-12 lg:px-16 lg:py-6 xl:px-24">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="w-full max-w-xl space-y-8 sm:space-y-10 lg:space-y-6"
         >
-          <source
-            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260506_081238_406ed0e3-5d83-436e-a512-0bbff7ec5b95.mp4"
-            type="video/mp4"
-          />
-        </video>
+          <div className="space-y-2">
+            <h2 className="font-display text-3xl font-medium tracking-tight text-text-primary">
+              {isSignup ? "Create New Profile" : "Welcome Back"}
+            </h2>
+            <p className="text-sm text-text-muted">
+              {isSignup
+                ? "Input your basic details to begin the journey."
+                : "Sign in to your NafaIQ terminal."}
+            </p>
+          </div>
 
-        {/* subtle bottom scrim so hero content reads over the video */}
+          <div className="grid grid-cols-2 gap-4">
+            <SocialButton icon={<Chrome className="h-5 w-5" />} label="Google" onClick={handleGoogle} disabled={busy} />
+            <SocialButton icon={<Github className="h-5 w-5" />} label="Github" onClick={handleGoogle} disabled={busy} />
+          </div>
+
+          <div className="relative flex items-center">
+            <div className="flex-1 border-t border-border" />
+            <span className="bg-background px-4 text-xs font-medium uppercase tracking-widest text-text-muted">
+              Or
+            </span>
+            <div className="flex-1 border-t border-border" />
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {isSignup && (
+              <div className="grid grid-cols-2 gap-4">
+                <InputGroup
+                  label="First Name"
+                  placeholder="Ahmed"
+                  type="text"
+                  value={firstName}
+                  onChange={setFirstName}
+                  autoComplete="given-name"
+                />
+                <InputGroup
+                  label="Last Name"
+                  placeholder="Khan"
+                  type="text"
+                  value={lastName}
+                  onChange={setLastName}
+                  autoComplete="family-name"
+                />
+              </div>
+            )}
+
+            <InputGroup
+              label="Email"
+              placeholder="you@example.com"
+              type="email"
+              value={email}
+              onChange={setEmail}
+              autoComplete="email"
+              required
+            />
+
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium text-text-primary">Password</label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                  minLength={8}
+                  autoComplete={isSignup ? "new-password" : "current-password"}
+                  className="h-11 w-full rounded-xl border border-border bg-surface px-4 pr-11 text-text-primary placeholder:text-text-muted/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((s) => !s)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted transition-colors hover:text-text-primary"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+              <p className="text-xs text-text-muted">Requires at least 8 symbols.</p>
+            </div>
+
+            <button
+              type="submit"
+              disabled={busy}
+              className="mt-4 flex h-14 w-full items-center justify-center rounded-xl bg-primary font-semibold text-primary-foreground transition-all hover:bg-primary/90 active:scale-[0.98] disabled:opacity-60"
+            >
+              {busy ? (
+                <Loader2 className="h-5 w-5 animate-spin" />
+              ) : isSignup ? (
+                "Create Account"
+              ) : (
+                "Sign In"
+              )}
+            </button>
+          </form>
+
+          <p className="text-center text-sm text-text-muted">
+            {isSignup ? "Member of the team? " : "New to NafaIQ? "}
+            <button
+              onClick={() => setMode(isSignup ? "signin" : "signup")}
+              className="font-medium text-primary hover:underline"
+            >
+              {isSignup ? "Log in" : "Sign up"}
+            </button>
+          </p>
+
+          <p className="text-center">
+            <Link to="/" className="text-xs text-text-muted hover:text-text-secondary">
+              ← Back to home
+            </Link>
+          </p>
+        </motion.div>
+      </div>
+
+      {/* ---------- Right column: hero ---------- */}
+      <div className="relative hidden min-h-[600px] w-[52%] flex-col items-center justify-end overflow-hidden rounded-3xl border border-border px-12 pb-32 shadow-2xl lg:flex">
+        {/* green ambient gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/40 via-primary/10 to-background" />
+        <div className="absolute -left-24 top-1/4 h-96 w-96 rounded-full bg-primary/30 blur-[120px]" />
+        <div className="absolute -right-16 bottom-1/3 h-80 w-80 rounded-full bg-primary/20 blur-[120px]" />
+
+        {/* subtle bottom scrim so hero content reads clearly */}
         <div className="absolute inset-x-0 bottom-0 z-[5] h-2/3 bg-gradient-to-t from-background via-background/60 to-transparent" />
 
         <motion.div
