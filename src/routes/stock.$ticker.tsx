@@ -164,10 +164,12 @@ function StockDetail() {
           {t("Overall: STRONG BUY · 5 of 6 indicators bullish")}
         </div>
         <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-          {s.ticker}{" "}
-          {t(
-            "is showing strong bullish momentum. Price has broken above MA50 with significantly above-average volume — a classic confirmation signal. RSI at 61 leaves room before overbought territory. The only caution is Bollinger Band position suggesting the move may slow near 148–150. Consider a stop-loss at the MA20 level (~136).",
-          )}
+          <Typewriter
+            id={`stock-ai-${s.ticker}`}
+            text={`${s.ticker} ${t(
+              "is showing strong bullish momentum. Price has broken above MA50 with significantly above-average volume — a classic confirmation signal. RSI at 61 leaves room before overbought territory. The only caution is Bollinger Band position suggesting the move may slow near 148–150. Consider a stop-loss at the MA20 level (~136).",
+            )}`}
+          />
         </p>
         <p className="mt-2 text-[11px] italic text-text-muted">
           {t("This is AI-generated technical analysis only. Not financial advice.")}
