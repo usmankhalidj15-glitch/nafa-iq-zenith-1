@@ -1218,8 +1218,222 @@ const STEPS: { step: string; title: string; desc: string }[] = [
   },
 ];
 
-function HowItWorks() {
+/* ---------- Sticky panel visuals (shared terminal frame) ---------- */
+function StepPanelFrame({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className="relative w-full max-w-[380px] rounded-[16px] border border-white/10 p-6"
+      style={{
+        background: "rgba(17,24,39,0.92)",
+        boxShadow: "0 40px 80px rgba(0,0,0,0.5), 0 0 60px rgba(0,212,170,0.08)",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function TrackPanel() {
+  return (
+    <div>
+      <div className="flex items-center gap-1.5">
+        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-bull" />
+        <span className="text-[10px] font-bold tracking-widest text-bull">LIVE</span>
+        <span className="ml-auto text-[10px] font-semibold uppercase tracking-widest text-text-muted">
+          PSX Market
+        </span>
+      </div>
+      <div className="mt-6">
+        <div className="text-[11px] text-text-muted">KSE-100 Index</div>
+        <div className="mt-1 font-mono text-[40px] font-bold leading-none text-text-primary">
+          78,542.10
+        </div>
+        <div className="mt-2 font-mono text-sm font-semibold text-bull">+968.30 · +1.24% ▲</div>
+      </div>
+      <div className="mt-6 flex h-16 items-end gap-1.5">
+        {[40, 55, 35, 70, 50, 80, 65, 90, 75, 95, 82, 96].map((h, i) => (
+          <div key={i} className="flex-1 rounded-t-sm bg-bull/70" style={{ height: `${h}%` }} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function UnderstandPanel() {
+  return (
+    <div>
+      <div className="text-[10px] font-semibold uppercase tracking-widest text-text-muted">
+        Haqeeqi Daulat™ — حقیقی دولت
+      </div>
+      <div className="mt-1 text-sm font-semibold text-text-primary">Your Real Wealth</div>
+      <div className="mt-6 grid grid-cols-2 gap-4">
+        <div>
+          <div className="text-[10px] text-text-muted">PSX Shows You</div>
+          <div className="mt-1 font-mono text-[30px] font-bold leading-none text-bull">+12.73%</div>
+          <div className="mt-2 text-[10px] text-text-secondary">PKR 858,054</div>
+        </div>
+        <div>
+          <div className="text-[10px] text-warning">Real USD Return</div>
+          <div className="mt-1 font-mono text-[30px] font-bold leading-none text-bear">-3.2%</div>
+          <div className="mt-2 text-[10px] text-text-secondary">After 16.2% PKR decay</div>
+        </div>
+      </div>
+      <div
+        className="mt-6 rounded-[8px] p-3 text-[11px] text-warning"
+        style={{ background: "rgba(245,158,11,0.1)" }}
+      >
+        <span className="inline-flex items-center gap-1.5">
+          <AlertTriangle className="h-3.5 w-3.5" strokeWidth={1.5} /> PKR 1,02,722 eroded by
+          devaluation this year
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function DecidePanel() {
+  return (
+    <div>
+      <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-widest text-ai">
+        <Lightbulb className="h-3.5 w-3.5" /> Recommended for you
+      </div>
+      <div className="mt-4 rounded-[10px] border border-l-2 border-l-warning border-white/10 bg-warning/[0.06] p-3">
+        <div className="flex items-center gap-2 text-[12px] font-semibold text-warning">
+          <ShieldCheck className="h-4 w-4" /> Devaluation Shield Score
+        </div>
+        <div className="mt-1 font-mono text-2xl font-bold text-text-primary">72 / 100</div>
+        <div className="mt-1 text-[11px] text-text-secondary">
+          Shift 15% into USD-hedged assets to raise your score.
+        </div>
+      </div>
+      <div className="mt-3 rounded-[10px] border border-l-2 border-l-bull border-white/10 bg-bull/[0.06] p-3">
+        <div className="flex items-center gap-2 text-[12px] font-semibold text-bull">
+          <CrescentIcon className="h-4 w-4" /> Zakat Reminder
+        </div>
+        <div className="mt-1 text-[11px] text-text-secondary">
+          PKR 21,451 due this year — 12 days left in your cycle.
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const STEP_PANELS = [<TrackPanel />, <UnderstandPanel />, <DecidePanel />];
+
+/* ---------- Desktop scrollytelling (sticky panel + step observer) ---------- */
+function HowItWorksDesktop() {
   const reduce = useReducedMotion();
+  const [active, setActive] = useState(0);
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const idx = Number((entry.target as HTMLElement).dataset.index);
+            if (!Number.isNaN(idx)) setActive(idx);
+          }
+        });
+      },
+      // Narrow band through the vertical center of the viewport.
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
+    );
+    stepRefs.current.forEach((el) => el && io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <div className="mt-16 hidden grid-cols-2 gap-16 lg:grid">
+      {/* Left: tall scrolling steps */}
+      <div>
+        {STEPS.map((s, i) => (
+          <div
+            key={s.step}
+            data-index={i}
+            ref={(el) => (stepRefs.current[i] = el)}
+            className="flex min-h-[80vh] flex-col justify-center"
+          >
+            <div
+              className="transition-all duration-500"
+              style={{ opacity: active === i ? 1 : 0.35 }}
+            >
+              <div className="flex items-center gap-4">
+                <div
+                  className="flex h-12 w-12 items-center justify-center rounded-[12px] transition-colors duration-500"
+                  style={{
+                    background: active === i ? "rgba(0,212,170,0.15)" : "rgba(255,255,255,0.05)",
+                  }}
+                >
+                  <span className="font-mono text-lg font-bold text-bull">{s.step}</span>
+                </div>
+                <h3
+                  className={cn(
+                    "text-2xl transition-all duration-500",
+                    active === i
+                      ? "font-bold text-text-primary"
+                      : "font-semibold text-text-secondary",
+                  )}
+                >
+                  {s.title}
+                </h3>
+              </div>
+              <p className="mt-4 max-w-[420px] text-base leading-[1.6] text-text-secondary">
+                {s.desc}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Right: sticky panel with crossfade */}
+      <div className="relative">
+        <div className="sticky top-1/2 flex -translate-y-1/2 items-center justify-center">
+          {reduce ? (
+            <StepPanelFrame key={active}>{STEP_PANELS[active]}</StepPanelFrame>
+          ) : (
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="w-full flex justify-center"
+              >
+                <StepPanelFrame>{STEP_PANELS[active]}</StepPanelFrame>
+              </motion.div>
+            </AnimatePresence>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- Mobile/tablet stacked cards (fade/slide-in) ---------- */
+function HowItWorksMobile() {
+  return (
+    <div className="relative mt-12 grid gap-5 md:grid-cols-3 lg:hidden">
+      {STEPS.map((s, i) => (
+        <RevealItem key={s.step} delay={i * 0.1}>
+          <div className="relative h-full rounded-[16px] border border-white/[0.07] bg-[rgba(17,24,39,0.6)] p-7 backdrop-blur-md">
+            <span className="absolute right-5 top-4 font-mono text-3xl font-bold tabular-nums text-white/[0.06]">
+              {s.step}
+            </span>
+            <div className="flex h-12 w-12 items-center justify-center rounded-[12px] bg-bull/10 text-bull">
+              <span className="font-mono text-lg font-bold">{s.step}</span>
+            </div>
+            <h3 className="mt-4 text-lg font-semibold text-text-primary">{s.title}</h3>
+            <p className="mt-2 text-sm leading-[1.6] text-text-secondary">{s.desc}</p>
+          </div>
+        </RevealItem>
+      ))}
+    </div>
+  );
+}
+
+function HowItWorks() {
   return (
     <section className="mx-auto max-w-[1200px] px-6 py-[60px] lg:py-[100px]">
       <Reveal className="text-center">
@@ -1228,22 +1442,8 @@ function HowItWorks() {
           From data to decision in three steps
         </h2>
       </Reveal>
-      <div className="relative mt-12 grid gap-5 md:grid-cols-3">
-        {STEPS.map((s, i) => (
-          <RevealItem key={s.step} delay={i * 0.1}>
-            <div className="relative h-full rounded-[16px] border border-white/[0.07] bg-[rgba(17,24,39,0.6)] p-7 backdrop-blur-md">
-              <span className="absolute right-5 top-4 font-mono text-3xl font-bold tabular-nums text-white/[0.06]">
-                {s.step}
-              </span>
-              <div className="flex h-12 w-12 items-center justify-center rounded-[12px] bg-bull/10 text-bull">
-                <span className="font-mono text-lg font-bold">{s.step}</span>
-              </div>
-              <h3 className="mt-4 text-lg font-semibold text-text-primary">{s.title}</h3>
-              <p className="mt-2 text-sm leading-[1.6] text-text-secondary">{s.desc}</p>
-            </div>
-          </RevealItem>
-        ))}
-      </div>
+      <HowItWorksMobile />
+      <HowItWorksDesktop />
     </section>
   );
 }
