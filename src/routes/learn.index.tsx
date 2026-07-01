@@ -107,10 +107,7 @@ function Learn() {
           </span>
           <div className="flex items-center gap-2">
             <div className="h-2 w-40 overflow-hidden rounded-full bg-elevated">
-              <div
-                className="h-full rounded-full bg-bull transition-all duration-700"
-                style={{ width: `${xpPct}%` }}
-              />
+              <AnimatedBar value={xpPct} className="bg-bull" />
             </div>
             <span className="font-mono text-xs tabular-nums text-text-muted">
               {xp} / {XP_GOAL} XP
