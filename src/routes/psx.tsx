@@ -12,6 +12,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 import { Card } from "@/components/Card";
+import { Typewriter } from "@/components/Typewriter";
 import { Change } from "@/components/Change";
 import { SignalBadge } from "@/components/SignalBadge";
 import { CandlestickChart, PriceLineChart, Sparkline } from "@/components/charts";
