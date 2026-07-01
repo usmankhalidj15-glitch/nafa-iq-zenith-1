@@ -263,7 +263,7 @@ function Dashboard() {
                         : s.color,
                   }}
                 />
-                {t(s.name)} {s.value}%
+                {t(s.name)} {localizeDigits(`${s.value}%`)}
               </span>
             ))}
           </div>
