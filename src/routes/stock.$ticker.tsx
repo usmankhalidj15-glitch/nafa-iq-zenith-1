@@ -88,7 +88,7 @@ function StockDetail() {
           <p className="text-sm text-text-secondary">{t(s.sector)} {t("Sector")}</p>
           <div className="mt-2 flex items-baseline gap-3">
             <span className="font-mono text-3xl font-bold tabular-nums text-text-primary">
-              {fmtNum(s.price)}
+              <CountUpNumber value={s.price} decimals={2} />
             </span>
             <Change value={`${chg >= 0 ? "+" : ""}${fmtNum(chg)}`} pct={s.changePct} />
           </div>
