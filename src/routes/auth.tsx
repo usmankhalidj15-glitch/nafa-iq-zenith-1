@@ -664,8 +664,8 @@ function HeroBackdrop() {
       <motion.img
         src="/hero-bg.webp"
         alt=""
-        style={{ x, y, filter: "saturate(1.2) brightness(1.04)" }}
-        className="absolute inset-0 h-full w-full scale-[1.06] object-cover object-center"
+        style={{ x, y, scale, filter: "saturate(1.2) brightness(1.04)" }}
+        className="absolute inset-0 h-full w-full object-cover object-center"
       />
 
       {/* Dark gradient behind the right column/card for contrast */}
