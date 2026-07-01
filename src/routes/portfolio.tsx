@@ -165,26 +165,93 @@ function HaqeeqiDaulat() {
               </div>
               <div className="mt-1 flex items-baseline gap-2">
                 <span className="font-mono text-2xl font-bold tabular-nums text-gold">
-                  <CountUpNumber value={38} />
+                  <CountUpNumber value={score} />
                 </span>
                 <span className="font-mono text-sm text-text-muted">/ 100</span>
                 <span className="rounded-full border border-gold/35 bg-gold/[0.12] px-2 py-0.5 text-[10px] font-semibold text-gold">
-                  {t("Moderate risk")}
+                  {risk}
                 </span>
               </div>
               <p className="mt-1.5 max-w-md text-[11px] text-text-secondary">
                 {t("34% of portfolio in Oil & Gas provides partial hedge against rupee weakness.")}
               </p>
             </div>
-            <button className="cta-primary flex items-center gap-1.5 rounded-[8px] bg-gold px-3.5 py-2 text-sm font-semibold text-gold-foreground transition hover:bg-gold-hover">
+            <button
+              onClick={() => setOpen(true)}
+              className="cta-primary flex items-center gap-1.5 rounded-[8px] bg-gold px-3.5 py-2 text-sm font-semibold text-gold-foreground transition hover:bg-gold-hover"
+            >
               {t("Improve Score")} <ArrowRight className="h-4 w-4" />
             </button>
           </div>
           <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/5">
-            <AnimatedBar value={38} className="bg-gold" />
+            <AnimatedBar key={score} value={score} className="bg-gold" />
           </div>
         </div>
       </div>
+
+      <Modal open={open} onClose={() => setOpen(false)} title={t("Improve Score")}>
+        <div className="space-y-3">
+          <div className="flex items-baseline justify-between rounded-[8px] border border-gold/25 bg-gold/[0.08] px-3 py-2.5">
+            <span className="text-xs text-text-secondary">
+              {t("Devaluation Shield Score")}
+            </span>
+            <span className="font-mono text-lg font-bold tabular-nums text-gold">
+              {score}
+              <span className="text-xs text-text-muted"> / 100</span>
+            </span>
+          </div>
+          <p className="text-[11px] text-text-muted">
+            {t("Apply hedging actions below to project their impact on your shield score.")}
+          </p>
+          <div className="space-y-2">
+            {SHIELD_ACTIONS.map((a, i) => {
+              const active = applied.includes(i);
+              return (
+                <button
+                  key={a.title}
+                  onClick={() => toggle(i)}
+                  className={cn(
+                    "flex w-full items-start gap-3 rounded-[8px] border p-3 text-left transition",
+                    active
+                      ? "border-gold/50 bg-gold/[0.1]"
+                      : "border-white/[0.08] bg-surface-alt hover:border-white/20",
+                  )}
+                >
+                  <div
+                    className={cn(
+                      "mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border text-[10px] font-bold",
+                      active
+                        ? "border-gold bg-gold text-gold-foreground"
+                        : "border-white/20 text-text-muted",
+                    )}
+                  >
+                    {active ? "✓" : "+"}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-sm font-semibold text-text-primary">
+                        {t(a.title)}
+                      </span>
+                      <span className="shrink-0 font-mono text-xs font-semibold text-bull">
+                        +{a.points}
+                      </span>
+                    </div>
+                    <p className="mt-0.5 text-[11px] text-text-secondary">{t(a.detail)}</p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+          <button
+            onClick={() => setOpen(false)}
+            className="mt-1 flex w-full items-center justify-center gap-1.5 rounded-[8px] bg-gold px-3.5 py-2.5 text-sm font-semibold text-gold-foreground transition hover:bg-gold-hover"
+          >
+            {applied.length > 0
+              ? `${t("Apply")} ${applied.length} ${t("actions")} — +${gained}`
+              : t("Select actions to improve")}
+          </button>
+        </div>
+      </Modal>
     </Card>
   );
 }
