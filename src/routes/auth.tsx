@@ -473,7 +473,7 @@ function AuthVisualPanel({ currentStep }: { currentStep: number }) {
         variants={container}
         initial="hidden"
         animate="show"
-        className="relative z-10 w-full max-w-xs space-y-8"
+        className="relative z-10 flex h-full w-full max-w-xs flex-col justify-center gap-8"
       >
         <motion.div variants={item} className="space-y-3">
           <h1
