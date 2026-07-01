@@ -102,7 +102,7 @@ function Dashboard() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0">
           <h1 className="truncate text-xl font-bold text-text-primary sm:text-2xl">
-            {t("Asalam-o-Alaikum,")} {firstName}
+            {t("Asalam-o-Alaikum,")} {t(firstName)}
           </h1>
           <p className="mt-0.5 text-[13px] text-text-secondary">
             {formatToday()} · {t("KSE-100")}{" "}
