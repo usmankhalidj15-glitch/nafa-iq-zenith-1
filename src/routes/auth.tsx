@@ -183,7 +183,7 @@ function AuthPage() {
       </Link>
 
       {/* ---------- Left column: form ---------- */}
-      <div className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-16 sm:px-8 md:py-12 lg:px-12">
+      <div className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-10 sm:px-8 md:py-10 lg:px-12">
         <AuthAmbientBackground />
 
         <motion.div
