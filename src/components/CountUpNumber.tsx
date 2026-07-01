@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as CountUpModule from "react-countup";
 import { cn } from "@/lib/utils";
+import { useLang, toUrduDigits } from "@/hooks/use-lang";
 
 // react-countup ships as CJS; depending on the bundler's interop the component
 // can be wrapped one or two `default` levels deep. Unwrap until we hit the fn.
