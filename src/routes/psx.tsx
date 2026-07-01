@@ -23,6 +23,7 @@ import {
   STOCK_LIST,
   SECTORS,
   generateOHLCV,
+  sma,
   fmtNum,
   type Signal,
 } from "@/lib/data";
