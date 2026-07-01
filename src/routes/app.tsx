@@ -105,7 +105,8 @@ function Dashboard() {
             {t("Asalam-o-Alaikum,")} {firstName}
           </h1>
           <p className="mt-0.5 text-[13px] text-text-secondary">
-            {formatToday()} · KSE-100 <span className="font-mono text-bull">+1.24%</span> {t("today")}
+            {formatToday()} · {t("KSE-100")}{" "}
+            <span className="font-mono text-bull">{localizeDigits("+1.24%")}</span> {t("today")}
           </p>
         </div>
         <div className="flex shrink-0 flex-wrap gap-2">
