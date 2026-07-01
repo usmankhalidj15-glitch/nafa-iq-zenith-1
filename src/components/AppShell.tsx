@@ -22,6 +22,7 @@ import {
   PanelLeft,
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence, PageTransition } from "@/components/animations";
 import { cn } from "@/lib/utils";
 import { TICKER_ITEMS, STOCKS } from "@/lib/data";
 import { LEARNING_PATHS, LESSON_CONTENT } from "@/lib/learn-data";
@@ -90,25 +91,33 @@ function SidebarLink({
       className={cn(
         "group relative flex items-center gap-3 rounded-[10px] px-3 py-2.5 text-[13px] font-medium transition-colors duration-200",
         active
-          ? "bg-bull/[0.10] text-bull"
+          ? "text-bull"
           : "text-text-secondary hover:bg-white/[0.04] hover:text-text-primary",
       )}
     >
+      {/* shared sliding highlight */}
+      {active && (
+        <motion.span
+          layoutId="sidebar-active-pill"
+          className="absolute inset-0 rounded-[10px] bg-bull/[0.10]"
+          transition={{ type: "spring", stiffness: 400, damping: 32 }}
+        />
+      )}
       {/* left-edge accent bar */}
       <span
         className={cn(
-          "absolute start-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-e-full bg-bull transition-opacity duration-200",
+          "absolute start-0 top-1/2 z-[1] h-5 w-[3px] -translate-y-1/2 rounded-e-full bg-bull transition-opacity duration-200",
           active ? "opacity-100" : "opacity-0",
         )}
       />
       <Icon
         className={cn(
-          "h-5 w-5 shrink-0",
+          "relative z-[1] h-5 w-5 shrink-0 transition-transform duration-200 group-hover:scale-110",
           active ? "text-bull" : "text-text-muted group-hover:text-text-primary",
         )}
         strokeWidth={1.75}
       />
-      {t(label)}
+      <span className="relative z-[1]">{t(label)}</span>
     </Link>
   );
 }
@@ -477,19 +486,31 @@ function BottomNav() {
             to={t.to}
             className="flex min-h-[64px] flex-1 flex-col items-center justify-center gap-1 py-2"
           >
-            <span
-              className={cn(
-                "flex h-7 w-12 items-center justify-center rounded-full transition-colors",
-                active ? "bg-gold/15" : "",
-              )}
+            <motion.span
+              whileTap={{ scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              className="relative flex h-7 w-12 items-center justify-center rounded-full"
             >
+              {active && (
+                <motion.span
+                  layoutId="bottomnav-active-pill"
+                  className="absolute inset-0 rounded-full bg-gold/15"
+                  transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                />
+              )}
               <t.icon
-                className={cn("h-5 w-5", active ? "text-gold" : "text-text-muted")}
+                className={cn(
+                  "relative z-[1] h-5 w-5 transition-colors",
+                  active ? "text-gold" : "text-text-muted",
+                )}
                 strokeWidth={1.75}
               />
-            </span>
+            </motion.span>
             <span
-              className={cn("text-[10px] font-medium", active ? "text-gold" : "text-text-muted")}
+              className={cn(
+                "text-[10px] font-medium transition-colors",
+                active ? "text-gold" : "text-text-muted",
+              )}
             >
               {tr(label)}
             </span>
@@ -542,17 +563,31 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           onExpand={() => toggleCollapsed(false)}
         />
         <Breadcrumbs />
-        <main className="px-3 pt-4 pb-24 sm:px-5 lg:px-6 lg:pb-8">{children}</main>
+        <main className="px-3 pt-4 pb-24 sm:px-5 lg:px-6 lg:pb-8">
+          <PageTransition routeKey={pathname}>{children}</PageTransition>
+        </main>
       </div>
       <BottomNav />
 
-      {drawer && (
-        <div className="fixed inset-0 z-50 lg:hidden" onClick={() => setDrawer(false)}>
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-          <div
-            className="glass-chrome safe-bottom absolute right-0 bottom-0 left-0 rounded-t-2xl border-t border-white/10 p-4"
-            onClick={(e) => e.stopPropagation()}
+      <AnimatePresence>
+        {drawer && (
+          <motion.div
+            className="fixed inset-0 z-50 lg:hidden"
+            onClick={() => setDrawer(false)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
           >
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+            <motion.div
+              className="glass-chrome safe-bottom absolute right-0 bottom-0 left-0 rounded-t-2xl border-t border-white/10 p-4"
+              onClick={(e) => e.stopPropagation()}
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", stiffness: 320, damping: 32 }}
+            >
             <div className="mb-3 flex items-center justify-between">
               <span className="text-sm font-semibold text-text-primary">{t("More")}</span>
               <button onClick={() => setDrawer(false)}>
@@ -594,9 +629,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 <LogOut className="h-4 w-4" /> {t("Sign out")}
               </button>
             </div>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
