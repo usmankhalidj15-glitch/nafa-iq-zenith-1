@@ -318,16 +318,21 @@ function AuthPage() {
       {/* ---------- Right column: hero ---------- */}
       <div className="relative hidden min-h-[calc(100vh-2rem)] w-[45%] flex-col items-center justify-end overflow-hidden rounded-3xl border border-border px-6 pb-16 shadow-2xl md:flex lg:w-[52%] lg:px-12 lg:pb-32">
         {/* CSS-only ambient background */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,hsl(var(--primary)/0.18),transparent_45%),radial-gradient(circle_at_80%_85%,hsl(var(--primary)/0.12),transparent_50%)] bg-surface" />
+        <div
+          className="absolute inset-0 bg-surface"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 20% 15%, color-mix(in oklab, var(--color-primary) 18%, transparent), transparent 45%), radial-gradient(circle at 80% 85%, color-mix(in oklab, var(--color-primary) 12%, transparent), transparent 50%)",
+          }}
+        />
 
         {/* faint grid */}
         <div
-          className="absolute inset-0 opacity-[0.06]"
+          className="absolute inset-0 opacity-[0.05]"
           style={{
             backgroundImage:
-              "linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)",
+              "linear-gradient(to right, var(--color-text-primary) 1px, transparent 1px), linear-gradient(to bottom, var(--color-text-primary) 1px, transparent 1px)",
             backgroundSize: "44px 44px",
-            color: "hsl(var(--text-primary))",
           }}
         />
 
