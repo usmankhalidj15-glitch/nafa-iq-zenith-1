@@ -1091,7 +1091,7 @@ function Zakat() {
         <div className="mt-5 flex items-center justify-between border-t border-white/[0.06] pt-4">
           <span className="text-sm font-bold text-text-primary">{t("Total Assets")}</span>
           <span className="font-mono text-base font-bold tabular-nums text-text-primary">
-            {fmtPKR(totalAssets)}
+            <CountUpNumber value={totalAssets} prefix="PKR " preserveValue />
           </span>
         </div>
       </Card>
