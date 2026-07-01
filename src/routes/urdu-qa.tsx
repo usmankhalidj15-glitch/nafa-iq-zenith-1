@@ -227,7 +227,7 @@ function UrduQaPage() {
                 <span className="font-mono text-bull">62%</span>
               </div>
               <div className="mt-2 h-2.5 overflow-hidden rounded-full bg-border">
-                <div className="h-full rounded-full bg-bull" style={{ width: "62%" }} />
+                <AnimatedBar value={62} className="bg-bull" />
               </div>
             </div>
             <div className="flex items-center gap-1.5 text-xs text-text-secondary">
