@@ -422,13 +422,12 @@ function AuthPage() {
                 </div>
               </div>
             )}
-          </div>
-        </motion.div>
+            </div>
+          </motion.div>
+        </div>
+
+        <AuthVisualPanel currentStep={currentStep} />
       </div>
-
-
-
-      <AuthVisualPanel />
     </main>
   );
 }
