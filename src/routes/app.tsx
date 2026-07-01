@@ -180,7 +180,7 @@ function Dashboard() {
         <Card className="lg:col-span-6">
           <div className="text-[13px] font-medium text-text-secondary">{t("Total Net Worth")}</div>
           <div className="mt-3 font-mono text-4xl font-bold tabular-nums text-text-primary">
-            {fmtPKR(4280500)}
+            <CountUpNumber value={4280500} prefix="PKR " />
           </div>
           <div className="mt-2 font-mono text-sm tabular-nums text-bull">
             +PKR 56,000 (+1.32%) this month
@@ -189,17 +189,22 @@ function Dashboard() {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:col-span-6">
           <StatCard
             label="Portfolio Value"
-            value={fmtPKR(858054)}
+            value={<CountUpNumber value={858054} prefix="PKR " />}
             sub="+12.73% YTD"
             subColor="text-bull"
           />
           <StatCard
             label="Monthly Spending"
-            value={fmtPKR(112050)}
+            value={<CountUpNumber value={112050} prefix="PKR " />}
             sub="-12% vs May"
             subColor="text-bull"
           />
-          <StatCard label="Today's PSX P/L" value="+17,480" sub="+1.42%" subColor="text-bull" />
+          <StatCard
+            label="Today's PSX P/L"
+            value={<CountUpNumber value={17480} prefix="+" />}
+            sub="+1.42%"
+            subColor="text-bull"
+          />
         </div>
       </div>
 
