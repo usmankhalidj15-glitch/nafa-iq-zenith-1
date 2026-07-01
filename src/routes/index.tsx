@@ -709,16 +709,18 @@ function Nav() {
               <Link
                 key={l.label}
                 to={l.to}
-                className="rounded-full px-2.5 py-1.5 text-sm font-medium whitespace-nowrap text-text-secondary transition-colors hover:bg-white/[0.06] hover:text-text-primary"
+                className="group relative overflow-hidden rounded-full px-2.5 py-1.5 text-sm font-medium whitespace-nowrap text-text-secondary transition-colors hover:bg-white/[0.06] hover:text-text-primary"
               >
+                <span className="absolute left-1/2 top-0 h-[2px] w-0 -translate-x-1/2 rounded-full bg-primary shadow-[0_0_10px_1px_var(--color-primary)] transition-all duration-300 group-hover:w-2/3" />
                 {l.label}
               </Link>
             ) : (
               <a
                 key={l.label}
                 href={l.href}
-                className="rounded-full px-2.5 py-1.5 text-sm font-medium whitespace-nowrap text-text-secondary transition-colors hover:bg-white/[0.06] hover:text-text-primary"
+                className="group relative overflow-hidden rounded-full px-2.5 py-1.5 text-sm font-medium whitespace-nowrap text-text-secondary transition-colors hover:bg-white/[0.06] hover:text-text-primary"
               >
+                <span className="absolute left-1/2 top-0 h-[2px] w-0 -translate-x-1/2 rounded-full bg-primary shadow-[0_0_10px_1px_var(--color-primary)] transition-all duration-300 group-hover:w-2/3" />
                 {l.label}
               </a>
             ),
