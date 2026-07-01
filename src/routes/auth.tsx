@@ -466,15 +466,6 @@ function AuthVisualPanel({ currentStep }: { currentStep: number }) {
         }}
       />
 
-      {/* Seam fade: left column dissolves into black as it meets the right column */}
-      <div
-        className="pointer-events-none absolute inset-0 z-0"
-        style={{
-          background:
-            "linear-gradient(to right, transparent 0%, transparent 70%, black 100%)",
-        }}
-      />
-
 
 
 
