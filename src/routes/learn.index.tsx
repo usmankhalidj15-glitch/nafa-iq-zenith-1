@@ -249,10 +249,10 @@ function Learn() {
           {terms.map((term) => (
             <details key={term.en} className="group rounded-[8px] border border-border bg-surface p-3">
               <summary className="flex cursor-pointer items-center justify-between text-sm font-medium text-text-primary">
-                <span>{term.en}</span>
+                <span>{t(term.en)}</span>
                 <span className="font-urdu text-base text-text-secondary">{term.ur}</span>
               </summary>
-              <p className="mt-2 text-xs leading-relaxed text-text-secondary">{term.def}</p>
+              <p className="mt-2 text-xs leading-relaxed text-text-secondary">{t(term.def)}</p>
             </details>
           ))}
           {terms.length === 0 && (
