@@ -9,14 +9,18 @@
  *  - Sign placement: always LEADING, e.g. "+2.27%", "-0.45%", "+PKR 2,500".
  */
 
+import { localizeDigits } from "@/hooks/use-lang";
+
 const GROUPING_LOCALE = "en-US";
 
-/** Western 3-digit grouped number, e.g. 858054 -> "858,054". */
+/** Western 3-digit grouped number, e.g. 858054 -> "858,054" (Urdu numerals in UR mode). */
 export function formatNumber(value: number, decimals = 0): string {
-  return value.toLocaleString(GROUPING_LOCALE, {
-    minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals,
-  });
+  return localizeDigits(
+    value.toLocaleString(GROUPING_LOCALE, {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    }),
+  );
 }
 
 /** Currency, e.g. 858054 -> "PKR 858,054". */
