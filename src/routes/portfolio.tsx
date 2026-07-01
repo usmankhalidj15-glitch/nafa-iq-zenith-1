@@ -70,8 +70,44 @@ const STOCK_ALLOC = [
   { name: "FFC", value: 15, color: "#6b7280" },
 ];
 
+const SHIELD_ACTIONS = [
+  {
+    title: "Add USD-hedged exposure",
+    detail: "Shift 10% into export-heavy names (technology, textiles) that earn in USD.",
+    points: 12,
+  },
+  {
+    title: "Increase Oil & Gas weighting",
+    detail: "Commodity-linked stocks track global prices and cushion rupee weakness.",
+    points: 9,
+  },
+  {
+    title: "Trim cash & PKR fixed income",
+    detail: "Idle rupee holdings erode fastest during devaluation cycles.",
+    points: 7,
+  },
+  {
+    title: "Add gold / commodity proxy",
+    detail: "A small allocation to gold-linked assets is a classic inflation hedge.",
+    points: 6,
+  },
+];
+
 function HaqeeqiDaulat() {
   const { t } = useLang();
+  const [open, setOpen] = useState(false);
+  const [applied, setApplied] = useState<number[]>([]);
+
+  const baseScore = 38;
+  const gained = applied.reduce((sum, i) => sum + SHIELD_ACTIONS[i].points, 0);
+  const score = Math.min(100, baseScore + gained);
+  const risk =
+    score >= 70 ? t("Low risk") : score >= 45 ? t("Moderate risk") : t("High risk");
+
+  function toggle(i: number) {
+    setApplied((prev) => (prev.includes(i) ? prev.filter((x) => x !== i) : [...prev, i]));
+  }
+
   return (
     <Card hover={false} className="relative overflow-hidden border-gold/20">
       <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gold/10 blur-3xl" />
