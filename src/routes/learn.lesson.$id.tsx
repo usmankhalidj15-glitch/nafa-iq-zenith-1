@@ -357,13 +357,14 @@ const resultRef: { current: { correct: number; gain: number } | null } = { curre
 /* ---------------- Reading View ---------------- */
 
 function Blocks({ blocks, accent }: { blocks: ContentBlock[]; accent: string }) {
+  const { t } = useLang();
   return (
     <>
       {blocks.map((b, i) => {
         if (b.type === "p") {
           return (
             <p key={i} className="my-4 text-[16px] leading-[1.8] text-text-secondary">
-              {b.text}
+              {t(b.text)}
             </p>
           );
         }
@@ -379,9 +380,9 @@ function Blocks({ blocks, accent }: { blocks: ContentBlock[]; accent: string }) 
                 className="flex items-center gap-1.5 text-xs font-bold"
                 style={{ color: m.color }}
               >
-                <EmojiIcon emoji={m.emoji} size={13} /> {m.label}
+                <EmojiIcon emoji={m.emoji} size={13} /> {t(m.label)}
               </div>
-              <p className="mt-1.5 text-sm leading-relaxed text-text-secondary">{b.text}</p>
+              <p className="mt-1.5 text-sm leading-relaxed text-text-secondary">{t(b.text)}</p>
             </div>
           );
         }
@@ -393,7 +394,7 @@ function Blocks({ blocks, accent }: { blocks: ContentBlock[]; accent: string }) 
             >
               {b.lines.map((line, j) => (
                 <div key={j} className="text-bull">
-                  {line.split("=").map((part, k, all) => (
+                  {t(line).split("=").map((part, k, all) => (
                     <span key={k}>
                       <span className="text-text-primary">{part}</span>
                       {k < all.length - 1 && <span className="text-text-muted"> = </span>}
@@ -415,7 +416,7 @@ function Blocks({ blocks, accent }: { blocks: ContentBlock[]; accent: string }) 
                       key={h}
                       className="border border-border bg-elevated px-3 py-2 text-left font-bold text-text-primary"
                     >
-                      {h}
+                      {t(h)}
                     </th>
                   ))}
                 </tr>
@@ -431,7 +432,7 @@ function Blocks({ blocks, accent }: { blocks: ContentBlock[]; accent: string }) 
                   >
                     {row.map((cell, c) => (
                       <td key={c} className="border border-border px-3 py-2 text-text-secondary">
-                        {cell}
+                        {t(cell)}
                       </td>
                     ))}
                   </tr>
@@ -779,7 +780,7 @@ function QuizView({
               transition={{ duration: 0.25, ease: "easeOut" }}
             >
               <div className="mb-6 text-[20px] font-semibold leading-snug text-text-primary">
-                {q.q.q}
+                {t(q.q.q)}
               </div>
 
               <div className="space-y-3">
@@ -831,7 +832,7 @@ function QuizView({
                           isCorrectAns && "font-semibold",
                         )}
                       >
-                        {opt.text}
+                        {t(opt.text)}
                       </span>
                       {isCorrectAns && (
                         <CheckCircle2 className="h-5 w-5 shrink-0 text-bull" strokeWidth={2.5} />
@@ -870,7 +871,7 @@ function QuizView({
                     <Lightbulb className="h-4 w-4" strokeWidth={2} />
                     {wasCorrect ? t("Correct") : t("Explanation")}
                   </div>
-                  <p className="mt-2 text-sm leading-relaxed text-text-primary">{q.q.explanation}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-text-primary">{t(q.q.explanation)}</p>
                 </div>
 
                 {isLast && (
@@ -1037,7 +1038,7 @@ function ResultsView({
           <details key={i} className="rounded-[8px] border border-border bg-surface p-3">
             <summary className="flex cursor-pointer items-center justify-between text-sm font-medium text-text-primary">
               <span className="flex items-center gap-2">
-                <span className="text-text-muted">Q{i + 1}</span> {sq.q.q}
+                <span className="text-text-muted">Q{i + 1}</span> {t(sq.q.q)}
               </span>
               <ChevronDown className="h-4 w-4 shrink-0 text-text-muted" />
             </summary>
@@ -1055,10 +1056,10 @@ function ResultsView({
                   ) : (
                     <span className="shrink-0">•</span>
                   )}
-                  {o.text}
+                  {t(o.text)}
                 </div>
               ))}
-              <p className="mt-2 text-xs leading-relaxed text-text-muted">{sq.q.explanation}</p>
+              <p className="mt-2 text-xs leading-relaxed text-text-muted">{t(sq.q.explanation)}</p>
             </div>
           </details>
         ))}

@@ -249,10 +249,10 @@ function Learn() {
           {terms.map((term) => (
             <details key={term.en} className="group rounded-[8px] border border-border bg-surface p-3">
               <summary className="flex cursor-pointer items-center justify-between text-sm font-medium text-text-primary">
-                <span>{term.en}</span>
+                <span>{t(term.en)}</span>
                 <span className="font-urdu text-base text-text-secondary">{term.ur}</span>
               </summary>
-              <p className="mt-2 text-xs leading-relaxed text-text-secondary">{term.def}</p>
+              <p className="mt-2 text-xs leading-relaxed text-text-secondary">{t(term.def)}</p>
             </details>
           ))}
           {terms.length === 0 && (
@@ -470,12 +470,12 @@ function FlashcardModal({ onClose }: { onClose: () => void }) {
             >
               <div className={cn("flip-inner", flipped && "flipped")}>
                 <div className="flip-face rounded-[16px] border border-border bg-surface p-8">
-                  <div className="text-2xl font-bold text-text-primary">{card.front}</div>
+                  <div className="text-2xl font-bold text-text-primary">{t(card.front)}</div>
                   <div className="mt-3 font-urdu text-3xl text-bull">{card.ur}</div>
                   <div className="mt-6 text-xs text-text-muted">{t("Tap to flip")}</div>
                 </div>
                 <div className="flip-face flip-back rounded-[16px] border border-bull/40 bg-surface p-8 text-center">
-                  <p className="text-sm leading-relaxed text-text-secondary">{card.def}</p>
+                  <p className="text-sm leading-relaxed text-text-secondary">{t(card.def)}</p>
                 </div>
               </div>
             </button>
