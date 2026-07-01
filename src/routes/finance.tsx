@@ -226,6 +226,9 @@ function Overview() {
           <div dir="ltr" className="mt-1 font-mono text-lg font-semibold tracking-tight text-bull tabular-nums sm:text-xl">
             PKR <span ref={income.ref}>{income.formatted}</span>
           </div>
+          <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-white/5">
+            <AnimatedBar value={78} className="bg-bull" />
+          </div>
           <div className="mt-3 flex items-end justify-between gap-2">
             <span dir="ltr" className="text-[10px] text-bull/80 sm:text-[11px]">
               {formatSignedPKR(2500)} {t("vs last month")}
