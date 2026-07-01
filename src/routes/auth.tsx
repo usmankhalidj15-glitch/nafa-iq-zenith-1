@@ -189,7 +189,7 @@ function AuthPage() {
         src="/auth-right-bg.webp"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 z-0 h-full w-1/2 object-cover object-center"
+        className="pointer-events-none absolute inset-y-0 right-0 z-0 h-full w-[62%] object-cover object-center"
         style={{
           maskImage: "linear-gradient(to right, transparent 0%, black 25%)",
           WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 25%)",
