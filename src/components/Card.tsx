@@ -24,7 +24,7 @@ export function StatCard({
   subColor = "text-text-secondary",
 }: {
   label: string;
-  value: string;
+  value: React.ReactNode;
   sub?: string;
   subColor?: string;
 }) {
