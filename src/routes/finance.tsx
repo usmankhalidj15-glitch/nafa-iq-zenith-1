@@ -44,7 +44,7 @@ export const Route = createFileRoute("/finance")({
   component: Finance,
 });
 
-const TABS = ["Overview", "Transactions", "Budgets", "Bills", "Goals"] as const;
+const TABS = ["Overview", "Transactions", "Budgets", "Bills", "Goals", "Zakat"] as const;
 type Tab = (typeof TABS)[number];
 
 const CAT_COLOR: Record<string, string> = {
