@@ -871,7 +871,7 @@ function QuizView({
                     <Lightbulb className="h-4 w-4" strokeWidth={2} />
                     {wasCorrect ? t("Correct") : t("Explanation")}
                   </div>
-                  <p className="mt-2 text-sm leading-relaxed text-text-primary">{q.q.explanation}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-text-primary">{t(q.q.explanation)}</p>
                 </div>
 
                 {isLast && (
