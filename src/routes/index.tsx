@@ -1351,7 +1351,9 @@ function HowItWorksDesktop() {
           <div
             key={s.step}
             data-index={i}
-            ref={(el) => (stepRefs.current[i] = el)}
+            ref={(el) => {
+              stepRefs.current[i] = el;
+            }}
             className="flex min-h-[80vh] flex-col justify-center"
           >
             <div
