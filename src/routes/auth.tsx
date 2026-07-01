@@ -194,37 +194,17 @@ function AuthPage() {
         </Link>
       </nav>
 
-      {/* ---------- Columns ---------- */}
-      <div className="relative z-10 flex flex-1 flex-col-reverse gap-2 overflow-hidden md:flex-row-reverse md:gap-4">
-        {/* Form column */}
-        <div className="relative flex flex-1 items-center justify-center overflow-hidden rounded-3xl px-4 py-8 sm:px-8 lg:px-12">
-          {/* Right column background image */}
-          <img
-            src="/auth-right-bg.webp"
-            alt=""
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover object-center"
-          />
-          {/* Radial legibility gradient centered behind the signup card */}
-          <div
-            className="pointer-events-none absolute inset-0 z-0"
-            style={{
-              background:
-                "radial-gradient(ellipse 60% 65% at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.30) 55%, transparent 80%)",
-            }}
-          />
-
-
-
-
+      {/* ---------- Columns (flush, no gap) ---------- */}
+      <div className="relative z-10 flex flex-1 flex-col-reverse overflow-hidden md:flex-row-reverse">
+        {/* Form column — solid dark panel, form sits directly inside */}
+        <div className="relative flex flex-1 items-center justify-center overflow-hidden rounded-3xl bg-zinc-950 px-4 py-8 sm:px-8 lg:px-12 md:rounded-l-none md:rounded-r-3xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="relative z-10 w-full max-w-md"
           >
-            {/* Glass card */}
-            <div className="rounded-[22px] border border-white/10 bg-zinc-900/85 p-6 shadow-[0_0_60px_-15px_rgba(45,212,167,0.3)] backdrop-blur-md sm:p-8">
+
             {confirmSent ? (
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
@@ -445,8 +425,8 @@ function AuthPage() {
                 </div>
               </div>
             )}
-            </div>
           </motion.div>
+
         </div>
 
         <AuthVisualPanel currentStep={currentStep} />
@@ -466,15 +446,16 @@ function AuthVisualPanel({ currentStep }: { currentStep: number }) {
     { number: 3, text: "Finalize your profile" },
   ];
   return (
-    <aside className="relative hidden w-[45%] flex-col justify-center overflow-hidden rounded-3xl px-8 py-12 md:flex lg:w-[50%] lg:px-14">
-      {/* Left column background image */}
+    <aside className="relative hidden w-[45%] flex-col justify-center overflow-hidden rounded-3xl px-8 py-12 md:flex md:rounded-r-none lg:w-[50%] lg:px-14">
+      {/* Left column background image, strictly clipped to column bounds */}
       <img
         src="/hero-bg.webp"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 h-full w-full rounded-3xl object-cover"
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
         style={{ objectPosition: "left center" }}
       />
+
 
       {/* Small contained gradient behind the heading + paragraph text only */}
       <div
