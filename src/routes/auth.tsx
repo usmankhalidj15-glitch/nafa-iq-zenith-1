@@ -127,17 +127,12 @@ function AuthPage() {
             </p>
           </motion.div>
 
-          <div className="space-y-3">
-            <motion.div variants={item}>
-              <StepItem number={1} text="Register your identity" active />
-            </motion.div>
-            <motion.div variants={item}>
-              <StepItem number={2} text="Configure your studio" />
-            </motion.div>
-            <motion.div variants={item}>
-              <StepItem number={3} text="Finalize your profile" />
-            </motion.div>
-          </div>
+          <motion.div variants={item} className="space-y-3">
+            <StepItem number={1} text="Register your identity" active />
+            <StepItem number={2} text="Configure your studio" />
+            <StepItem number={3} text="Finalize your profile" />
+          </motion.div>
+
         </motion.div>
       </div>
 
