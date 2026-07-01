@@ -250,7 +250,7 @@ function Dashboard() {
         </Card>
         <Card className="lg:col-span-2">
           <h3 className="mb-3 text-sm font-semibold text-text-primary">{t("Spending Breakdown")}</h3>
-          <DonutChart data={SPENDING} centerValue="132,000" centerLabel="PKR total" />
+          <DonutChart data={SPENDING} centerValue={localizeDigits("132,000")} centerLabel="PKR total" />
           <div className="mt-2 grid grid-cols-2 gap-1.5 text-xs">
             {SPENDING.map((s, i) => (
               <span key={s.name} className="flex items-center gap-1.5 text-text-secondary">
