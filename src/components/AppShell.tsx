@@ -534,9 +534,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {/* ambient depth — very subtle brand wash */}
       <div className="ambient-glow -top-40 right-[-12%] h-[420px] w-[420px] bg-primary/[0.03]" />
 
-      <Sidebar />
-      <div className="relative lg:ps-[212px]">
-        <Header onMenu={() => setDrawer(true)} />
+      {!collapsed && <Sidebar onCollapse={() => toggleCollapsed(true)} />}
+      <div className={cn("relative", !collapsed && "lg:ps-[212px]")}>
+        <Header
+          onMenu={() => setDrawer(true)}
+          collapsed={collapsed}
+          onExpand={() => toggleCollapsed(false)}
+        />
         <Breadcrumbs />
         <main className="px-3 pt-4 pb-24 sm:px-5 lg:px-6 lg:pb-8">{children}</main>
       </div>
