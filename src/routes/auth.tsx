@@ -183,8 +183,6 @@ function AuthPage() {
       className="relative flex min-h-screen w-full flex-col overflow-hidden p-2 transition-all duration-500 selection:bg-primary/30 md:p-4"
       style={{ backgroundColor: "#031310" }}
     >
-      {/* Full-bleed hero background across both columns */}
-      <HeroBackdrop />
 
       {/* ---------- Top nav (spans both columns) ---------- */}
       <nav className="relative z-20 flex items-center justify-between px-2 py-2 md:px-3 md:py-3">
