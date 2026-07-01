@@ -751,10 +751,7 @@ function Goals() {
               {t("Target")} {fmtPKR(g.target)} · {t("Saved")} {fmtPKR(g.saved)}
             </div>
             <div className="mt-2 h-2 overflow-hidden rounded-full bg-elevated">
-              <div
-                className={cn("h-full rounded-full", g.color === "bull" ? "bg-bull" : "bg-warning")}
-                style={{ width: `${pct}%` }}
-              />
+              <AnimatedBar value={pct} className={g.color === "bull" ? "bg-bull" : "bg-warning"} />
             </div>
             {g.date && (
               <div className="mt-2 text-[11px] text-text-muted">{t("Target date:")} {g.date}</div>
