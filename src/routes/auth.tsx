@@ -434,9 +434,14 @@ function AuthPage() {
 
 /* ---------- Reusable components ---------- */
 
-function AuthVisualPanel() {
+function AuthVisualPanel({ currentStep }: { currentStep: number }) {
+  const steps = [
+    { number: 1, text: "Register your identity" },
+    { number: 2, text: "Configure your studio" },
+    { number: 3, text: "Finalize your profile" },
+  ];
   return (
-    <aside className="relative hidden min-h-[calc(100vh-2rem)] w-[45%] flex-col justify-center overflow-hidden rounded-3xl border border-border bg-[#0a1410] px-8 py-12 shadow-2xl md:flex lg:w-[50%] lg:px-14">
+    <aside className="relative hidden w-[45%] flex-col justify-center overflow-hidden rounded-3xl border border-border bg-[#0a1410] px-8 py-12 shadow-2xl md:flex lg:w-[50%] lg:px-14">
       <img
         src="/hero-bg.webp"
         alt=""
@@ -452,34 +457,32 @@ function AuthVisualPanel() {
         }}
       />
 
-
-
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
         className="relative z-10 w-full max-w-xs space-y-8"
       >
-        <motion.div variants={item} className="flex items-center gap-2.5">
-          <LogoIcon className="h-9 w-9 rounded-[8px] ring-1 ring-bull/30" />
-          <span className="font-display text-2xl font-bold tracking-tight text-text-primary">
-            Nafa<span className="text-primary">IQ</span>
-          </span>
-        </motion.div>
-
         <motion.div variants={item} className="space-y-3">
           <h1 className="font-display whitespace-nowrap text-4xl font-medium tracking-tight text-text-primary">
             Join NafaIQ
           </h1>
-          <p className="px-1 text-sm leading-relaxed text-text-secondary/80">
+          <p className="px-1 text-sm leading-relaxed text-text-secondary">
             Follow these 3 quick phases to activate your space.
           </p>
         </motion.div>
 
         <motion.div variants={item} className="space-y-3">
-          <StepItem number={1} text="Register your identity" active />
-          <StepItem number={2} text="Configure your studio" />
-          <StepItem number={3} text="Finalize your profile" />
+          {steps.map((s) => (
+            <StepItem
+              key={s.number}
+              number={s.number}
+              text={s.text}
+              state={
+                s.number < currentStep ? "done" : s.number === currentStep ? "active" : "todo"
+              }
+            />
+          ))}
         </motion.div>
       </motion.div>
     </aside>
@@ -487,28 +490,45 @@ function AuthVisualPanel() {
 }
 
 
-function StepItem({ number, text, active }: { number: number; text: string; active?: boolean }) {
+function StepItem({
+  number,
+  text,
+  state,
+}: {
+  number: number;
+  text: string;
+  state: "done" | "active" | "todo";
+}) {
+  const active = state === "active";
+  const done = state === "done";
   return (
     <div
       className={
-        "flex items-center gap-3 rounded-2xl px-4 py-3 " +
+        "flex items-center gap-3 rounded-2xl px-4 py-3 transition-colors duration-300 " +
         (active
           ? "border border-primary bg-primary text-primary-foreground"
-          : "border border-border bg-surface text-text-primary")
+          : done
+            ? "border border-primary/40 bg-primary/10 text-text-primary"
+            : "border border-border bg-surface text-text-primary")
       }
     >
       <span
         className={
           "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-sm font-semibold " +
-          (active ? "bg-primary-foreground/15 text-primary-foreground" : "bg-white/10 text-text-muted")
+          (active
+            ? "bg-primary-foreground/20 text-primary-foreground"
+            : done
+              ? "bg-primary/25 text-primary"
+              : "bg-white/15 text-text-secondary")
         }
       >
-        {active ? <Check className="h-4 w-4" /> : number}
+        {done ? <Check className="h-4 w-4" /> : number}
       </span>
       <span className="text-sm font-medium">{text}</span>
     </div>
   );
 }
+
 
 function GoogleIcon({ className }: { className?: string }) {
   return (
