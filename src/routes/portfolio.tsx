@@ -248,12 +248,22 @@ function Portfolio() {
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <StatCard
           label="Portfolio Value"
-          value={fmtPKR(858054)}
+          value={<CountUpNumber value={858054} prefix="PKR " />}
           sub={`${t("Total Invested")} ${fmtPKR(761190)}`}
         />
-        <StatCard label="Total Invested" value={fmtPKR(761190)} />
-        <StatCard label="Total Gain" value="+PKR 96,864" sub="+12.73%" subColor="text-bull" />
-        <StatCard label="Today's P/L" value="+PKR 17,480" sub="+1.42%" subColor="text-bull" />
+        <StatCard label="Total Invested" value={<CountUpNumber value={761190} prefix="PKR " />} />
+        <StatCard
+          label="Total Gain"
+          value={<CountUpNumber value={96864} prefix="+PKR " />}
+          sub="+12.73%"
+          subColor="text-bull"
+        />
+        <StatCard
+          label="Today's P/L"
+          value={<CountUpNumber value={17480} prefix="+PKR " />}
+          sub="+1.42%"
+          subColor="text-bull"
+        />
       </div>
 
       <Card>
