@@ -399,7 +399,7 @@ function SocialButton({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="flex h-12 items-center justify-center gap-2.5 rounded-xl border border-border bg-surface text-sm font-medium text-text-primary transition-colors hover:bg-hover disabled:opacity-60"
+      className="flex h-12 w-full items-center justify-center gap-2.5 rounded-xl border border-border bg-surface text-sm font-medium text-text-primary transition-colors hover:bg-hover disabled:opacity-60"
     >
       {icon}
       {label}
