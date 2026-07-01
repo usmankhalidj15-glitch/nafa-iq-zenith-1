@@ -1056,10 +1056,10 @@ function ResultsView({
                   ) : (
                     <span className="shrink-0">•</span>
                   )}
-                  {o.text}
+                  {t(o.text)}
                 </div>
               ))}
-              <p className="mt-2 text-xs leading-relaxed text-text-muted">{sq.q.explanation}</p>
+              <p className="mt-2 text-xs leading-relaxed text-text-muted">{t(sq.q.explanation)}</p>
             </div>
           </details>
         ))}
