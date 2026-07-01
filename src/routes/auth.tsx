@@ -459,11 +459,6 @@ function AuthVisualPanel({ currentStep }: { currentStep: number }) {
   return (
     <aside
       className="relative hidden w-[45%] flex-col justify-center overflow-hidden rounded-3xl px-8 py-12 md:flex lg:w-[50%] lg:px-14"
-      style={{
-        backgroundImage: "url(/auth-right-bg.webp)",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
     >
       {/* Legibility scrim over the panel background image */}
       <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
@@ -662,18 +657,20 @@ function HeroBackdrop() {
     >
       {/* Full-bleed hero image: flag/candles on the left, map/AI icons on the right */}
       <motion.img
-        src="/hero-bg.webp"
+        src="/auth-right-bg.webp"
         alt=""
-        style={{ x, y, scale, filter: "saturate(1.2) brightness(1.04)" }}
-        className="absolute inset-0 h-full w-full object-cover object-center"
+        style={{ x, y, scale, filter: "saturate(1.2) brightness(1.04)", objectPosition: "55% 35%" }}
+        className="absolute inset-0 h-full w-full object-cover"
       />
 
-      {/* Dark gradient behind the right column/card for contrast */}
-      <div className="absolute inset-0 bg-gradient-to-l from-black/90 via-black/55 to-transparent" />
+      {/* Right-side scrim — lighter so background detail shows behind the card */}
+      <div className="absolute inset-0 bg-gradient-to-l from-black/60 via-black/25 to-transparent" />
 
-      {/* Subtle left legibility scrim + top/bottom vignette */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-transparent to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/50" />
+      {/* Left legibility scrim for the visual panel text */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/15 to-transparent" />
+
+      {/* Top/bottom vignette */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40" />
     </div>
   );
 }
