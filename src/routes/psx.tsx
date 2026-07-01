@@ -101,6 +101,8 @@ export default function PSX() {
   const [mas, setMas] = useState<string[]>(["MA20", "MA50"]);
   const [moverTab, setMoverTab] = useState<"Gainers" | "Losers" | "Most Active">("Gainers");
   const [signalFilter, setSignalFilter] = useState<string>("All");
+  const [watchlist, setWatchlist] = useState<string[]>(["HBL", "ENGRO", "LUCK", "OGDC"]);
+  const [addOpen, setAddOpen] = useState(false);
 
   const meta = symbolMeta(sym);
   const full = useMemo(
