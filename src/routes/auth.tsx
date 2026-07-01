@@ -466,15 +466,25 @@ function AuthVisualPanel({ currentStep }: { currentStep: number }) {
     { number: 3, text: "Finalize your profile" },
   ];
   return (
-    <div className="relative hidden min-h-screen w-full flex-col justify-center px-8 md:flex md:w-1/2 md:px-14 lg:px-20">
-      {/* Small gradient behind the text block for legibility */}
+    <aside className="relative hidden w-[45%] flex-col justify-center overflow-hidden rounded-3xl px-8 py-12 md:flex lg:w-[50%] lg:px-14">
+      {/* Left column background image */}
+      <img
+        src="/hero-bg.webp"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full rounded-3xl object-cover"
+        style={{ objectPosition: "left center" }}
+      />
+
+      {/* Small contained gradient behind the heading + paragraph text only */}
       <div
-        className="pointer-events-none absolute inset-y-0 left-0 z-0 w-[70%]"
+        className="pointer-events-none absolute inset-y-0 left-0 z-0 w-[55%] rounded-3xl"
         style={{
           background:
-            "linear-gradient(to right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 50%, transparent 100%)",
+            "linear-gradient(to right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 55%, transparent 100%)",
         }}
       />
+
 
 
 
