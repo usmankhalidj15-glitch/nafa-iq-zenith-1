@@ -660,46 +660,4 @@ function FloatingInput({
   );
 }
 
-function HeroBackdrop() {
-  const reduce = useReducedMotion();
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-
-  // Springy cursor follow for a very subtle parallax on the hero image.
-  const sx = useSpring(mx, { stiffness: 40, damping: 22 });
-  const sy = useSpring(my, { stiffness: 40, damping: 22 });
-  const x = useTransform(sx, (v) => v * 14); // max ~±14px
-  const y = useTransform(sy, (v) => v * 10); // max ~±10px
-  const scale = useMotionValue(1.06);
-
-  useEffect(() => {
-    if (reduce) return;
-    const onMove = (e: MouseEvent) => {
-      mx.set(e.clientX / window.innerWidth - 0.5);
-      my.set(e.clientY / window.innerHeight - 0.5);
-    };
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
-  }, [mx, my, reduce]);
-
-  return (
-    <div
-      className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
-      aria-hidden="true"
-      style={{ backgroundColor: "#031310" }}
-    >
-      {/* Full-bleed hero image: flag/candles on the left, map/AI icons on the right */}
-      <motion.img
-        src="/auth-right-bg.webp"
-        alt=""
-        style={{ x, y, scale, filter: "saturate(0.85) brightness(0.9)", objectPosition: "55% 35%" }}
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-
-      {/* Global uniform darkening */}
-      <div className="absolute inset-0 bg-black/30" />
-    </div>
-  );
-}
-
 
