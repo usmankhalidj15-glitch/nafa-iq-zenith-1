@@ -151,7 +151,7 @@ function AuthPage() {
   ][pwScore];
 
   return (
-    <main className="relative flex min-h-screen w-full flex-col-reverse bg-background p-2 transition-all duration-500 selection:bg-primary/30 md:flex-row md:p-4">
+    <main className="relative flex min-h-screen w-full flex-col-reverse bg-background p-2 transition-all duration-500 selection:bg-primary/30 md:flex-row-reverse md:p-4">
       {/* Back to home — top left */}
       <Link
         to="/"
