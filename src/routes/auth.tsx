@@ -574,14 +574,114 @@ function FloatingInput({
   );
 }
 
+function CandleCluster({
+  x,
+  data,
+  opacity,
+}: {
+  x: string;
+  data: [number, number, number, number][];
+  opacity: number;
+}) {
+  return (
+    <g opacity={opacity} transform={`translate(${x})`}>
+      {data.map(([dx, y, body, wick], i) => (
+        <g key={i} transform={`translate(${dx} ${y})`}>
+          <line x1="6" y1="0" x2="6" y2={wick} stroke="var(--color-primary)" strokeWidth="1.5" />
+          <rect
+            x="0"
+            y={(wick - body) / 2}
+            width="12"
+            height={body}
+            rx="2"
+            fill="var(--color-primary)"
+          />
+        </g>
+      ))}
+    </g>
+  );
+}
+
 function AuthAmbientBackground() {
+  const reduce = useReducedMotion();
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+
+  // Parallax layers — springy follow of the cursor.
+  const sx = useSpring(mx, { stiffness: 40, damping: 20 });
+  const sy = useSpring(my, { stiffness: 40, damping: 20 });
+  const farX = useTransform(sx, (v) => v * 12);
+  const farY = useTransform(sy, (v) => v * 12);
+  const nearX = useTransform(sx, (v) => v * 26);
+  const nearY = useTransform(sy, (v) => v * 26);
+
+  useEffect(() => {
+    if (reduce) return;
+    const onMove = (e: MouseEvent) => {
+      mx.set(e.clientX / window.innerWidth - 0.5);
+      my.set(e.clientY / window.innerHeight - 0.5);
+    };
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, [mx, my, reduce]);
+
+  const particles = Array.from({ length: 22 }, (_, i) => ({
+    id: i,
+    left: `${(i * 37.3) % 100}%`,
+    top: `${(i * 61.7) % 100}%`,
+    size: 1.5 + ((i * 7) % 4),
+    dur: 16 + ((i * 5) % 14),
+    delay: (i * 1.3) % 8,
+    drift: 18 + ((i * 11) % 30),
+  }));
+
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-      {/* teal gradient glows */}
-      <div className="absolute -left-24 top-0 h-96 w-96 rounded-full bg-primary/10 blur-[120px]" />
-      <div className="absolute -bottom-24 right-0 h-96 w-96 rounded-full bg-info/10 blur-[120px]" />
+      {/* Soft pulsing glow behind the card */}
+      <motion.div
+        className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/12 blur-[130px]"
+        animate={reduce ? undefined : { opacity: [0.55, 0.9, 0.55], scale: [0.95, 1.05, 0.95] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+      />
 
-      <svg className="absolute inset-0 h-full w-full opacity-[0.5]" preserveAspectRatio="xMidYMid slice">
+      {/* Corner ambient glows (parallax) */}
+      <motion.div
+        style={{ x: farX, y: farY }}
+        className="absolute -left-24 top-0 h-96 w-96 rounded-full bg-primary/10 blur-[120px]"
+      />
+      <motion.div
+        style={{ x: farX, y: farY }}
+        className="absolute -bottom-24 right-0 h-96 w-96 rounded-full bg-info/10 blur-[120px]"
+      />
+
+      {/* Drifting particles */}
+      {!reduce &&
+        particles.map((p) => (
+          <motion.span
+            key={p.id}
+            className="absolute rounded-full bg-primary/60"
+            style={{
+              left: p.left,
+              top: p.top,
+              width: p.size,
+              height: p.size,
+              boxShadow: "0 0 8px rgba(45,212,167,0.6)",
+            }}
+            animate={{
+              y: [0, -p.drift, p.drift * 0.5, 0],
+              x: [0, p.drift * 0.5, -p.drift * 0.4, 0],
+              opacity: [0, 0.7, 0.4, 0],
+            }}
+            transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
+          />
+        ))}
+
+      {/* Grid + composed candlesticks + neural nodes (parallax) */}
+      <motion.svg
+        style={{ x: nearX, y: nearY }}
+        className="absolute inset-0 h-full w-full"
+        preserveAspectRatio="xMidYMid slice"
+      >
         <defs>
           <pattern id="loginGrid" width="42" height="42" patternUnits="userSpaceOnUse">
             <path d="M42 0H0V42" fill="none" stroke="var(--color-primary)" strokeOpacity="0.05" />
@@ -593,22 +693,38 @@ function AuthAmbientBackground() {
           </linearGradient>
         </defs>
         <rect width="100%" height="100%" fill="url(#loginGrid)" />
-        {/* candlesticks */}
-        <g opacity="0.14" transform="translate(40 60)">
-          {[
+
+        {/* Anchored candlestick clusters, low opacity */}
+        <CandleCluster
+          x="6% 68%"
+          opacity={0.12}
+          data={[
             [0, 40, 60, 90],
             [26, 20, 80, 120],
             [52, 55, 45, 70],
             [78, 10, 90, 140],
-            [104, 45, 55, 80],
-          ].map(([x, y, body, wick], i) => (
-            <g key={i} transform={`translate(${x} ${y})`}>
-              <line x1="6" y1="0" x2="6" y2={wick} stroke="var(--color-primary)" strokeWidth="1.5" />
-              <rect x="0" y={(wick - body) / 2} width="12" height={body} fill="var(--color-primary)" />
-            </g>
-          ))}
-        </g>
-        {/* neural nodes */}
+          ]}
+        />
+        <CandleCluster
+          x="4% 12%"
+          opacity={0.1}
+          data={[
+            [0, 30, 50, 80],
+            [26, 10, 70, 110],
+            [52, 45, 40, 60],
+          ]}
+        />
+        <CandleCluster
+          x="70% 70%"
+          opacity={0.1}
+          data={[
+            [0, 45, 55, 80],
+            [26, 20, 75, 115],
+            [52, 50, 45, 70],
+          ]}
+        />
+
+        {/* Neural nodes */}
         <g opacity="0.16">
           <line x1="82%" y1="16%" x2="92%" y2="30%" stroke="url(#loginLine)" strokeWidth="1" />
           <line x1="92%" y1="30%" x2="80%" y2="42%" stroke="url(#loginLine)" strokeWidth="1" />
@@ -622,7 +738,7 @@ function AuthAmbientBackground() {
             <circle key={i} cx={cx} cy={cy} r="2.5" fill="var(--color-primary)" />
           ))}
         </g>
-      </svg>
+      </motion.svg>
     </div>
   );
 }
