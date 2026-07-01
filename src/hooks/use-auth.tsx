@@ -19,7 +19,7 @@ type AuthContextValue = {
     email: string,
     password: string,
     displayName: string,
-  ) => Promise<{ error: string | null }>;
+  ) => Promise<{ error: string | null; needsConfirmation: boolean }>;
   signInWithGoogle: () => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
 };
