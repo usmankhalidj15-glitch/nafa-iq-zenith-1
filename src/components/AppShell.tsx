@@ -18,6 +18,8 @@ import {
   ChevronRight,
   Sun,
   Moon,
+  PanelLeftClose,
+  PanelLeft,
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
@@ -111,7 +113,8 @@ function SidebarLink({
   );
 }
 
-function Sidebar() {
+function Sidebar({ onCollapse }: { onCollapse: () => void }) {
+  const { t } = useLang();
   const path = useRouterState({ select: (s) => s.location.pathname });
   const { profile, user, signOut } = useAuth();
   const navigate = useNavigate();
@@ -137,6 +140,16 @@ function Sidebar() {
       {/* utility section — separated from primary nav */}
       <div className="space-y-1 border-t border-white/[0.06] px-3 py-3">
         <SidebarLink to="/settings" label="Settings" icon={Settings} active={isActive("/settings")} />
+        <button
+          onClick={onCollapse}
+          className="group flex w-full items-center gap-3 rounded-[10px] px-3 py-2.5 text-[13px] font-medium text-text-secondary transition-colors duration-200 hover:bg-white/[0.04] hover:text-text-primary"
+        >
+          <PanelLeftClose
+            className="h-5 w-5 shrink-0 text-text-muted group-hover:text-text-primary"
+            strokeWidth={1.75}
+          />
+          {t("Collapse")}
+        </button>
       </div>
 
       <div className="flex items-center gap-3 border-t border-white/[0.06] p-3">
@@ -340,7 +353,15 @@ function ThemeToggle() {
   );
 }
 
-function Header({ onMenu }: { onMenu: () => void }) {
+function Header({
+  onMenu,
+  collapsed,
+  onExpand,
+}: {
+  onMenu: () => void;
+  collapsed: boolean;
+  onExpand: () => void;
+}) {
   const { t, isUrdu } = useLang();
   return (
     <header
@@ -352,7 +373,16 @@ function Header({ onMenu }: { onMenu: () => void }) {
       <button onClick={onMenu} className="text-text-secondary lg:hidden" aria-label="Menu">
         <Menu className="h-5 w-5" strokeWidth={1.75} />
       </button>
-      <div className="lg:hidden">
+      {collapsed && (
+        <button
+          onClick={onExpand}
+          className="hidden text-text-secondary transition-colors hover:text-text-primary lg:inline-flex"
+          aria-label="Show menu"
+        >
+          <PanelLeft className="h-5 w-5" strokeWidth={1.75} />
+        </button>
+      )}
+      <div className={cn("lg:hidden", collapsed && "lg:block")}>
         <Logo />
       </div>
 
@@ -472,6 +502,16 @@ function BottomNav() {
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [drawer, setDrawer] = useState(false);
+  const [collapsed, setCollapsed] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.localStorage.getItem("nafaiq-sidebar-collapsed") === "1";
+  });
+  function toggleCollapsed(next: boolean) {
+    setCollapsed(next);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("nafaiq-sidebar-collapsed", next ? "1" : "0");
+    }
+  }
   const { profile, user, signOut } = useAuth();
   const { theme } = useTheme();
   const { t, isUrdu } = useLang();
@@ -494,9 +534,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {/* ambient depth — very subtle brand wash */}
       <div className="ambient-glow -top-40 right-[-12%] h-[420px] w-[420px] bg-primary/[0.03]" />
 
-      <Sidebar />
-      <div className="relative lg:ps-[212px]">
-        <Header onMenu={() => setDrawer(true)} />
+      {!collapsed && <Sidebar onCollapse={() => toggleCollapsed(true)} />}
+      <div className={cn("relative", !collapsed && "lg:ps-[212px]")}>
+        <Header
+          onMenu={() => setDrawer(true)}
+          collapsed={collapsed}
+          onExpand={() => toggleCollapsed(false)}
+        />
         <Breadcrumbs />
         <main className="px-3 pt-4 pb-24 sm:px-5 lg:px-6 lg:pb-8">{children}</main>
       </div>
