@@ -101,6 +101,8 @@ export default function PSX() {
   const [mas, setMas] = useState<string[]>(["MA20", "MA50"]);
   const [moverTab, setMoverTab] = useState<"Gainers" | "Losers" | "Most Active">("Gainers");
   const [signalFilter, setSignalFilter] = useState<string>("All");
+  const [watchlist, setWatchlist] = useState<string[]>(["HBL", "ENGRO", "LUCK", "OGDC"]);
+  const [addOpen, setAddOpen] = useState(false);
 
   const meta = symbolMeta(sym);
   const full = useMemo(
@@ -384,34 +386,76 @@ export default function PSX() {
           <Card>
             <div className="mb-2 flex items-center justify-between">
               <h3 className="text-sm font-semibold text-text-primary">{t("Watchlist")}</h3>
-              <button className="flex items-center gap-1 text-xs font-medium text-bull">
-                <Plus className="h-3.5 w-3.5" />
-                {t("Add Stock")}
-              </button>
+              <Popover open={addOpen} onOpenChange={setAddOpen}>
+                <PopoverTrigger asChild>
+                  <button className="flex items-center gap-1 text-xs font-medium text-bull transition-colors hover:text-bull/80">
+                    <Plus className="h-3.5 w-3.5" />
+                    {t("Add Stock")}
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent align="end" className="w-56 p-1">
+                  <div className="max-h-64 overflow-y-auto">
+                    {Object.keys(STOCKS).filter((tk) => !watchlist.includes(tk)).length === 0 ? (
+                      <p className="px-2 py-3 text-center text-xs text-text-muted">
+                        All stocks added
+                      </p>
+                    ) : (
+                      Object.keys(STOCKS)
+                        .filter((tk) => !watchlist.includes(tk))
+                        .map((tk) => (
+                          <button
+                            key={tk}
+                            onClick={() => {
+                              setWatchlist((w) => [...w, tk]);
+                              setAddOpen(false);
+                            }}
+                            className="flex w-full items-center gap-2 rounded-[6px] px-2 py-1.5 text-left hover:bg-hover"
+                          >
+                            <Plus className="h-3.5 w-3.5 text-bull" />
+                            <span className="text-sm font-semibold text-bull">{tk}</span>
+                            <span className="flex-1 truncate text-[10px] text-text-muted">
+                              {STOCKS[tk].name}
+                            </span>
+                          </button>
+                        ))
+                    )}
+                  </div>
+                </PopoverContent>
+              </Popover>
             </div>
             <div className="space-y-1">
-              {["HBL", "ENGRO", "LUCK", "OGDC"].map((tk) => {
+              {watchlist.map((tk) => {
                 const s = STOCKS[tk];
                 return (
-                  <Link
-                    to="/stock/$ticker"
-                    params={{ ticker: tk }}
+                  <div
                     key={tk}
-                    className="flex items-center gap-2 rounded-[6px] px-2 py-1.5 hover:bg-hover"
+                    className="group flex items-center gap-2 rounded-[6px] px-2 py-1.5 hover:bg-hover"
                   >
-                    <Star className="wl-star h-3.5 w-3.5 text-bull" fill="#00d4aa" />
-                    <div className="flex-1">
-                      <div className="wl-symbol text-sm font-semibold text-bull">{tk}</div>
-                      <div className="text-[10px] text-text-muted">{s.name}</div>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-mono text-sm tabular-nums text-text-primary">
-                        {fmtNum(s.price)}
+                    <button
+                      onClick={() => setWatchlist((w) => w.filter((x) => x !== tk))}
+                      aria-label={`Remove ${tk}`}
+                      className="shrink-0"
+                    >
+                      <Star className="wl-star h-3.5 w-3.5 text-bull" fill="#00d4aa" />
+                    </button>
+                    <Link
+                      to="/stock/$ticker"
+                      params={{ ticker: tk }}
+                      className="flex flex-1 items-center gap-2"
+                    >
+                      <div className="flex-1">
+                        <div className="wl-symbol text-sm font-semibold text-bull">{tk}</div>
+                        <div className="text-[10px] text-text-muted">{s.name}</div>
                       </div>
-                      <Change pct={s.changePct} />
-                    </div>
-                    <SignalBadge signal={s.signal} />
-                  </Link>
+                      <div className="text-right">
+                        <div className="font-mono text-sm tabular-nums text-text-primary">
+                          {fmtNum(s.price)}
+                        </div>
+                        <Change pct={s.changePct} />
+                      </div>
+                      <SignalBadge signal={s.signal} />
+                    </Link>
+                  </div>
                 );
               })}
             </div>
