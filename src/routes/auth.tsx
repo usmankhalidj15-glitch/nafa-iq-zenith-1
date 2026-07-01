@@ -93,9 +93,9 @@ function AuthPage() {
   const isSignup = mode === "signup";
 
   return (
-    <main className="flex min-h-screen w-full bg-black p-2 transition-all duration-500 selection:bg-white/30 lg:h-screen lg:overflow-hidden lg:p-4">
+    <main className="flex min-h-screen w-full bg-background p-2 transition-all duration-500 selection:bg-primary/30 lg:h-screen lg:overflow-hidden lg:p-4">
       {/* ---------- Left column: hero + video ---------- */}
-      <div className="relative hidden h-full w-[52%] flex-col items-center justify-end overflow-hidden rounded-3xl px-12 pb-32 shadow-2xl lg:flex">
+      <div className="relative hidden h-full w-[52%] flex-col items-center justify-end overflow-hidden rounded-3xl border border-border px-12 pb-32 shadow-2xl lg:flex">
         <video
           className="absolute inset-0 h-full w-full object-cover"
           autoPlay
@@ -109,6 +109,9 @@ function AuthPage() {
           />
         </video>
 
+        {/* subtle bottom scrim so hero content reads over the video */}
+        <div className="absolute inset-x-0 bottom-0 z-[5] h-2/3 bg-gradient-to-t from-background via-background/60 to-transparent" />
+
         <motion.div
           variants={container}
           initial="hidden"
@@ -116,13 +119,19 @@ function AuthPage() {
           className="z-10 w-full max-w-xs space-y-8"
         >
           <motion.div variants={item} className="flex items-center gap-2">
-            <Circle className="h-5 w-5 fill-white text-white" />
-            <span className="text-xl font-semibold tracking-tight">NafaIQ</span>
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+              <TrendingUp className="h-5 w-5" strokeWidth={2.25} />
+            </span>
+            <span className="font-display text-xl font-semibold tracking-tight text-text-primary">
+              Nafa<span className="text-gold">IQ</span>
+            </span>
           </motion.div>
 
           <motion.div variants={item} className="space-y-3">
-            <h1 className="whitespace-nowrap text-4xl font-medium tracking-tight">Join NafaIQ</h1>
-            <p className="px-1 text-sm leading-relaxed text-white/60">
+            <h1 className="font-display whitespace-nowrap text-4xl font-medium tracking-tight text-text-primary">
+              Join NafaIQ
+            </h1>
+            <p className="px-1 text-sm leading-relaxed text-text-secondary/80">
               Follow these 3 quick phases to activate your space.
             </p>
           </motion.div>
@@ -135,6 +144,7 @@ function AuthPage() {
 
         </motion.div>
       </div>
+
 
       {/* ---------- Right column: form ---------- */}
       <div className="flex flex-1 flex-col items-center justify-center overflow-y-auto px-4 py-12 sm:px-12 lg:overflow-hidden lg:px-16 lg:py-6 xl:px-24">
