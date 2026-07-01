@@ -1363,6 +1363,7 @@ function HowItWorksDesktop() {
 
         {STEPS.map((s, i) => {
           const done = i <= active;
+          const isActive = active === i;
           return (
             <div
               key={s.step}
@@ -1378,32 +1379,37 @@ function HowItWorksDesktop() {
                 aria-hidden
               >
                 <span
-                  className="h-3 w-3 rounded-full transition-all duration-500"
+                  className="h-3 w-3 rounded-full transition-all duration-700"
                   style={{
                     background: done ? "rgb(0,212,170)" : "rgba(255,255,255,0.18)",
-                    transform: active === i ? "scale(1.35)" : "scale(1)",
-                    boxShadow: active === i ? "0 0 16px 3px rgba(0,212,170,0.7)" : "none",
+                    transform: isActive ? "scale(1.5)" : "scale(1)",
+                    boxShadow: isActive ? "0 0 20px 4px rgba(0,212,170,0.8)" : "none",
                   }}
                 />
               </span>
 
-              <div
-                className="transition-all duration-500"
-                style={{ opacity: active === i ? 1 : 0.35 }}
+              {/* Step content — vanish effect: inactive steps fade, blur & shrink */}
+              <motion.div
+                animate={{
+                  opacity: isActive ? 1 : 0.08,
+                  scale: isActive ? 1 : 0.94,
+                  filter: isActive ? "blur(0px)" : "blur(3px)",
+                }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
               >
                 <div className="flex items-center gap-4">
                   <div
-                    className="flex h-12 w-12 items-center justify-center rounded-[12px] transition-colors duration-500"
+                    className="flex h-12 w-12 items-center justify-center rounded-[12px] transition-colors duration-700"
                     style={{
-                      background: active === i ? "rgba(0,212,170,0.15)" : "rgba(255,255,255,0.05)",
+                      background: isActive ? "rgba(0,212,170,0.15)" : "rgba(255,255,255,0.04)",
                     }}
                   >
                     <span className="font-mono text-lg font-bold text-bull">{s.step}</span>
                   </div>
                   <h3
                     className={cn(
-                      "text-2xl transition-all duration-500",
-                      active === i
+                      "text-2xl transition-all duration-700",
+                      isActive
                         ? "font-bold text-text-primary"
                         : "font-semibold text-text-secondary",
                     )}
@@ -1414,31 +1420,46 @@ function HowItWorksDesktop() {
                 <p className="mt-4 max-w-[420px] text-base leading-[1.6] text-text-secondary">
                   {s.desc}
                 </p>
-              </div>
+              </motion.div>
             </div>
           );
         })}
       </div>
 
-      {/* Right: sticky panel with crossfade */}
+      {/* Right: sticky panel with crossfade + bottom dots */}
       <div className="relative">
-        <div className="sticky top-0 flex h-screen items-center justify-center">
+        <div className="sticky top-0 flex h-screen flex-col items-center justify-center">
           {reduce ? (
             <StepPanelFrame key={active}>{STEP_PANELS[active]}</StepPanelFrame>
           ) : (
             <AnimatePresence mode="wait">
               <motion.div
                 key={active}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
+                initial={{ opacity: 0, y: 16, scale: 0.97 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -16, scale: 0.97 }}
+                transition={{ duration: 0.45, ease: "easeOut" }}
                 className="w-full flex justify-center"
               >
                 <StepPanelFrame>{STEP_PANELS[active]}</StepPanelFrame>
               </motion.div>
             </AnimatePresence>
           )}
+
+          {/* Bottom step indicator dots */}
+          <div className="mt-8 flex items-center gap-2.5">
+            {STEPS.map((s, i) => (
+              <span
+                key={s.step}
+                className="h-2 rounded-full transition-all duration-500"
+                style={{
+                  width: active === i ? 24 : 8,
+                  background: active === i ? "rgb(0,212,170)" : "rgba(255,255,255,0.18)",
+                  boxShadow: active === i ? "0 0 10px 2px rgba(0,212,170,0.6)" : "none",
+                }}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
