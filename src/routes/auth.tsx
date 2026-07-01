@@ -155,7 +155,7 @@ function AuthPage() {
       {/* Back to home — top left */}
       <Link
         to="/"
-        className="absolute left-4 top-4 z-30 inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface/70 px-3 py-1.5 text-xs font-medium text-text-secondary backdrop-blur-md transition-all duration-200 hover:border-border-hover hover:text-text-primary"
+        className="absolute right-4 top-4 z-30 inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface/70 px-3 py-1.5 text-xs font-medium text-text-secondary backdrop-blur-md transition-all duration-200 hover:border-border-hover hover:text-text-primary"
       >
         <ArrowLeft className="h-3.5 w-3.5" />
         Back to home
