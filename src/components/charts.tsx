@@ -405,7 +405,7 @@ export function DonutChart({
   centerLabel,
   centerValue,
 }: {
-  data: { name: string; value: number; color: string }[];
+  data: { name: string; value: number; color: string; amount?: number }[];
   centerLabel?: string;
   centerValue?: string;
 }) {
@@ -443,6 +443,36 @@ export function DonutChart({
     );
   };
 
+  const DonutTip = ({ active, payload }: { active?: boolean; payload?: any[] }) => {
+    if (!active || !payload?.length) return null;
+    const p = payload[0].payload as { name: string; value: number; amount?: number };
+    return (
+      <div
+        style={{
+          background: ct.tooltip.background,
+          border: ct.tooltip.border,
+          borderRadius: 12,
+          boxShadow: ct.tooltip.boxShadow,
+          padding: "10px 14px",
+        }}
+      >
+        <div style={{ fontSize: 12, color: ct.tooltipLabel, marginBottom: 2 }}>{p.name}</div>
+        <div
+          style={{
+            fontFamily: "var(--font-mono, monospace)",
+            fontSize: 16,
+            fontWeight: 700,
+            color: ct.tooltip.color,
+            fontVariantNumeric: "tabular-nums",
+            letterSpacing: "0.02em",
+          }}
+        >
+          {p.amount != null ? `PKR ${p.amount.toLocaleString()}` : `${p.value}%`}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="relative">
       <ResponsiveContainer width="100%" height={220}>
@@ -453,7 +483,8 @@ export function DonutChart({
             nameKey="name"
             innerRadius={62}
             outerRadius={92}
-            paddingAngle={2}
+            paddingAngle={3}
+            cornerRadius={4}
             stroke={ct.light ? "#ffffff" : "none"}
             strokeWidth={ct.light ? 2 : 0}
             isAnimationActive={false}
@@ -464,10 +495,7 @@ export function DonutChart({
               <Cell key={i} fill={ct.light ? lightPalette[i % lightPalette.length] : d.color} />
             ))}
           </Pie>
-          <Tooltip
-            contentStyle={ct.tooltip}
-            itemStyle={{ color: ct.tooltip.color }}
-          />
+          <Tooltip content={<DonutTip />} cursor={false} />
         </PieChart>
       </ResponsiveContainer>
       {centerValue && (

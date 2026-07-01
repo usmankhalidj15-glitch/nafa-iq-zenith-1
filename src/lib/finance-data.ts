@@ -155,11 +155,11 @@ export const BILLS: Bill[] = [
 ];
 
 export const SPENDING = [
-  { name: "Food", value: 34, color: "#00d4aa" },
-  { name: "Utilities", value: 25, color: "#3b82f6" },
-  { name: "Transport", value: 16, color: "#f59e0b" },
-  { name: "Shopping", value: 13, color: "#8b5cf6" },
-  { name: "Other", value: 12, color: "#6b7280" },
+  { name: "Food & Dining", value: 34, amount: 45000, color: "#00d4aa" },
+  { name: "Utilities", value: 25, amount: 33000, color: "#3b82f6" },
+  { name: "Transport", value: 16, amount: 21000, color: "#f59e0b" },
+  { name: "Shopping", value: 13, amount: 17000, color: "#8b5cf6" },
+  { name: "Other", value: 12, amount: 16000, color: "#6b7280" },
 ];
 
 export const INCOME_EXPENSE = [
