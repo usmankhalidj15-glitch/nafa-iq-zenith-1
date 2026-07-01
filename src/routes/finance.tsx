@@ -562,10 +562,7 @@ function Budgets() {
                 </span>
               </div>
               <div className="mt-2 h-2 overflow-hidden rounded-full bg-elevated">
-                <div
-                  className={cn("h-full rounded-full", color)}
-                  style={{ width: `${Math.min(pct, 100)}%` }}
-                />
+                <AnimatedBar value={Math.min(pct, 100)} className={color} />
               </div>
               {b.tip && (
                 <div className="mt-2 flex items-start gap-1.5 rounded-[6px] border-l-2 border-ai bg-ai-tint px-2.5 py-1.5 text-[11px] text-text-secondary">
