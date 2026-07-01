@@ -470,12 +470,12 @@ function FlashcardModal({ onClose }: { onClose: () => void }) {
             >
               <div className={cn("flip-inner", flipped && "flipped")}>
                 <div className="flip-face rounded-[16px] border border-border bg-surface p-8">
-                  <div className="text-2xl font-bold text-text-primary">{card.front}</div>
+                  <div className="text-2xl font-bold text-text-primary">{t(card.front)}</div>
                   <div className="mt-3 font-urdu text-3xl text-bull">{card.ur}</div>
                   <div className="mt-6 text-xs text-text-muted">{t("Tap to flip")}</div>
                 </div>
                 <div className="flip-face flip-back rounded-[16px] border border-bull/40 bg-surface p-8 text-center">
-                  <p className="text-sm leading-relaxed text-text-secondary">{card.def}</p>
+                  <p className="text-sm leading-relaxed text-text-secondary">{t(card.def)}</p>
                 </div>
               </div>
             </button>
