@@ -1,6 +1,13 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { motion, type Variants } from "framer-motion";
+import {
+  motion,
+  type Variants,
+  useReducedMotion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import {
   Loader2,
   Eye,
