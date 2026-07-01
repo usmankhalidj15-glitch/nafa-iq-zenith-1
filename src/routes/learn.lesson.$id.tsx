@@ -29,6 +29,7 @@ import {
   X,
 } from "lucide-react";
 import { EmojiIcon } from "@/components/icons";
+import { Typewriter } from "@/components/Typewriter";
 import {
   LESSON_CONTENT,
   lessonOrder,
