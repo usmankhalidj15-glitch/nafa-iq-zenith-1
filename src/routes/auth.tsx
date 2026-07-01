@@ -145,7 +145,7 @@ function AuthPage() {
   const isSignup = mode === "signup";
 
   return (
-    <main className="relative flex min-h-screen w-full flex-col-reverse bg-background p-2 transition-all duration-500 selection:bg-primary/30 lg:flex-row lg:p-4">
+    <main className="relative flex min-h-screen w-full flex-col-reverse bg-background p-2 transition-all duration-500 selection:bg-primary/30 md:flex-row md:p-4">
       {/* Back to home — top left */}
       <Link
         to="/"
@@ -156,7 +156,7 @@ function AuthPage() {
       </Link>
 
       {/* ---------- Left column: form ---------- */}
-      <div className="flex flex-1 flex-col items-center justify-center px-4 py-12 sm:px-12 lg:px-16 lg:pt-16 lg:pb-6 xl:px-24">
+      <div className="flex flex-1 flex-col items-center justify-center px-4 pb-10 pt-20 sm:px-12 md:py-12 lg:px-16 lg:pb-6 lg:pt-16 xl:px-24">
         {confirmSent ? (
           <motion.div
             initial={{ opacity: 0, y: 12 }}
@@ -316,16 +316,17 @@ function AuthPage() {
 
 
       {/* ---------- Right column: hero ---------- */}
-      <div className="relative hidden min-h-[600px] w-[52%] flex-col items-center justify-end overflow-hidden rounded-3xl border border-border px-12 pb-32 shadow-2xl lg:flex">
+      <div className="relative hidden min-h-[calc(100vh-2rem)] w-[45%] flex-col items-center justify-end overflow-hidden rounded-3xl border border-border px-6 pb-16 shadow-2xl md:flex lg:w-[52%] lg:px-12 lg:pb-32">
         {/* uploaded image background */}
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${authBg.url})` }}
+        <img
+          src={authBg.url}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-background/10" />
 
         {/* subtle bottom scrim so hero content reads clearly */}
-        <div className="absolute inset-x-0 bottom-0 z-[5] h-1/2 bg-gradient-to-t from-background/80 via-background/30 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 z-[5] h-1/3 bg-gradient-to-t from-background/55 via-background/10 to-transparent" />
 
         <motion.div
           variants={container}
