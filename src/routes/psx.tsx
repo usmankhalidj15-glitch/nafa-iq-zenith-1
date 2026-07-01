@@ -155,7 +155,7 @@ export default function PSX() {
                 </Popover>
               </div>
               <div className="mt-1 font-mono text-lg font-bold tabular-nums text-text-primary">
-                {fmtNum(idx.value)}
+                <CountUpNumber value={idx.value} decimals={2} />
               </div>
               <div className="flex items-center justify-between">
                 <Change value={`+${fmtNum(idx.change)}`} pct={idx.changePct} />
