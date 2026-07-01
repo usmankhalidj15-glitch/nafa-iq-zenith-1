@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { motion, type Variants } from "framer-motion";
-import { Loader2, BarChart3, Chrome, Github, Eye, EyeOff, Check } from "lucide-react";
+import { Loader2, Chrome, Github, Eye, EyeOff, Check } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/use-auth";
 
@@ -34,6 +34,36 @@ const item: Variants = {
   hidden: { opacity: 0, y: 10 },
   show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
+
+function LogoIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      {/* Rounded square border */}
+      <rect
+        x="1.5"
+        y="1.5"
+        width="29"
+        height="29"
+        rx="7"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        fill="none"
+      />
+      {/* 4 vertical bars with rounded tops */}
+      <rect x="7" y="20" width="2.5" height="4" rx="1.25" fill="currentColor" />
+      <rect x="11.5" y="16" width="2.5" height="8" rx="1.25" fill="currentColor" />
+      <rect x="16" y="12" width="2.5" height="12" rx="1.25" fill="currentColor" />
+      <rect x="20.5" y="8" width="2.5" height="16" rx="1.25" fill="currentColor" />
+      {/* Horizontal baseline */}
+      <rect x="6.5" y="24.5" width="19" height="1.5" rx="0.75" fill="currentColor" />
+    </svg>
+  );
+}
 
 function AuthPage() {
   const { user, loading, signInWithPassword, signUpWithPassword, signInWithGoogle } = useAuth();
@@ -102,6 +132,13 @@ function AuthPage() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full max-w-xl space-y-8 sm:space-y-10 lg:space-y-6"
         >
+          <div className="flex items-center gap-2.5 lg:hidden">
+            <LogoIcon className="h-8 w-8 text-primary" />
+            <span className="font-display text-xl font-bold tracking-tight text-text-primary">
+              Nafa<span className="text-primary">IQ</span>
+            </span>
+          </div>
+
           <div className="space-y-2">
             <h2 className="font-display text-3xl font-medium tracking-tight text-text-primary">
               {isSignup ? "Create New Profile" : "Welcome Back"}
@@ -233,13 +270,10 @@ function AuthPage() {
           className="z-10 w-full max-w-xs space-y-8"
         >
           <motion.div variants={item} className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-primary/40 bg-primary/10 text-primary">
-              <BarChart3 className="h-5 w-5" strokeWidth={2.5} />
-            </span>
+            <LogoIcon className="h-9 w-9 text-primary" />
             <span className="font-display text-2xl font-bold tracking-tight text-text-primary">
               Nafa<span className="text-primary">IQ</span>
             </span>
-
           </motion.div>
 
           <motion.div variants={item} className="space-y-3">
