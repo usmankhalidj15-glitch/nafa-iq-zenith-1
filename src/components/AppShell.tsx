@@ -502,6 +502,16 @@ function BottomNav() {
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [drawer, setDrawer] = useState(false);
+  const [collapsed, setCollapsed] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.localStorage.getItem("nafaiq-sidebar-collapsed") === "1";
+  });
+  function toggleCollapsed(next: boolean) {
+    setCollapsed(next);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("nafaiq-sidebar-collapsed", next ? "1" : "0");
+    }
+  }
   const { profile, user, signOut } = useAuth();
   const { theme } = useTheme();
   const { t, isUrdu } = useLang();
