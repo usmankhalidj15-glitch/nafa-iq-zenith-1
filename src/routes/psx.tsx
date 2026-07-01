@@ -12,6 +12,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 import { Card } from "@/components/Card";
+import { CountUpNumber } from "@/components/CountUpNumber";
 import { Typewriter } from "@/components/Typewriter";
 import { Change } from "@/components/Change";
 import { SignalBadge } from "@/components/SignalBadge";
@@ -154,7 +155,7 @@ export default function PSX() {
                 </Popover>
               </div>
               <div className="mt-1 font-mono text-lg font-bold tabular-nums text-text-primary">
-                {fmtNum(idx.value)}
+                <CountUpNumber value={idx.value} decimals={2} />
               </div>
               <div className="flex items-center justify-between">
                 <Change value={`+${fmtNum(idx.change)}`} pct={idx.changePct} />

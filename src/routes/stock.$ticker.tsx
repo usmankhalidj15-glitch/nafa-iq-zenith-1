@@ -4,6 +4,8 @@ import { Card } from "@/components/Card";
 import { Change } from "@/components/Change";
 import { SignalBadge } from "@/components/SignalBadge";
 import { CandlestickChart } from "@/components/charts";
+import { CountUpNumber } from "@/components/CountUpNumber";
+import { Typewriter } from "@/components/Typewriter";
 import { STOCKS, generateOHLCV, fmtNum } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/hooks/use-lang";
@@ -86,7 +88,7 @@ function StockDetail() {
           <p className="text-sm text-text-secondary">{t(s.sector)} {t("Sector")}</p>
           <div className="mt-2 flex items-baseline gap-3">
             <span className="font-mono text-3xl font-bold tabular-nums text-text-primary">
-              {fmtNum(s.price)}
+              <CountUpNumber value={s.price} decimals={2} />
             </span>
             <Change value={`${chg >= 0 ? "+" : ""}${fmtNum(chg)}`} pct={s.changePct} />
           </div>
@@ -162,10 +164,12 @@ function StockDetail() {
           {t("Overall: STRONG BUY · 5 of 6 indicators bullish")}
         </div>
         <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-          {s.ticker}{" "}
-          {t(
-            "is showing strong bullish momentum. Price has broken above MA50 with significantly above-average volume — a classic confirmation signal. RSI at 61 leaves room before overbought territory. The only caution is Bollinger Band position suggesting the move may slow near 148–150. Consider a stop-loss at the MA20 level (~136).",
-          )}
+          <Typewriter
+            id={`stock-ai-${s.ticker}`}
+            text={`${s.ticker} ${t(
+              "is showing strong bullish momentum. Price has broken above MA50 with significantly above-average volume — a classic confirmation signal. RSI at 61 leaves room before overbought territory. The only caution is Bollinger Band position suggesting the move may slow near 148–150. Consider a stop-loss at the MA20 level (~136).",
+            )}`}
+          />
         </p>
         <p className="mt-2 text-[11px] italic text-text-muted">
           {t("This is AI-generated technical analysis only. Not financial advice.")}
