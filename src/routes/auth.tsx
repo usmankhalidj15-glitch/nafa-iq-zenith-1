@@ -399,7 +399,7 @@ function AuthPage() {
                   </motion.button>
                 </motion.form>
 
-                <div className="space-y-3 pt-1 text-center">
+                <div className="space-y-3 text-center">
                   <p className="text-sm text-text-muted">
                     {isSignup ? "Already have an account? " : "New to NafaIQ? "}
                     <button
