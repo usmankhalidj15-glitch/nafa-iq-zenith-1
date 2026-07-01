@@ -264,9 +264,15 @@ function AuthPage() {
                   <div className="flex-1 border-t border-border" />
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <motion.form
+                  onSubmit={handleSubmit}
+                  className="space-y-4"
+                  variants={formContainer}
+                  initial="hidden"
+                  animate="show"
+                >
                   {isSignup && (
-                    <div className="grid grid-cols-2 gap-3">
+                    <motion.div variants={formItem} className="grid grid-cols-2 gap-3">
                       <FloatingInput
                         id="firstName"
                         label="First name"
@@ -285,21 +291,23 @@ function AuthPage() {
                         autoComplete="family-name"
                         icon={<User className="h-4 w-4" />}
                       />
-                    </div>
+                    </motion.div>
                   )}
 
-                  <FloatingInput
-                    id="email"
-                    label="Email address"
-                    type="email"
-                    value={email}
-                    onChange={setEmail}
-                    autoComplete="email"
-                    required
-                    icon={<Mail className="h-4 w-4" />}
-                  />
+                  <motion.div variants={formItem}>
+                    <FloatingInput
+                      id="email"
+                      label="Email address"
+                      type="email"
+                      value={email}
+                      onChange={setEmail}
+                      autoComplete="email"
+                      required
+                      icon={<Mail className="h-4 w-4" />}
+                    />
+                  </motion.div>
 
-                  <div className="space-y-2.5">
+                  <motion.div variants={formItem} className="space-y-2.5">
                     <FloatingInput
                       id="password"
                       label="Password"
