@@ -522,7 +522,8 @@ function AuthVisualPanel({ currentStep }: { currentStep: number }) {
           ))}
         </motion.div>
       </motion.div>
-    </div>
+    </aside>
+
   );
 }
 
