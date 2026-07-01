@@ -5,20 +5,20 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-background: #050816;
+  --color-background: #0a0a0f;
   --color-foreground: #ffffff;
 
-  --color-surface: #0d1424;
-  --color-surface-alt: #0b1120;
-  --color-elevated: #111a2e;
+  --color-surface: rgba(18, 18, 26, 0.8);
+  --color-surface-alt: #101018;
+  --color-elevated: #16161f;
   --color-border: rgba(255, 255, 255, 0.06);
   --color-border-hover: rgba(255, 255, 255, 0.12);
   --color-hover: rgba(255, 255, 255, 0.04);
-  --color-sidebar: #070c1a;
+  --color-sidebar: #08080d;
 
-  --color-card: #0d1424;
+  --color-card: rgba(18, 18, 26, 0.8);
   --color-card-foreground: #ffffff;
-  --color-popover: #111a2e;
+  --color-popover: #16161f;
   --color-popover-foreground: #ffffff;
 
   --color-bull: #10b981;
