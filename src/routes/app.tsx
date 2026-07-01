@@ -18,11 +18,11 @@ import { DonutChart, PortfolioAreaChart, Sparkline, DONUT_LIGHT_PALETTE } from "
 import { CountUpNumber, AnimatedBar } from "@/components/CountUpNumber";
 import { Typewriter } from "@/components/Typewriter";
 import { useTheme } from "@/hooks/use-theme";
-import { STOCKS, WATCHLIST, generateOHLCV, fmtPKR } from "@/lib/data";
+import { STOCKS, WATCHLIST, generateOHLCV, fmtPKR, fmtNum } from "@/lib/data";
 import { SPENDING, GOALS } from "@/lib/finance-data";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
-import { useLang } from "@/hooks/use-lang";
+import { useLang, localizeDigits } from "@/hooks/use-lang";
 import { useFinanceStore, financeActions } from "@/hooks/use-finance-store";
 import { Modal, fieldClass } from "@/components/Modal";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -105,7 +105,8 @@ function Dashboard() {
             {t("Asalam-o-Alaikum,")} {firstName}
           </h1>
           <p className="mt-0.5 text-[13px] text-text-secondary">
-            {formatToday()} · KSE-100 <span className="font-mono text-bull">+1.24%</span> {t("today")}
+            {formatToday()} · {t("KSE-100")}{" "}
+            <span className="font-mono text-bull">{localizeDigits("+1.24%")}</span> {t("today")}
           </p>
         </div>
         <div className="flex shrink-0 flex-wrap gap-2">
@@ -243,13 +244,13 @@ function Dashboard() {
             </span>
             <span className="flex items-center gap-1.5">
               <span className="h-0.5 w-4 bg-text-secondary" />
-              KSE-100
+              {t("KSE-100")}
             </span>
           </div>
         </Card>
         <Card className="lg:col-span-2">
           <h3 className="mb-3 text-sm font-semibold text-text-primary">{t("Spending Breakdown")}</h3>
-          <DonutChart data={SPENDING} centerValue="132,000" centerLabel="PKR total" />
+          <DonutChart data={SPENDING} centerValue={localizeDigits("132,000")} centerLabel="PKR total" />
           <div className="mt-2 grid grid-cols-2 gap-1.5 text-xs">
             {SPENDING.map((s, i) => (
               <span key={s.name} className="flex items-center gap-1.5 text-text-secondary">
@@ -262,7 +263,7 @@ function Dashboard() {
                         : s.color,
                   }}
                 />
-                {t(s.name)} {s.value}%
+                {t(s.name)} {localizeDigits(`${s.value}%`)}
               </span>
             ))}
           </div>
@@ -288,7 +289,7 @@ function Dashboard() {
                 </div>
                 <div className="truncate text-[10px] text-text-muted">{s.name}</div>
                 <div className="mt-1 font-mono text-lg font-bold tabular-nums text-text-primary">
-                  {s.price.toLocaleString()}
+                  {fmtNum(s.price)}
                 </div>
                 <div className="my-1">
                   <Sparkline data={spark} color={s.changePct >= 0 ? "#00d4aa" : "#e5484d"} />

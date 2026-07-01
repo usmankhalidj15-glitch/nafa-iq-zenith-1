@@ -162,6 +162,8 @@ const UR: Record<string, string> = {
 
   // ---- Alerts ----
   "Active Alerts": "فعال الرٹس",
+  "Add Alert": "الرٹ شامل کریں",
+  "KSE-100": "کے ایس ای-100",
   "Add New Alert": "نیا الرٹ شامل کریں",
   Above: "اوپر",
   Below: "نیچے",
@@ -598,6 +600,23 @@ const UR: Record<string, string> = {
 export function translate(lang: Lang, key: string): string {
   if (lang === "en") return key;
   return UR[key] ?? key;
+}
+
+/** Current app language, readable outside React (e.g. number formatters). */
+export function getCurrentLang(): Lang {
+  return current;
+}
+
+const URDU_DIGITS = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+
+/** Convert ASCII digits in a string to Urdu (Extended Arabic-Indic) numerals. */
+export function toUrduDigits(input: string): string {
+  return input.replace(/[0-9]/g, (d) => URDU_DIGITS[Number(d)]);
+}
+
+/** Localize digits in a formatted string based on the current app language. */
+export function localizeDigits(input: string): string {
+  return current === "ur" ? toUrduDigits(input) : input;
 }
 
 /**
