@@ -14,6 +14,10 @@ import {
   Percent,
   Lightbulb,
   CalendarIcon,
+  Scale,
+  FileDown,
+  Coins,
+
 } from "lucide-react";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
