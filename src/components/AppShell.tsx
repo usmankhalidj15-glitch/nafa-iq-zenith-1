@@ -563,17 +563,31 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           onExpand={() => toggleCollapsed(false)}
         />
         <Breadcrumbs />
-        <main className="px-3 pt-4 pb-24 sm:px-5 lg:px-6 lg:pb-8">{children}</main>
+        <main className="px-3 pt-4 pb-24 sm:px-5 lg:px-6 lg:pb-8">
+          <PageTransition routeKey={pathname}>{children}</PageTransition>
+        </main>
       </div>
       <BottomNav />
 
-      {drawer && (
-        <div className="fixed inset-0 z-50 lg:hidden" onClick={() => setDrawer(false)}>
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-          <div
-            className="glass-chrome safe-bottom absolute right-0 bottom-0 left-0 rounded-t-2xl border-t border-white/10 p-4"
-            onClick={(e) => e.stopPropagation()}
+      <AnimatePresence>
+        {drawer && (
+          <motion.div
+            className="fixed inset-0 z-50 lg:hidden"
+            onClick={() => setDrawer(false)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
           >
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+            <motion.div
+              className="glass-chrome safe-bottom absolute right-0 bottom-0 left-0 rounded-t-2xl border-t border-white/10 p-4"
+              onClick={(e) => e.stopPropagation()}
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", stiffness: 320, damping: 32 }}
+            >
             <div className="mb-3 flex items-center justify-between">
               <span className="text-sm font-semibold text-text-primary">{t("More")}</span>
               <button onClick={() => setDrawer(false)}>
