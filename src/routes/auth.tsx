@@ -317,16 +317,26 @@ function AuthPage() {
 
       {/* ---------- Right column: hero ---------- */}
       <div className="relative hidden min-h-[calc(100vh-2rem)] w-[45%] flex-col items-center justify-end overflow-hidden rounded-3xl border border-border px-6 pb-16 shadow-2xl md:flex lg:w-[52%] lg:px-12 lg:pb-32">
-        {/* uploaded image background */}
-        <img
-          src={authBg.url}
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 h-full w-full object-cover object-center"
+        {/* CSS-only ambient background */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,hsl(var(--primary)/0.18),transparent_45%),radial-gradient(circle_at_80%_85%,hsl(var(--primary)/0.12),transparent_50%)] bg-surface" />
+
+        {/* faint grid */}
+        <div
+          className="absolute inset-0 opacity-[0.06]"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)",
+            backgroundSize: "44px 44px",
+            color: "hsl(var(--text-primary))",
+          }}
         />
 
+        {/* floating glow orbs */}
+        <div className="absolute -left-16 top-1/4 h-64 w-64 rounded-full bg-primary/20 blur-3xl" />
+        <div className="absolute -right-20 top-2/3 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
+
         {/* subtle bottom scrim so hero content reads clearly */}
-        <div className="absolute inset-x-0 bottom-0 z-[5] h-1/3 bg-gradient-to-t from-background/55 via-background/10 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 z-[5] h-1/3 bg-gradient-to-t from-background/70 via-background/20 to-transparent" />
 
         <motion.div
           variants={container}
