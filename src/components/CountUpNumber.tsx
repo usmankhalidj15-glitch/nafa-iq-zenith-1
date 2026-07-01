@@ -37,6 +37,7 @@ export function CountUpNumber({
   duration?: number;
   preserveValue?: boolean;
 }) {
+  const { isUrdu } = useLang();
   return (
     <CountUp
       start={0}
@@ -50,6 +51,17 @@ export function CountUpNumber({
       preserveValue={preserveValue}
       // easeOutCubic — smooth, decelerating finish
       easingFn={(t, b, c, d) => c * (1 - Math.pow(1 - t / d, 3)) + b}
+      formattingFn={
+        isUrdu
+          ? (val: number) => {
+              const body = val.toLocaleString("en-US", {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals,
+              });
+              return `${prefix ?? ""}${toUrduDigits(body)}${suffix ?? ""}`;
+            }
+          : undefined
+      }
     />
   );
 }
