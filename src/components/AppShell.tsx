@@ -486,19 +486,31 @@ function BottomNav() {
             to={t.to}
             className="flex min-h-[64px] flex-1 flex-col items-center justify-center gap-1 py-2"
           >
-            <span
-              className={cn(
-                "flex h-7 w-12 items-center justify-center rounded-full transition-colors",
-                active ? "bg-gold/15" : "",
-              )}
+            <motion.span
+              whileTap={{ scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              className="relative flex h-7 w-12 items-center justify-center rounded-full"
             >
+              {active && (
+                <motion.span
+                  layoutId="bottomnav-active-pill"
+                  className="absolute inset-0 rounded-full bg-gold/15"
+                  transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                />
+              )}
               <t.icon
-                className={cn("h-5 w-5", active ? "text-gold" : "text-text-muted")}
+                className={cn(
+                  "relative z-[1] h-5 w-5 transition-colors",
+                  active ? "text-gold" : "text-text-muted",
+                )}
                 strokeWidth={1.75}
               />
-            </span>
+            </motion.span>
             <span
-              className={cn("text-[10px] font-medium", active ? "text-gold" : "text-text-muted")}
+              className={cn(
+                "text-[10px] font-medium transition-colors",
+                active ? "text-gold" : "text-text-muted",
+              )}
             >
               {tr(label)}
             </span>
