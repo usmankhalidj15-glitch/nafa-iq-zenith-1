@@ -317,12 +317,9 @@ function Dashboard() {
                   {fmtPKR(g.saved)} / {fmtPKR(g.target)}
                 </div>
                 <div className="mt-2 h-2 overflow-hidden rounded-full bg-elevated">
-                  <div
-                    className={cn(
-                      "h-full rounded-full",
-                      g.color === "bull" ? "bg-bull" : "bg-warning",
-                    )}
-                    style={{ width: `${pct}%` }}
+                  <AnimatedBar
+                    value={pct}
+                    className={g.color === "bull" ? "bg-bull" : "bg-warning"}
                   />
                 </div>
                 <p className="mt-2 text-[11px] leading-relaxed text-text-muted">{t(g.ai)}</p>
