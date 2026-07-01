@@ -642,6 +642,7 @@ function HeroBackdrop() {
   const sy = useSpring(my, { stiffness: 40, damping: 22 });
   const x = useTransform(sx, (v) => v * 14); // max ~±14px
   const y = useTransform(sy, (v) => v * 10); // max ~±10px
+  const scale = useMotionValue(1.06);
 
   useEffect(() => {
     if (reduce) return;
