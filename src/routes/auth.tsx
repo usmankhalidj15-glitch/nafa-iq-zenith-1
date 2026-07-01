@@ -659,16 +659,18 @@ function HeroBackdrop() {
       <motion.img
         src="/auth-right-bg.webp"
         alt=""
-        style={{ x, y, scale, filter: "saturate(1.2) brightness(1.04)" }}
+        style={{ x, y, scale, filter: "saturate(1.2) brightness(1.04)", objectPosition: "55% 35%" }}
         className="absolute inset-0 h-full w-full object-cover"
       />
 
-      {/* Dark gradient behind the right column/card for contrast */}
-      <div className="absolute inset-0 bg-gradient-to-l from-black/90 via-black/55 to-transparent" />
+      {/* Right-side scrim — lighter so background detail shows behind the card */}
+      <div className="absolute inset-0 bg-gradient-to-l from-black/60 via-black/25 to-transparent" />
 
-      {/* Subtle left legibility scrim + top/bottom vignette */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-transparent to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/50" />
+      {/* Left legibility scrim for the visual panel text */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/15 to-transparent" />
+
+      {/* Top/bottom vignette */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40" />
     </div>
   );
 }
