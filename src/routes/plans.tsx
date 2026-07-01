@@ -215,7 +215,7 @@ function PlansPage() {
                 </Link>
               ) : (
                 <a
-                  href="mailto:hello@nafaiq.com?subject=NafaIQ%20Premium%20Inquiry"
+                  href="mailto:usmankhalidj15@gmail.com?subject=NafaIQ%20Premium%20Inquiry"
                   className="mt-6 flex items-center justify-center rounded-[10px] border border-white/[0.1] bg-surface px-4 py-2.5 text-sm font-semibold text-text-primary transition hover:border-white/[0.2]"
                 >
                   {t(tier.cta)}
