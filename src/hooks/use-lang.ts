@@ -631,7 +631,8 @@ const UR: Record<string, string> = {
 
 export function translate(lang: Lang, key: string): string {
   if (lang === "en") return key;
-  return UR[key] ?? key;
+  // Hand-curated UI dictionary takes priority, then generated Learn Hub content.
+  return UR[key] ?? LEARN_UR[key] ?? key;
 }
 
 /** Current app language, readable outside React (e.g. number formatters). */
