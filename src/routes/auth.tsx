@@ -204,14 +204,23 @@ function AuthPage() {
       {/* ---------- Columns ---------- */}
       <div className="relative z-10 flex flex-1 flex-col-reverse gap-2 md:flex-row-reverse md:gap-4">
         {/* Form column */}
-        <div className="relative flex flex-1 items-center justify-center px-4 py-8 sm:px-8 lg:px-12">
-          {/* Radial legibility overlay centered on the signup card */}
+        <div className="relative flex flex-1 items-center justify-center overflow-hidden rounded-3xl px-4 py-8 sm:px-8 lg:px-12">
+          {/* Right column background image */}
+          <img
+            src="/auth-right-bg.webp"
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover object-center"
+          />
+          {/* Radial legibility gradient centered behind the signup card */}
           <div
             className="pointer-events-none absolute inset-0 z-0"
             style={{
-              background: "radial-gradient(ellipse 45% 55% at center, rgba(0,0,0,0.6), transparent 65%)",
+              background:
+                "radial-gradient(ellipse 60% 65% at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.30) 55%, transparent 80%)",
             }}
           />
+
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
