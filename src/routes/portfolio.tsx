@@ -15,6 +15,7 @@ import { Card, StatCard } from "@/components/Card";
 import { Change } from "@/components/Change";
 import { SignalBadge } from "@/components/SignalBadge";
 import { DonutChart, PortfolioAreaChart } from "@/components/charts";
+import { CountUpNumber, AnimatedBar } from "@/components/CountUpNumber";
 import { STOCKS, fmtPKR, fmtNum, type Holding, type Signal } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { EmojiIcon } from "@/components/icons";
@@ -88,24 +89,33 @@ function HaqeeqiDaulat() {
 
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
           <div className="rounded-[10px] border border-white/[0.06] bg-surface-alt p-4">
-            <div className="font-mono text-xl font-bold tabular-nums text-bull">+12.73%</div>
+            <div className="font-mono text-xl font-bold tabular-nums text-bull">
+              <CountUpNumber value={12.73} decimals={2} prefix="+" suffix="%" />
+            </div>
             <div className="mt-1 text-[11px] text-text-muted">{t("Nominal PKR Gain")}</div>
             <div className="mt-2 font-mono text-xs tabular-nums text-text-secondary">
               +PKR 96,864
             </div>
           </div>
           <div className="rounded-[10px] border border-white/[0.06] bg-surface-alt p-4">
-            <div className="font-mono text-xl font-bold tabular-nums text-bear">-16.2%</div>
+            <div className="font-mono text-xl font-bold tabular-nums text-bear">
+              <CountUpNumber value={-16.2} decimals={1} suffix="%" />
+            </div>
             <div className="mt-1 text-[11px] text-text-muted">{t("PKR Devaluation")}</div>
             <div className="mt-2 font-mono text-xs tabular-nums text-text-secondary">
               -PKR 102,722 eroded
             </div>
           </div>
           <div className="rounded-[10px] border border-white/[0.06] bg-surface-alt p-4">
-            <div className="font-mono text-xl font-bold tabular-nums text-bear">-3.2%</div>
+            <div className="font-mono text-xl font-bold tabular-nums text-bear">
+              <CountUpNumber value={-3.2} decimals={1} suffix="%" />
+            </div>
             <div className="mt-1 text-[11px] text-text-muted">{t("Real USD Return")}</div>
             <div className="mt-2 font-mono text-xs tabular-nums text-text-secondary">
-              <span dir="ltr">$-180</span> {t("in real terms")}
+              <span dir="ltr">
+                <CountUpNumber value={-180} prefix="$" />
+              </span>{" "}
+              {t("in real terms")}
             </div>
           </div>
         </div>
@@ -117,7 +127,9 @@ function HaqeeqiDaulat() {
                 {t("Devaluation Shield Score")}
               </div>
               <div className="mt-1 flex items-baseline gap-2">
-                <span className="font-mono text-2xl font-bold tabular-nums text-gold">38</span>
+                <span className="font-mono text-2xl font-bold tabular-nums text-gold">
+                  <CountUpNumber value={38} />
+                </span>
                 <span className="font-mono text-sm text-text-muted">/ 100</span>
                 <span className="rounded-full border border-gold/35 bg-gold/[0.12] px-2 py-0.5 text-[10px] font-semibold text-gold">
                   {t("Moderate risk")}
@@ -132,7 +144,7 @@ function HaqeeqiDaulat() {
             </button>
           </div>
           <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/5">
-            <div className="h-full rounded-full bg-gold" style={{ width: "38%" }} />
+            <AnimatedBar value={38} className="bg-gold" />
           </div>
         </div>
       </div>
@@ -236,12 +248,22 @@ function Portfolio() {
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <StatCard
           label="Portfolio Value"
-          value={fmtPKR(858054)}
+          value={<CountUpNumber value={858054} prefix="PKR " />}
           sub={`${t("Total Invested")} ${fmtPKR(761190)}`}
         />
-        <StatCard label="Total Invested" value={fmtPKR(761190)} />
-        <StatCard label="Total Gain" value="+PKR 96,864" sub="+12.73%" subColor="text-bull" />
-        <StatCard label="Today's P/L" value="+PKR 17,480" sub="+1.42%" subColor="text-bull" />
+        <StatCard label="Total Invested" value={<CountUpNumber value={761190} prefix="PKR " />} />
+        <StatCard
+          label="Total Gain"
+          value={<CountUpNumber value={96864} prefix="+PKR " />}
+          sub="+12.73%"
+          subColor="text-bull"
+        />
+        <StatCard
+          label="Today's P/L"
+          value={<CountUpNumber value={17480} prefix="+PKR " />}
+          sub="+1.42%"
+          subColor="text-bull"
+        />
       </div>
 
       <Card>

@@ -15,6 +15,7 @@ import { Change } from "@/components/Change";
 import { SignalBadge } from "@/components/SignalBadge";
 import { EmojiIcon } from "@/components/icons";
 import { DonutChart, PortfolioAreaChart, Sparkline, DONUT_LIGHT_PALETTE } from "@/components/charts";
+import { CountUpNumber, AnimatedBar } from "@/components/CountUpNumber";
 import { useTheme } from "@/hooks/use-theme";
 import { STOCKS, WATCHLIST, generateOHLCV, fmtPKR } from "@/lib/data";
 import { SPENDING, GOALS } from "@/lib/finance-data";
@@ -180,7 +181,7 @@ function Dashboard() {
         <Card className="lg:col-span-6">
           <div className="text-[13px] font-medium text-text-secondary">{t("Total Net Worth")}</div>
           <div className="mt-3 font-mono text-4xl font-bold tabular-nums text-text-primary">
-            {fmtPKR(4280500)}
+            <CountUpNumber value={4280500} prefix="PKR " />
           </div>
           <div className="mt-2 font-mono text-sm tabular-nums text-bull">
             +PKR 56,000 (+1.32%) this month
@@ -189,17 +190,22 @@ function Dashboard() {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:col-span-6">
           <StatCard
             label="Portfolio Value"
-            value={fmtPKR(858054)}
+            value={<CountUpNumber value={858054} prefix="PKR " />}
             sub="+12.73% YTD"
             subColor="text-bull"
           />
           <StatCard
             label="Monthly Spending"
-            value={fmtPKR(112050)}
+            value={<CountUpNumber value={112050} prefix="PKR " />}
             sub="-12% vs May"
             subColor="text-bull"
           />
-          <StatCard label="Today's PSX P/L" value="+17,480" sub="+1.42%" subColor="text-bull" />
+          <StatCard
+            label="Today's PSX P/L"
+            value={<CountUpNumber value={17480} prefix="+" />}
+            sub="+1.42%"
+            subColor="text-bull"
+          />
         </div>
       </div>
 
@@ -311,12 +317,9 @@ function Dashboard() {
                   {fmtPKR(g.saved)} / {fmtPKR(g.target)}
                 </div>
                 <div className="mt-2 h-2 overflow-hidden rounded-full bg-elevated">
-                  <div
-                    className={cn(
-                      "h-full rounded-full",
-                      g.color === "bull" ? "bg-bull" : "bg-warning",
-                    )}
-                    style={{ width: `${pct}%` }}
+                  <AnimatedBar
+                    value={pct}
+                    className={g.color === "bull" ? "bg-bull" : "bg-warning"}
                   />
                 </div>
                 <p className="mt-2 text-[11px] leading-relaxed text-text-muted">{t(g.ai)}</p>
