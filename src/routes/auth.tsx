@@ -49,18 +49,22 @@ function LogoIcon({ className }: { className?: string }) {
         y="1.5"
         width="29"
         height="29"
-        rx="7"
+        rx="8"
         stroke="currentColor"
         strokeWidth="1.5"
         fill="none"
       />
-      {/* 4 vertical bars with rounded tops */}
-      <rect x="7" y="20" width="2.5" height="4" rx="1.25" fill="currentColor" />
-      <rect x="11.5" y="16" width="2.5" height="8" rx="1.25" fill="currentColor" />
-      <rect x="16" y="12" width="2.5" height="12" rx="1.25" fill="currentColor" />
-      <rect x="20.5" y="8" width="2.5" height="16" rx="1.25" fill="currentColor" />
-      {/* Horizontal baseline */}
-      <rect x="6.5" y="24.5" width="19" height="1.5" rx="0.75" fill="currentColor" />
+      {/* Stylized "N" */}
+      <path
+        d="M9 22 V10.5 L16 22 V10.5"
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+      {/* Tall vertical bar */}
+      <rect x="19.6" y="9.5" width="3.2" height="12.5" rx="1.6" fill="currentColor" />
     </svg>
   );
 }
