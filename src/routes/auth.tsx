@@ -118,13 +118,14 @@ function AuthPage() {
           animate="show"
           className="z-10 w-full max-w-xs space-y-8"
         >
-          <motion.div variants={item} className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <TrendingUp className="h-5 w-5" strokeWidth={2.25} />
+          <motion.div variants={item} className="flex items-center gap-2.5">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-primary/40 bg-primary/10 text-primary">
+              <BarChart3 className="h-5 w-5" strokeWidth={2.5} />
             </span>
-            <span className="font-display text-xl font-semibold tracking-tight text-text-primary">
-              Nafa<span className="text-gold">IQ</span>
+            <span className="font-display text-2xl font-bold tracking-tight text-text-primary">
+              Nafa<span className="text-primary">IQ</span>
             </span>
+
           </motion.div>
 
           <motion.div variants={item} className="space-y-3">
