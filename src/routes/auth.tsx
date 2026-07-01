@@ -176,8 +176,7 @@ function AuthPage() {
 
   return (
     <main
-      className="relative flex min-h-screen w-full flex-col overflow-hidden p-2 transition-all duration-500 selection:bg-primary/30 md:p-4"
-      style={{ backgroundColor: "#031310" }}
+      className="relative flex min-h-screen w-full flex-col overflow-hidden bg-black p-2 transition-all duration-500 selection:bg-primary/30 md:p-4"
     >
 
       {/* ---------- Top nav (spans both columns) ---------- */}
@@ -198,7 +197,7 @@ function AuthPage() {
       </nav>
 
       {/* ---------- Columns ---------- */}
-      <div className="relative z-10 flex flex-1 flex-col-reverse gap-2 md:flex-row-reverse md:gap-4">
+      <div className="relative z-10 flex flex-1 flex-col-reverse gap-2 overflow-hidden md:flex-row-reverse md:gap-4">
         {/* Form column */}
         <div className="relative flex flex-1 items-center justify-center overflow-hidden rounded-3xl px-4 py-8 sm:px-8 lg:px-12">
           {/* Right column background image */}
