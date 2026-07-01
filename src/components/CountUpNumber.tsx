@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
-import CountUp from "react-countup";
+import * as CountUpModule from "react-countup";
 import { cn } from "@/lib/utils";
+
+// react-countup ships as CJS; depending on the bundler's interop the default
+// export can arrive as the component OR as a namespace object. Unwrap safely.
+const CountUp = (
+  (CountUpModule as { default?: unknown }).default ?? CountUpModule
+) as typeof import("react-countup").default;
+
 
 /**
  * Smooth count-up for financial figures.
