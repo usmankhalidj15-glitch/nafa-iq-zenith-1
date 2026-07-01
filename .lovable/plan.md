@@ -1,48 +1,45 @@
-## Goal
+# UI/UX + Motion Polish Pass
 
-Repaint the entire app (dark theme) with your provided palette:
-- **App background** → `#0a0a0f` (near-black with a hint of blue)
-- **Container / card backgrounds** → `rgba(18, 18, 26, 0.8)` (semi-transparent dark surface)
+Goal: raise perceived quality across the whole app using the UI/UX-pro-max design principles and the existing framer-motion system. Everything here is **additive polish** — no features, routes, data, or copy are removed, and the design tokens/brand stay as-is (dark-only, teal primary, gold accent).
 
-All colors live as semantic tokens in `src/styles.css`, so this is a token-level change — no component edits needed. Accent colors (teal, gold, bull/bear, AI blue) and typography stay exactly as they are.
+## Guardrails
+- No feature removal, no route changes, no backend/data changes.
+- Reuse existing tokens in `src/styles.css` and existing helpers in `src/components/animations.tsx` (`Reveal`, `RevealGroup`, `Magnetic`, `CountUp`, `SPRING_*`, `EASE`, `fadeUp`). No new color values, no new fonts.
+- Respect `useReducedMotion` on every new animation (the existing helpers already do).
+- Keep changes presentational (className + motion props only).
 
-## What changes
+## 1. AppShell / navigation
+- Add an animated active-nav indicator using framer-motion `layoutId` (shared "pill" that slides between sidebar/mobile items) instead of a static highlight.
+- Add smooth route-transition wrapper (`AnimatePresence` + subtle fade/translate) around the main content `Outlet` so screen changes feel intentional.
+- Polish hover/press states on nav items and buttons (consistent `whileHover`/`whileTap` scale, spring easing).
+- Sidebar collapse/expand: ensure width + label transitions are spring-eased and content doesn't jump.
+- Mobile bottom nav: refine active-state motion and tap feedback.
 
-All edits are in the `@theme` block of `src/styles.css` (the dark theme). The light theme (`.theme-light`) is left untouched.
+## 2. Landing page (`/`)
+- Audit spacing/hierarchy rhythm section-by-section (consistent vertical spacing scale, heading sizes, max-widths).
+- Ensure every major section reveals on scroll via `Reveal`/`RevealGroup` with consistent stagger (fix any sections that pop in without motion).
+- Strengthen hero: refined entrance sequence, keep existing particles/tilt/CTA, tighten CTA button micro-interactions (magnetic + press).
+- Feature cards / pricing / FAQ: consistent hover lift, border-glow on hover using existing tokens, uniform corner radii.
+- Verify counts use `CountUp`; make number reveals consistent.
 
-### 1. Global background
-```
---color-background: #050816  →  #0a0a0f
-```
-This drives the page/body background everywhere.
+## 3. App dashboard & core routes (`/app`, `/psx`, `/portfolio`, `/finance`)
+- Consistent card entrance stagger on mount (KPI cards, tables, charts) via `RevealGroup`.
+- Uniform hover elevation + focus-visible states across cards, list rows, and interactive controls.
+- Ensure numeric/price values consistently use mono + tabular-nums and `Change`/`SignalBadge` styling is uniform.
+- Light empty/loading state motion where trivially applicable (no new data logic).
 
-### 2. Card & container surfaces
-```
---color-surface:  #0d1424  →  rgba(18, 18, 26, 0.8)
---color-card:     #0d1424  →  rgba(18, 18, 26, 0.8)
---color-ai-tint:  #0d1424  →  rgba(18, 18, 26, 0.8)
-```
-`--color-surface` is what the `.glass-card` utility (used by every `Card`) paints with, so all cards, panels, and containers pick this up. Because it's semi-transparent, cards will read as a soft elevated layer floating over the `#0a0a0f` base.
+## 4. Cross-app consistency (light-touch)
+- Standardize interactive feedback: one shared hover/press spring, consistent focus rings using `--color-ring`.
+- Consistent border/glass treatment on cards (align to the existing glass-card language in memory).
+- Accessibility: focus-visible outlines, reduced-motion fallbacks, sufficient tap targets on mobile.
 
-### 3. Supporting surfaces (kept in harmony with the new palette)
-To avoid a mismatched look where nested/elevated elements clash with the new base, these related dark tokens shift to tones derived from the same `18,18,26` family:
-```
---color-surface-alt: #0b1120  →  #101018   (alt rows / subtle panels)
---color-elevated:    #111a2e  →  #16161f   (inputs, dropdowns, popovers base)
---color-sidebar:     #070c1a  →  #08080d   (left nav chrome)
---color-popover:     #111a2e  →  #16161f
---color-secondary:   #111a2e  →  #16161f
---color-muted:       #111a2e  →  #16161f
---color-accent:      #111a2e  →  #16161f
-```
+## Verification
+- Typecheck/build passes.
+- Screenshot landing, `/app`, `/psx` via headless browser (desktop + mobile viewport) to confirm layout intact and motion present.
+- Manually confirm reduced-motion path renders static content.
+- Confirm no route, feature, or copy was removed by diffing touched files.
 
-Borders, text colors, and all brand accents are unchanged, so contrast and readability stay intact.
-
-## Scope / non-goals
-- Only `src/styles.css` dark-theme tokens change.
-- No JSX/component changes, no new files.
-- Light theme untouched.
-- If after previewing you want the cards more opaque or a different base tint, that's a one-line follow-up tweak.
-
-## How you'll review it
-Once implemented, open the Dashboard and Finance pages in the preview — the background goes near-black and every card becomes the translucent dark surface, matching your reference image. Adjustments to opacity or exact tint are trivial from there.
+## Technical notes
+- Files likely touched: `src/components/AppShell.tsx`, `src/routes/index.tsx`, `src/routes/app.tsx`, `src/routes/psx.tsx`, `src/routes/portfolio.tsx`, `src/routes/finance.tsx`, and possibly small additions to `src/components/animations.tsx` (e.g. a reusable `NavIndicator`/`PageTransition` helper) and shared card components.
+- New motion helpers, if any, go in `animations.tsx` to keep the motion language centralized.
+- I'll work in the order: AppShell → landing → dashboard/core → consistency sweep, verifying build after each area.
