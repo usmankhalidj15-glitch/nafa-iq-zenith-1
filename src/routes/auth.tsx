@@ -175,28 +175,9 @@ function AuthPage() {
         : 1;
 
   return (
-    <main className="relative min-h-screen w-full overflow-hidden bg-black transition-all duration-500 selection:bg-primary/30">
-      {/* ---------- Base layer: full-page hero background ---------- */}
-      <img
-        src="/hero-bg.webp"
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
-        style={{ objectPosition: "left center" }}
-      />
-      {/* ---------- Accent layer: right image blended into the base ---------- */}
-      <img
-        src="/auth-right-bg.webp"
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 z-0 h-full w-[62%] object-cover object-center"
-        style={{
-          maskImage: "linear-gradient(to right, transparent 0%, black 40%)",
-          WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 40%)",
-        }}
-      />
+    <main className="relative flex min-h-screen w-full flex-col overflow-hidden bg-black p-2 transition-all duration-500 selection:bg-primary/30 md:p-4">
 
-      {/* ---------- Top nav (overlay, spans full width) ---------- */}
+      {/* ---------- Top nav (overlay, spans both columns) ---------- */}
       <nav className="pointer-events-none absolute inset-x-0 top-0 z-20 flex items-center justify-between px-5 py-5 md:px-7 md:py-7">
         <div className="pointer-events-auto flex items-center gap-2.5">
           <LogoIcon className="h-9 w-9 rounded-[8px] ring-1 ring-bull/30" />
@@ -213,20 +194,26 @@ function AuthPage() {
         </Link>
       </nav>
 
-      {/* ---------- Content (sits directly on layered background) ---------- */}
-      <div className="relative z-10 flex min-h-screen w-full flex-col md:flex-row">
-        <AuthVisualPanel currentStep={currentStep} />
-
-        {/* Signup card block */}
-        <div className="relative flex w-full items-center justify-center px-4 py-16 sm:px-8 md:w-1/2 md:px-12 lg:px-16">
-          {/* Radial legibility gradient just beyond the card edges */}
+      {/* ---------- Columns ---------- */}
+      <div className="relative z-10 flex flex-1 flex-col-reverse gap-2 overflow-hidden md:flex-row-reverse md:gap-4">
+        {/* Form column */}
+        <div className="relative flex flex-1 items-center justify-center overflow-hidden rounded-3xl px-4 py-8 sm:px-8 lg:px-12">
+          {/* Right column background image */}
+          <img
+            src="/auth-right-bg.webp"
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover object-center"
+          />
+          {/* Radial legibility gradient centered behind the signup card */}
           <div
             className="pointer-events-none absolute inset-0 z-0"
             style={{
               background:
-                "radial-gradient(ellipse 55% 60% at center, rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.25) 50%, transparent 80%)",
+                "radial-gradient(ellipse 60% 65% at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.30) 55%, transparent 80%)",
             }}
           />
+
 
 
 
