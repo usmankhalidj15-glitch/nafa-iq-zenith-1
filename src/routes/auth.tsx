@@ -428,21 +428,22 @@ function AuthPage() {
 
 function AuthVisualPanel() {
   return (
-    <aside className="relative hidden min-h-[calc(100vh-2rem)] w-[45%] flex-col justify-end overflow-hidden rounded-3xl border border-border bg-[#0a1410] px-6 pb-14 shadow-2xl md:flex lg:w-[52%] lg:px-12 lg:pb-24">
+    <aside className="relative hidden min-h-[calc(100vh-2rem)] w-[45%] flex-col justify-center overflow-hidden rounded-3xl border border-border bg-[#0a1410] px-8 py-12 shadow-2xl md:flex lg:w-[50%] lg:px-14">
       <img
         src="/hero-bg.webp"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
-        style={{ filter: "saturate(1.35) brightness(1.08) contrast(1.05)" }}
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover object-[70%_center]"
+        style={{ filter: "saturate(1.35) brightness(1.12) contrast(1.05)" }}
       />
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "linear-gradient(180deg, rgba(10,20,15,0.35) 0%, rgba(10,20,15,0.15) 42%, rgba(10,20,15,0.72) 100%)",
+            "linear-gradient(115deg, rgba(6,12,10,0.82) 0%, rgba(8,14,12,0.5) 45%, rgba(10,20,15,0.25) 100%)",
         }}
       />
+
 
 
       <motion.div
