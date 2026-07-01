@@ -458,7 +458,7 @@ function AuthVisualPanel({ currentStep }: { currentStep: number }) {
   ];
   return (
     <aside
-      className="relative hidden h-full w-[45%] flex-col justify-center overflow-hidden rounded-3xl px-8 py-12 md:flex lg:w-[50%] lg:px-14"
+      className="relative hidden w-[45%] flex-col justify-center overflow-hidden rounded-3xl px-8 py-12 md:flex lg:w-[50%] lg:px-14"
       style={{
         backgroundImage: "url(/auth-right-bg.webp)",
         backgroundSize: "cover",
