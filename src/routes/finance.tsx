@@ -104,6 +104,7 @@ function Finance() {
       {tab === "Budgets" && <Budgets />}
       {tab === "Bills" && <Bills />}
       {tab === "Goals" && <Goals />}
+      {tab === "Zakat" && <Zakat />}
 
       {/* AI report */}
       <div className="rounded-[8px] border border-border border-l-4 border-l-ai bg-ai-tint p-4">
