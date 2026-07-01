@@ -207,8 +207,13 @@ function AuthPage() {
       <div className="relative z-10 flex flex-1 flex-col-reverse gap-2 md:flex-row-reverse md:gap-4">
         {/* Form column */}
         <div className="relative flex flex-1 items-center justify-center px-4 py-8 sm:px-8 lg:px-12">
-
-
+          {/* Radial legibility overlay centered on the signup card */}
+          <div
+            className="pointer-events-none absolute inset-0 z-0"
+            style={{
+              background: "radial-gradient(ellipse 45% 55% at center, rgba(0,0,0,0.6), transparent 65%)",
+            }}
+          />
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
