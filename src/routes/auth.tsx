@@ -388,7 +388,8 @@ function AuthPage() {
                     )}
                   </motion.div>
 
-                  <button
+                  <motion.button
+                    variants={formItem}
                     type="submit"
                     disabled={busy}
                     className="group mt-2 flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-info font-semibold text-primary-foreground shadow-[0_8px_24px_-8px_color-mix(in_oklab,var(--color-primary)_60%,transparent)] transition-all duration-200 hover:brightness-110 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:brightness-100"
@@ -401,8 +402,8 @@ function AuthPage() {
                         <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
                       </>
                     )}
-                  </button>
-                </form>
+                  </motion.button>
+                </motion.form>
 
                 <div className="space-y-3 pt-1 text-center">
                   <p className="text-sm text-text-muted">
