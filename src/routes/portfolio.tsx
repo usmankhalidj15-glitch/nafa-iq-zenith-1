@@ -144,7 +144,7 @@ function HaqeeqiDaulat() {
             </button>
           </div>
           <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/5">
-            <div className="h-full rounded-full bg-gold" style={{ width: "38%" }} />
+            <AnimatedBar value={38} className="bg-gold" />
           </div>
         </div>
       </div>
