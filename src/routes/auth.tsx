@@ -207,8 +207,13 @@ function AuthPage() {
       <div className="relative z-10 flex flex-1 flex-col-reverse gap-2 md:flex-row-reverse md:gap-4">
         {/* Form column */}
         <div className="relative flex flex-1 items-center justify-center px-4 py-8 sm:px-8 lg:px-12">
-
-
+          {/* Radial legibility overlay centered on the signup card */}
+          <div
+            className="pointer-events-none absolute inset-0 z-0"
+            style={{
+              background: "radial-gradient(ellipse 45% 55% at center, rgba(0,0,0,0.6), transparent 65%)",
+            }}
+          />
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -460,8 +465,13 @@ function AuthVisualPanel({ currentStep }: { currentStep: number }) {
     <aside
       className="relative hidden w-[45%] flex-col justify-center overflow-hidden rounded-3xl px-8 py-12 md:flex lg:w-[50%] lg:px-14"
     >
-      {/* Legibility scrim over the panel background image */}
-      <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
+      {/* Radial legibility overlay centered on heading + steps */}
+      <div
+        className="pointer-events-none absolute inset-0 rounded-3xl"
+        style={{
+          background: "radial-gradient(ellipse 55% 50% at 30% 50%, rgba(0,0,0,0.6), transparent 65%)",
+        }}
+      />
 
 
       <motion.div
@@ -663,14 +673,8 @@ function HeroBackdrop() {
         className="absolute inset-0 h-full w-full object-cover"
       />
 
-      {/* Right-side scrim — lighter so background detail shows behind the card */}
-      <div className="absolute inset-0 bg-gradient-to-l from-black/60 via-black/25 to-transparent" />
-
-      {/* Left legibility scrim for the visual panel text */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/15 to-transparent" />
-
-      {/* Top/bottom vignette */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40" />
+      {/* Global uniform darkening */}
+      <div className="absolute inset-0 bg-black/30" />
     </div>
   );
 }
