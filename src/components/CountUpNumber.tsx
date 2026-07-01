@@ -26,6 +26,7 @@ export function CountUpNumber({
   suffix,
   className,
   duration = 1.5,
+  preserveValue = false,
 }: {
   value: number;
   decimals?: number;
@@ -33,6 +34,7 @@ export function CountUpNumber({
   suffix?: string;
   className?: string;
   duration?: number;
+  preserveValue?: boolean;
 }) {
   return (
     <CountUp
@@ -44,6 +46,7 @@ export function CountUpNumber({
       prefix={prefix}
       suffix={suffix}
       className={className}
+      preserveValue={preserveValue}
       // easeOutCubic — smooth, decelerating finish
       easingFn={(t, b, c, d) => c * (1 - Math.pow(1 - t / d, 3)) + b}
     />
