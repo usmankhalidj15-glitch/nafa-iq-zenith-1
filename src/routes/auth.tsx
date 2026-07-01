@@ -657,10 +657,10 @@ function HeroBackdrop() {
     >
       {/* Full-bleed hero image: flag/candles on the left, map/AI icons on the right */}
       <motion.img
-        src="/hero-bg.webp"
+        src="/auth-right-bg.webp"
         alt=""
         style={{ x, y, scale, filter: "saturate(1.2) brightness(1.04)" }}
-        className="absolute inset-0 h-full w-full object-cover object-center"
+        className="absolute inset-0 h-full w-full object-cover"
       />
 
       {/* Dark gradient behind the right column/card for contrast */}
