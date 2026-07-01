@@ -162,6 +162,8 @@ const UR: Record<string, string> = {
 
   // ---- Alerts ----
   "Active Alerts": "فعال الرٹس",
+  "Add Alert": "الرٹ شامل کریں",
+  "KSE-100": "کے ایس ای-100",
   "Add New Alert": "نیا الرٹ شامل کریں",
   Above: "اوپر",
   Below: "نیچے",
