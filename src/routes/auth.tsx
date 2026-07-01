@@ -81,12 +81,14 @@ function AuthPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [confirmSent, setConfirmSent] = useState(false);
 
   const destination =
     redirect && redirect.startsWith("/") && redirect !== "/" && !redirect.startsWith("/auth")
       ? redirect
       : "/app";
 
+  // Fallback: if a session already exists (or arrives via OAuth/email link), go in.
   useEffect(() => {
     if (!loading && user) navigate({ to: destination });
   }, [user, loading, navigate, destination]);
@@ -102,13 +104,28 @@ function AuthPage() {
           toast.error("Please enter your name");
           return;
         }
-        const { error } = await signUpWithPassword(email.trim(), password, name);
+        if (password.length < 8) {
+          toast.error("Password must be at least 8 characters");
+          return;
+        }
+        const { error, needsConfirmation } = await signUpWithPassword(
+          email.trim(),
+          password,
+          name,
+        );
         if (error) return toast.error(error);
+        if (needsConfirmation) {
+          setConfirmSent(true);
+          toast.success("Confirmation email sent — check your inbox.");
+          return;
+        }
         toast.success("Account created — welcome to NafaIQ!");
+        navigate({ to: destination });
       } else {
         const { error } = await signInWithPassword(email.trim(), password);
         if (error) return toast.error(error);
         toast.success("Welcome back!");
+        navigate({ to: destination });
       }
     } finally {
       setBusy(false);
