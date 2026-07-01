@@ -89,24 +89,33 @@ function HaqeeqiDaulat() {
 
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
           <div className="rounded-[10px] border border-white/[0.06] bg-surface-alt p-4">
-            <div className="font-mono text-xl font-bold tabular-nums text-bull">+12.73%</div>
+            <div className="font-mono text-xl font-bold tabular-nums text-bull">
+              <CountUpNumber value={12.73} decimals={2} prefix="+" suffix="%" />
+            </div>
             <div className="mt-1 text-[11px] text-text-muted">{t("Nominal PKR Gain")}</div>
             <div className="mt-2 font-mono text-xs tabular-nums text-text-secondary">
               +PKR 96,864
             </div>
           </div>
           <div className="rounded-[10px] border border-white/[0.06] bg-surface-alt p-4">
-            <div className="font-mono text-xl font-bold tabular-nums text-bear">-16.2%</div>
+            <div className="font-mono text-xl font-bold tabular-nums text-bear">
+              <CountUpNumber value={-16.2} decimals={1} suffix="%" />
+            </div>
             <div className="mt-1 text-[11px] text-text-muted">{t("PKR Devaluation")}</div>
             <div className="mt-2 font-mono text-xs tabular-nums text-text-secondary">
               -PKR 102,722 eroded
             </div>
           </div>
           <div className="rounded-[10px] border border-white/[0.06] bg-surface-alt p-4">
-            <div className="font-mono text-xl font-bold tabular-nums text-bear">-3.2%</div>
+            <div className="font-mono text-xl font-bold tabular-nums text-bear">
+              <CountUpNumber value={-3.2} decimals={1} suffix="%" />
+            </div>
             <div className="mt-1 text-[11px] text-text-muted">{t("Real USD Return")}</div>
             <div className="mt-2 font-mono text-xs tabular-nums text-text-secondary">
-              <span dir="ltr">$-180</span> {t("in real terms")}
+              <span dir="ltr">
+                <CountUpNumber value={-180} prefix="$" />
+              </span>{" "}
+              {t("in real terms")}
             </div>
           </div>
         </div>
