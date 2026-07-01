@@ -476,7 +476,7 @@ function AuthVisualPanel({ currentStep }: { currentStep: number }) {
     { number: 3, text: "Finalize your profile" },
   ];
   return (
-    <div className="relative hidden h-full w-full items-center px-8 md:flex md:w-1/2 md:px-14 lg:px-20">
+    <div className="relative hidden min-h-screen w-full flex-col justify-center px-8 md:flex md:w-1/2 md:px-14 lg:px-20">
       {/* Small gradient behind the text block for legibility */}
       <div
         className="pointer-events-none absolute inset-y-0 left-0 z-0 w-[70%]"
