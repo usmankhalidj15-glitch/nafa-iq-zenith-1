@@ -268,6 +268,9 @@ function Overview() {
           <div dir="ltr" className="kpi-value-neutral mt-1 font-mono text-lg font-semibold tracking-tight text-ai tabular-nums sm:text-xl">
             PKR <span ref={savings.ref}>{savings.formatted}</span>
           </div>
+          <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-white/5">
+            <AnimatedBar value={61} className="bg-ai" />
+          </div>
           <div className="mt-3 flex items-center justify-between gap-2">
             <span className="text-[10px] text-text-muted sm:text-[11px]">{t("Saved this month")}</span>
             <span dir="ltr" className="text-[10px] text-bull/80 sm:text-[11px]">{formatSignedPKR(4825)}</span>
