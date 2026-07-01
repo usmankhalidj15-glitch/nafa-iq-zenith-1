@@ -202,7 +202,7 @@ function AuthPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="relative z-10 w-full max-w-md"
+            className="relative z-10 mx-auto flex h-full w-full max-w-[480px] flex-col justify-center"
           >
 
             {confirmSent ? (
