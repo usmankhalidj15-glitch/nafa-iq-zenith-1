@@ -236,7 +236,7 @@ function AuthPage() {
                 </button>
               </motion.div>
             ) : (
-              <div className="space-y-6">
+              <div className="space-y-5">
                 <div className="space-y-1.5">
                   <h1 className="font-display text-[28px] font-bold leading-tight tracking-tight text-text-primary">
                     {isSignup ? "Create your account" : "Welcome back"}
