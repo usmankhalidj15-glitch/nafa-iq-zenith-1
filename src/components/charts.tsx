@@ -136,15 +136,17 @@ export function CandlestickChart({
   data,
   height = 480,
   mas = ["MA20", "MA50"],
+  maSeries,
 }: {
   data: Candle[];
   height?: number;
   mas?: string[];
+  maSeries?: { ma20: (number | null)[]; ma50: (number | null)[]; ma200: (number | null)[] };
 }) {
   const ct = useChartTheme();
-  const ma20 = sma(data, 20);
-  const ma50 = sma(data, 50);
-  const ma200 = sma(data, 200);
+  const ma20 = maSeries?.ma20 ?? sma(data, 20);
+  const ma50 = maSeries?.ma50 ?? sma(data, 50);
+  const ma200 = maSeries?.ma200 ?? sma(data, 200);
   const enriched = data.map((c, i) => ({
     ...c,
     range: [c.low, c.high] as [number, number],
@@ -225,16 +227,18 @@ export function PriceLineChart({
   data,
   height = 480,
   mas = ["MA20", "MA50"],
+  maSeries,
 }: {
   data: Candle[];
   height?: number;
   mas?: string[];
+  maSeries?: { ma20: (number | null)[]; ma50: (number | null)[]; ma200: (number | null)[] };
 }) {
   const ct = useChartTheme();
   const { t } = useLang();
-  const ma20 = sma(data, 20);
-  const ma50 = sma(data, 50);
-  const ma200 = sma(data, 200);
+  const ma20 = maSeries?.ma20 ?? sma(data, 20);
+  const ma50 = maSeries?.ma50 ?? sma(data, 50);
+  const ma200 = maSeries?.ma200 ?? sma(data, 200);
   const enriched = data.map((c, i) => ({
     date: c.date,
     close: c.close,
