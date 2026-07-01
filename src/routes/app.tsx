@@ -102,7 +102,7 @@ function Dashboard() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0">
           <h1 className="truncate text-xl font-bold text-text-primary sm:text-2xl">
-            {t("Asalam-o-Alaikum,")} {firstName}
+            {t("Asalam-o-Alaikum,")} {t(firstName)}
           </h1>
           <p className="mt-0.5 text-[13px] text-text-secondary">
             {formatToday()} · {t("KSE-100")}{" "}
@@ -287,7 +287,7 @@ function Dashboard() {
                   <span className="font-semibold text-text-primary">{tk}</span>
                   <Change pct={s.changePct} pill />
                 </div>
-                <div className="truncate text-[10px] text-text-muted">{s.name}</div>
+                <div className="truncate text-[10px] text-text-muted">{t(s.name)}</div>
                 <div className="mt-1 font-mono text-lg font-bold tabular-nums text-text-primary">
                   {fmtNum(s.price)}
                 </div>

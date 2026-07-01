@@ -81,8 +81,8 @@ const UR: Record<string, string> = {
   Expenses: "اخراجات",
   "vs last month": "پچھلے ماہ کے مقابلے",
   Excellent: "بہترین",
-  "Goal: 65%": "ہدف: ۶۵٪",
-  "6-month totals": "۶ ماہ کے کل اعداد",
+  "Goal: 65%": "ہدف: 65%",
+  "6-month totals": "6 ماہ کے کل اعداد",
   "in real terms": "حقیقی اعتبار سے",
 
   // ---- Dashboard ----
@@ -178,6 +178,25 @@ const UR: Record<string, string> = {
   // ---- Common / shell ----
   today: "آج",
   "Asalam-o-Alaikum,": "السلام علیکم،",
+  // ---- User names (greeting) ----
+  Usman: "عثمان",
+  Investor: "سرمایہ کار",
+  Ahmed: "احمد",
+  Ali: "علی",
+  Hassan: "حسن",
+  Hussain: "حسین",
+  Fatima: "فاطمہ",
+  Ayesha: "عائشہ",
+  Bilal: "بلال",
+  Omar: "عمر",
+  Zain: "زین",
+  Saad: "سعد",
+  Hamza: "حمزہ",
+  Usama: "اسامہ",
+  Talha: "طلحہ",
+  Sara: "سارہ",
+  Maryam: "مریم",
+  Khan: "خان",
   Live: "لائیو",
   Notifications: "اطلاعات",
   "View all": "سب دیکھیں",
@@ -222,6 +241,18 @@ const UR: Record<string, string> = {
   Transport: "ٹرانسپورٹ",
   Shopping: "شاپنگ",
   Other: "دیگر",
+
+  // ---- Stock company names ----
+  "Habib Bank Limited": "حبیب بینک لمیٹڈ",
+  "Engro Corporation": "اینگرو کارپوریشن",
+  "Lucky Cement": "لکی سیمنٹ",
+  "Oil & Gas Dev. Co.": "آئل اینڈ گیس ڈیولپمنٹ کمپنی",
+  "Fauji Fertilizer Co.": "فوجی فرٹیلائزر کمپنی",
+  "MCB Bank Limited": "ایم سی بی بینک لمیٹڈ",
+  "United Bank Limited": "یونائیٹڈ بینک لمیٹڈ",
+  "Nestlé Pakistan": "نیسلے پاکستان",
+  "Pakistan State Oil": "پاکستان اسٹیٹ آئل",
+  "Hub Power Company": "حب پاور کمپنی",
   "Food & Dining": "کھانا اور ڈائننگ",
   Groceries: "گروسری",
   Subscriptions: "سبسکرپشنز",
@@ -607,16 +638,14 @@ export function getCurrentLang(): Lang {
   return current;
 }
 
-const URDU_DIGITS = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-
-/** Convert ASCII digits in a string to Urdu (Extended Arabic-Indic) numerals. */
+/** Numbers stay in Western digits app-wide — return input unchanged. */
 export function toUrduDigits(input: string): string {
-  return input.replace(/[0-9]/g, (d) => URDU_DIGITS[Number(d)]);
+  return input;
 }
 
-/** Localize digits in a formatted string based on the current app language. */
+/** Numbers stay in Western digits regardless of language. */
 export function localizeDigits(input: string): string {
-  return current === "ur" ? toUrduDigits(input) : input;
+  return input;
 }
 
 /**
