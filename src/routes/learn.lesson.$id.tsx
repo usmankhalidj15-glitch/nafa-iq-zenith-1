@@ -1185,7 +1185,11 @@ function ChatPanel({
                   : "rounded-[12px] rounded-bl-none bg-elevated text-text-primary",
               )}
             >
-              {m.content}
+              {m.role === "assistant" ? (
+                <Typewriter key={i} text={m.content} />
+              ) : (
+                m.content
+              )}
             </div>
             {i === 0 && <div className="mt-1 text-[10px] text-text-muted">{t("just now")}</div>}
           </div>
