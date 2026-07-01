@@ -357,13 +357,14 @@ const resultRef: { current: { correct: number; gain: number } | null } = { curre
 /* ---------------- Reading View ---------------- */
 
 function Blocks({ blocks, accent }: { blocks: ContentBlock[]; accent: string }) {
+  const { t } = useLang();
   return (
     <>
       {blocks.map((b, i) => {
         if (b.type === "p") {
           return (
             <p key={i} className="my-4 text-[16px] leading-[1.8] text-text-secondary">
-              {b.text}
+              {t(b.text)}
             </p>
           );
         }
@@ -379,9 +380,9 @@ function Blocks({ blocks, accent }: { blocks: ContentBlock[]; accent: string }) 
                 className="flex items-center gap-1.5 text-xs font-bold"
                 style={{ color: m.color }}
               >
-                <EmojiIcon emoji={m.emoji} size={13} /> {m.label}
+                <EmojiIcon emoji={m.emoji} size={13} /> {t(m.label)}
               </div>
-              <p className="mt-1.5 text-sm leading-relaxed text-text-secondary">{b.text}</p>
+              <p className="mt-1.5 text-sm leading-relaxed text-text-secondary">{t(b.text)}</p>
             </div>
           );
         }
@@ -393,7 +394,7 @@ function Blocks({ blocks, accent }: { blocks: ContentBlock[]; accent: string }) 
             >
               {b.lines.map((line, j) => (
                 <div key={j} className="text-bull">
-                  {line.split("=").map((part, k, all) => (
+                  {t(line).split("=").map((part, k, all) => (
                     <span key={k}>
                       <span className="text-text-primary">{part}</span>
                       {k < all.length - 1 && <span className="text-text-muted"> = </span>}
@@ -415,7 +416,7 @@ function Blocks({ blocks, accent }: { blocks: ContentBlock[]; accent: string }) 
                       key={h}
                       className="border border-border bg-elevated px-3 py-2 text-left font-bold text-text-primary"
                     >
-                      {h}
+                      {t(h)}
                     </th>
                   ))}
                 </tr>
@@ -431,7 +432,7 @@ function Blocks({ blocks, accent }: { blocks: ContentBlock[]; accent: string }) 
                   >
                     {row.map((cell, c) => (
                       <td key={c} className="border border-border px-3 py-2 text-text-secondary">
-                        {cell}
+                        {t(cell)}
                       </td>
                     ))}
                   </tr>
