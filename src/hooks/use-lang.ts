@@ -241,6 +241,18 @@ const UR: Record<string, string> = {
   Transport: "ٹرانسپورٹ",
   Shopping: "شاپنگ",
   Other: "دیگر",
+
+  // ---- Stock company names ----
+  "Habib Bank Limited": "حبیب بینک لمیٹڈ",
+  "Engro Corporation": "اینگرو کارپوریشن",
+  "Lucky Cement": "لکی سیمنٹ",
+  "Oil & Gas Dev. Co.": "آئل اینڈ گیس ڈیولپمنٹ کمپنی",
+  "Fauji Fertilizer Co.": "فوجی فرٹیلائزر کمپنی",
+  "MCB Bank Limited": "ایم سی بی بینک لمیٹڈ",
+  "United Bank Limited": "یونائیٹڈ بینک لمیٹڈ",
+  "Nestlé Pakistan": "نیسلے پاکستان",
+  "Pakistan State Oil": "پاکستان اسٹیٹ آئل",
+  "Hub Power Company": "حب پاور کمپنی",
   "Food & Dining": "کھانا اور ڈائننگ",
   Groceries: "گروسری",
   Subscriptions: "سبسکرپشنز",
