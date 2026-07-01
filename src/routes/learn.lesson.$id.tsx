@@ -832,7 +832,7 @@ function QuizView({
                           isCorrectAns && "font-semibold",
                         )}
                       >
-                        {opt.text}
+                        {t(opt.text)}
                       </span>
                       {isCorrectAns && (
                         <CheckCircle2 className="h-5 w-5 shrink-0 text-bull" strokeWidth={2.5} />
