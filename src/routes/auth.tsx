@@ -132,6 +132,13 @@ function AuthPage() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full max-w-xl space-y-8 sm:space-y-10 lg:space-y-6"
         >
+          <div className="flex items-center gap-2.5 lg:hidden">
+            <LogoIcon className="h-8 w-8 text-primary" />
+            <span className="font-display text-xl font-bold tracking-tight text-text-primary">
+              Nafa<span className="text-primary">IQ</span>
+            </span>
+          </div>
+
           <div className="space-y-2">
             <h2 className="font-display text-3xl font-medium tracking-tight text-text-primary">
               {isSignup ? "Create New Profile" : "Welcome Back"}
