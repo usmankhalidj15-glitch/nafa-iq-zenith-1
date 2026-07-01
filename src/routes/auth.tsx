@@ -386,7 +386,7 @@ function AuthPage() {
                         </ul>
                       </motion.div>
                     )}
-                  </div>
+                  </motion.div>
 
                   <button
                     type="submit"
