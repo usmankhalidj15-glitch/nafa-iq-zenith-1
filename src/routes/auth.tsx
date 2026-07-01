@@ -227,7 +227,7 @@ function AuthPage() {
                     setConfirmSent(false);
                     setMode("signin");
                   }}
-                  className="flex h-13 w-full items-center justify-center rounded-xl bg-primary py-3.5 font-semibold text-primary-foreground transition-all duration-200 hover:bg-primary/90 active:scale-[0.98]"
+                  className="flex h-[52px] w-full items-center justify-center rounded-xl bg-primary py-3.5 font-semibold text-primary-foreground transition-all duration-200 hover:bg-primary/90 active:scale-[0.98]"
                 >
                   Go to Sign In
                 </button>
@@ -530,7 +530,7 @@ function GoogleButton({ onClick, disabled }: { onClick?: () => void; disabled?: 
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="flex h-13 w-full items-center justify-center gap-3 rounded-xl border border-border bg-surface/50 py-3.5 text-sm font-medium text-text-primary transition-all duration-200 hover:border-border-hover hover:bg-hover active:scale-[0.99] disabled:opacity-60"
+      className="flex h-[52px] w-full items-center justify-center gap-3 rounded-xl border border-border bg-surface/50 py-3.5 text-sm font-medium text-text-primary transition-all duration-200 hover:border-border-hover hover:bg-hover active:scale-[0.99] disabled:opacity-60"
     >
       <GoogleIcon className="h-5 w-5" />
       Continue with Google
