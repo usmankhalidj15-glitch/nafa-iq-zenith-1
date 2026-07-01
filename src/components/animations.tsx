@@ -286,6 +286,48 @@ export function Magnetic({
   );
 }
 
+/* ---------- page transition: subtle fade + lift on route change ---------- */
+export function PageTransition({
+  routeKey,
+  children,
+  className,
+}: {
+  routeKey: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const reduce = useReducedMotion();
+  if (reduce) return <div className={className}>{children}</div>;
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        key={routeKey}
+        className={className}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -6 }}
+        transition={{ duration: DUR.base, ease: EASE }}
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+/* ---------- shared interactive-feedback presets (hover lift + press) ---------- */
+/** Spread onto a motion element for a consistent hover-lift + tap-press feel. */
+export const interactive = {
+  whileHover: { y: -2, scale: 1.01 },
+  whileTap: { scale: 0.98 },
+  transition: SPRING_UI,
+} as const;
+
+/** Lighter press-only feedback for nav items / icon buttons. */
+export const pressable = {
+  whileTap: { scale: 0.94 },
+  transition: SPRING_UI,
+} as const;
+
 /* re-export for convenience */
-export { motion, useScroll, useTransform, useSpring, useMotionValue, useReducedMotion };
+export { AnimatePresence, motion, useScroll, useTransform, useSpring, useMotionValue, useReducedMotion };
 export type { MotionValue };
