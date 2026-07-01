@@ -22,6 +22,7 @@ import { EmojiIcon } from "@/components/icons";
 import { Card } from "@/components/Card";
 import { AnimatedBar } from "@/components/CountUpNumber";
 import { IncomeExpenseChart, Sparkline } from "@/components/charts";
+import { Typewriter } from "@/components/Typewriter";
 import { fmtPKR } from "@/lib/data";
 import { formatNumber, formatPKR, formatSignedPKR } from "@/lib/format";
 import { BUDGETS, INCOME_EXPENSE, type Goal } from "@/lib/finance-data";
