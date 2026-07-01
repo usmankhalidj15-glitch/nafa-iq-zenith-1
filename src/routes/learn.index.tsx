@@ -320,7 +320,7 @@ const HUB_PRESETS = [
 
 function HubChatPanel() {
   const ask = useServerFn(askTutor);
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const initialGreeting = t(
     "Hi! I'm your NafaIQ tutor. Ask me anything about PSX investing, terms, or strategies.",
   );
@@ -358,6 +358,7 @@ function HubChatPanel() {
         const res = await ask({
           data: {
             lessonTitle: "PSX investing basics",
+            lang,
             messages: history.slice(-12),
           },
         });
@@ -371,7 +372,7 @@ function HubChatPanel() {
         setLoading(false);
       }
     },
-    [ask, messages, loading],
+    [ask, messages, loading, lang, t],
   );
 
   const showPresets = messages.length === 1;

@@ -1106,7 +1106,7 @@ function ChatPanel({
   embedded?: boolean;
 }) {
   const ask = useServerFn(askTutor);
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const initialGreeting = useMemo(
     () => `${t("Hi! I'm here to help you understand")} ${t(lesson.title)}. ${t("What would you like to know?")}`,
     [lesson.title, t],
@@ -1147,6 +1147,7 @@ function ChatPanel({
           data: {
             lessonTitle: lesson.title,
             section: sectionHeading,
+            lang,
             messages: history.slice(-12),
           },
         });
@@ -1160,7 +1161,7 @@ function ChatPanel({
         setLoading(false);
       }
     },
-    [ask, messages, loading, lesson, activeSection],
+    [ask, messages, loading, lesson, activeSection, lang, t],
   );
 
   const showPresets = messages.length === 1;
