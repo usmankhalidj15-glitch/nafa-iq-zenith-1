@@ -93,62 +93,9 @@ function AuthPage() {
   const isSignup = mode === "signup";
 
   return (
-    <main className="flex min-h-screen w-full bg-background p-2 transition-all duration-500 selection:bg-primary/30 lg:h-screen lg:overflow-hidden lg:p-4">
-      {/* ---------- Left column: hero + video ---------- */}
-      <div className="relative hidden h-full w-[52%] flex-col items-center justify-end overflow-hidden rounded-3xl border border-border px-12 pb-32 shadow-2xl lg:flex">
-        <video
-          className="absolute inset-0 h-full w-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-        >
-          <source
-            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260506_081238_406ed0e3-5d83-436e-a512-0bbff7ec5b95.mp4"
-            type="video/mp4"
-          />
-        </video>
-
-        {/* subtle bottom scrim so hero content reads over the video */}
-        <div className="absolute inset-x-0 bottom-0 z-[5] h-2/3 bg-gradient-to-t from-background via-background/60 to-transparent" />
-
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="z-10 w-full max-w-xs space-y-8"
-        >
-          <motion.div variants={item} className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-primary/40 bg-primary/10 text-primary">
-              <BarChart3 className="h-5 w-5" strokeWidth={2.5} />
-            </span>
-            <span className="font-display text-2xl font-bold tracking-tight text-text-primary">
-              Nafa<span className="text-primary">IQ</span>
-            </span>
-
-          </motion.div>
-
-          <motion.div variants={item} className="space-y-3">
-            <h1 className="font-display whitespace-nowrap text-4xl font-medium tracking-tight text-text-primary">
-              Join NafaIQ
-            </h1>
-            <p className="px-1 text-sm leading-relaxed text-text-secondary/80">
-              Follow these 3 quick phases to activate your space.
-            </p>
-          </motion.div>
-
-          <motion.div variants={item} className="space-y-3">
-            <StepItem number={1} text="Register your identity" active />
-            <StepItem number={2} text="Configure your studio" />
-            <StepItem number={3} text="Finalize your profile" />
-          </motion.div>
-
-        </motion.div>
-      </div>
-
-
-      {/* ---------- Right column: form ---------- */}
-      <div className="flex flex-1 flex-col items-center justify-center overflow-y-auto px-4 py-12 sm:px-12 lg:overflow-hidden lg:px-16 lg:py-6 xl:px-24">
+    <main className="flex min-h-screen w-full flex-col-reverse bg-background p-2 transition-all duration-500 selection:bg-primary/30 lg:flex-row lg:p-4">
+      {/* ---------- Left column: form ---------- */}
+      <div className="flex flex-1 flex-col items-center justify-center px-4 py-12 sm:px-12 lg:px-16 lg:py-6 xl:px-24">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -266,6 +213,50 @@ function AuthPage() {
               ← Back to home
             </Link>
           </p>
+        </motion.div>
+      </div>
+
+      {/* ---------- Right column: hero ---------- */}
+      <div className="relative hidden min-h-[600px] w-[52%] flex-col items-center justify-end overflow-hidden rounded-3xl border border-border px-12 pb-32 shadow-2xl lg:flex">
+        {/* green ambient gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/40 via-primary/10 to-background" />
+        <div className="absolute -left-24 top-1/4 h-96 w-96 rounded-full bg-primary/30 blur-[120px]" />
+        <div className="absolute -right-16 bottom-1/3 h-80 w-80 rounded-full bg-primary/20 blur-[120px]" />
+
+        {/* subtle bottom scrim so hero content reads clearly */}
+        <div className="absolute inset-x-0 bottom-0 z-[5] h-2/3 bg-gradient-to-t from-background via-background/60 to-transparent" />
+
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="z-10 w-full max-w-xs space-y-8"
+        >
+          <motion.div variants={item} className="flex items-center gap-2.5">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-primary/40 bg-primary/10 text-primary">
+              <BarChart3 className="h-5 w-5" strokeWidth={2.5} />
+            </span>
+            <span className="font-display text-2xl font-bold tracking-tight text-text-primary">
+              Nafa<span className="text-primary">IQ</span>
+            </span>
+
+          </motion.div>
+
+          <motion.div variants={item} className="space-y-3">
+            <h1 className="font-display whitespace-nowrap text-4xl font-medium tracking-tight text-text-primary">
+              Join NafaIQ
+            </h1>
+            <p className="px-1 text-sm leading-relaxed text-text-secondary/80">
+              Follow these 3 quick phases to activate your space.
+            </p>
+          </motion.div>
+
+          <motion.div variants={item} className="space-y-3">
+            <StepItem number={1} text="Register your identity" active />
+            <StepItem number={2} text="Configure your studio" />
+            <StepItem number={3} text="Finalize your profile" />
+          </motion.div>
+
         </motion.div>
       </div>
     </main>
