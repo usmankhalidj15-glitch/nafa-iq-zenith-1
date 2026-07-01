@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/use-auth";
+import logo from "@/assets/logo.png";
 
 
 export const Route = createFileRoute("/auth")({
@@ -50,35 +51,13 @@ const item: Variants = {
 
 function LogoIcon({ className }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 32 32"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+    <img
+      src={logo}
+      alt="NafaIQ"
+      width={36}
+      height={36}
       className={className}
-    >
-      {/* Rounded square border */}
-      <rect
-        x="1.5"
-        y="1.5"
-        width="29"
-        height="29"
-        rx="8"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        fill="none"
-      />
-      {/* Stylized "N" */}
-      <path
-        d="M9 22 V10.5 L16 22 V10.5"
-        stroke="currentColor"
-        strokeWidth="3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-      {/* Tall vertical bar */}
-      <rect x="19.6" y="9.5" width="3.2" height="12.5" rx="1.6" fill="currentColor" />
-    </svg>
+    />
   );
 }
 
@@ -194,7 +173,7 @@ function AuthPage() {
         >
           {/* Logo */}
           <div className="mb-8 flex items-center gap-2.5">
-            <LogoIcon className="h-9 w-9 text-primary" />
+            <LogoIcon className="h-9 w-9 rounded-[8px] ring-1 ring-bull/30" />
             <span className="font-display text-2xl font-bold tracking-tight text-text-primary">
               Nafa<span className="text-primary">IQ</span>
             </span>
@@ -453,7 +432,7 @@ function AuthVisualPanel() {
         className="relative z-10 w-full max-w-xs space-y-8"
       >
         <motion.div variants={item} className="flex items-center gap-2.5">
-          <LogoIcon className="h-9 w-9 text-primary" />
+          <LogoIcon className="h-9 w-9 rounded-[8px] ring-1 ring-bull/30" />
           <span className="font-display text-2xl font-bold tracking-tight text-text-primary">
             Nafa<span className="text-primary">IQ</span>
           </span>
