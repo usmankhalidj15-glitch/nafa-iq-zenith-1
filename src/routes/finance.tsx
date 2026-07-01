@@ -226,6 +226,9 @@ function Overview() {
           <div dir="ltr" className="mt-1 font-mono text-lg font-semibold tracking-tight text-bull tabular-nums sm:text-xl">
             PKR <span ref={income.ref}>{income.formatted}</span>
           </div>
+          <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-white/5">
+            <AnimatedBar value={78} className="bg-bull" />
+          </div>
           <div className="mt-3 flex items-end justify-between gap-2">
             <span dir="ltr" className="text-[10px] text-bull/80 sm:text-[11px]">
               {formatSignedPKR(2500)} {t("vs last month")}
@@ -245,6 +248,9 @@ function Overview() {
           <div dir="ltr" className="mt-1 font-mono text-lg font-semibold tracking-tight text-bear tabular-nums sm:text-xl">
             PKR <span ref={expenses.ref}>{expenses.formatted}</span>
           </div>
+          <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-white/5">
+            <AnimatedBar value={40} className="bg-bear" />
+          </div>
           <div className="mt-3 flex items-end justify-between gap-2">
             <span dir="ltr" className="text-[10px] text-bear/90 sm:text-[11px]">-12% {t("vs last month")}</span>
             <div className="w-14 shrink-0">
@@ -261,6 +267,9 @@ function Overview() {
           <KpiLabel>Net Savings</KpiLabel>
           <div dir="ltr" className="kpi-value-neutral mt-1 font-mono text-lg font-semibold tracking-tight text-ai tabular-nums sm:text-xl">
             PKR <span ref={savings.ref}>{savings.formatted}</span>
+          </div>
+          <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-white/5">
+            <AnimatedBar value={61} className="bg-ai" />
           </div>
           <div className="mt-3 flex items-center justify-between gap-2">
             <span className="text-[10px] text-text-muted sm:text-[11px]">{t("Saved this month")}</span>
