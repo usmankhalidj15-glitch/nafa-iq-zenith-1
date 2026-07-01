@@ -377,6 +377,7 @@ function Header({ onMenu }: { onMenu: () => void }) {
         >
           <Sparkles className="h-4 w-4" />
         </Link>
+        <ThemeToggle />
         <NotificationBell />
         <UserMenu />
       </div>
