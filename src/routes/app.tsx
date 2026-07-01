@@ -18,11 +18,11 @@ import { DonutChart, PortfolioAreaChart, Sparkline, DONUT_LIGHT_PALETTE } from "
 import { CountUpNumber, AnimatedBar } from "@/components/CountUpNumber";
 import { Typewriter } from "@/components/Typewriter";
 import { useTheme } from "@/hooks/use-theme";
-import { STOCKS, WATCHLIST, generateOHLCV, fmtPKR } from "@/lib/data";
+import { STOCKS, WATCHLIST, generateOHLCV, fmtPKR, fmtNum } from "@/lib/data";
 import { SPENDING, GOALS } from "@/lib/finance-data";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
-import { useLang } from "@/hooks/use-lang";
+import { useLang, localizeDigits } from "@/hooks/use-lang";
 import { useFinanceStore, financeActions } from "@/hooks/use-finance-store";
 import { Modal, fieldClass } from "@/components/Modal";
 import { Checkbox } from "@/components/ui/checkbox";
