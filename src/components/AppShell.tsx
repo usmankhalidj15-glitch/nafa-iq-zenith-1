@@ -111,7 +111,8 @@ function SidebarLink({
   );
 }
 
-function Sidebar() {
+function Sidebar({ onCollapse }: { onCollapse: () => void }) {
+  const { t } = useLang();
   const path = useRouterState({ select: (s) => s.location.pathname });
   const { profile, user, signOut } = useAuth();
   const navigate = useNavigate();
@@ -137,6 +138,16 @@ function Sidebar() {
       {/* utility section — separated from primary nav */}
       <div className="space-y-1 border-t border-white/[0.06] px-3 py-3">
         <SidebarLink to="/settings" label="Settings" icon={Settings} active={isActive("/settings")} />
+        <button
+          onClick={onCollapse}
+          className="group flex w-full items-center gap-3 rounded-[10px] px-3 py-2.5 text-[13px] font-medium text-text-secondary transition-colors duration-200 hover:bg-white/[0.04] hover:text-text-primary"
+        >
+          <PanelLeftClose
+            className="h-5 w-5 shrink-0 text-text-muted group-hover:text-text-primary"
+            strokeWidth={1.75}
+          />
+          {t("Collapse")}
+        </button>
       </div>
 
       <div className="flex items-center gap-3 border-t border-white/[0.06] p-3">
