@@ -607,16 +607,14 @@ export function getCurrentLang(): Lang {
   return current;
 }
 
-const URDU_DIGITS = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-
-/** Convert ASCII digits in a string to Urdu (Extended Arabic-Indic) numerals. */
+/** Numbers stay in Western digits app-wide — return input unchanged. */
 export function toUrduDigits(input: string): string {
-  return input.replace(/[0-9]/g, (d) => URDU_DIGITS[Number(d)]);
+  return input;
 }
 
-/** Localize digits in a formatted string based on the current app language. */
+/** Numbers stay in Western digits regardless of language. */
 export function localizeDigits(input: string): string {
-  return current === "ur" ? toUrduDigits(input) : input;
+  return input;
 }
 
 /**
