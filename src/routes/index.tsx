@@ -1419,7 +1419,7 @@ function HowItWorksDesktop() {
 
       {/* Right: sticky panel with crossfade */}
       <div className="relative">
-        <div className="sticky top-1/2 flex -translate-y-1/2 items-center justify-center">
+        <div className="sticky top-0 flex h-screen items-center justify-center">
           {reduce ? (
             <StepPanelFrame key={active}>{STEP_PANELS[active]}</StepPanelFrame>
           ) : (
