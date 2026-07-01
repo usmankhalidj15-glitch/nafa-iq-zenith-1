@@ -195,7 +195,7 @@ export default function PSX() {
               >
                 {SYMBOLS.map((s) => (
                   <option key={s} value={s}>
-                    {s === "KSE-100" ? t("KSE-100 Index") : `${s} · ${STOCKS[s].name}`}
+                    {s === "KSE-100" ? t("KSE-100 Index") : `${s} · ${t(STOCKS[s].name)}`}
                   </option>
                 ))}
               </select>
