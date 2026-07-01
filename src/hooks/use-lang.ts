@@ -81,8 +81,8 @@ const UR: Record<string, string> = {
   Expenses: "اخراجات",
   "vs last month": "پچھلے ماہ کے مقابلے",
   Excellent: "بہترین",
-  "Goal: 65%": "ہدف: ۶۵٪",
-  "6-month totals": "۶ ماہ کے کل اعداد",
+  "Goal: 65%": "ہدف: 65%",
+  "6-month totals": "6 ماہ کے کل اعداد",
   "in real terms": "حقیقی اعتبار سے",
 
   // ---- Dashboard ----
