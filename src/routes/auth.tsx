@@ -423,16 +423,6 @@ function AuthVisualPanel() {
         animate="show"
         className="relative z-10 w-full max-w-xs space-y-8"
       >
-        <motion.div variants={item}>
-          <Link
-            to="/"
-            className="group inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-surface/40 px-3 py-1.5 text-[11px] font-medium text-text-muted backdrop-blur-md transition-all duration-200 hover:border-white/20 hover:text-text-primary"
-          >
-            <ArrowLeft className="h-3 w-3 transition-transform duration-200 group-hover:-translate-x-0.5" />
-            Back to home
-          </Link>
-        </motion.div>
-
         <motion.div variants={item} className="flex items-center gap-2.5">
           <LogoIcon className="h-9 w-9 rounded-[8px] ring-1 ring-bull/30" />
           <span className="font-display text-2xl font-bold tracking-tight text-text-primary">
