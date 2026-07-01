@@ -472,23 +472,24 @@ function AuthVisualPanel({ currentStep }: { currentStep: number }) {
     <aside
       className="relative hidden w-[45%] flex-col justify-center overflow-hidden rounded-3xl px-8 py-12 md:flex lg:w-[50%] lg:px-14"
     >
-      {/* Radial legibility overlay centered on heading + steps */}
-      <div
-        className="pointer-events-none absolute inset-0 rounded-3xl"
-        style={{
-          background: "radial-gradient(ellipse 55% 50% at 30% 50%, rgba(0,0,0,0.6), transparent 65%)",
-        }}
+      {/* Left column background image */}
+      <img
+        src="/hero-bg.webp"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full rounded-3xl object-cover"
+        style={{ objectPosition: "left center" }}
       />
 
-
-      {/* Local gradient scrim behind the text block for extra legibility */}
+      {/* Small contained gradient behind the heading + paragraph text only */}
       <div
-        className="pointer-events-none absolute inset-y-0 left-0 z-0 w-[85%]"
+        className="pointer-events-none absolute inset-y-0 left-0 z-0 w-[55%] rounded-3xl"
         style={{
           background:
-            "linear-gradient(to right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.30) 55%, transparent 100%)",
+            "linear-gradient(to right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 55%, transparent 100%)",
         }}
       />
+
 
       <motion.div
         variants={container}
