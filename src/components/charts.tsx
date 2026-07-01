@@ -549,14 +549,20 @@ export function IncomeExpenseChart({
           name={t("In")}
           fill={ct.teal}
           radius={[3, 3, 0, 0]}
-          isAnimationActive={false}
+          isAnimationActive
+          animationBegin={0}
+          animationDuration={900}
+          animationEasing="ease-out"
         />
         <Bar
           dataKey="expense"
           name={t("Out")}
           fill={ct.expense}
           radius={[3, 3, 0, 0]}
-          isAnimationActive={false}
+          isAnimationActive
+          animationBegin={200}
+          animationDuration={900}
+          animationEasing="ease-out"
         />
       </ComposedChart>
     </ResponsiveContainer>
