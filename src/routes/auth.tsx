@@ -179,9 +179,9 @@ function AuthPage() {
       className="relative flex min-h-screen w-full flex-col overflow-hidden bg-black p-2 transition-all duration-500 selection:bg-primary/30 md:p-4"
     >
 
-      {/* ---------- Top nav (spans both columns) ---------- */}
-      <nav className="relative z-20 flex items-center justify-between px-2 py-2 md:px-3 md:py-3">
-        <div className="flex items-center gap-2.5">
+      {/* ---------- Top nav (overlay, spans both columns) ---------- */}
+      <nav className="pointer-events-none absolute inset-x-0 top-0 z-20 flex items-center justify-between px-5 py-5 md:px-7 md:py-7">
+        <div className="pointer-events-auto flex items-center gap-2.5">
           <LogoIcon className="h-9 w-9 rounded-[8px] ring-1 ring-bull/30" />
           <span className="font-display text-2xl font-bold tracking-tight text-text-primary">
             Nafa<span className="text-primary">IQ</span>
@@ -189,12 +189,13 @@ function AuthPage() {
         </div>
         <Link
           to="/"
-          className="group inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-surface/40 px-3.5 py-2 text-xs font-medium text-text-muted backdrop-blur-md transition-all duration-200 hover:border-white/20 hover:text-text-primary"
+          className="group pointer-events-auto inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-surface/40 px-3.5 py-2 text-xs font-medium text-text-muted backdrop-blur-md transition-all duration-200 hover:border-white/20 hover:text-text-primary"
         >
           <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-x-0.5" />
           Back to home
         </Link>
       </nav>
+
 
       {/* ---------- Columns ---------- */}
       <div className="relative z-10 flex flex-1 flex-col-reverse gap-2 overflow-hidden md:flex-row-reverse md:gap-4">
