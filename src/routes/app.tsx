@@ -289,7 +289,7 @@ function Dashboard() {
                 </div>
                 <div className="truncate text-[10px] text-text-muted">{s.name}</div>
                 <div className="mt-1 font-mono text-lg font-bold tabular-nums text-text-primary">
-                  {s.price.toLocaleString()}
+                  {fmtNum(s.price)}
                 </div>
                 <div className="my-1">
                   <Sparkline data={spark} color={s.changePct >= 0 ? "#00d4aa" : "#e5484d"} />
