@@ -474,6 +474,15 @@ function AuthVisualPanel({ currentStep }: { currentStep: number }) {
       />
 
 
+      {/* Local gradient scrim behind the text block for extra legibility */}
+      <div
+        className="pointer-events-none absolute inset-y-0 left-0 z-0 w-[85%]"
+        style={{
+          background:
+            "linear-gradient(to right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.30) 55%, transparent 100%)",
+        }}
+      />
+
       <motion.div
         variants={container}
         initial="hidden"
@@ -481,10 +490,16 @@ function AuthVisualPanel({ currentStep }: { currentStep: number }) {
         className="relative z-10 w-full max-w-xs space-y-8"
       >
         <motion.div variants={item} className="space-y-3">
-          <h1 className="font-display whitespace-nowrap text-4xl font-medium tracking-tight text-text-primary">
+          <h1
+            className="font-display whitespace-nowrap text-4xl font-medium tracking-tight text-text-primary"
+            style={{ textShadow: "0 2px 12px rgba(0,0,0,0.7)" }}
+          >
             Join NafaIQ
           </h1>
-          <p className="px-1 text-sm leading-relaxed text-text-secondary">
+          <p
+            className="px-1 text-sm leading-relaxed text-text-secondary"
+            style={{ textShadow: "0 1px 8px rgba(0,0,0,0.6)" }}
+          >
             Follow these 3 quick phases to activate your space.
           </p>
         </motion.div>
