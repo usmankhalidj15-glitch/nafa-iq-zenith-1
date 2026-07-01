@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { motion, type Variants } from "framer-motion";
-import { Loader2, Circle, Chrome, Github, Eye, EyeOff, Check } from "lucide-react";
+import { Loader2, TrendingUp, Chrome, Github, Eye, EyeOff, Check } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/use-auth";
 
@@ -93,9 +93,9 @@ function AuthPage() {
   const isSignup = mode === "signup";
 
   return (
-    <main className="flex min-h-screen w-full bg-black p-2 transition-all duration-500 selection:bg-white/30 lg:h-screen lg:overflow-hidden lg:p-4">
+    <main className="flex min-h-screen w-full bg-background p-2 transition-all duration-500 selection:bg-primary/30 lg:h-screen lg:overflow-hidden lg:p-4">
       {/* ---------- Left column: hero + video ---------- */}
-      <div className="relative hidden h-full w-[52%] flex-col items-center justify-end overflow-hidden rounded-3xl px-12 pb-32 shadow-2xl lg:flex">
+      <div className="relative hidden h-full w-[52%] flex-col items-center justify-end overflow-hidden rounded-3xl border border-border px-12 pb-32 shadow-2xl lg:flex">
         <video
           className="absolute inset-0 h-full w-full object-cover"
           autoPlay
@@ -109,6 +109,9 @@ function AuthPage() {
           />
         </video>
 
+        {/* subtle bottom scrim so hero content reads over the video */}
+        <div className="absolute inset-x-0 bottom-0 z-[5] h-2/3 bg-gradient-to-t from-background via-background/60 to-transparent" />
+
         <motion.div
           variants={container}
           initial="hidden"
@@ -116,13 +119,19 @@ function AuthPage() {
           className="z-10 w-full max-w-xs space-y-8"
         >
           <motion.div variants={item} className="flex items-center gap-2">
-            <Circle className="h-5 w-5 fill-white text-white" />
-            <span className="text-xl font-semibold tracking-tight">NafaIQ</span>
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+              <TrendingUp className="h-5 w-5" strokeWidth={2.25} />
+            </span>
+            <span className="font-display text-xl font-semibold tracking-tight text-text-primary">
+              Nafa<span className="text-gold">IQ</span>
+            </span>
           </motion.div>
 
           <motion.div variants={item} className="space-y-3">
-            <h1 className="whitespace-nowrap text-4xl font-medium tracking-tight">Join NafaIQ</h1>
-            <p className="px-1 text-sm leading-relaxed text-white/60">
+            <h1 className="font-display whitespace-nowrap text-4xl font-medium tracking-tight text-text-primary">
+              Join NafaIQ
+            </h1>
+            <p className="px-1 text-sm leading-relaxed text-text-secondary/80">
               Follow these 3 quick phases to activate your space.
             </p>
           </motion.div>
@@ -136,6 +145,7 @@ function AuthPage() {
         </motion.div>
       </div>
 
+
       {/* ---------- Right column: form ---------- */}
       <div className="flex flex-1 flex-col items-center justify-center overflow-y-auto px-4 py-12 sm:px-12 lg:overflow-hidden lg:px-16 lg:py-6 xl:px-24">
         <motion.div
@@ -145,10 +155,10 @@ function AuthPage() {
           className="w-full max-w-xl space-y-8 sm:space-y-10 lg:space-y-6"
         >
           <div className="space-y-2">
-            <h2 className="text-3xl font-medium tracking-tight">
+            <h2 className="font-display text-3xl font-medium tracking-tight text-text-primary">
               {isSignup ? "Create New Profile" : "Welcome Back"}
             </h2>
-            <p className="text-sm text-white/40">
+            <p className="text-sm text-text-muted">
               {isSignup
                 ? "Input your basic details to begin the journey."
                 : "Sign in to your NafaIQ terminal."}
@@ -161,11 +171,11 @@ function AuthPage() {
           </div>
 
           <div className="relative flex items-center">
-            <div className="flex-1 border-t border-white/10" />
-            <span className="bg-black px-4 text-xs font-medium uppercase tracking-widest text-white/40">
+            <div className="flex-1 border-t border-border" />
+            <span className="bg-background px-4 text-xs font-medium uppercase tracking-widest text-text-muted">
               Or
             </span>
-            <div className="flex-1 border-t border-white/10" />
+            <div className="flex-1 border-t border-border" />
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -201,7 +211,7 @@ function AuthPage() {
             />
 
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-white">Password</label>
+              <label className="text-sm font-medium text-text-primary">Password</label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -211,24 +221,24 @@ function AuthPage() {
                   required
                   minLength={8}
                   autoComplete={isSignup ? "new-password" : "current-password"}
-                  className="h-11 w-full rounded-xl border-none bg-brand-gray px-4 pr-11 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
+                  className="h-11 w-full rounded-xl border border-border bg-surface px-4 pr-11 text-text-primary placeholder:text-text-muted/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((s) => !s)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 transition-colors hover:text-white"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted transition-colors hover:text-text-primary"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
-              <p className="text-xs text-white/30">Requires at least 8 symbols.</p>
+              <p className="text-xs text-text-muted">Requires at least 8 symbols.</p>
             </div>
 
             <button
               type="submit"
               disabled={busy}
-              className="mt-4 flex h-14 w-full items-center justify-center rounded-xl bg-white font-semibold text-black transition-all hover:bg-white/90 active:scale-[0.98] disabled:opacity-60"
+              className="mt-4 flex h-14 w-full items-center justify-center rounded-xl bg-primary font-semibold text-primary-foreground transition-all hover:bg-primary/90 active:scale-[0.98] disabled:opacity-60"
             >
               {busy ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
@@ -240,18 +250,18 @@ function AuthPage() {
             </button>
           </form>
 
-          <p className="text-center text-sm text-white/40">
+          <p className="text-center text-sm text-text-muted">
             {isSignup ? "Member of the team? " : "New to NafaIQ? "}
             <button
               onClick={() => setMode(isSignup ? "signin" : "signup")}
-              className="font-medium text-white hover:underline"
+              className="font-medium text-primary hover:underline"
             >
               {isSignup ? "Log in" : "Sign up"}
             </button>
           </p>
 
           <p className="text-center">
-            <Link to="/" className="text-xs text-white/30 hover:text-white/60">
+            <Link to="/" className="text-xs text-text-muted hover:text-text-secondary">
               ← Back to home
             </Link>
           </p>
@@ -268,13 +278,15 @@ function StepItem({ number, text, active }: { number: number; text: string; acti
     <div
       className={
         "flex items-center gap-3 rounded-2xl px-4 py-3 " +
-        (active ? "border border-white bg-white text-black" : "border-none bg-brand-gray text-white")
+        (active
+          ? "border border-primary bg-primary text-primary-foreground"
+          : "border border-border bg-surface text-text-primary")
       }
     >
       <span
         className={
           "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-sm font-semibold " +
-          (active ? "bg-black text-white" : "bg-white/10 text-white/40")
+          (active ? "bg-primary-foreground/15 text-primary-foreground" : "bg-white/10 text-text-muted")
         }
       >
         {active ? <Check className="h-4 w-4" /> : number}
@@ -300,7 +312,7 @@ function SocialButton({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="flex h-12 items-center justify-center gap-2.5 rounded-xl border border-white/10 bg-black text-sm font-medium text-white transition-colors hover:bg-white/5 disabled:opacity-60"
+      className="flex h-12 items-center justify-center gap-2.5 rounded-xl border border-border bg-surface text-sm font-medium text-text-primary transition-colors hover:bg-hover disabled:opacity-60"
     >
       {icon}
       {label}
@@ -327,7 +339,7 @@ function InputGroup({
 }) {
   return (
     <div className="space-y-1.5">
-      <label className="text-sm font-medium text-white">{label}</label>
+      <label className="text-sm font-medium text-text-primary">{label}</label>
       <input
         type={type}
         value={value}
@@ -335,8 +347,9 @@ function InputGroup({
         placeholder={placeholder}
         autoComplete={autoComplete}
         required={required}
-        className="h-11 w-full rounded-xl border-none bg-brand-gray px-4 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
+        className="h-11 w-full rounded-xl border border-border bg-surface px-4 text-text-primary placeholder:text-text-muted/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
       />
     </div>
   );
+
 }
