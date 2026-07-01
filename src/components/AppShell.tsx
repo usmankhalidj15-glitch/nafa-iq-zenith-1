@@ -353,7 +353,15 @@ function ThemeToggle() {
   );
 }
 
-function Header({ onMenu }: { onMenu: () => void }) {
+function Header({
+  onMenu,
+  collapsed,
+  onExpand,
+}: {
+  onMenu: () => void;
+  collapsed: boolean;
+  onExpand: () => void;
+}) {
   const { t, isUrdu } = useLang();
   return (
     <header
@@ -365,7 +373,16 @@ function Header({ onMenu }: { onMenu: () => void }) {
       <button onClick={onMenu} className="text-text-secondary lg:hidden" aria-label="Menu">
         <Menu className="h-5 w-5" strokeWidth={1.75} />
       </button>
-      <div className="lg:hidden">
+      {collapsed && (
+        <button
+          onClick={onExpand}
+          className="hidden text-text-secondary transition-colors hover:text-text-primary lg:inline-flex"
+          aria-label="Show menu"
+        >
+          <PanelLeft className="h-5 w-5" strokeWidth={1.75} />
+        </button>
+      )}
+      <div className={cn("lg:hidden", collapsed && "lg:block")}>
         <Logo />
       </div>
 
