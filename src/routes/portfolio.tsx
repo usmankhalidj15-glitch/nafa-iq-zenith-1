@@ -573,7 +573,7 @@ function ReportModal({ onClose }: { onClose: () => void }) {
                 <EmojiIcon emoji={s.icon} size={15} className="text-text-secondary" /> {t(s.title)}
               </div>
               <p className="mt-1 whitespace-pre-line text-xs leading-relaxed text-text-secondary">
-                {t(s.body)}
+                <Typewriter id={`portfolio-report-${s.title}`} speed={8} text={t(s.body)} />
               </p>
             </div>
           ))}
