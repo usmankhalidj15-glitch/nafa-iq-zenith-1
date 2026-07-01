@@ -4,6 +4,8 @@ import { Card } from "@/components/Card";
 import { Change } from "@/components/Change";
 import { SignalBadge } from "@/components/SignalBadge";
 import { CandlestickChart } from "@/components/charts";
+import { CountUpNumber } from "@/components/CountUpNumber";
+import { Typewriter } from "@/components/Typewriter";
 import { STOCKS, generateOHLCV, fmtNum } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/hooks/use-lang";
