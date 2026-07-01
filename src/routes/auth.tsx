@@ -1,12 +1,9 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Loader2, TrendingUp, ArrowLeft } from "lucide-react";
+import { motion, type Variants } from "framer-motion";
+import { Loader2, Circle, Chrome, Github, Eye, EyeOff, Check } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/use-auth";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import logo from "@/assets/logo.png";
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>): { redirect?: string } => ({
@@ -14,50 +11,43 @@ export const Route = createFileRoute("/auth")({
   }),
   head: () => ({
     meta: [
-      { title: "Sign in — NafaIQ" },
+      { title: "Sign up — NafaIQ" },
       {
         name: "description",
         content:
-          "Sign in or create your NafaIQ account to access your PSX terminal and finance dashboard.",
+          "Create your NafaIQ account to access your PSX terminal and personal finance dashboard.",
       },
     ],
   }),
   component: AuthPage,
 });
 
-const GoogleIcon = () => (
-  <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" aria-hidden>
-    <path
-      fill="#4285F4"
-      d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"
-    />
-    <path
-      fill="#34A853"
-      d="M12 23c2.97 0 5.46-.98 7.28-2.65l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z"
-    />
-    <path
-      fill="#FBBC05"
-      d="M5.84 14.11a6.6 6.6 0 0 1 0-4.22V7.05H2.18a11 11 0 0 0 0 9.9l3.66-2.84z"
-    />
-    <path
-      fill="#EA4335"
-      d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1A11 11 0 0 0 2.18 7.05l3.66 2.84C6.71 7.3 9.14 5.38 12 5.38z"
-    />
-  </svg>
-);
+const container: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+  },
+};
+
+const item: Variants = {
+  hidden: { opacity: 0, y: 10 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+};
 
 function AuthPage() {
   const { user, loading, signInWithPassword, signUpWithPassword, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
   const { redirect } = Route.useSearch();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
-  const [name, setName] = useState("");
+
+  const [mode, setMode] = useState<"signin" | "signup">("signup");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [busy, setBusy] = useState(false);
 
-  // Send authenticated users to their intended in-app destination, defaulting
-  // to the dashboard. Never bounce back to the landing or auth pages.
   const destination =
     redirect && redirect.startsWith("/") && redirect !== "/" && !redirect.startsWith("/auth")
       ? redirect
@@ -73,11 +63,12 @@ function AuthPage() {
     setBusy(true);
     try {
       if (mode === "signup") {
-        if (name.trim().length < 2) {
+        const name = `${firstName} ${lastName}`.trim();
+        if (name.length < 2) {
           toast.error("Please enter your name");
           return;
         }
-        const { error } = await signUpWithPassword(email.trim(), password, name.trim());
+        const { error } = await signUpWithPassword(email.trim(), password, name);
         if (error) return toast.error(error);
         toast.success("Account created — welcome to NafaIQ!");
       } else {
@@ -99,122 +90,258 @@ function AuthPage() {
     }
   }
 
+  const isSignup = mode === "signup";
+
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-10">
-      {/* ambient brand glows */}
-      <div className="ambient-glow -top-24 left-1/2 h-[460px] w-[460px] -translate-x-1/2 bg-bull/10" />
-      <div className="ambient-glow bottom-[-10%] right-[-10%] h-[360px] w-[360px] bg-ai/[0.08]" />
-      <div className="relative z-10 w-full max-w-[400px]">
-        <Link
-          to="/"
-          className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-text-secondary transition-colors hover:text-text-primary"
+    <main className="flex min-h-screen w-full bg-black p-2 transition-all duration-500 selection:bg-white/30 lg:h-screen lg:overflow-hidden lg:p-4">
+      {/* ---------- Left column: hero + video ---------- */}
+      <div className="relative hidden h-full w-[52%] flex-col items-center justify-end overflow-hidden rounded-3xl px-12 pb-32 shadow-2xl lg:flex">
+        <video
+          className="absolute inset-0 h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
         >
-          <ArrowLeft className="h-4 w-4" strokeWidth={1.75} /> Back to home
-        </Link>
+          <source
+            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260506_081238_406ed0e3-5d83-436e-a512-0bbff7ec5b95.mp4"
+            type="video/mp4"
+          />
+        </video>
 
-        <div className="mb-8 flex flex-col items-center text-center">
-          <div className="relative">
-            <div className="absolute inset-0 -z-10 rounded-[14px] bg-bull/30 blur-xl" />
-            <img src={logo} alt="NafaIQ" width={48} height={48} className="rounded-[10px]" />
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="z-10 w-full max-w-xs space-y-8"
+        >
+          <motion.div variants={item} className="flex items-center gap-2">
+            <Circle className="h-5 w-5 fill-white text-white" />
+            <span className="text-xl font-semibold tracking-tight">NafaIQ</span>
+          </motion.div>
+
+          <motion.div variants={item} className="space-y-3">
+            <h1 className="whitespace-nowrap text-4xl font-medium tracking-tight">Join NafaIQ</h1>
+            <p className="px-1 text-sm leading-relaxed text-white/60">
+              Follow these 3 quick phases to activate your space.
+            </p>
+          </motion.div>
+
+          <div className="space-y-3">
+            <motion.div variants={item}>
+              <StepItem number={1} text="Register your identity" active />
+            </motion.div>
+            <motion.div variants={item}>
+              <StepItem number={2} text="Configure your studio" />
+            </motion.div>
+            <motion.div variants={item}>
+              <StepItem number={3} text="Finalize your profile" />
+            </motion.div>
           </div>
-          <h1 className="mt-4 text-2xl font-bold tracking-tight text-text-primary">
-            {mode === "signin" ? "Welcome back" : "Create your account"}
-          </h1>
-          <p className="mt-1 text-sm text-text-secondary">
-            {mode === "signin"
-              ? "Sign in to your NafaIQ terminal"
-              : "Start tracking PSX & your finances"}
-          </p>
-        </div>
+        </motion.div>
+      </div>
 
-        <div className="glass-card rounded-2xl p-6">
-          <button
-            onClick={handleGoogle}
-            disabled={busy}
-            className="flex w-full items-center justify-center gap-2.5 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-text-primary transition-colors hover:bg-white/10 disabled:opacity-60"
-          >
-            <GoogleIcon />
-            Continue with Google
-          </button>
-
-          <div className="my-4 flex items-center gap-3">
-            <span className="h-px flex-1 bg-border" />
-            <span className="text-[11px] uppercase tracking-wide text-text-muted">or</span>
-            <span className="h-px flex-1 bg-border" />
+      {/* ---------- Right column: form ---------- */}
+      <div className="flex flex-1 flex-col items-center justify-center overflow-y-auto px-4 py-12 sm:px-12 lg:overflow-hidden lg:px-16 lg:py-6 xl:px-24">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="w-full max-w-xl space-y-8 sm:space-y-10 lg:space-y-6"
+        >
+          <div className="space-y-2">
+            <h2 className="text-3xl font-medium tracking-tight">
+              {isSignup ? "Create New Profile" : "Welcome Back"}
+            </h2>
+            <p className="text-sm text-white/40">
+              {isSignup
+                ? "Input your basic details to begin the journey."
+                : "Sign in to your NafaIQ terminal."}
+            </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-3">
-            {mode === "signup" && (
-              <div>
-                <label className="mb-1 block text-xs font-medium text-text-secondary">Name</label>
-                <Input
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Ahmed Khan"
-                  autoComplete="name"
+          <div className="grid grid-cols-2 gap-4">
+            <SocialButton icon={<Chrome className="h-5 w-5" />} label="Google" onClick={handleGoogle} disabled={busy} />
+            <SocialButton icon={<Github className="h-5 w-5" />} label="Github" onClick={handleGoogle} disabled={busy} />
+          </div>
+
+          <div className="relative flex items-center">
+            <div className="flex-1 border-t border-white/10" />
+            <span className="bg-black px-4 text-xs font-medium uppercase tracking-widest text-white/40">
+              Or
+            </span>
+            <div className="flex-1 border-t border-white/10" />
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {isSignup && (
+              <div className="grid grid-cols-2 gap-4">
+                <InputGroup
+                  label="First Name"
+                  placeholder="Ahmed"
+                  type="text"
+                  value={firstName}
+                  onChange={setFirstName}
+                  autoComplete="given-name"
+                />
+                <InputGroup
+                  label="Last Name"
+                  placeholder="Khan"
+                  type="text"
+                  value={lastName}
+                  onChange={setLastName}
+                  autoComplete="family-name"
                 />
               </div>
             )}
-            <div>
-              <label className="mb-1 block text-xs font-medium text-text-secondary">Email</label>
-              <Input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                autoComplete="email"
-              />
+
+            <InputGroup
+              label="Email"
+              placeholder="you@example.com"
+              type="email"
+              value={email}
+              onChange={setEmail}
+              autoComplete="email"
+              required
+            />
+
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium text-white">Password</label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                  minLength={8}
+                  autoComplete={isSignup ? "new-password" : "current-password"}
+                  className="h-11 w-full rounded-xl border-none bg-brand-gray px-4 pr-11 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((s) => !s)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 transition-colors hover:text-white"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+              <p className="text-xs text-white/30">Requires at least 8 symbols.</p>
             </div>
-            <div>
-              <label className="mb-1 block text-xs font-medium text-text-secondary">Password</label>
-              <Input
-                type="password"
-                required
-                minLength={6}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                autoComplete={mode === "signin" ? "current-password" : "new-password"}
-              />
-            </div>
-            <Button
+
+            <button
               type="submit"
               disabled={busy}
-              className="w-full bg-bull text-background hover:bg-bull/90"
+              className="mt-4 flex h-14 w-full items-center justify-center rounded-xl bg-white font-semibold text-black transition-all hover:bg-white/90 active:scale-[0.98] disabled:opacity-60"
             >
               {busy ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : mode === "signin" ? (
-                "Sign in"
+                <Loader2 className="h-5 w-5 animate-spin" />
+              ) : isSignup ? (
+                "Create Account"
               ) : (
-                "Create account"
+                "Sign In"
               )}
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              asChild
-              className="w-full border-white/10 bg-transparent text-text-secondary hover:bg-white/5 hover:text-text-primary"
-            >
-              <Link to="/">Cancel</Link>
-            </Button>
+            </button>
           </form>
-        </div>
 
-        <p className="mt-5 text-center text-sm text-text-secondary">
-          {mode === "signin" ? "Don't have an account?" : "Already have an account?"}{" "}
-          <button
-            onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-            className={cn("font-semibold text-bull hover:underline")}
-          >
-            {mode === "signin" ? "Sign up" : "Sign in"}
-          </button>
-        </p>
-        <p className="mt-6 flex items-center justify-center gap-1.5 text-[11px] text-text-muted">
-          <TrendingUp className="h-3.5 w-3.5" /> Pakistan Stock Exchange terminal & finance manager
-        </p>
+          <p className="text-center text-sm text-white/40">
+            {isSignup ? "Member of the team? " : "New to NafaIQ? "}
+            <button
+              onClick={() => setMode(isSignup ? "signin" : "signup")}
+              className="font-medium text-white hover:underline"
+            >
+              {isSignup ? "Log in" : "Sign up"}
+            </button>
+          </p>
+
+          <p className="text-center">
+            <Link to="/" className="text-xs text-white/30 hover:text-white/60">
+              ← Back to home
+            </Link>
+          </p>
+        </motion.div>
       </div>
+    </main>
+  );
+}
+
+/* ---------- Reusable components ---------- */
+
+function StepItem({ number, text, active }: { number: number; text: string; active?: boolean }) {
+  return (
+    <div
+      className={
+        "flex items-center gap-3 rounded-2xl px-4 py-3 " +
+        (active ? "border border-white bg-white text-black" : "border-none bg-brand-gray text-white")
+      }
+    >
+      <span
+        className={
+          "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-sm font-semibold " +
+          (active ? "bg-black text-white" : "bg-white/10 text-white/40")
+        }
+      >
+        {active ? <Check className="h-4 w-4" /> : number}
+      </span>
+      <span className="text-sm font-medium">{text}</span>
+    </div>
+  );
+}
+
+function SocialButton({
+  icon,
+  label,
+  onClick,
+  disabled,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  onClick?: () => void;
+  disabled?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className="flex h-12 items-center justify-center gap-2.5 rounded-xl border border-white/10 bg-black text-sm font-medium text-white transition-colors hover:bg-white/5 disabled:opacity-60"
+    >
+      {icon}
+      {label}
+    </button>
+  );
+}
+
+function InputGroup({
+  label,
+  placeholder,
+  type,
+  value,
+  onChange,
+  autoComplete,
+  required,
+}: {
+  label: string;
+  placeholder: string;
+  type: string;
+  value: string;
+  onChange: (v: string) => void;
+  autoComplete?: string;
+  required?: boolean;
+}) {
+  return (
+    <div className="space-y-1.5">
+      <label className="text-sm font-medium text-white">{label}</label>
+      <input
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        autoComplete={autoComplete}
+        required={required}
+        className="h-11 w-full rounded-xl border-none bg-brand-gray px-4 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-white/20"
+      />
     </div>
   );
 }
