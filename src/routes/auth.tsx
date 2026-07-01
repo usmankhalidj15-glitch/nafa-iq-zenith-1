@@ -3,10 +3,6 @@ import { useEffect, useState } from "react";
 import {
   motion,
   type Variants,
-  useReducedMotion,
-  useMotionValue,
-  useSpring,
-  useTransform,
 } from "framer-motion";
 import {
   Loader2,
@@ -183,8 +179,6 @@ function AuthPage() {
       className="relative flex min-h-screen w-full flex-col overflow-hidden p-2 transition-all duration-500 selection:bg-primary/30 md:p-4"
       style={{ backgroundColor: "#031310" }}
     >
-      {/* Full-bleed hero background across both columns */}
-      <HeroBackdrop />
 
       {/* ---------- Top nav (spans both columns) ---------- */}
       <nav className="relative z-20 flex items-center justify-between px-2 py-2 md:px-3 md:py-3">
@@ -206,14 +200,23 @@ function AuthPage() {
       {/* ---------- Columns ---------- */}
       <div className="relative z-10 flex flex-1 flex-col-reverse gap-2 md:flex-row-reverse md:gap-4">
         {/* Form column */}
-        <div className="relative flex flex-1 items-center justify-center px-4 py-8 sm:px-8 lg:px-12">
-          {/* Radial legibility overlay centered on the signup card */}
+        <div className="relative flex flex-1 items-center justify-center overflow-hidden rounded-3xl px-4 py-8 sm:px-8 lg:px-12">
+          {/* Right column background image */}
+          <img
+            src="/auth-right-bg.webp"
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover object-center"
+          />
+          {/* Radial legibility gradient centered behind the signup card */}
           <div
             className="pointer-events-none absolute inset-0 z-0"
             style={{
-              background: "radial-gradient(ellipse 45% 55% at center, rgba(0,0,0,0.6), transparent 65%)",
+              background:
+                "radial-gradient(ellipse 60% 65% at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.30) 55%, transparent 80%)",
             }}
           />
+
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -222,7 +225,7 @@ function AuthPage() {
             className="relative z-10 w-full max-w-md"
           >
             {/* Glass card */}
-            <div className="rounded-[22px] border border-white/10 bg-[#0a1512]/85 p-6 shadow-[0_24px_70px_-20px_rgba(0,0,0,0.85),0_0_50px_-12px_rgba(45,212,167,0.4)] backdrop-blur-md sm:p-8">
+            <div className="rounded-[22px] border border-white/10 bg-zinc-900/85 p-6 shadow-[0_0_60px_-15px_rgba(45,212,167,0.3)] backdrop-blur-md sm:p-8">
             {confirmSent ? (
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
@@ -465,23 +468,24 @@ function AuthVisualPanel({ currentStep }: { currentStep: number }) {
     <aside
       className="relative hidden w-[45%] flex-col justify-center overflow-hidden rounded-3xl px-8 py-12 md:flex lg:w-[50%] lg:px-14"
     >
-      {/* Radial legibility overlay centered on heading + steps */}
-      <div
-        className="pointer-events-none absolute inset-0 rounded-3xl"
-        style={{
-          background: "radial-gradient(ellipse 55% 50% at 30% 50%, rgba(0,0,0,0.6), transparent 65%)",
-        }}
+      {/* Left column background image */}
+      <img
+        src="/hero-bg.webp"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full rounded-3xl object-cover"
+        style={{ objectPosition: "left center" }}
       />
 
-
-      {/* Local gradient scrim behind the text block for extra legibility */}
+      {/* Small contained gradient behind the heading + paragraph text only */}
       <div
-        className="pointer-events-none absolute inset-y-0 left-0 z-0 w-[85%]"
+        className="pointer-events-none absolute inset-y-0 left-0 z-0 w-[55%] rounded-3xl"
         style={{
           background:
-            "linear-gradient(to right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.30) 55%, transparent 100%)",
+            "linear-gradient(to right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 55%, transparent 100%)",
         }}
       />
+
 
       <motion.div
         variants={container}
@@ -648,48 +652,6 @@ function FloatingInput({
       {trailing && (
         <span className="absolute right-3.5 top-1/2 -translate-y-1/2">{trailing}</span>
       )}
-    </div>
-  );
-}
-
-function HeroBackdrop() {
-  const reduce = useReducedMotion();
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-
-  // Springy cursor follow for a very subtle parallax on the hero image.
-  const sx = useSpring(mx, { stiffness: 40, damping: 22 });
-  const sy = useSpring(my, { stiffness: 40, damping: 22 });
-  const x = useTransform(sx, (v) => v * 14); // max ~±14px
-  const y = useTransform(sy, (v) => v * 10); // max ~±10px
-  const scale = useMotionValue(1.06);
-
-  useEffect(() => {
-    if (reduce) return;
-    const onMove = (e: MouseEvent) => {
-      mx.set(e.clientX / window.innerWidth - 0.5);
-      my.set(e.clientY / window.innerHeight - 0.5);
-    };
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
-  }, [mx, my, reduce]);
-
-  return (
-    <div
-      className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
-      aria-hidden="true"
-      style={{ backgroundColor: "#031310" }}
-    >
-      {/* Full-bleed hero image: flag/candles on the left, map/AI icons on the right */}
-      <motion.img
-        src="/auth-right-bg.webp"
-        alt=""
-        style={{ x, y, scale, filter: "saturate(0.85) brightness(0.9)", objectPosition: "55% 35%" }}
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-
-      {/* Global uniform darkening */}
-      <div className="absolute inset-0 bg-black/30" />
     </div>
   );
 }
