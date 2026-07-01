@@ -233,13 +233,10 @@ function AuthPage() {
           className="z-10 w-full max-w-xs space-y-8"
         >
           <motion.div variants={item} className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-primary/40 bg-primary/10 text-primary">
-              <BarChart3 className="h-5 w-5" strokeWidth={2.5} />
-            </span>
+            <LogoIcon className="h-9 w-9 text-primary" />
             <span className="font-display text-2xl font-bold tracking-tight text-text-primary">
               Nafa<span className="text-primary">IQ</span>
             </span>
-
           </motion.div>
 
           <motion.div variants={item} className="space-y-3">
