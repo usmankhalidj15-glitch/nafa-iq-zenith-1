@@ -460,8 +460,13 @@ function AuthVisualPanel({ currentStep }: { currentStep: number }) {
     <aside
       className="relative hidden w-[45%] flex-col justify-center overflow-hidden rounded-3xl px-8 py-12 md:flex lg:w-[50%] lg:px-14"
     >
-      {/* Legibility scrim over the panel background image */}
-      <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
+      {/* Radial legibility overlay centered on heading + steps */}
+      <div
+        className="pointer-events-none absolute inset-0 rounded-3xl"
+        style={{
+          background: "radial-gradient(ellipse 55% 50% at 30% 50%, rgba(0,0,0,0.6), transparent 65%)",
+        }}
+      />
 
 
       <motion.div
