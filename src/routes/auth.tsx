@@ -315,69 +315,208 @@ function AuthPage() {
       </div>
 
 
-      {/* ---------- Right column: hero ---------- */}
-      <div className="relative hidden min-h-[calc(100vh-2rem)] w-[45%] flex-col items-center justify-end overflow-hidden rounded-3xl border border-border px-6 pb-16 shadow-2xl md:flex lg:w-[52%] lg:px-12 lg:pb-32">
-        {/* CSS-only ambient background */}
-        <div
-          className="absolute inset-0 bg-surface"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 20% 15%, color-mix(in oklab, var(--color-primary) 18%, transparent), transparent 45%), radial-gradient(circle at 80% 85%, color-mix(in oklab, var(--color-primary) 12%, transparent), transparent 50%)",
-          }}
-        />
-
-        {/* faint grid */}
-        <div
-          className="absolute inset-0 opacity-[0.05]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, var(--color-text-primary) 1px, transparent 1px), linear-gradient(to bottom, var(--color-text-primary) 1px, transparent 1px)",
-            backgroundSize: "44px 44px",
-          }}
-        />
-
-        {/* floating glow orbs */}
-        <div className="absolute -left-16 top-1/4 h-64 w-64 rounded-full bg-primary/20 blur-3xl" />
-        <div className="absolute -right-20 top-2/3 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
-
-        {/* subtle bottom scrim so hero content reads clearly */}
-        <div className="absolute inset-x-0 bottom-0 z-[5] h-1/3 bg-gradient-to-t from-background/70 via-background/20 to-transparent" />
-
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="z-10 w-full max-w-xs space-y-8"
-        >
-          <motion.div variants={item} className="flex items-center gap-2.5">
-            <LogoIcon className="h-9 w-9 text-primary" />
-            <span className="font-display text-2xl font-bold tracking-tight text-text-primary">
-              Nafa<span className="text-primary">IQ</span>
-            </span>
-          </motion.div>
-
-          <motion.div variants={item} className="space-y-3">
-            <h1 className="font-display whitespace-nowrap text-4xl font-medium tracking-tight text-text-primary">
-              Join NafaIQ
-            </h1>
-            <p className="px-1 text-sm leading-relaxed text-text-secondary/80">
-              Follow these 3 quick phases to activate your space.
-            </p>
-          </motion.div>
-
-          <motion.div variants={item} className="space-y-3">
-            <StepItem number={1} text="Register your identity" active />
-            <StepItem number={2} text="Configure your studio" />
-            <StepItem number={3} text="Finalize your profile" />
-          </motion.div>
-
-        </motion.div>
-      </div>
+      <AuthVisualPanel />
     </main>
   );
 }
 
 /* ---------- Reusable components ---------- */
+
+function AuthVisualPanel() {
+  return (
+    <aside className="relative hidden min-h-[calc(100vh-2rem)] w-[45%] flex-col justify-end overflow-hidden rounded-3xl border border-border bg-background px-6 pb-14 shadow-2xl md:flex lg:w-[52%] lg:px-12 lg:pb-24">
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(145deg, var(--color-background) 0%, var(--color-sidebar) 38%, var(--color-background) 100%)",
+        }}
+      />
+
+      <svg
+        className="absolute inset-0 h-full w-full"
+        viewBox="0 0 760 980"
+        preserveAspectRatio="xMidYMid slice"
+        role="img"
+        aria-label="Pakistan market intelligence background"
+      >
+        <defs>
+          <radialGradient id="authGlow" cx="42%" cy="36%" r="70%">
+            <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0.22" />
+            <stop offset="52%" stopColor="var(--color-primary)" stopOpacity="0.08" />
+            <stop offset="100%" stopColor="var(--color-background)" stopOpacity="0" />
+          </radialGradient>
+          <linearGradient id="authWave" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0" />
+            <stop offset="48%" stopColor="var(--color-primary)" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="var(--color-ai)" stopOpacity="0" />
+          </linearGradient>
+          <pattern id="authGrid" width="36" height="36" patternUnits="userSpaceOnUse">
+            <path d="M36 0H0V36" fill="none" stroke="var(--color-primary)" strokeOpacity="0.08" />
+          </pattern>
+          <filter id="authSoftGlow" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="8" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        <rect width="760" height="980" fill="url(#authGlow)" />
+        <rect y="360" width="760" height="620" fill="url(#authGrid)" opacity="0.95" />
+
+        <g opacity="0.15" transform="translate(54 154)">
+          <path d="M82 0a88 88 0 1 0 93 132A70 70 0 1 1 82 0Z" fill="var(--color-primary)" />
+          <path d="m166 40 13 27 30 4-22 21 6 30-27-15-27 15 6-30-22-21 30-4Z" fill="var(--color-primary)" />
+        </g>
+
+        <MarketChart />
+        <PakistanDottedMap />
+        <DataWave />
+
+        <g transform="translate(530 510)" opacity="0.72">
+          <circle cx="70" cy="70" r="64" fill="none" stroke="var(--color-primary)" strokeOpacity="0.18" />
+          <circle cx="70" cy="70" r="52" fill="none" stroke="var(--color-primary)" strokeOpacity="0.3" />
+          <path d="M28 92h18V70h18v22h18V56h18v36h18" fill="var(--color-primary)" opacity="0.56" />
+          <path d="m28 70 24-18 20 12 42-44" fill="none" stroke="var(--color-primary)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="7" />
+          <path d="m102 21 18-4-5 18" fill="none" stroke="var(--color-primary)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="7" />
+        </g>
+
+        <g transform="translate(544 690)" opacity="0.72">
+          <rect width="104" height="104" rx="24" fill="var(--color-surface)" stroke="var(--color-primary)" strokeOpacity="0.45" />
+          <text x="52" y="67" textAnchor="middle" fontFamily="var(--font-display)" fontSize="42" fontWeight="700" fill="var(--color-primary)">AI</text>
+        </g>
+
+        <rect y="650" width="760" height="330" fill="var(--color-background)" opacity="0.56" />
+      </svg>
+
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="relative z-10 w-full max-w-xs space-y-8"
+      >
+        <motion.div variants={item} className="flex items-center gap-2.5">
+          <LogoIcon className="h-9 w-9 text-primary" />
+          <span className="font-display text-2xl font-bold tracking-tight text-text-primary">
+            Nafa<span className="text-primary">IQ</span>
+          </span>
+        </motion.div>
+
+        <motion.div variants={item} className="space-y-3">
+          <h1 className="font-display whitespace-nowrap text-4xl font-medium tracking-tight text-text-primary">
+            Join NafaIQ
+          </h1>
+          <p className="px-1 text-sm leading-relaxed text-text-secondary/80">
+            Follow these 3 quick phases to activate your space.
+          </p>
+        </motion.div>
+
+        <motion.div variants={item} className="space-y-3">
+          <StepItem number={1} text="Register your identity" active />
+          <StepItem number={2} text="Configure your studio" />
+          <StepItem number={3} text="Finalize your profile" />
+        </motion.div>
+      </motion.div>
+    </aside>
+  );
+}
+
+function MarketChart() {
+  const candles = [
+    [58, 660, 36, 78, 1],
+    [92, 632, 28, 94, 1],
+    [128, 606, 42, 118, 1],
+    [164, 620, 34, 82, 0],
+    [202, 584, 48, 146, 1],
+    [244, 548, 36, 112, 1],
+    [282, 520, 44, 170, 1],
+    [322, 492, 36, 122, 0],
+    [362, 456, 46, 160, 1],
+    [404, 486, 34, 126, 0],
+  ];
+
+  return (
+    <g opacity="0.62">
+      <path
+        d="M0 706 C78 686 124 602 202 628 C268 650 326 516 414 548"
+        fill="none"
+        stroke="var(--color-primary)"
+        strokeOpacity="0.45"
+        strokeWidth="2"
+      />
+      {candles.map(([x, y, body, wick, up], index) => (
+        <g key={index} transform={`translate(${x} ${y})`} opacity={0.45 + index * 0.035}>
+          <line x1="10" y1={-wick / 2} x2="10" y2={wick / 2} stroke="var(--color-primary)" strokeWidth="2" />
+          <rect
+            x="0"
+            y={up ? -body / 2 : -body / 3}
+            width="20"
+            height={body}
+            fill={up ? "var(--color-primary)" : "var(--color-surface-alt)"}
+            stroke="var(--color-primary)"
+            strokeOpacity="0.75"
+          />
+        </g>
+      ))}
+    </g>
+  );
+}
+
+function PakistanDottedMap() {
+  const dots = Array.from({ length: 168 }, (_, index) => {
+    const row = Math.floor(index / 14);
+    const col = index % 14;
+    const taper = row < 3 ? 3 - row : row > 8 ? row - 8 : 0;
+    return { x: 432 + col * 17 + taper * 9, y: 154 + row * 17, show: col > taper - 1 && col < 14 - Math.max(0, taper - 1) };
+  });
+
+  return (
+    <g filter="url(#authSoftGlow)" opacity="0.84">
+      <path
+        d="M506 166c58-54 160-52 212-10 34 27 18 75 56 100-48 8-72 34-86 72-27-16-61-14-84 8-36-32-82-14-128-22 18-43-5-72 30-148Z"
+        fill="none"
+        stroke="var(--color-primary)"
+        strokeOpacity="0.5"
+        strokeWidth="2"
+      />
+      {dots.map((dot, index) =>
+        dot.show ? (
+          <circle key={index} cx={dot.x} cy={dot.y} r="1.6" fill="var(--color-primary)" opacity="0.72" />
+        ) : null,
+      )}
+      <circle cx="628" cy="282" r="4" fill="var(--color-primary)" />
+      <circle cx="628" cy="282" r="18" fill="none" stroke="var(--color-primary)" strokeOpacity="0.28" />
+    </g>
+  );
+}
+
+function DataWave() {
+  const paths = Array.from({ length: 13 }, (_, index) => {
+    const y = 788 + index * 11;
+    const lift = index * 4;
+    return `M-30 ${y} C90 ${730 - lift} 184 ${858 + lift} 310 ${786 - lift} S542 ${724 + lift} 790 ${786 - lift}`;
+  });
+
+  return (
+    <g opacity="0.68">
+      {paths.map((d, index) => (
+        <path
+          key={index}
+          d={d}
+          fill="none"
+          stroke="url(#authWave)"
+          strokeWidth={index === 5 ? 2.4 : 1}
+          strokeOpacity={index === 5 ? 0.9 : 0.42}
+        />
+      ))}
+      <path d="M-20 792 C124 756 212 842 334 782 S576 720 800 786" fill="none" stroke="var(--color-primary)" strokeWidth="3" strokeOpacity="0.72" />
+    </g>
+  );
+}
 
 function StepItem({ number, text, active }: { number: number; text: string; active?: boolean }) {
   return (
