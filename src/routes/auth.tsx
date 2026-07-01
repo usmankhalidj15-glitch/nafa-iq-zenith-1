@@ -446,15 +446,16 @@ function AuthVisualPanel({ currentStep }: { currentStep: number }) {
     { number: 3, text: "Finalize your profile" },
   ];
   return (
-    <aside className="relative hidden w-[45%] flex-col justify-center overflow-hidden rounded-3xl px-8 py-12 md:flex lg:w-[50%] lg:px-14">
-      {/* Left column background image */}
+    <aside className="relative hidden h-full w-[45%] flex-col justify-center overflow-hidden rounded-3xl px-8 py-12 md:flex md:rounded-r-none lg:w-[50%] lg:px-14">
+      {/* Left column background image, strictly clipped to column bounds */}
       <img
         src="/hero-bg.webp"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 h-full w-full rounded-3xl object-cover"
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
         style={{ objectPosition: "left center" }}
       />
+
 
       {/* Small contained gradient behind the heading + paragraph text only */}
       <div
