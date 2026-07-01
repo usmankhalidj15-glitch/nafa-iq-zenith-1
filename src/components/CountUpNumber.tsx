@@ -38,17 +38,15 @@ export function CountUpNumber({
 }
 
 /**
- * Progress / score bar that fills from 0 -> `value`% on mount
- * with a 0.8s ease-out transition.
+ * Fill bar that animates its width from 0 -> `value`% on mount
+ * with a 0.8s ease-out transition. Drop in as the inner fill of a track.
  */
 export function AnimatedBar({
   value,
   className,
-  trackClassName,
 }: {
   value: number;
   className?: string;
-  trackClassName?: string;
 }) {
   const [w, setW] = useState(0);
   useEffect(() => {
@@ -56,11 +54,10 @@ export function AnimatedBar({
     return () => cancelAnimationFrame(id);
   }, [value]);
   return (
-    <div className={cn("h-full rounded-full", className)}>
-      <div
-        className={cn("h-full rounded-full transition-[width] duration-[800ms] ease-out", trackClassName)}
-        style={{ width: `${w}%` }}
-      />
-    </div>
+    <div
+      className={cn("h-full rounded-full transition-[width] duration-[800ms] ease-out", className)}
+      style={{ width: `${w}%` }}
+    />
   );
 }
+
