@@ -19,7 +19,7 @@ type AuthContextValue = {
     email: string,
     password: string,
     displayName: string,
-  ) => Promise<{ error: string | null }>;
+  ) => Promise<{ error: string | null; needsConfirmation: boolean }>;
   signInWithGoogle: () => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
 };
@@ -89,7 +89,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     password,
     displayName,
   ) => {
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -102,6 +102,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     return {
       error: error?.message ?? null,
+      // When email confirmation is required, signUp returns a user but no session.
+      needsConfirmation: !error && !!data.user && !data.session,
     };
   };
 
