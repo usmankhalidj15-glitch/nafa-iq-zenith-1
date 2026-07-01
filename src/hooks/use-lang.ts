@@ -1,4 +1,5 @@
 import { useSyncExternalStore, useCallback } from "react";
+import { LEARN_UR } from "@/lib/learn-ur";
 
 export type Lang = "en" | "ur";
 
