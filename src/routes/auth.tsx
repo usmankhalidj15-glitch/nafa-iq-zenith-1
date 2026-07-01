@@ -56,6 +56,16 @@ const item: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
+const formContainer: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
+};
+
+const formItem: Variants = {
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+};
+
 function LogoIcon({ className }: { className?: string }) {
   return (
     <img
@@ -157,40 +167,50 @@ function AuthPage() {
     { label: "Strong", color: "var(--color-primary)" },
   ][pwScore];
 
+  // Derive which guided step is active so the visual panel mirrors form progress.
+  const currentStep = confirmSent
+    ? 3
+    : !isSignup
+      ? 2
+      : firstName.trim() && lastName.trim()
+        ? email.trim() && password.length >= 8
+          ? 3
+          : 2
+        : 1;
+
   return (
-    <main className="relative flex min-h-screen w-full flex-col-reverse bg-background p-2 transition-all duration-500 selection:bg-primary/30 md:flex-row-reverse md:p-4">
-
-      {/* ---------- Left column: form ---------- */}
-      <div className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-10 sm:px-8 md:py-10 lg:px-12">
-        <AuthAmbientBackground />
-
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="relative z-10 w-full max-w-md"
+    <main className="relative flex min-h-screen w-full flex-col bg-background p-2 transition-all duration-500 selection:bg-primary/30 md:p-4">
+      {/* ---------- Top nav (spans both columns) ---------- */}
+      <nav className="relative z-20 flex items-center justify-between px-2 py-2 md:px-3 md:py-3">
+        <div className="flex items-center gap-2.5">
+          <LogoIcon className="h-9 w-9 rounded-[8px] ring-1 ring-bull/30" />
+          <span className="font-display text-2xl font-bold tracking-tight text-text-primary">
+            Nafa<span className="text-primary">IQ</span>
+          </span>
+        </div>
+        <Link
+          to="/"
+          className="group inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-surface/40 px-3.5 py-2 text-xs font-medium text-text-muted backdrop-blur-md transition-all duration-200 hover:border-white/20 hover:text-text-primary"
         >
-          {/* Back to home */}
-          <div className="mb-4">
-            <Link
-              to="/"
-              className="group inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-surface/40 px-3 py-1.5 text-[11px] font-medium text-text-muted backdrop-blur-md transition-all duration-200 hover:border-white/20 hover:text-text-primary"
-            >
-              <ArrowLeft className="h-3 w-3 transition-transform duration-200 group-hover:-translate-x-0.5" />
-              Back to home
-            </Link>
-          </div>
+          <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-x-0.5" />
+          Back to home
+        </Link>
+      </nav>
 
-          {/* Logo */}
-          <div className="mb-8 flex items-center gap-2.5">
-            <LogoIcon className="h-9 w-9 rounded-[8px] ring-1 ring-bull/30" />
-            <span className="font-display text-2xl font-bold tracking-tight text-text-primary">
-              Nafa<span className="text-primary">IQ</span>
-            </span>
-          </div>
+      {/* ---------- Columns ---------- */}
+      <div className="flex flex-1 flex-col-reverse gap-2 md:flex-row-reverse md:gap-4">
+        {/* Form column */}
+        <div className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-8 sm:px-8 lg:px-12">
+          <AuthAmbientBackground />
 
-          {/* Glass card */}
-          <div className="rounded-[22px] border border-white/10 bg-surface/80 p-6 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.8),0_0_40px_-12px_rgba(45,212,167,0.35)] backdrop-blur-2xl sm:p-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="relative z-10 w-full max-w-md"
+          >
+            {/* Glass card */}
+            <div className="rounded-[22px] border border-white/10 bg-surface/80 p-6 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.8),0_0_40px_-12px_rgba(45,212,167,0.35)] backdrop-blur-2xl sm:p-8">
             {confirmSent ? (
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
@@ -244,9 +264,15 @@ function AuthPage() {
                   <div className="flex-1 border-t border-border" />
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <motion.form
+                  onSubmit={handleSubmit}
+                  className="space-y-4"
+                  variants={formContainer}
+                  initial="hidden"
+                  animate="show"
+                >
                   {isSignup && (
-                    <div className="grid grid-cols-2 gap-3">
+                    <motion.div variants={formItem} className="grid grid-cols-2 gap-3">
                       <FloatingInput
                         id="firstName"
                         label="First name"
@@ -265,21 +291,23 @@ function AuthPage() {
                         autoComplete="family-name"
                         icon={<User className="h-4 w-4" />}
                       />
-                    </div>
+                    </motion.div>
                   )}
 
-                  <FloatingInput
-                    id="email"
-                    label="Email address"
-                    type="email"
-                    value={email}
-                    onChange={setEmail}
-                    autoComplete="email"
-                    required
-                    icon={<Mail className="h-4 w-4" />}
-                  />
+                  <motion.div variants={formItem}>
+                    <FloatingInput
+                      id="email"
+                      label="Email address"
+                      type="email"
+                      value={email}
+                      onChange={setEmail}
+                      autoComplete="email"
+                      required
+                      icon={<Mail className="h-4 w-4" />}
+                    />
+                  </motion.div>
 
-                  <div className="space-y-2.5">
+                  <motion.div variants={formItem} className="space-y-2.5">
                     <FloatingInput
                       id="password"
                       label="Password"
@@ -358,9 +386,10 @@ function AuthPage() {
                         </ul>
                       </motion.div>
                     )}
-                  </div>
+                  </motion.div>
 
-                  <button
+                  <motion.button
+                    variants={formItem}
                     type="submit"
                     disabled={busy}
                     className="group mt-2 flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-info font-semibold text-primary-foreground shadow-[0_8px_24px_-8px_color-mix(in_oklab,var(--color-primary)_60%,transparent)] transition-all duration-200 hover:brightness-110 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:brightness-100"
@@ -373,8 +402,8 @@ function AuthPage() {
                         <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
                       </>
                     )}
-                  </button>
-                </form>
+                  </motion.button>
+                </motion.form>
 
                 <div className="space-y-3 pt-1 text-center">
                   <p className="text-sm text-text-muted">
@@ -402,22 +431,26 @@ function AuthPage() {
                 </div>
               </div>
             )}
-          </div>
-        </motion.div>
+            </div>
+          </motion.div>
+        </div>
+
+        <AuthVisualPanel currentStep={currentStep} />
       </div>
-
-
-
-      <AuthVisualPanel />
     </main>
   );
 }
 
 /* ---------- Reusable components ---------- */
 
-function AuthVisualPanel() {
+function AuthVisualPanel({ currentStep }: { currentStep: number }) {
+  const steps = [
+    { number: 1, text: "Register your identity" },
+    { number: 2, text: "Configure your studio" },
+    { number: 3, text: "Finalize your profile" },
+  ];
   return (
-    <aside className="relative hidden min-h-[calc(100vh-2rem)] w-[45%] flex-col justify-center overflow-hidden rounded-3xl border border-border bg-[#0a1410] px-8 py-12 shadow-2xl md:flex lg:w-[50%] lg:px-14">
+    <aside className="relative hidden w-[45%] flex-col justify-center overflow-hidden rounded-3xl border border-border bg-[#0a1410] px-8 py-12 shadow-2xl md:flex lg:w-[50%] lg:px-14">
       <img
         src="/hero-bg.webp"
         alt=""
@@ -433,34 +466,32 @@ function AuthVisualPanel() {
         }}
       />
 
-
-
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
         className="relative z-10 w-full max-w-xs space-y-8"
       >
-        <motion.div variants={item} className="flex items-center gap-2.5">
-          <LogoIcon className="h-9 w-9 rounded-[8px] ring-1 ring-bull/30" />
-          <span className="font-display text-2xl font-bold tracking-tight text-text-primary">
-            Nafa<span className="text-primary">IQ</span>
-          </span>
-        </motion.div>
-
         <motion.div variants={item} className="space-y-3">
           <h1 className="font-display whitespace-nowrap text-4xl font-medium tracking-tight text-text-primary">
             Join NafaIQ
           </h1>
-          <p className="px-1 text-sm leading-relaxed text-text-secondary/80">
+          <p className="px-1 text-sm leading-relaxed text-text-secondary">
             Follow these 3 quick phases to activate your space.
           </p>
         </motion.div>
 
         <motion.div variants={item} className="space-y-3">
-          <StepItem number={1} text="Register your identity" active />
-          <StepItem number={2} text="Configure your studio" />
-          <StepItem number={3} text="Finalize your profile" />
+          {steps.map((s) => (
+            <StepItem
+              key={s.number}
+              number={s.number}
+              text={s.text}
+              state={
+                s.number < currentStep ? "done" : s.number === currentStep ? "active" : "todo"
+              }
+            />
+          ))}
         </motion.div>
       </motion.div>
     </aside>
@@ -468,28 +499,45 @@ function AuthVisualPanel() {
 }
 
 
-function StepItem({ number, text, active }: { number: number; text: string; active?: boolean }) {
+function StepItem({
+  number,
+  text,
+  state,
+}: {
+  number: number;
+  text: string;
+  state: "done" | "active" | "todo";
+}) {
+  const active = state === "active";
+  const done = state === "done";
   return (
     <div
       className={
-        "flex items-center gap-3 rounded-2xl px-4 py-3 " +
+        "flex items-center gap-3 rounded-2xl px-4 py-3 transition-colors duration-300 " +
         (active
           ? "border border-primary bg-primary text-primary-foreground"
-          : "border border-border bg-surface text-text-primary")
+          : done
+            ? "border border-primary/40 bg-primary/10 text-text-primary"
+            : "border border-border bg-surface text-text-primary")
       }
     >
       <span
         className={
           "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-sm font-semibold " +
-          (active ? "bg-primary-foreground/15 text-primary-foreground" : "bg-white/10 text-text-muted")
+          (active
+            ? "bg-primary-foreground/20 text-primary-foreground"
+            : done
+              ? "bg-primary/25 text-primary"
+              : "bg-white/15 text-text-secondary")
         }
       >
-        {active ? <Check className="h-4 w-4" /> : number}
+        {done ? <Check className="h-4 w-4" /> : number}
       </span>
       <span className="text-sm font-medium">{text}</span>
     </div>
   );
 }
+
 
 function GoogleIcon({ className }: { className?: string }) {
   return (
