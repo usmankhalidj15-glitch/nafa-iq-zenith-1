@@ -780,7 +780,7 @@ function QuizView({
               transition={{ duration: 0.25, ease: "easeOut" }}
             >
               <div className="mb-6 text-[20px] font-semibold leading-snug text-text-primary">
-                {q.q.q}
+                {t(q.q.q)}
               </div>
 
               <div className="space-y-3">
