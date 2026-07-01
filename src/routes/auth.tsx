@@ -155,7 +155,7 @@ function AuthPage() {
       </Link>
 
       {/* ---------- Left column: form ---------- */}
-      <div className="flex flex-1 flex-col items-center justify-center px-4 py-12 sm:px-12 lg:px-16 lg:py-6 xl:px-24">
+      <div className="flex flex-1 flex-col items-center justify-center px-4 py-12 sm:px-12 lg:px-16 lg:pt-16 lg:pb-6 xl:px-24">
         {confirmSent ? (
           <motion.div
             initial={{ opacity: 0, y: 12 }}
