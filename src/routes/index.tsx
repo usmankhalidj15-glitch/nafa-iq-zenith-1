@@ -1345,47 +1345,76 @@ function HowItWorksDesktop() {
 
   return (
     <div className="mt-16 hidden grid-cols-2 gap-16 lg:grid">
-      {/* Left: tall scrolling steps */}
-      <div>
-        {STEPS.map((s, i) => (
-          <div
-            key={s.step}
-            data-index={i}
-            ref={(el) => {
-              stepRefs.current[i] = el;
-            }}
-            className="flex min-h-[80vh] flex-col justify-center"
-          >
+      {/* Left: tall scrolling steps with progress rail */}
+      <div className="relative pl-16">
+        {/* Vertical rail track */}
+        <div className="absolute left-[27px] top-0 bottom-0 w-px bg-white/[0.08]" />
+        {/* Vertical rail progress fill */}
+        <div
+          className="absolute left-[27px] top-0 w-px bg-gradient-to-b from-bull via-bull to-bull/40 transition-[height] duration-700 ease-out"
+          style={{
+            height: `${((active + 1) / STEPS.length) * 100}%`,
+            boxShadow: "0 0 12px rgba(0,212,170,0.6)",
+          }}
+        />
+
+        {STEPS.map((s, i) => {
+          const done = i <= active;
+          return (
             <div
-              className="transition-all duration-500"
-              style={{ opacity: active === i ? 1 : 0.35 }}
+              key={s.step}
+              data-index={i}
+              ref={(el) => {
+                stepRefs.current[i] = el;
+              }}
+              className="relative flex min-h-[80vh] flex-col justify-center"
             >
-              <div className="flex items-center gap-4">
-                <div
-                  className="flex h-12 w-12 items-center justify-center rounded-[12px] transition-colors duration-500"
+              {/* Rail dot centered on this step */}
+              <span
+                className="absolute left-[-52px] top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center"
+                aria-hidden
+              >
+                <span
+                  className="h-3 w-3 rounded-full transition-all duration-500"
                   style={{
-                    background: active === i ? "rgba(0,212,170,0.15)" : "rgba(255,255,255,0.05)",
+                    background: done ? "rgb(0,212,170)" : "rgba(255,255,255,0.18)",
+                    transform: active === i ? "scale(1.35)" : "scale(1)",
+                    boxShadow: active === i ? "0 0 16px 3px rgba(0,212,170,0.7)" : "none",
                   }}
-                >
-                  <span className="font-mono text-lg font-bold text-bull">{s.step}</span>
+                />
+              </span>
+
+              <div
+                className="transition-all duration-500"
+                style={{ opacity: active === i ? 1 : 0.35 }}
+              >
+                <div className="flex items-center gap-4">
+                  <div
+                    className="flex h-12 w-12 items-center justify-center rounded-[12px] transition-colors duration-500"
+                    style={{
+                      background: active === i ? "rgba(0,212,170,0.15)" : "rgba(255,255,255,0.05)",
+                    }}
+                  >
+                    <span className="font-mono text-lg font-bold text-bull">{s.step}</span>
+                  </div>
+                  <h3
+                    className={cn(
+                      "text-2xl transition-all duration-500",
+                      active === i
+                        ? "font-bold text-text-primary"
+                        : "font-semibold text-text-secondary",
+                    )}
+                  >
+                    {s.title}
+                  </h3>
                 </div>
-                <h3
-                  className={cn(
-                    "text-2xl transition-all duration-500",
-                    active === i
-                      ? "font-bold text-text-primary"
-                      : "font-semibold text-text-secondary",
-                  )}
-                >
-                  {s.title}
-                </h3>
+                <p className="mt-4 max-w-[420px] text-base leading-[1.6] text-text-secondary">
+                  {s.desc}
+                </p>
               </div>
-              <p className="mt-4 max-w-[420px] text-base leading-[1.6] text-text-secondary">
-                {s.desc}
-              </p>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Right: sticky panel with crossfade */}
