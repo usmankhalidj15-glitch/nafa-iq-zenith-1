@@ -1127,7 +1127,7 @@ function Zakat() {
             {t("Nisab Threshold")}
           </div>
           <div className="mt-1 font-mono text-2xl font-bold tabular-nums text-gold">
-            {fmtPKR(NISAB)}
+            <CountUpNumber value={NISAB} prefix="PKR " preserveValue />
           </div>
           <div
             className={cn(
