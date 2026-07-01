@@ -501,60 +501,146 @@ function StepItem({ number, text, active }: { number: number; text: string; acti
   );
 }
 
-function SocialButton({
-  icon,
-  label,
-  onClick,
-  disabled,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  onClick?: () => void;
-  disabled?: boolean;
-}) {
+function GoogleIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <path
+        fill="#4285F4"
+        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1Z"
+      />
+      <path
+        fill="#34A853"
+        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23Z"
+      />
+      <path
+        fill="#FBBC05"
+        d="M5.84 14.1a6.6 6.6 0 0 1 0-4.2V7.06H2.18a11 11 0 0 0 0 9.88l3.66-2.84Z"
+      />
+      <path
+        fill="#EA4335"
+        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1a11 11 0 0 0-9.82 6.06l3.66 2.84C6.71 7.3 9.14 5.38 12 5.38Z"
+      />
+    </svg>
+  );
+}
+
+function GoogleButton({ onClick, disabled }: { onClick?: () => void; disabled?: boolean }) {
   return (
     <button
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="flex h-12 w-full items-center justify-center gap-2.5 rounded-xl border border-border bg-surface text-sm font-medium text-text-primary transition-colors hover:bg-hover disabled:opacity-60"
+      className="flex h-13 w-full items-center justify-center gap-3 rounded-xl border border-border bg-surface/50 py-3.5 text-sm font-medium text-text-primary transition-all duration-200 hover:border-border-hover hover:bg-hover active:scale-[0.99] disabled:opacity-60"
     >
-      {icon}
-      {label}
+      <GoogleIcon className="h-5 w-5" />
+      Continue with Google
     </button>
   );
 }
 
-function InputGroup({
+function FloatingInput({
+  id,
   label,
-  placeholder,
   type,
   value,
   onChange,
   autoComplete,
   required,
+  minLength,
+  icon,
+  trailing,
 }: {
+  id: string;
   label: string;
-  placeholder: string;
   type: string;
   value: string;
   onChange: (v: string) => void;
   autoComplete?: string;
   required?: boolean;
+  minLength?: number;
+  icon?: React.ReactNode;
+  trailing?: React.ReactNode;
 }) {
   return (
-    <div className="space-y-1.5">
-      <label className="text-sm font-medium text-text-primary">{label}</label>
+    <div className="group relative">
+      <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted transition-colors duration-200 group-focus-within:text-primary">
+        {icon}
+      </span>
       <input
+        id={id}
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
+        placeholder=" "
         autoComplete={autoComplete}
         required={required}
-        className="h-11 w-full rounded-xl border border-border bg-surface px-4 text-text-primary placeholder:text-text-muted/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+        minLength={minLength}
+        className="peer h-14 w-full rounded-xl border border-border bg-surface/40 px-4 pl-10 pt-4 text-sm text-text-primary transition-all duration-200 focus:border-primary focus:bg-surface/70 focus:outline-none focus:ring-2 focus:ring-primary/25"
+        style={trailing ? { paddingRight: "2.75rem" } : undefined}
       />
+      <label
+        htmlFor={id}
+        className="pointer-events-none absolute left-10 top-1/2 -translate-y-1/2 text-sm text-text-muted transition-all duration-200 peer-focus:top-3.5 peer-focus:text-[11px] peer-focus:font-medium peer-focus:text-primary peer-[:not(:placeholder-shown)]:top-3.5 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:font-medium"
+      >
+        {label}
+      </label>
+      {trailing && (
+        <span className="absolute right-3.5 top-1/2 -translate-y-1/2">{trailing}</span>
+      )}
     </div>
   );
-
 }
+
+function AuthAmbientBackground() {
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+      {/* teal gradient glows */}
+      <div className="absolute -left-24 top-0 h-96 w-96 rounded-full bg-primary/10 blur-[120px]" />
+      <div className="absolute -bottom-24 right-0 h-96 w-96 rounded-full bg-info/10 blur-[120px]" />
+
+      <svg className="absolute inset-0 h-full w-full opacity-[0.5]" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id="loginGrid" width="42" height="42" patternUnits="userSpaceOnUse">
+            <path d="M42 0H0V42" fill="none" stroke="var(--color-primary)" strokeOpacity="0.05" />
+          </pattern>
+          <linearGradient id="loginLine" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0" />
+            <stop offset="50%" stopColor="var(--color-primary)" stopOpacity="0.35" />
+            <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#loginGrid)" />
+        {/* candlesticks */}
+        <g opacity="0.14" transform="translate(40 60)">
+          {[
+            [0, 40, 60, 90],
+            [26, 20, 80, 120],
+            [52, 55, 45, 70],
+            [78, 10, 90, 140],
+            [104, 45, 55, 80],
+          ].map(([x, y, body, wick], i) => (
+            <g key={i} transform={`translate(${x} ${y})`}>
+              <line x1="6" y1="0" x2="6" y2={wick} stroke="var(--color-primary)" strokeWidth="1.5" />
+              <rect x="0" y={(wick - body) / 2} width="12" height={body} fill="var(--color-primary)" />
+            </g>
+          ))}
+        </g>
+        {/* neural nodes */}
+        <g opacity="0.16">
+          <line x1="82%" y1="16%" x2="92%" y2="30%" stroke="url(#loginLine)" strokeWidth="1" />
+          <line x1="92%" y1="30%" x2="80%" y2="42%" stroke="url(#loginLine)" strokeWidth="1" />
+          <line x1="80%" y1="42%" x2="94%" y2="54%" stroke="url(#loginLine)" strokeWidth="1" />
+          {[
+            ["82%", "16%"],
+            ["92%", "30%"],
+            ["80%", "42%"],
+            ["94%", "54%"],
+          ].map(([cx, cy], i) => (
+            <circle key={i} cx={cx} cy={cy} r="2.5" fill="var(--color-primary)" />
+          ))}
+        </g>
+      </svg>
+    </div>
+  );
+}
+
