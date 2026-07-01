@@ -70,12 +70,10 @@ export const askTutor = createServerFn({ method: "POST" })
         choices?: { message?: { content?: string } }[];
       };
       const reply = json.choices?.[0]?.message?.content?.trim();
-      return (
-        { reply } ||
-        fallback(
-          "I'm not sure how to answer that — could you rephrase?",
-          "مجھے یقین نہیں کہ اس کا جواب کیسے دوں — کیا آپ اسے دوبارہ واضح کر سکتے ہیں؟",
-        )
+      if (reply) return { reply };
+      return fallback(
+        "I'm not sure how to answer that — could you rephrase?",
+        "مجھے یقین نہیں کہ اس کا جواب کیسے دوں — کیا آپ اسے دوبارہ واضح کر سکتے ہیں؟",
       );
     } catch {
       return fallback(
