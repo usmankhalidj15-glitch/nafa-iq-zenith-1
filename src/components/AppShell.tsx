@@ -101,10 +101,7 @@ function SidebarLink({
           layoutId="sidebar-active-pill"
           className="absolute inset-0 rounded-[10px] bg-bull/[0.10]"
           transition={{ type: "spring", stiffness: 400, damping: 32 }}
-        >
-          {/* top glow light */}
-          <span className="absolute left-1/2 top-0 h-[2px] w-2/3 -translate-x-1/2 rounded-full bg-bull shadow-[0_0_10px_1px_var(--color-bull)]" />
-        </motion.span>
+        />
       )}
       {/* left-edge accent bar */}
       <span
@@ -499,10 +496,7 @@ function BottomNav() {
                   layoutId="bottomnav-active-pill"
                   className="absolute inset-0 rounded-full bg-gold/15"
                   transition={{ type: "spring", stiffness: 400, damping: 32 }}
-                >
-                  {/* top glow light */}
-                  <span className="absolute left-1/2 top-0 h-[2px] w-1/2 -translate-x-1/2 rounded-full bg-gold shadow-[0_0_10px_1px_var(--color-gold)]" />
-                </motion.span>
+                />
               )}
               <t.icon
                 className={cn(
