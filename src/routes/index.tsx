@@ -1579,7 +1579,7 @@ function FAQ() {
                   }}
                 >
                   <div className="overflow-hidden">
-                    <p className="pb-6 pl-13 pr-6 text-sm leading-relaxed text-text-secondary">
+                    <p className="pb-6 pl-[52px] pr-6 text-sm leading-relaxed text-text-secondary">
                       {f.a}
                     </p>
                   </div>
