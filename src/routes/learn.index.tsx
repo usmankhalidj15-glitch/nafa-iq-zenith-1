@@ -21,6 +21,7 @@ import { useLearn } from "@/hooks/use-learn";
 import { useServerFn } from "@tanstack/react-start";
 import { askTutor } from "@/lib/learn-ai.functions";
 import { cn } from "@/lib/utils";
+import { AnimatedBar } from "@/components/CountUpNumber";
 import { useLang } from "@/hooks/use-lang";
 
 export const Route = createFileRoute("/learn/")({
