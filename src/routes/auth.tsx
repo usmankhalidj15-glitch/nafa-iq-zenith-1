@@ -322,10 +322,10 @@ function AuthPage() {
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${authBg.url})` }}
         />
-        <div className="absolute inset-0 bg-background/30" />
+        <div className="absolute inset-0 bg-background/10" />
 
         {/* subtle bottom scrim so hero content reads clearly */}
-        <div className="absolute inset-x-0 bottom-0 z-[5] h-2/3 bg-gradient-to-t from-background via-background/60 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 z-[5] h-1/2 bg-gradient-to-t from-background/80 via-background/30 to-transparent" />
 
         <motion.div
           variants={container}
