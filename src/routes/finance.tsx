@@ -24,7 +24,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { EmojiIcon } from "@/components/icons";
 import { Card } from "@/components/Card";
-import { AnimatedBar } from "@/components/CountUpNumber";
+import { AnimatedBar, CountUpNumber } from "@/components/CountUpNumber";
 import { IncomeExpenseChart, Sparkline } from "@/components/charts";
 import { Typewriter } from "@/components/Typewriter";
 import { fmtPKR } from "@/lib/data";
