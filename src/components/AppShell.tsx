@@ -629,9 +629,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 <LogOut className="h-4 w-4" /> {t("Sign out")}
               </button>
             </div>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
