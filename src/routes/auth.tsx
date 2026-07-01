@@ -458,7 +458,7 @@ function AuthVisualPanel({ currentStep }: { currentStep: number }) {
   ];
   return (
     <aside
-      className="relative hidden w-[45%] flex-col justify-center rounded-3xl px-8 py-12 md:flex lg:w-[50%] lg:px-14"
+      className="relative hidden w-[45%] flex-col justify-center overflow-hidden rounded-3xl px-8 py-12 md:flex lg:w-[50%] lg:px-14"
       style={{
         backgroundImage: "url(/auth-right-bg.webp)",
         backgroundSize: "cover",
@@ -642,6 +642,7 @@ function HeroBackdrop() {
   const sy = useSpring(my, { stiffness: 40, damping: 22 });
   const x = useTransform(sx, (v) => v * 14); // max ~±14px
   const y = useTransform(sy, (v) => v * 10); // max ~±10px
+  const scale = useMotionValue(1.06);
 
   useEffect(() => {
     if (reduce) return;
@@ -663,8 +664,8 @@ function HeroBackdrop() {
       <motion.img
         src="/hero-bg.webp"
         alt=""
-        style={{ x, y, filter: "saturate(1.2) brightness(1.04)" }}
-        className="absolute inset-0 h-full w-full scale-[1.06] object-cover object-center"
+        style={{ x, y, scale, filter: "saturate(1.2) brightness(1.04)" }}
+        className="absolute inset-0 h-full w-full object-cover object-center"
       />
 
       {/* Dark gradient behind the right column/card for contrast */}
