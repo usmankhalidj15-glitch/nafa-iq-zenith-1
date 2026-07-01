@@ -4,7 +4,7 @@ import { motion, type Variants } from "framer-motion";
 import { Loader2, Chrome, Eye, EyeOff, Check, ArrowLeft, MailCheck } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/use-auth";
-import authBg from "@/assets/auth-bg.png.asset.json";
+
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>): { redirect?: string } => ({
@@ -317,16 +317,31 @@ function AuthPage() {
 
       {/* ---------- Right column: hero ---------- */}
       <div className="relative hidden min-h-[calc(100vh-2rem)] w-[45%] flex-col items-center justify-end overflow-hidden rounded-3xl border border-border px-6 pb-16 shadow-2xl md:flex lg:w-[52%] lg:px-12 lg:pb-32">
-        {/* uploaded image background */}
-        <img
-          src={authBg.url}
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 h-full w-full object-cover object-center"
+        {/* CSS-only ambient background */}
+        <div
+          className="absolute inset-0 bg-surface"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 20% 15%, color-mix(in oklab, var(--color-primary) 18%, transparent), transparent 45%), radial-gradient(circle at 80% 85%, color-mix(in oklab, var(--color-primary) 12%, transparent), transparent 50%)",
+          }}
         />
 
+        {/* faint grid */}
+        <div
+          className="absolute inset-0 opacity-[0.05]"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, var(--color-text-primary) 1px, transparent 1px), linear-gradient(to bottom, var(--color-text-primary) 1px, transparent 1px)",
+            backgroundSize: "44px 44px",
+          }}
+        />
+
+        {/* floating glow orbs */}
+        <div className="absolute -left-16 top-1/4 h-64 w-64 rounded-full bg-primary/20 blur-3xl" />
+        <div className="absolute -right-20 top-2/3 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
+
         {/* subtle bottom scrim so hero content reads clearly */}
-        <div className="absolute inset-x-0 bottom-0 z-[5] h-1/3 bg-gradient-to-t from-background/55 via-background/10 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 z-[5] h-1/3 bg-gradient-to-t from-background/70 via-background/20 to-transparent" />
 
         <motion.div
           variants={container}
