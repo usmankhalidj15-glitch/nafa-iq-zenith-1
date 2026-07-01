@@ -600,6 +600,23 @@ export function translate(lang: Lang, key: string): string {
   return UR[key] ?? key;
 }
 
+/** Current app language, readable outside React (e.g. number formatters). */
+export function getCurrentLang(): Lang {
+  return current;
+}
+
+const URDU_DIGITS = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+
+/** Convert ASCII digits in a string to Urdu (Extended Arabic-Indic) numerals. */
+export function toUrduDigits(input: string): string {
+  return input.replace(/[0-9]/g, (d) => URDU_DIGITS[Number(d)]);
+}
+
+/** Localize digits in a formatted string based on the current app language. */
+export function localizeDigits(input: string): string {
+  return current === "ur" ? toUrduDigits(input) : input;
+}
+
 /**
  * App language (English / Urdu) shared across components and persisted.
  * Scoped to the authenticated app — the landing page stays English.
