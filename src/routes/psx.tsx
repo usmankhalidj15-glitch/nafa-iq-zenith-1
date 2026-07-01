@@ -109,7 +109,18 @@ export default function PSX() {
     () => generateOHLCV(meta.seed, meta.start, meta.end, 250, meta.vMin, meta.vMax),
     [sym],
   );
-  const data = full.slice(-tfDays(tf));
+  const visibleCount = tfDays(tf);
+  const data = full.slice(-visibleCount);
+  // Compute MAs over the full 250-point series (so MA200 warms up), then align
+  // to the visible window — otherwise short timeframes render an empty MA line.
+  const maSeries = useMemo(() => {
+    const start = Math.max(0, full.length - visibleCount);
+    return {
+      ma20: sma(full, 20).slice(start),
+      ma50: sma(full, 50).slice(start),
+      ma200: sma(full, 200).slice(start),
+    };
+  }, [full, visibleCount]);
   const last = data[data.length - 1];
   const first = data[0];
   const chg = last.close - first.open;
