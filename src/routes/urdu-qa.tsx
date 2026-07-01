@@ -18,6 +18,7 @@ import { Change } from "@/components/Change";
 import { SignalBadge } from "@/components/SignalBadge";
 import { fieldClass } from "@/components/Modal";
 import { EmojiIcon } from "@/components/icons";
+import { AnimatedBar } from "@/components/CountUpNumber";
 import type { Signal } from "@/lib/data";
 import { useLang } from "@/hooks/use-lang";
 import { cn } from "@/lib/utils";
