@@ -153,16 +153,6 @@ function AuthPage() {
   return (
     <main className="relative flex min-h-screen w-full flex-col-reverse bg-background p-2 transition-all duration-500 selection:bg-primary/30 md:flex-row-reverse md:p-4">
 
-      {/* Back to home — top left */}
-      <Link
-        to="/"
-        className="group absolute left-4 top-4 z-30 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-surface/60 px-3.5 py-2 text-xs font-medium text-text-muted backdrop-blur-md transition-all duration-200 hover:border-white/20 hover:text-text-primary md:left-6 md:top-6"
-      >
-        <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-x-0.5" />
-        Back to home
-      </Link>
-
-
       {/* ---------- Left column: form ---------- */}
       <div className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-10 sm:px-8 md:py-10 lg:px-12">
         <AuthAmbientBackground />
@@ -173,6 +163,17 @@ function AuthPage() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="relative z-10 w-full max-w-md"
         >
+          {/* Back to home */}
+          <div className="mb-4">
+            <Link
+              to="/"
+              className="group inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-surface/40 px-3 py-1.5 text-[11px] font-medium text-text-muted backdrop-blur-md transition-all duration-200 hover:border-white/20 hover:text-text-primary"
+            >
+              <ArrowLeft className="h-3 w-3 transition-transform duration-200 group-hover:-translate-x-0.5" />
+              Back to home
+            </Link>
+          </div>
+
           {/* Logo */}
           <div className="mb-8 flex items-center gap-2.5">
             <LogoIcon className="h-9 w-9 rounded-[8px] ring-1 ring-bull/30" />
