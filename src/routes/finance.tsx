@@ -24,7 +24,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { EmojiIcon } from "@/components/icons";
 import { Card } from "@/components/Card";
-import { AnimatedBar } from "@/components/CountUpNumber";
+import { AnimatedBar, CountUpNumber } from "@/components/CountUpNumber";
 import { IncomeExpenseChart, Sparkline } from "@/components/charts";
 import { Typewriter } from "@/components/Typewriter";
 import { fmtPKR } from "@/lib/data";
@@ -1091,7 +1091,7 @@ function Zakat() {
         <div className="mt-5 flex items-center justify-between border-t border-white/[0.06] pt-4">
           <span className="text-sm font-bold text-text-primary">{t("Total Assets")}</span>
           <span className="font-mono text-base font-bold tabular-nums text-text-primary">
-            {fmtPKR(totalAssets)}
+            <CountUpNumber value={totalAssets} prefix="PKR " preserveValue />
           </span>
         </div>
       </Card>
@@ -1127,7 +1127,7 @@ function Zakat() {
             {t("Nisab Threshold")}
           </div>
           <div className="mt-1 font-mono text-2xl font-bold tabular-nums text-gold">
-            {fmtPKR(NISAB)}
+            <CountUpNumber value={NISAB} prefix="PKR " preserveValue />
           </div>
           <div
             className={cn(
@@ -1143,13 +1143,13 @@ function Zakat() {
         <Card hover={false} className="text-center">
           <div className="text-xs font-medium text-text-secondary">{t("Zakatable Wealth")}</div>
           <div className="mt-1 font-mono text-2xl font-bold tabular-nums text-text-primary">
-            {fmtPKR(zakatableWealth)}
+            <CountUpNumber value={zakatableWealth} prefix="PKR " preserveValue />
           </div>
           <div className="mt-4 text-xs font-medium text-text-secondary">
             {t("Zakat Due (2.5%)")}
           </div>
           <div className="mt-1 font-mono text-3xl font-extrabold tabular-nums text-bull">
-            {fmtPKR(zakatDue)}
+            <CountUpNumber value={zakatDue} prefix="PKR " preserveValue />
           </div>
           <button
             onClick={exportPdf}
