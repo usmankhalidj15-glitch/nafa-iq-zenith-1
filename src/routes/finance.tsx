@@ -1143,13 +1143,13 @@ function Zakat() {
         <Card hover={false} className="text-center">
           <div className="text-xs font-medium text-text-secondary">{t("Zakatable Wealth")}</div>
           <div className="mt-1 font-mono text-2xl font-bold tabular-nums text-text-primary">
-            {fmtPKR(zakatableWealth)}
+            <CountUpNumber value={zakatableWealth} prefix="PKR " preserveValue />
           </div>
           <div className="mt-4 text-xs font-medium text-text-secondary">
             {t("Zakat Due (2.5%)")}
           </div>
           <div className="mt-1 font-mono text-3xl font-extrabold tabular-nums text-bull">
-            {fmtPKR(zakatDue)}
+            <CountUpNumber value={zakatDue} prefix="PKR " preserveValue />
           </div>
           <button
             onClick={exportPdf}
