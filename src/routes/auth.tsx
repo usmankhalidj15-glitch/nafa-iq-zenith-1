@@ -144,135 +144,175 @@ function AuthPage() {
   const isSignup = mode === "signup";
 
   return (
-    <main className="flex min-h-screen w-full flex-col-reverse bg-background p-2 transition-all duration-500 selection:bg-primary/30 lg:flex-row lg:p-4">
+    <main className="relative flex min-h-screen w-full flex-col-reverse bg-background p-2 transition-all duration-500 selection:bg-primary/30 lg:flex-row lg:p-4">
+      {/* Back to home — top left */}
+      <Link
+        to="/"
+        className="absolute left-4 top-4 z-30 inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface/70 px-3 py-1.5 text-xs font-medium text-text-secondary backdrop-blur-md transition-colors hover:border-border-hover hover:text-text-primary"
+      >
+        <ArrowLeft className="h-3.5 w-3.5" />
+        Back to home
+      </Link>
+
       {/* ---------- Left column: form ---------- */}
       <div className="flex flex-1 flex-col items-center justify-center px-4 py-12 sm:px-12 lg:px-16 lg:py-6 xl:px-24">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="w-full max-w-xl space-y-8 sm:space-y-10 lg:space-y-6"
-        >
-          <div className="flex items-center gap-2.5 lg:hidden">
-            <LogoIcon className="h-8 w-8 text-primary" />
-            <span className="font-display text-xl font-bold tracking-tight text-text-primary">
-              Nafa<span className="text-primary">IQ</span>
-            </span>
-          </div>
-
-          <div className="space-y-2">
-            <h2 className="font-display text-3xl font-medium tracking-tight text-text-primary">
-              {isSignup ? "Create New Profile" : "Welcome Back"}
-            </h2>
-            <p className="text-sm text-text-muted">
-              {isSignup
-                ? "Input your basic details to begin the journey."
-                : "Sign in to your NafaIQ terminal."}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <SocialButton icon={<Chrome className="h-5 w-5" />} label="Google" onClick={handleGoogle} disabled={busy} />
-            <SocialButton icon={<Github className="h-5 w-5" />} label="Github" onClick={handleGoogle} disabled={busy} />
-          </div>
-
-          <div className="relative flex items-center">
-            <div className="flex-1 border-t border-border" />
-            <span className="bg-background px-4 text-xs font-medium uppercase tracking-widest text-text-muted">
-              Or
-            </span>
-            <div className="flex-1 border-t border-border" />
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {isSignup && (
-              <div className="grid grid-cols-2 gap-4">
-                <InputGroup
-                  label="First Name"
-                  placeholder="Ahmed"
-                  type="text"
-                  value={firstName}
-                  onChange={setFirstName}
-                  autoComplete="given-name"
-                />
-                <InputGroup
-                  label="Last Name"
-                  placeholder="Khan"
-                  type="text"
-                  value={lastName}
-                  onChange={setLastName}
-                  autoComplete="family-name"
-                />
-              </div>
-            )}
-
-            <InputGroup
-              label="Email"
-              placeholder="you@example.com"
-              type="email"
-              value={email}
-              onChange={setEmail}
-              autoComplete="email"
-              required
-            />
-
-            <div className="space-y-1.5">
-              <label className="text-sm font-medium text-text-primary">Password</label>
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  required
-                  minLength={8}
-                  autoComplete={isSignup ? "new-password" : "current-password"}
-                  className="h-11 w-full rounded-xl border border-border bg-surface px-4 pr-11 text-text-primary placeholder:text-text-muted/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword((s) => !s)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted transition-colors hover:text-text-primary"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                >
-                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                </button>
-              </div>
-              <p className="text-xs text-text-muted">Requires at least 8 symbols.</p>
+        {confirmSent ? (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="w-full max-w-md space-y-6 text-center"
+          >
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+              <MailCheck className="h-8 w-8" />
+            </div>
+            <div className="space-y-2">
+              <h2 className="font-display text-2xl font-medium tracking-tight text-text-primary">
+                Confirm your email
+              </h2>
+              <p className="text-sm text-text-muted">
+                We sent a confirmation link to{" "}
+                <span className="font-medium text-text-primary">{email}</span>. Click the link to
+                activate your NafaIQ account, then sign in.
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                setConfirmSent(false);
+                setMode("signin");
+              }}
+              className="flex h-12 w-full items-center justify-center rounded-xl bg-primary font-semibold text-primary-foreground transition-all hover:bg-primary/90 active:scale-[0.98]"
+            >
+              Go to Sign In
+            </button>
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="w-full max-w-xl space-y-8 sm:space-y-10 lg:space-y-6"
+          >
+            <div className="flex items-center gap-2.5 lg:hidden">
+              <LogoIcon className="h-8 w-8 text-primary" />
+              <span className="font-display text-xl font-bold tracking-tight text-text-primary">
+                Nafa<span className="text-primary">IQ</span>
+              </span>
             </div>
 
-            <button
-              type="submit"
+            <div className="space-y-2">
+              <h2 className="font-display text-3xl font-medium tracking-tight text-text-primary">
+                {isSignup ? "Create New Profile" : "Welcome Back"}
+              </h2>
+              <p className="text-sm text-text-muted">
+                {isSignup
+                  ? "Input your basic details to begin the journey."
+                  : "Sign in to your NafaIQ terminal."}
+              </p>
+            </div>
+
+            <SocialButton
+              icon={<Chrome className="h-5 w-5" />}
+              label="Continue with Google"
+              onClick={handleGoogle}
               disabled={busy}
-              className="mt-4 flex h-14 w-full items-center justify-center rounded-xl bg-primary font-semibold text-primary-foreground transition-all hover:bg-primary/90 active:scale-[0.98] disabled:opacity-60"
-            >
-              {busy ? (
-                <Loader2 className="h-5 w-5 animate-spin" />
-              ) : isSignup ? (
-                "Create Account"
-              ) : (
-                "Sign In"
+            />
+
+            <div className="relative flex items-center">
+              <div className="flex-1 border-t border-border" />
+              <span className="bg-background px-4 text-xs font-medium uppercase tracking-widest text-text-muted">
+                Or
+              </span>
+              <div className="flex-1 border-t border-border" />
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+              {isSignup && (
+                <div className="grid grid-cols-2 gap-4">
+                  <InputGroup
+                    label="First Name"
+                    placeholder="Ahmed"
+                    type="text"
+                    value={firstName}
+                    onChange={setFirstName}
+                    autoComplete="given-name"
+                  />
+                  <InputGroup
+                    label="Last Name"
+                    placeholder="Khan"
+                    type="text"
+                    value={lastName}
+                    onChange={setLastName}
+                    autoComplete="family-name"
+                  />
+                </div>
               )}
-            </button>
-          </form>
 
-          <p className="text-center text-sm text-text-muted">
-            {isSignup ? "Member of the team? " : "New to NafaIQ? "}
-            <button
-              onClick={() => setMode(isSignup ? "signin" : "signup")}
-              className="font-medium text-primary hover:underline"
-            >
-              {isSignup ? "Log in" : "Sign up"}
-            </button>
-          </p>
+              <InputGroup
+                label="Email"
+                placeholder="you@example.com"
+                type="email"
+                value={email}
+                onChange={setEmail}
+                autoComplete="email"
+                required
+              />
 
-          <p className="text-center">
-            <Link to="/" className="text-xs text-text-muted hover:text-text-secondary">
-              ← Back to home
-            </Link>
-          </p>
-        </motion.div>
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium text-text-primary">Password</label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    required
+                    minLength={8}
+                    autoComplete={isSignup ? "new-password" : "current-password"}
+                    className="h-11 w-full rounded-xl border border-border bg-surface px-4 pr-11 text-text-primary placeholder:text-text-muted/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((s) => !s)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted transition-colors hover:text-text-primary"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
+                {isSignup && (
+                  <p className="text-xs text-text-muted">Use at least 8 characters — avoid common passwords.</p>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                disabled={busy}
+                className="mt-4 flex h-14 w-full items-center justify-center rounded-xl bg-primary font-semibold text-primary-foreground transition-all hover:bg-primary/90 active:scale-[0.98] disabled:opacity-60"
+              >
+                {busy ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : isSignup ? (
+                  "Create Account"
+                ) : (
+                  "Sign In"
+                )}
+              </button>
+            </form>
+
+            <p className="text-center text-sm text-text-muted">
+              {isSignup ? "Member of the team? " : "New to NafaIQ? "}
+              <button
+                onClick={() => setMode(isSignup ? "signin" : "signup")}
+                className="font-medium text-primary hover:underline"
+              >
+                {isSignup ? "Log in" : "Sign up"}
+              </button>
+            </p>
+          </motion.div>
+        )}
       </div>
+
 
       {/* ---------- Right column: hero ---------- */}
       <div className="relative hidden min-h-[600px] w-[52%] flex-col items-center justify-end overflow-hidden rounded-3xl border border-border px-12 pb-32 shadow-2xl lg:flex">
