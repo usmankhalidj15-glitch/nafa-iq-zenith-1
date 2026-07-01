@@ -217,7 +217,7 @@ function AuthPage() {
             className="relative z-10 w-full max-w-md"
           >
             {/* Glass card */}
-            <div className="rounded-[22px] border border-white/10 bg-surface/80 p-6 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.8),0_0_40px_-12px_rgba(45,212,167,0.35)] backdrop-blur-2xl sm:p-8">
+            <div className="rounded-[22px] border border-white/10 bg-[#0a1512]/85 p-6 shadow-[0_24px_70px_-20px_rgba(0,0,0,0.85),0_0_50px_-12px_rgba(45,212,167,0.4)] backdrop-blur-md sm:p-8">
             {confirmSent ? (
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
