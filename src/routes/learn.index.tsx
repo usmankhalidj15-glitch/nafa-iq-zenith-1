@@ -153,10 +153,7 @@ function Learn() {
                   {p.lessonIds.length} {t("lessons")} · {t("Est:")} {p.estMin} {t("min")}
                 </div>
                 <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-elevated">
-                  <div
-                    className="h-full rounded-full transition-all duration-700"
-                    style={{ width: `${progress}%`, background: p.accent }}
-                  />
+                  <AnimatedBar value={progress} style={{ background: p.accent }} glow={false} />
                 </div>
                 <div className="mt-1 text-[10px] font-medium text-text-muted">
                   {progress}% {t("complete")}
