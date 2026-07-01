@@ -669,7 +669,7 @@ function HeroBackdrop() {
       <motion.img
         src="/auth-right-bg.webp"
         alt=""
-        style={{ x, y, scale, filter: "saturate(1.2) brightness(1.04)", objectPosition: "55% 35%" }}
+        style={{ x, y, scale, filter: "saturate(0.85) brightness(0.9)", objectPosition: "55% 35%" }}
         className="absolute inset-0 h-full w-full object-cover"
       />
 
