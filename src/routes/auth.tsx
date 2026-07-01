@@ -457,21 +457,10 @@ function AuthVisualPanel({ currentStep }: { currentStep: number }) {
     { number: 3, text: "Finalize your profile" },
   ];
   return (
-    <aside className="relative hidden w-[45%] flex-col justify-center overflow-hidden rounded-3xl border border-border bg-[#0a1410] px-8 py-12 shadow-2xl md:flex lg:w-[50%] lg:px-14">
-      <img
-        src="/hero-bg.webp"
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover object-[70%_center]"
-        style={{ filter: "saturate(1.35) brightness(1.12) contrast(1.05)" }}
-      />
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(115deg, rgba(6,12,10,0.82) 0%, rgba(8,14,12,0.5) 45%, rgba(10,20,15,0.25) 100%)",
-        }}
-      />
+    <aside className="relative hidden w-[45%] flex-col justify-center px-8 py-12 md:flex lg:w-[50%] lg:px-14">
+      {/* Legibility scrim for the panel text over the shared hero image */}
+      <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-r from-black/55 via-black/20 to-transparent" />
+
 
       <motion.div
         variants={container}
