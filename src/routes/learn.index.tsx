@@ -9,12 +9,14 @@ import {
   RotateCcw,
   ArrowRight,
   Bot,
+  BookOpen,
   Send,
   Sparkles,
+  Video,
+  PartyPopper,
 } from "lucide-react";
 import { Card } from "@/components/Card";
 import { EmojiIcon } from "@/components/icons";
-import { Video, BookOpen, PartyPopper } from "lucide-react";
 import { LESSONS, GLOSSARY } from "@/lib/finance-data";
 import { LEARNING_PATHS, LESSON_ID_BY_TITLE, LESSON_CONTENT, FLASHCARDS } from "@/lib/learn-data";
 import { useLearn } from "@/hooks/use-learn";
@@ -318,13 +320,14 @@ const HUB_PRESETS = [
 
 function HubChatPanel() {
   const ask = useServerFn(askTutor);
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const initialGreeting = t(
+    "Hi! I'm your NafaIQ tutor. Ask me anything about PSX investing, terms, or strategies.",
+  );
   const [messages, setMessages] = useState<HubChatMsg[]>([
     {
       role: "assistant",
-      content: t(
-        "Hi! I'm your NafaIQ tutor. Ask me anything about PSX investing, terms, or strategies.",
-      ),
+      content: initialGreeting,
     },
   ]);
   const [input, setInput] = useState("");
@@ -334,6 +337,14 @@ function HubChatPanel() {
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, loading]);
+
+  useEffect(() => {
+    setMessages((current) =>
+      current.length === 1 && current[0]?.role === "assistant"
+        ? [{ role: "assistant", content: initialGreeting }]
+        : current,
+    );
+  }, [initialGreeting]);
 
   const send = useCallback(
     async (text: string) => {
@@ -347,6 +358,7 @@ function HubChatPanel() {
         const res = await ask({
           data: {
             lessonTitle: "PSX investing basics",
+            lang,
             messages: history.slice(-12),
           },
         });
@@ -360,7 +372,7 @@ function HubChatPanel() {
         setLoading(false);
       }
     },
-    [ask, messages, loading],
+    [ask, messages, loading, lang, t],
   );
 
   const showPresets = messages.length === 1;

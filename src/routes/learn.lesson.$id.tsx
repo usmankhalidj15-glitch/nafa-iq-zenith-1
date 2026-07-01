@@ -1106,11 +1106,15 @@ function ChatPanel({
   embedded?: boolean;
 }) {
   const ask = useServerFn(askTutor);
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const initialGreeting = useMemo(
+    () => `${t("Hi! I'm here to help you understand")} ${t(lesson.title)}. ${t("What would you like to know?")}`,
+    [lesson.title, t],
+  );
   const [messages, setMessages] = useState<ChatMsg[]>([
     {
       role: "assistant",
-      content: `${t("Hi! I'm here to help you understand")} ${t(lesson.title)}. ${t("What would you like to know?")}`,
+      content: initialGreeting,
     },
   ]);
   const [input, setInput] = useState("");
@@ -1120,6 +1124,14 @@ function ChatPanel({
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, loading]);
+
+  useEffect(() => {
+    setMessages((current) =>
+      current.length === 1 && current[0]?.role === "assistant"
+        ? [{ role: "assistant", content: initialGreeting }]
+        : current,
+    );
+  }, [initialGreeting]);
 
   const send = useCallback(
     async (text: string) => {
@@ -1135,6 +1147,7 @@ function ChatPanel({
           data: {
             lessonTitle: lesson.title,
             section: sectionHeading,
+            lang,
             messages: history.slice(-12),
           },
         });
@@ -1148,7 +1161,7 @@ function ChatPanel({
         setLoading(false);
       }
     },
-    [ask, messages, loading, lesson, activeSection],
+    [ask, messages, loading, lesson, activeSection, lang, t],
   );
 
   const showPresets = messages.length === 1;

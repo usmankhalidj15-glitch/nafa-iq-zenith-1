@@ -537,8 +537,11 @@ const UR: Record<string, string> = {
   "Powered by AI": "اے آئی سے چلایا گیا",
   "just now": "ابھی",
   "Ask about this lesson…": "اس سبق کے بارے میں پوچھیں…",
-  "Hi! I'm here to help you understand": "سلام! میں آپ کی مدد کے لیے حاضر ہوں",
+  "Hi! I'm here to help you understand": "السلام علیکم! میں آپ کو سمجھانے کے لیے حاضر ہوں",
   "What would you like to know?": "آپ کیا جاننا چاہیں گے؟",
+  "Video coming soon": "ویڈیو جلد آ رہی ہے",
+  "A video walkthrough is in production. Read the full lesson below for now.":
+    "ویڈیو وضاحت تیاری میں ہے۔ فی الحال نیچے مکمل سبق پڑھیں۔",
 
   // ---- Stock detail (extended) ----
   Confidence: "اعتماد",
