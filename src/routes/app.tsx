@@ -287,7 +287,7 @@ function Dashboard() {
                   <span className="font-semibold text-text-primary">{tk}</span>
                   <Change pct={s.changePct} pill />
                 </div>
-                <div className="truncate text-[10px] text-text-muted">{s.name}</div>
+                <div className="truncate text-[10px] text-text-muted">{t(s.name)}</div>
                 <div className="mt-1 font-mono text-lg font-bold tabular-nums text-text-primary">
                   {fmtNum(s.price)}
                 </div>

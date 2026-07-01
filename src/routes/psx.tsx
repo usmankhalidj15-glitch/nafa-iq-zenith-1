@@ -426,7 +426,7 @@ export default function PSX() {
                             <Plus className="h-3.5 w-3.5 text-bull" />
                             <span className="text-sm font-semibold text-bull">{tk}</span>
                             <span className="flex-1 truncate text-[10px] text-text-muted">
-                              {STOCKS[tk].name}
+                              {t(STOCKS[tk].name)}
                             </span>
                           </button>
                         ))
@@ -457,7 +457,7 @@ export default function PSX() {
                     >
                       <div className="flex-1">
                         <div className="wl-symbol text-sm font-semibold text-bull">{tk}</div>
-                        <div className="text-[10px] text-text-muted">{s.name}</div>
+                        <div className="text-[10px] text-text-muted">{t(s.name)}</div>
                       </div>
                       <div className="text-right">
                         <div className="font-mono text-sm tabular-nums text-text-primary">
