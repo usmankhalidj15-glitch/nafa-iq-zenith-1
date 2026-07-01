@@ -4,6 +4,7 @@ import { motion, type Variants } from "framer-motion";
 import { Loader2, Chrome, Eye, EyeOff, Check, ArrowLeft, MailCheck } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/use-auth";
+import authBg from "@/assets/auth-bg.png.asset.json";
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>): { redirect?: string } => ({
@@ -316,10 +317,12 @@ function AuthPage() {
 
       {/* ---------- Right column: hero ---------- */}
       <div className="relative hidden min-h-[600px] w-[52%] flex-col items-center justify-end overflow-hidden rounded-3xl border border-border px-12 pb-32 shadow-2xl lg:flex">
-        {/* green ambient gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/40 via-primary/10 to-background" />
-        <div className="absolute -left-24 top-1/4 h-96 w-96 rounded-full bg-primary/30 blur-[120px]" />
-        <div className="absolute -right-16 bottom-1/3 h-80 w-80 rounded-full bg-primary/20 blur-[120px]" />
+        {/* uploaded image background */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${authBg.url})` }}
+        />
+        <div className="absolute inset-0 bg-background/30" />
 
         {/* subtle bottom scrim so hero content reads clearly */}
         <div className="absolute inset-x-0 bottom-0 z-[5] h-2/3 bg-gradient-to-t from-background via-background/60 to-transparent" />
