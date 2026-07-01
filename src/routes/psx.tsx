@@ -384,7 +384,7 @@ export default function PSX() {
         {/* Right panel */}
         <div className="min-w-0 space-y-4">
           <Card>
-            <div class="mb-2 flex items-center justify-between">
+            <div className="mb-2 flex items-center justify-between">
               <h3 className="text-sm font-semibold text-text-primary">{t("Watchlist")}</h3>
               <Popover open={addOpen} onOpenChange={setAddOpen}>
                 <PopoverTrigger asChild>
