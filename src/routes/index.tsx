@@ -1872,10 +1872,10 @@ function Landing() {
               </p>
               <div className="mt-6 space-y-3 text-sm">
                 <a
-                  href="mailto:hello@nafaiq.com"
+                  href="mailto:usmankhalidj15@gmail.com"
                   className="inline-flex items-center gap-2 font-medium text-bull transition hover:text-[#00efc0]"
                 >
-                  <Mail className="h-4 w-4" /> hello@nafaiq.com
+                  <Mail className="h-4 w-4" /> usmankhalidj15@gmail.com
                 </a>
                 <p className="text-text-secondary">Karachi, Pakistan</p>
               </div>
