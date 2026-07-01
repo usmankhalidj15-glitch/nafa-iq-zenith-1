@@ -179,7 +179,13 @@ function AuthPage() {
         : 1;
 
   return (
-    <main className="relative flex min-h-screen w-full flex-col bg-background p-2 transition-all duration-500 selection:bg-primary/30 md:p-4">
+    <main
+      className="relative flex min-h-screen w-full flex-col overflow-hidden p-2 transition-all duration-500 selection:bg-primary/30 md:p-4"
+      style={{ backgroundColor: "#031310" }}
+    >
+      {/* Full-bleed hero background across both columns */}
+      <HeroBackdrop />
+
       {/* ---------- Top nav (spans both columns) ---------- */}
       <nav className="relative z-20 flex items-center justify-between px-2 py-2 md:px-3 md:py-3">
         <div className="flex items-center gap-2.5">
@@ -198,10 +204,11 @@ function AuthPage() {
       </nav>
 
       {/* ---------- Columns ---------- */}
-      <div className="flex flex-1 flex-col-reverse gap-2 md:flex-row-reverse md:gap-4">
+      <div className="relative z-10 flex flex-1 flex-col-reverse gap-2 md:flex-row-reverse md:gap-4">
         {/* Form column */}
-        <div className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-8 sm:px-8 lg:px-12">
-          <AuthAmbientBackground />
+        <div className="relative flex flex-1 items-center justify-center px-4 py-8 sm:px-8 lg:px-12">
+
+
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
