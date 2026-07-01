@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { motion, type Variants } from "framer-motion";
-import { Loader2, BarChart3, Chrome, Github, Eye, EyeOff, Check } from "lucide-react";
+import { Loader2, Chrome, Github, Eye, EyeOff, Check } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/use-auth";
 
