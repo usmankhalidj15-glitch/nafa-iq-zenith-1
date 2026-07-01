@@ -1,6 +1,19 @@
 import { useEffect, useState } from "react";
-import CountUp from "react-countup";
+import * as CountUpModule from "react-countup";
 import { cn } from "@/lib/utils";
+
+// react-countup ships as CJS; depending on the bundler's interop the component
+// can be wrapped one or two `default` levels deep. Unwrap until we hit the fn.
+function resolveCountUp(mod: unknown): typeof import("react-countup").default {
+  let candidate: unknown = mod;
+  while (candidate && typeof candidate === "object" && "default" in candidate) {
+    candidate = (candidate as { default: unknown }).default;
+  }
+  return candidate as typeof import("react-countup").default;
+}
+const CountUp = resolveCountUp(CountUpModule);
+
+
 
 /**
  * Smooth count-up for financial figures.
