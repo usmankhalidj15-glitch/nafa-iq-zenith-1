@@ -448,8 +448,11 @@ function AuthPage() {
             </div>
           </motion.div>
         </div>
+
+        <AuthVisualPanel currentStep={currentStep} />
       </div>
     </main>
+
 
   );
 }
