@@ -197,7 +197,7 @@ function AuthPage() {
       </nav>
 
       {/* ---------- Columns ---------- */}
-      <div className="relative z-10 flex flex-1 flex-col-reverse gap-2 md:flex-row-reverse md:gap-4">
+      <div className="relative z-10 flex flex-1 flex-col-reverse gap-2 overflow-hidden md:flex-row-reverse md:gap-4">
         {/* Form column */}
         <div className="relative flex flex-1 items-center justify-center overflow-hidden rounded-3xl px-4 py-8 sm:px-8 lg:px-12">
           {/* Right column background image */}
