@@ -1517,10 +1517,10 @@ function Landing() {
             </div>
             <div className="mt-8 flex flex-wrap justify-center gap-2.5">
               {[
-                { icon: Apple, label: "iOS 14+" },
-                { icon: Smartphone, label: "Android 8+" },
+                { icon: AppleBadgeIcon, label: "iOS 14+" },
+                { icon: AndroidBadgeIcon, label: "Android 8+" },
                 { icon: Globe, label: "All Browsers" },
-                { icon: MonitorSmartphone, label: "Installable PWA" },
+                { icon: PWABadgeIcon, label: "Installable PWA" },
               ].map(({ icon: Icon, label }) => (
                 <span
                   key={label}
