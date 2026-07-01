@@ -1038,7 +1038,7 @@ function ResultsView({
           <details key={i} className="rounded-[8px] border border-border bg-surface p-3">
             <summary className="flex cursor-pointer items-center justify-between text-sm font-medium text-text-primary">
               <span className="flex items-center gap-2">
-                <span className="text-text-muted">Q{i + 1}</span> {sq.q.q}
+                <span className="text-text-muted">Q{i + 1}</span> {t(sq.q.q)}
               </span>
               <ChevronDown className="h-4 w-4 shrink-0 text-text-muted" />
             </summary>
