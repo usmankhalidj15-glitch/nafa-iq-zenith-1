@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { useLang, localizeDigits } from "@/hooks/use-lang";
 
 export function Change({
   value,
@@ -11,8 +12,11 @@ export function Change({
   className?: string;
   pill?: boolean;
 }) {
+  useLang();
   const up = pct >= 0;
-  const text = `${up ? "▲" : "▼"}${up ? "+" : ""}${pct.toFixed(2)}%`;
+  const text = localizeDigits(`${up ? "▲" : "▼"}${up ? "+" : ""}${pct.toFixed(2)}%`);
+  const displayValue =
+    typeof value === "string" ? localizeDigits(value) : value;
   return (
     <span
       className={cn(
@@ -23,7 +27,7 @@ export function Change({
         className,
       )}
     >
-      {value !== undefined && <span className="mr-1">{value}</span>}
+      {displayValue !== undefined && <span className="mr-1">{displayValue}</span>}
       {text}
     </span>
   );
