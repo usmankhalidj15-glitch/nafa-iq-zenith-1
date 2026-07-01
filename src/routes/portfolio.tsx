@@ -127,7 +127,9 @@ function HaqeeqiDaulat() {
                 {t("Devaluation Shield Score")}
               </div>
               <div className="mt-1 flex items-baseline gap-2">
-                <span className="font-mono text-2xl font-bold tabular-nums text-gold">38</span>
+                <span className="font-mono text-2xl font-bold tabular-nums text-gold">
+                  <CountUpNumber value={38} />
+                </span>
                 <span className="font-mono text-sm text-text-muted">/ 100</span>
                 <span className="rounded-full border border-gold/35 bg-gold/[0.12] px-2 py-0.5 text-[10px] font-semibold text-gold">
                   {t("Moderate risk")}
