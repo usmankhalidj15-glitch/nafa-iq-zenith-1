@@ -446,7 +446,7 @@ function AuthVisualPanel({ currentStep }: { currentStep: number }) {
     { number: 3, text: "Finalize your profile" },
   ];
   return (
-    <aside className="relative hidden h-full w-[45%] flex-col justify-center overflow-hidden rounded-3xl px-8 py-12 md:flex md:rounded-r-none lg:w-[50%] lg:px-14">
+    <aside className="relative hidden w-[45%] flex-col justify-center overflow-hidden rounded-3xl px-8 py-12 md:flex md:rounded-r-none lg:w-[50%] lg:px-14">
       {/* Left column background image, strictly clipped to column bounds */}
       <img
         src="/hero-bg.webp"
