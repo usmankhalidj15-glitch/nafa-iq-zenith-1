@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as CountUpModule from "react-countup";
 import { cn } from "@/lib/utils";
 
