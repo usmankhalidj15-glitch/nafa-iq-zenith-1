@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { useLang } from "@/hooks/use-lang";
+import { motion, useReducedMotion, SPRING_UI } from "@/components/animations";
 
 export function Card({
   className,
@@ -29,13 +30,28 @@ export function StatCard({
   subColor?: string;
 }) {
   const { t } = useLang();
-  return (
-    <Card>
+  const reduce = useReducedMotion();
+  const content = (
+    <>
       <div className="text-xs font-medium text-text-secondary">{t(label)}</div>
       <div className="mt-2 font-mono text-xl font-bold tabular-nums text-text-primary md:text-2xl">
         {value}
       </div>
       {sub && <div className={cn("mt-1 font-mono text-xs tabular-nums", subColor)}>{sub}</div>}
-    </Card>
+    </>
+  );
+  if (reduce) return <Card>{content}</Card>;
+  return (
+    <motion.div
+      className="glass-card glass-card-hover rounded-[14px] p-6"
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.4 }}
+      whileHover={{ y: -3 }}
+      transition={SPRING_UI}
+    >
+      {content}
+    </motion.div>
   );
 }
+
