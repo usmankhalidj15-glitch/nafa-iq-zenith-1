@@ -248,6 +248,9 @@ function Overview() {
           <div dir="ltr" className="mt-1 font-mono text-lg font-semibold tracking-tight text-bear tabular-nums sm:text-xl">
             PKR <span ref={expenses.ref}>{expenses.formatted}</span>
           </div>
+          <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-white/5">
+            <AnimatedBar value={40} className="bg-bear" />
+          </div>
           <div className="mt-3 flex items-end justify-between gap-2">
             <span dir="ltr" className="text-[10px] text-bear/90 sm:text-[11px]">-12% {t("vs last month")}</span>
             <div className="w-14 shrink-0">
