@@ -22,7 +22,7 @@ import {
   PanelLeft,
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence, PageTransition, pressable } from "@/components/animations";
+import { motion, AnimatePresence, PageTransition } from "@/components/animations";
 import { cn } from "@/lib/utils";
 import { TICKER_ITEMS, STOCKS } from "@/lib/data";
 import { LEARNING_PATHS, LESSON_CONTENT } from "@/lib/learn-data";
