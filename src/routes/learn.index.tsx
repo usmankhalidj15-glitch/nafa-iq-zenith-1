@@ -319,12 +319,13 @@ const HUB_PRESETS = [
 function HubChatPanel() {
   const ask = useServerFn(askTutor);
   const { t } = useLang();
+  const initialGreeting = t(
+    "Hi! I'm your NafaIQ tutor. Ask me anything about PSX investing, terms, or strategies.",
+  );
   const [messages, setMessages] = useState<HubChatMsg[]>([
     {
       role: "assistant",
-      content: t(
-        "Hi! I'm your NafaIQ tutor. Ask me anything about PSX investing, terms, or strategies.",
-      ),
+      content: initialGreeting,
     },
   ]);
   const [input, setInput] = useState("");
@@ -334,6 +335,14 @@ function HubChatPanel() {
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, loading]);
+
+  useEffect(() => {
+    setMessages((current) =>
+      current.length === 1 && current[0]?.role === "assistant"
+        ? [{ role: "assistant", content: initialGreeting }]
+        : current,
+    );
+  }, [initialGreeting]);
 
   const send = useCallback(
     async (text: string) => {
