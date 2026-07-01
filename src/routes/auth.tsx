@@ -56,6 +56,16 @@ const item: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
+const formContainer: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
+};
+
+const formItem: Variants = {
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+};
+
 function LogoIcon({ className }: { className?: string }) {
   return (
     <img
