@@ -179,7 +179,13 @@ function AuthPage() {
         : 1;
 
   return (
-    <main className="relative flex min-h-screen w-full flex-col bg-background p-2 transition-all duration-500 selection:bg-primary/30 md:p-4">
+    <main
+      className="relative flex min-h-screen w-full flex-col overflow-hidden p-2 transition-all duration-500 selection:bg-primary/30 md:p-4"
+      style={{ backgroundColor: "#031310" }}
+    >
+      {/* Full-bleed hero background across both columns */}
+      <HeroBackdrop />
+
       {/* ---------- Top nav (spans both columns) ---------- */}
       <nav className="relative z-20 flex items-center justify-between px-2 py-2 md:px-3 md:py-3">
         <div className="flex items-center gap-2.5">
@@ -198,10 +204,11 @@ function AuthPage() {
       </nav>
 
       {/* ---------- Columns ---------- */}
-      <div className="flex flex-1 flex-col-reverse gap-2 md:flex-row-reverse md:gap-4">
+      <div className="relative z-10 flex flex-1 flex-col-reverse gap-2 md:flex-row-reverse md:gap-4">
         {/* Form column */}
-        <div className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-8 sm:px-8 lg:px-12">
-          <AuthAmbientBackground />
+        <div className="relative flex flex-1 items-center justify-center px-4 py-8 sm:px-8 lg:px-12">
+
+
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -210,7 +217,7 @@ function AuthPage() {
             className="relative z-10 w-full max-w-md"
           >
             {/* Glass card */}
-            <div className="rounded-[22px] border border-white/10 bg-surface/80 p-6 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.8),0_0_40px_-12px_rgba(45,212,167,0.35)] backdrop-blur-2xl sm:p-8">
+            <div className="rounded-[22px] border border-white/10 bg-[#0a1512]/85 p-6 shadow-[0_24px_70px_-20px_rgba(0,0,0,0.85),0_0_50px_-12px_rgba(45,212,167,0.4)] backdrop-blur-md sm:p-8">
             {confirmSent ? (
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
@@ -450,21 +457,10 @@ function AuthVisualPanel({ currentStep }: { currentStep: number }) {
     { number: 3, text: "Finalize your profile" },
   ];
   return (
-    <aside className="relative hidden w-[45%] flex-col justify-center overflow-hidden rounded-3xl border border-border bg-[#0a1410] px-8 py-12 shadow-2xl md:flex lg:w-[50%] lg:px-14">
-      <img
-        src="/hero-bg.webp"
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover object-[70%_center]"
-        style={{ filter: "saturate(1.35) brightness(1.12) contrast(1.05)" }}
-      />
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(115deg, rgba(6,12,10,0.82) 0%, rgba(8,14,12,0.5) 45%, rgba(10,20,15,0.25) 100%)",
-        }}
-      />
+    <aside className="relative hidden w-[45%] flex-col justify-center px-8 py-12 md:flex lg:w-[50%] lg:px-14">
+      {/* Legibility scrim for the panel text over the shared hero image */}
+      <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-r from-black/55 via-black/20 to-transparent" />
+
 
       <motion.div
         variants={container}
@@ -629,46 +625,16 @@ function FloatingInput({
   );
 }
 
-function CandleCluster({
-  x,
-  data,
-  opacity,
-}: {
-  x: string;
-  data: [number, number, number, number][];
-  opacity: number;
-}) {
-  return (
-    <g opacity={opacity} transform={`translate(${x})`}>
-      {data.map(([dx, y, body, wick], i) => (
-        <g key={i} transform={`translate(${dx} ${y})`}>
-          <line x1="6" y1="0" x2="6" y2={wick} stroke="var(--color-primary)" strokeWidth="1.5" />
-          <rect
-            x="0"
-            y={(wick - body) / 2}
-            width="12"
-            height={body}
-            rx="2"
-            fill="var(--color-primary)"
-          />
-        </g>
-      ))}
-    </g>
-  );
-}
-
-function AuthAmbientBackground() {
+function HeroBackdrop() {
   const reduce = useReducedMotion();
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
 
-  // Parallax layers — springy follow of the cursor.
-  const sx = useSpring(mx, { stiffness: 40, damping: 20 });
-  const sy = useSpring(my, { stiffness: 40, damping: 20 });
-  const farX = useTransform(sx, (v) => v * 12);
-  const farY = useTransform(sy, (v) => v * 12);
-  const nearX = useTransform(sx, (v) => v * 26);
-  const nearY = useTransform(sy, (v) => v * 26);
+  // Springy cursor follow for a very subtle parallax on the hero image.
+  const sx = useSpring(mx, { stiffness: 40, damping: 22 });
+  const sy = useSpring(my, { stiffness: 40, damping: 22 });
+  const x = useTransform(sx, (v) => v * 14); // max ~±14px
+  const y = useTransform(sy, (v) => v * 10); // max ~±10px
 
   useEffect(() => {
     if (reduce) return;
@@ -680,121 +646,28 @@ function AuthAmbientBackground() {
     return () => window.removeEventListener("mousemove", onMove);
   }, [mx, my, reduce]);
 
-  const particles = Array.from({ length: 22 }, (_, i) => ({
-    id: i,
-    left: `${(i * 37.3) % 100}%`,
-    top: `${(i * 61.7) % 100}%`,
-    size: 1.5 + ((i * 7) % 4),
-    dur: 16 + ((i * 5) % 14),
-    delay: (i * 1.3) % 8,
-    drift: 18 + ((i * 11) % 30),
-  }));
-
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-      {/* Soft pulsing glow behind the card */}
-      <motion.div
-        className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/12 blur-[130px]"
-        animate={reduce ? undefined : { opacity: [0.55, 0.9, 0.55], scale: [0.95, 1.05, 0.95] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+    <div
+      className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+      aria-hidden="true"
+      style={{ backgroundColor: "#031310" }}
+    >
+      {/* Full-bleed hero image: flag/candles on the left, map/AI icons on the right */}
+      <motion.img
+        src="/hero-bg.webp"
+        alt=""
+        style={{ x, y, filter: "saturate(1.2) brightness(1.04)" }}
+        className="absolute inset-0 h-full w-full scale-[1.06] object-cover object-center"
       />
 
-      {/* Corner ambient glows (parallax) */}
-      <motion.div
-        style={{ x: farX, y: farY }}
-        className="absolute -left-24 top-0 h-96 w-96 rounded-full bg-primary/10 blur-[120px]"
-      />
-      <motion.div
-        style={{ x: farX, y: farY }}
-        className="absolute -bottom-24 right-0 h-96 w-96 rounded-full bg-info/10 blur-[120px]"
-      />
+      {/* Dark gradient behind the right column/card for contrast */}
+      <div className="absolute inset-0 bg-gradient-to-l from-black/90 via-black/55 to-transparent" />
 
-      {/* Drifting particles */}
-      {!reduce &&
-        particles.map((p) => (
-          <motion.span
-            key={p.id}
-            className="absolute rounded-full bg-primary/60"
-            style={{
-              left: p.left,
-              top: p.top,
-              width: p.size,
-              height: p.size,
-              boxShadow: "0 0 8px rgba(45,212,167,0.6)",
-            }}
-            animate={{
-              y: [0, -p.drift, p.drift * 0.5, 0],
-              x: [0, p.drift * 0.5, -p.drift * 0.4, 0],
-              opacity: [0, 0.7, 0.4, 0],
-            }}
-            transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
-          />
-        ))}
-
-      {/* Grid + composed candlesticks + neural nodes (parallax) */}
-      <motion.svg
-        style={{ x: nearX, y: nearY }}
-        className="absolute inset-0 h-full w-full"
-        preserveAspectRatio="xMidYMid slice"
-      >
-        <defs>
-          <pattern id="loginGrid" width="42" height="42" patternUnits="userSpaceOnUse">
-            <path d="M42 0H0V42" fill="none" stroke="var(--color-primary)" strokeOpacity="0.05" />
-          </pattern>
-          <linearGradient id="loginLine" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0" />
-            <stop offset="50%" stopColor="var(--color-primary)" stopOpacity="0.35" />
-            <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#loginGrid)" />
-
-        {/* Anchored candlestick clusters, low opacity */}
-        <CandleCluster
-          x="6% 68%"
-          opacity={0.12}
-          data={[
-            [0, 40, 60, 90],
-            [26, 20, 80, 120],
-            [52, 55, 45, 70],
-            [78, 10, 90, 140],
-          ]}
-        />
-        <CandleCluster
-          x="4% 12%"
-          opacity={0.1}
-          data={[
-            [0, 30, 50, 80],
-            [26, 10, 70, 110],
-            [52, 45, 40, 60],
-          ]}
-        />
-        <CandleCluster
-          x="70% 70%"
-          opacity={0.1}
-          data={[
-            [0, 45, 55, 80],
-            [26, 20, 75, 115],
-            [52, 50, 45, 70],
-          ]}
-        />
-
-        {/* Neural nodes */}
-        <g opacity="0.16">
-          <line x1="82%" y1="16%" x2="92%" y2="30%" stroke="url(#loginLine)" strokeWidth="1" />
-          <line x1="92%" y1="30%" x2="80%" y2="42%" stroke="url(#loginLine)" strokeWidth="1" />
-          <line x1="80%" y1="42%" x2="94%" y2="54%" stroke="url(#loginLine)" strokeWidth="1" />
-          {[
-            ["82%", "16%"],
-            ["92%", "30%"],
-            ["80%", "42%"],
-            ["94%", "54%"],
-          ].map(([cx, cy], i) => (
-            <circle key={i} cx={cx} cy={cy} r="2.5" fill="var(--color-primary)" />
-          ))}
-        </g>
-      </motion.svg>
+      {/* Subtle left legibility scrim + top/bottom vignette */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/50" />
     </div>
   );
 }
+
 
