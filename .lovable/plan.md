@@ -1,43 +1,48 @@
-# Make finance & alert actions functional
+## Goal
 
-The app is currently frontend-only with hardcoded dummy data. Buttons like **Create Alert**, the Transactions **+** FAB, **Add Bill**, **Add Goal**, the bill **✓ paid** button, and alert **toggle/delete** render but do nothing. This plan wires them up so they truly create/update items, and persists them so they survive page reloads — matching the existing frontend-only architecture (no backend needed).
+Repaint the entire app (dark theme) with your provided palette:
+- **App background** → `#0a0a0f` (near-black with a hint of blue)
+- **Container / card backgrounds** → `rgba(18, 18, 26, 0.8)` (semi-transparent dark surface)
 
-## Approach
+All colors live as semantic tokens in `src/styles.css`, so this is a token-level change — no component edits needed. Accent colors (teal, gold, bull/bear, AI blue) and typography stay exactly as they are.
 
-Introduce a small shared client store layered over the existing `src/lib/finance-data.ts` seed data, persisted to `localStorage`. Each screen reads from and writes to this store instead of importing the static arrays directly. New items appear instantly in their lists.
+## What changes
 
-```text
-finance-data.ts (seed)  ->  useFinanceStore (state + localStorage)  ->  screens
+All edits are in the `@theme` block of `src/styles.css` (the dark theme). The light theme (`.theme-light`) is left untouched.
+
+### 1. Global background
+```
+--color-background: #050816  →  #0a0a0f
+```
+This drives the page/body background everywhere.
+
+### 2. Card & container surfaces
+```
+--color-surface:  #0d1424  →  rgba(18, 18, 26, 0.8)
+--color-card:     #0d1424  →  rgba(18, 18, 26, 0.8)
+--color-ai-tint:  #0d1424  →  rgba(18, 18, 26, 0.8)
+```
+`--color-surface` is what the `.glass-card` utility (used by every `Card`) paints with, so all cards, panels, and containers pick this up. Because it's semi-transparent, cards will read as a soft elevated layer floating over the `#0a0a0f` base.
+
+### 3. Supporting surfaces (kept in harmony with the new palette)
+To avoid a mismatched look where nested/elevated elements clash with the new base, these related dark tokens shift to tones derived from the same `18,18,26` family:
+```
+--color-surface-alt: #0b1120  →  #101018   (alt rows / subtle panels)
+--color-elevated:    #111a2e  →  #16161f   (inputs, dropdowns, popovers base)
+--color-sidebar:     #070c1a  →  #08080d   (left nav chrome)
+--color-popover:     #111a2e  →  #16161f
+--color-secondary:   #111a2e  →  #16161f
+--color-muted:       #111a2e  →  #16161f
+--color-accent:      #111a2e  →  #16161f
 ```
 
-## Changes
+Borders, text colors, and all brand accents are unchanged, so contrast and readability stay intact.
 
-### 1. New store: `src/hooks/use-finance-store.ts`
-- A lightweight store (React context provider + hook, or a module-level store with `useSyncExternalStore`) holding: `alerts`, `transactions`, `bills`, `goals`, `notifications`.
-- Initializes from the seed arrays in `finance-data.ts`, then hydrates/overwrites from `localStorage` (`nafaiq:finance:v1`) on load; writes back on every change.
-- Exposes actions: `addAlert`, `toggleAlert`, `removeAlert`, `addTransaction`, `addBill`, `markBillPaid`, `addGoal`, `contributeToGoal`.
-- Provider mounted once in `src/routes/__root.tsx` so all routes share state.
+## Scope / non-goals
+- Only `src/styles.css` dark-theme tokens change.
+- No JSX/component changes, no new files.
+- Light theme untouched.
+- If after previewing you want the cards more opaque or a different base tint, that's a one-line follow-up tweak.
 
-### 2. Alerts screen (`src/routes/alerts.tsx`)
-- Replace local `useState(ALERTS)` with the store.
-- **Create Alert**: build an alert object from the selected type, symbol/bill, condition, price/timing, and push/email checkboxes (now controlled inputs); call `addAlert`, then reset the form and show it at the top of Active Alerts. Also append a "Notification" entry to history confirming creation.
-- Wire the existing toggle and trash buttons to `toggleAlert` / `removeAlert`.
-- Basic validation (e.g. Stock Price requires a numeric price) with inline feedback.
-
-### 3. Finance screen (`src/routes/finance.tsx`)
-- Read `transactions`, `bills`, `goals` from the store instead of static imports.
-- **Add Transaction** (the + FAB): opens a modal/sheet with merchant, amount (income/expense toggle), category, account, date; on submit calls `addTransaction` and the new row appears in the grouped list. Budgets "spent" totals recompute from transactions where applicable.
-- **Add Bill**: opens a small form (name, amount, due date) -> `addBill`.
-- Bill **✓** button: `markBillPaid` (updates status, optionally logs a transaction).
-- **Add Goal**: form (name, target, optional date) -> `addGoal`; the goal card grid updates. Goal contribute "+" button -> `contributeToGoal`.
-
-### 4. Shared form UI
-- Reuse existing shadcn/styled primitives and the project's glass/dark tokens (no hardcoded colors). A single reusable modal/sheet component for the create forms to keep things consistent.
-
-## Out of scope
-- No backend / Lovable Cloud (data stays client-side + localStorage, consistent with the current dummy-data design). If you'd prefer real cross-device persistence with auth, say so and I'll add a Cloud-backed version instead.
-- Landing page and unrelated screens untouched.
-
-## Verification
-- Typecheck/build.
-- Drive the preview: create an alert and confirm it appears + persists after reload; add a transaction, bill, and goal and confirm each shows in its list; toggle/delete an alert; mark a bill paid.
+## How you'll review it
+Once implemented, open the Dashboard and Finance pages in the preview — the background goes near-black and every card becomes the translucent dark surface, matching your reference image. Adjustments to opacity or exact tint are trivial from there.
