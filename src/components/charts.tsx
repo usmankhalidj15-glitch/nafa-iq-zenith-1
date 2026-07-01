@@ -405,7 +405,7 @@ export function DonutChart({
   centerLabel,
   centerValue,
 }: {
-  data: { name: string; value: number; color: string }[];
+  data: { name: string; value: number; color: string; amount?: number }[];
   centerLabel?: string;
   centerValue?: string;
 }) {
