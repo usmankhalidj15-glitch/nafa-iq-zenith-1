@@ -312,7 +312,7 @@ function Learn() {
             <div className="mx-auto mt-2 h-1 w-10 rounded-full bg-border sm:hidden" />
             <div className="flex items-center justify-between border-b border-border px-4 py-3">
               <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-text-primary">
-                <Bot className="h-4 w-4 text-bull" strokeWidth={1.5} /> {t("Ask AI Tutor")}
+                <AiGlyph className="h-4 w-4 text-bull" /> {t("Ask AI Tutor")}
               </span>
               <button onClick={() => setChatOpen(false)} aria-label="Close">
                 <X className="h-5 w-5 text-text-secondary" />
