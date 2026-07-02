@@ -8,7 +8,6 @@ import {
   ArrowRight,
   Bookmark,
   BookmarkCheck,
-  Bot,
   Brain,
   Check,
   CheckCircle2,

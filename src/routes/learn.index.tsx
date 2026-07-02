@@ -9,7 +9,6 @@ import {
   X,
   RotateCcw,
   ArrowRight,
-  Bot,
   BookOpen,
   Send,
   Sparkles,
