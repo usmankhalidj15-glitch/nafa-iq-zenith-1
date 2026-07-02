@@ -1403,12 +1403,12 @@ function FAQ() {
             </h2>
             <p className="mt-6 text-sm text-text-secondary">Didn&apos;t find your answer?</p>
             <div className="mt-4 h-px w-16 bg-white/10" />
-            <Link
-              to="/"
+            <a
+              href="#contact"
               className="story-link mt-4 inline-flex items-center gap-2 text-sm font-semibold text-bull"
             >
               Contact us <ArrowRight className="h-4 w-4" />
-            </Link>
+            </a>
           </div>
         </Reveal>
 
@@ -1717,6 +1717,15 @@ function Landing() {
               wealth in Pakistan. We help everyday investors see their true, devaluation-adjusted
               picture and make confident, values-aligned decisions.
             </p>
+            <div className="mt-6">
+              <Link
+                to="/team"
+                className="inline-flex items-center gap-2 rounded-[12px] bg-gradient-to-br from-[#00d4aa] to-[#00a88a] px-5 py-2.5 text-sm font-semibold text-bull-foreground shadow-[0_6px_24px_rgba(0,212,170,0.3)] transition hover:shadow-[0_10px_36px_rgba(0,212,170,0.5)]"
+              >
+                Our Team
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
           </Reveal>
 
           <div id="contact" className="scroll-mt-24">
@@ -1821,14 +1830,19 @@ function Landing() {
                 </a>
               </li>
               <li>
-                <a href="#" className="transition hover:text-bull">
-                  Privacy Policy
-                </a>
+                <Link to="/team" className="transition hover:text-bull">
+                  Our Team
+                </Link>
               </li>
               <li>
-                <a href="#" className="transition hover:text-bull">
-                  Terms
-                </a>
+              <a href="mailto:usmankhalidj15@gmail.com?subject=Privacy%20Policy" className="transition hover:text-bull">
+                Privacy Policy
+              </a>
+              </li>
+              <li>
+              <a href="mailto:usmankhalidj15@gmail.com?subject=Terms%20of%20Service" className="transition hover:text-bull">
+                Terms
+              </a>
               </li>
               <li>
                 <a href="#contact" className="transition hover:text-bull">

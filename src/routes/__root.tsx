@@ -106,23 +106,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content: "Bloomberg-grade PSX terminal meets a calm personal finance app.",
       },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:title", content: "NafaIQ — PSX Terminal & Personal Finance" },
-      {
-        name: "description",
-        content:
-          "NafaIQ is a Pakistan Stock Exchange dashboard, trading terminal, and personal finance manager.",
-      },
-      {
-        property: "og:description",
-        content:
-          "NafaIQ is a Pakistan Stock Exchange dashboard, trading terminal, and personal finance manager.",
-      },
-      {
-        name: "twitter:description",
-        content:
-          "NafaIQ is a Pakistan Stock Exchange dashboard, trading terminal, and personal finance manager.",
-      },
+      { property: "og:url", content: "https://nafaiq.vercel.app/" },
       {
         property: "og:image",
         content:
@@ -139,6 +123,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "apple-touch-icon", href: "/icons/apple-touch-icon.png" },
       { rel: "icon", type: "image/png", href: "/icons/icon-192.png" },
+      { rel: "canonical", href: "https://nafaiq.vercel.app/" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -175,7 +160,7 @@ function Spinner() {
   );
 }
 
-const TARGET_PATHS = new Set(["/", "/app", "/psx", "/portfolio", "/finance", "/learn"]);
+const TARGET_PATHS = new Set(["/", "/app", "/psx", "/portfolio", "/finance", "/learn", "/team"]);
 
 function PageTransition({ routeKey, children }: { routeKey: string; children: ReactNode }) {
   const reduce = useReducedMotion();
@@ -207,7 +192,8 @@ function AuthGate() {
   const isLanding = pathname === "/";
   const isPlans = pathname === "/plans";
   const isUrduQa = pathname === "/urdu-qa";
-  const isPublic = isAuthRoute || isLanding || isPlans || isUrduQa;
+  const isTeam = pathname === "/team";
+  const isPublic = isAuthRoute || isLanding || isPlans || isUrduQa || isTeam;
 
   useEffect(() => {
     if (loading) return;

@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UrduQaRouteImport } from './routes/urdu-qa'
+import { Route as TeamRouteImport } from './routes/team'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as PsxRouteImport } from './routes/psx'
@@ -28,6 +29,11 @@ import { Route as LearnLessonIdRouteImport } from './routes/learn.lesson.$id'
 const UrduQaRoute = UrduQaRouteImport.update({
   id: '/urdu-qa',
   path: '/urdu-qa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeamRoute = TeamRouteImport.update({
+  id: '/team',
+  path: '/team',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -113,6 +119,7 @@ export interface FileRoutesByFullPath {
   '/psx': typeof PsxRoute
   '/settings': typeof SettingsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/team': typeof TeamRoute
   '/urdu-qa': typeof UrduQaRoute
   '/stock/$ticker': typeof StockTickerRoute
   '/learn/': typeof LearnIndexRoute
@@ -129,6 +136,7 @@ export interface FileRoutesByTo {
   '/psx': typeof PsxRoute
   '/settings': typeof SettingsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/team': typeof TeamRoute
   '/urdu-qa': typeof UrduQaRoute
   '/stock/$ticker': typeof StockTickerRoute
   '/learn': typeof LearnIndexRoute
@@ -147,6 +155,7 @@ export interface FileRoutesById {
   '/psx': typeof PsxRoute
   '/settings': typeof SettingsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/team': typeof TeamRoute
   '/urdu-qa': typeof UrduQaRoute
   '/stock/$ticker': typeof StockTickerRoute
   '/learn/': typeof LearnIndexRoute
@@ -166,6 +175,7 @@ export interface FileRouteTypes {
     | '/psx'
     | '/settings'
     | '/sitemap.xml'
+    | '/team'
     | '/urdu-qa'
     | '/stock/$ticker'
     | '/learn/'
@@ -182,6 +192,7 @@ export interface FileRouteTypes {
     | '/psx'
     | '/settings'
     | '/sitemap.xml'
+    | '/team'
     | '/urdu-qa'
     | '/stock/$ticker'
     | '/learn'
@@ -199,6 +210,7 @@ export interface FileRouteTypes {
     | '/psx'
     | '/settings'
     | '/sitemap.xml'
+    | '/team'
     | '/urdu-qa'
     | '/stock/$ticker'
     | '/learn/'
@@ -217,6 +229,7 @@ export interface RootRouteChildren {
   PsxRoute: typeof PsxRoute
   SettingsRoute: typeof SettingsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  TeamRoute: typeof TeamRoute
   UrduQaRoute: typeof UrduQaRoute
   StockTickerRoute: typeof StockTickerRoute
 }
@@ -228,6 +241,13 @@ declare module '@tanstack/react-router' {
       path: '/urdu-qa'
       fullPath: '/urdu-qa'
       preLoaderRoute: typeof UrduQaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/team': {
+      id: '/team'
+      path: '/team'
+      fullPath: '/team'
+      preLoaderRoute: typeof TeamRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -355,6 +375,7 @@ const rootRouteChildren: RootRouteChildren = {
   PsxRoute: PsxRoute,
   SettingsRoute: SettingsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  TeamRoute: TeamRoute,
   UrduQaRoute: UrduQaRoute,
   StockTickerRoute: StockTickerRoute,
 }
