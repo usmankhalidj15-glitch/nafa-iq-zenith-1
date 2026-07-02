@@ -9,7 +9,6 @@ import {
   X,
   RotateCcw,
   ArrowRight,
-  Bot,
   BookOpen,
   Send,
   Sparkles,
@@ -25,6 +24,7 @@ import {
   Library,
 } from "lucide-react";
 import { Card } from "@/components/Card";
+import { AiGlyph } from "@/components/AiGlyph";
 import { EmojiIcon } from "@/components/icons";
 import { LESSONS, GLOSSARY } from "@/lib/finance-data";
 import { LEARNING_PATHS, LESSON_ID_BY_TITLE, LESSON_CONTENT, FLASHCARDS } from "@/lib/learn-data";
@@ -295,7 +295,7 @@ function Learn() {
         className="fixed right-4 bottom-20 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-bull text-bull-foreground shadow-[0_4px_24px_rgba(0,0,0,0.5)] hover:brightness-110 lg:bottom-8"
         aria-label={t("Ask AI Tutor")}
       >
-        <Bot className="h-6 w-6" />
+        <AiGlyph className="h-6 w-6" />
       </button>
 
       {/* AI Tutor chat sheet */}
@@ -312,7 +312,7 @@ function Learn() {
             <div className="mx-auto mt-2 h-1 w-10 rounded-full bg-border sm:hidden" />
             <div className="flex items-center justify-between border-b border-border px-4 py-3">
               <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-text-primary">
-                <Bot className="h-4 w-4 text-bull" strokeWidth={1.5} /> {t("Ask AI Tutor")}
+                <AiGlyph className="h-4 w-4 text-bull" /> {t("Ask AI Tutor")}
               </span>
               <button onClick={() => setChatOpen(false)} aria-label="Close">
                 <X className="h-5 w-5 text-text-secondary" />
