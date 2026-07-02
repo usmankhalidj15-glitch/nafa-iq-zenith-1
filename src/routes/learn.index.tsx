@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { LucideIcon } from "lucide-react";
 import {
   Search,
   Check,
@@ -14,6 +15,14 @@ import {
   Sparkles,
   Video,
   PartyPopper,
+  Flame,
+  CheckCircle2,
+  Star,
+  Trophy,
+  BarChart3,
+  TrendingUp,
+  Wallet,
+  Library,
 } from "lucide-react";
 import { Card } from "@/components/Card";
 import { EmojiIcon } from "@/components/icons";
@@ -42,13 +51,13 @@ export const Route = createFileRoute("/learn/")({
 
 const XP_GOAL = 500;
 
-function StatChip({ emoji, label, color }: { emoji: string; label: string; color: string }) {
+function StatPill({ icon: Icon, label, color }: { icon: LucideIcon; label: string; color: string }) {
   return (
     <span
       className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold"
       style={{ color, borderColor: `${color}40`, background: `${color}14` }}
     >
-      <EmojiIcon emoji={emoji} size={14} />
+      <Icon className="h-3.5 w-3.5" strokeWidth={2} />
       {label}
     </span>
   );
@@ -95,7 +104,7 @@ function Learn() {
   const xpPct = Math.min(100, Math.round((xp / XP_GOAL) * 100));
 
   return (
-    <div className="mx-auto max-w-6xl space-y-6">
+    <div className="mx-auto max-w-6xl space-y-6 pb-24 lg:pb-16">
       {/* Hero */}
       <Card hover={false} className="bg-gradient-to-br from-ai-tint to-surface">
         <h1 className="font-nastaliq text-2xl text-text-primary">سمجھو، سیکھو، بڑھو</h1>
@@ -104,25 +113,28 @@ function Learn() {
           {t("From KSE basics to technical analysis — in plain Urdu and English.")}
         </p>
         <div className="mt-3 flex flex-wrap items-center gap-3">
-          <span className="rounded-[4px] bg-elevated px-2 py-1 text-xs text-text-secondary">
-            {t("Beginner Investor")} · {lessonsDone} {t("lessons complete")}
+          <span className="rounded-[4px] bg-elevated px-2 py-1 text-xs font-medium text-text-secondary">
+            {t("Beginner Investor")}
           </span>
-          <div className="flex items-center gap-2">
-            <div className="h-2 w-40 overflow-hidden rounded-full bg-elevated">
-              <AnimatedBar value={xpPct} className="bg-bull" />
+          <div className="flex flex-col gap-1">
+            <span className="text-[10px] font-medium text-text-muted">{t("Level Progress")}</span>
+            <div className="flex items-center gap-2">
+              <div className="h-2 w-40 overflow-hidden rounded-full bg-elevated">
+                <AnimatedBar value={xpPct} className="bg-bull" />
+              </div>
+              <span className="font-mono text-xs tabular-nums text-text-muted">
+                {xp} / {XP_GOAL} XP
+              </span>
             </div>
-            <span className="font-mono text-xs tabular-nums text-text-muted">
-              {xp} / {XP_GOAL} XP
-            </span>
           </div>
         </div>
 
         {/* Learning stats bar */}
         <div className="mt-4 flex flex-wrap gap-2">
-          <StatChip emoji="🔥" label={t("5 Day Streak")} color="#f59e0b" />
-          <StatChip emoji="✅" label={`${lessonsDone} ${t("Lessons Done")}`} color="#00d4aa" />
-          <StatChip emoji="⭐" label={`${xp} ${t("XP Earned")}`} color="#eab308" />
-          <StatChip emoji="🏆" label={t("Beginner Level")} color="#8b5cf6" />
+          <StatPill icon={Flame} label={t("5 Day Streak")} color="#f59e0b" />
+          <StatPill icon={CheckCircle2} label={`${lessonsDone} ${t("Lessons Done")}`} color="#00d4aa" />
+          <StatPill icon={Star} label={`${xp} ${t("XP Earned")}`} color="#eab308" />
+          <StatPill icon={Trophy} label={t("Beginner Level")} color="#8b5cf6" />
         </div>
       </Card>
 
@@ -137,6 +149,15 @@ function Learn() {
             const progress = pathProgress(p.lessonIds);
             const firstUnfinished =
               p.lessonIds.find((l) => statusOf(l) !== "complete") ?? p.lessonIds[0];
+            const PathIcon =
+              (
+                {
+                  "psx-starter": BarChart3,
+                  technical: TrendingUp,
+                  islamic: Library,
+                  personal: Wallet,
+                } as Record<string, LucideIcon>
+              )[p.id] ?? BookOpen;
             return (
               <div
                 key={p.id}
@@ -144,10 +165,10 @@ function Learn() {
                 style={{ borderLeft: `3px solid ${p.accent}` }}
               >
                 <div
-                  className="flex h-10 w-10 items-center justify-center rounded-[8px] border border-white/[0.06] bg-elevated"
-                  style={{ color: p.accent }}
+                  className="flex h-10 w-10 items-center justify-center rounded-[8px] border border-white/[0.06]"
+                  style={{ background: `${p.accent}14`, color: p.accent }}
                 >
-                  <EmojiIcon emoji={p.emoji} size={18} />
+                  <PathIcon className="h-[18px] w-[18px]" strokeWidth={1.5} />
                 </div>
                 <div className="mt-2 text-sm font-semibold text-text-primary">{t(p.title)}</div>
                 <div className="mt-0.5 text-xs text-text-secondary">{t(p.description)}</div>

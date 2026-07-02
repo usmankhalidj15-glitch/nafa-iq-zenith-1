@@ -12,11 +12,14 @@ import {
   Brain,
   Check,
   CheckCircle2,
+  ChevronLeft,
   ChevronDown,
   ChevronRight,
   FileText,
   Inbox,
+  Info,
   Lightbulb,
+  Menu,
   MessageCircle,
   Send,
   Sparkles,
@@ -57,7 +60,7 @@ const CALLOUT_META: Record<string, { label: string; color: string; emoji: string
   tip: { label: "Pro Tip", color: "#00d4aa", emoji: "💡" },
   warning: { label: "Important", color: "#f59e0b", emoji: "⚠️" },
   example: { label: "Real Example", color: "#22c55e", emoji: "📊" },
-  note: { label: "Note", color: "#94a3b8", emoji: "📌" },
+  note: { label: "Note", color: ACCENT, emoji: "💡" },
 };
 
 function shuffle<T>(arr: T[]): T[] {
@@ -103,6 +106,8 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
   const [activeSection, setActiveSection] = useState(lesson.sections[0]?.id);
   const [chatOpen, setChatOpen] = useState(false);
   const [showArticle, setShowArticle] = useState(true);
+  const [tocCollapsed, setTocCollapsed] = useState(false);
+  const [chatCollapsed, setChatCollapsed] = useState(false);
 
   const order = lessonOrder();
   const idx = order.indexOf(lesson.id);
@@ -196,62 +201,89 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
         </>
       )}
 
-      <div className="mx-auto flex max-w-[1600px] gap-6 px-3 py-5 lg:px-6 justify-center">
+      <div className="mx-auto flex max-w-[1480px] gap-5 px-3 py-5 lg:px-6">
         {/* Left TOC */}
         {mode === "reading" && (
-          <aside className="hidden w-[300px] shrink-0 lg:block">
-            <div className="sticky top-[110px] rounded-[12px] border border-border bg-surface p-4">
-              <div className="text-xs font-semibold uppercase tracking-wide text-text-muted">
-                {t("In This Lesson")}
-              </div>
-              <nav className="mt-3 space-y-1 border-l border-border">
-                {lesson.sections.map((s) => (
+          <motion.aside
+            animate={{ width: tocCollapsed ? 0 : 260 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="hidden overflow-hidden lg:block"
+          >
+            <div className="w-[260px] shrink-0">
+              <div className="sticky top-[110px] rounded-[12px] border border-border bg-surface p-4">
+                <div className="flex items-center justify-between">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-text-muted">
+                    {t("In This Lesson")}
+                  </div>
                   <button
-                    key={s.id}
-                    onClick={() => scrollToSection(s.id)}
-                    className={cn(
-                      "-ml-px block border-l-2 py-1 pl-3 text-left text-xs transition-colors",
-                      activeSection === s.id
-                        ? "border-bull font-medium text-bull"
-                        : "border-transparent text-text-secondary hover:text-text-primary",
-                    )}
+                    onClick={() => setTocCollapsed(true)}
+                    className="flex h-6 w-6 items-center justify-center rounded-[4px] text-text-muted hover:bg-hover hover:text-text-primary"
                   >
-                    {t(s.heading)}
+                    <ChevronLeft className="h-4 w-4" strokeWidth={1.5} />
                   </button>
-                ))}
-              </nav>
-              <div className="mt-5 space-y-1.5 border-t border-border pt-4 text-xs text-text-secondary">
-                <div className="flex items-center gap-1.5">
-                  <Sparkles className="h-3.5 w-3.5" strokeWidth={1.5} /> {lesson.duration} {t("read")}
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <Target className="h-3.5 w-3.5" strokeWidth={1.5} /> {t(lesson.level)}
+                <nav className="mt-3 space-y-1 border-l border-border">
+                  {lesson.sections.map((s) => (
+                    <button
+                      key={s.id}
+                      onClick={() => scrollToSection(s.id)}
+                      className={cn(
+                        "-ml-px block border-l-2 py-1 pl-3 text-left text-xs transition-colors",
+                        activeSection === s.id
+                          ? "border-bull font-medium text-bull"
+                          : "border-transparent text-text-secondary hover:text-text-primary",
+                      )}
+                    >
+                      {t(s.heading)}
+                    </button>
+                  ))}
+                </nav>
+                <div className="mt-5 space-y-1.5 border-t border-border pt-4 text-xs text-text-secondary">
+                  <div className="flex items-center gap-1.5">
+                    <Sparkles className="h-3.5 w-3.5" strokeWidth={1.5} /> {lesson.duration} {t("read")}
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <Target className="h-3.5 w-3.5" strokeWidth={1.5} /> {t(lesson.level)}
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    {lesson.type === "video" && lesson.videoUrl ? (
+                      <>
+                        <Video className="h-3.5 w-3.5" strokeWidth={1.5} /> {t("Video + Article")}
+                      </>
+                    ) : (
+                      <>
+                        <BookOpen className="h-3.5 w-3.5" strokeWidth={1.5} /> {t("Article")}
+                      </>
+                    )}
+                  </div>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  {lesson.type === "video" && lesson.videoUrl ? (
-                    <>
-                      <Video className="h-3.5 w-3.5" strokeWidth={1.5} /> {t("Video + Article")}
-                    </>
+                <button
+                  onClick={() => toggleBookmark(lesson.id)}
+                  className="mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-[8px] border border-border px-3 py-2 text-xs font-medium text-text-secondary hover:bg-hover"
+                >
+                  {bookmarked ? (
+                    <BookmarkCheck className="h-4 w-4 text-bull" />
                   ) : (
-                    <>
-                      <BookOpen className="h-3.5 w-3.5" strokeWidth={1.5} /> {t("Article")}
-                    </>
+                    <Bookmark className="h-4 w-4" />
                   )}
-                </div>
+                  {bookmarked ? t("Bookmarked") : t("Bookmark Lesson")}
+                </button>
               </div>
-              <button
-                onClick={() => toggleBookmark(lesson.id)}
-                className="mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-[8px] border border-border px-3 py-2 text-xs font-medium text-text-secondary hover:bg-hover"
-              >
-                {bookmarked ? (
-                  <BookmarkCheck className="h-4 w-4 text-bull" />
-                ) : (
-                  <Bookmark className="h-4 w-4" />
-                )}
-                {bookmarked ? t("Bookmarked") : t("Bookmark Lesson")}
-              </button>
             </div>
-          </aside>
+          </motion.aside>
+        )}
+
+        {/* TOC expand button */}
+        {tocCollapsed && mode === "reading" && (
+          <div className="hidden lg:flex w-0 shrink-0 overflow-visible">
+            <button
+              onClick={() => setTocCollapsed(false)}
+              className="relative top-[132px] -ml-3 flex h-8 w-8 items-center justify-center rounded-full border border-border bg-surface text-text-muted shadow-sm transition-all hover:border-bull hover:text-bull"
+              title={t("Show table of contents")}
+            >
+              <Menu className="h-4 w-4" strokeWidth={1.5} />
+            </button>
+          </div>
         )}
 
         {/* Main content */}
@@ -304,11 +336,38 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
 
         {/* Right docked AI Tutor panel — desktop xl+ */}
         {mode === "reading" && (
-          <aside className="hidden w-[300px] shrink-0 xl:block">
-            <div className="sticky top-[110px] h-[calc(100vh-130px)]">
-              <ChatPanel lesson={lesson} activeSection={activeSection} />
+          <motion.aside
+            animate={{ width: chatCollapsed ? 0 : 300 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="hidden overflow-hidden xl:block"
+          >
+            <div className="w-[300px] shrink-0">
+              <div className="sticky top-[110px] h-[calc(100vh-130px)]">
+                <div className="relative h-full">
+                  <button
+                    onClick={() => setChatCollapsed(true)}
+                    className="absolute -left-2.5 top-3 z-10 flex h-6 w-6 items-center justify-center rounded-full border border-border bg-surface text-text-muted shadow-sm transition-all hover:border-bull hover:text-bull"
+                  >
+                    <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.5} />
+                  </button>
+                  <ChatPanel lesson={lesson} activeSection={activeSection} />
+                </div>
+              </div>
             </div>
-          </aside>
+          </motion.aside>
+        )}
+
+        {/* Chat expand button */}
+        {chatCollapsed && mode === "reading" && (
+          <div className="hidden xl:flex w-0 shrink-0 overflow-visible">
+            <button
+              onClick={() => setChatCollapsed(false)}
+              className="relative top-[132px] -mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-border bg-surface text-text-muted shadow-sm transition-all hover:border-bull hover:text-bull"
+              title={t("Open AI tutor")}
+            >
+              <Menu className="h-4 w-4" strokeWidth={1.5} />
+            </button>
+          </div>
         )}
       </div>
 
@@ -363,13 +422,14 @@ function Blocks({ blocks, accent }: { blocks: ContentBlock[]; accent: string }) 
       {blocks.map((b, i) => {
         if (b.type === "p") {
           return (
-            <p key={i} className="my-4 text-[16px] leading-[1.8] text-text-secondary">
+            <p key={i} className="my-4 text-[16px] leading-[1.9] text-text-secondary">
               {t(b.text)}
             </p>
           );
         }
         if (b.type === "callout") {
           const m = CALLOUT_META[b.kind];
+          const isNote = b.kind === "note";
           return (
             <div
               key={i}
@@ -380,7 +440,12 @@ function Blocks({ blocks, accent }: { blocks: ContentBlock[]; accent: string }) 
                 className="flex items-center gap-1.5 text-xs font-bold"
                 style={{ color: m.color }}
               >
-                <EmojiIcon emoji={m.emoji} size={13} /> {t(m.label)}
+                {isNote ? (
+                  <Info className="h-3.5 w-3.5" strokeWidth={2} />
+                ) : (
+                  <EmojiIcon emoji={m.emoji} size={13} />
+                )}
+                {t(m.label)}
               </div>
               <p className="mt-1.5 text-sm leading-relaxed text-text-secondary">{t(b.text)}</p>
             </div>
@@ -534,7 +599,7 @@ function ReadingView({
         <article className="mt-6">
           {lesson.sections.map((s) => (
             <section key={s.id} id={s.id} className="scroll-mt-[120px]">
-              <h2 className="mt-10 border-b border-border pb-2 text-[22px] font-bold text-text-primary">
+              <h2 className="mt-10 border-b border-border pb-3 text-[22px] font-bold text-text-primary first:mt-0">
                 {t(s.heading)}
               </h2>
               <Blocks blocks={s.blocks} accent={ACCENT} />
