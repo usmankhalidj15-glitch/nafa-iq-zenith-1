@@ -31,6 +31,7 @@ import {
   Cpu,
   X,
 } from "lucide-react";
+import { AiGlyph } from "@/components/AiGlyph";
 import { EmojiIcon } from "@/components/icons";
 import { Typewriter } from "@/components/Typewriter";
 import {
