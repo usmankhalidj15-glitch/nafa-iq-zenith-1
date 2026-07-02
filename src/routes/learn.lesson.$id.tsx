@@ -196,10 +196,10 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
         </>
       )}
 
-      <div className="mx-auto flex max-w-[1600px] gap-6 px-3 py-5 lg:px-6">
+      <div className="mx-auto flex max-w-[1600px] gap-6 px-3 py-5 lg:px-6 justify-center">
         {/* Left TOC */}
         {mode === "reading" && (
-          <aside className="hidden w-[240px] shrink-0 lg:block">
+          <aside className="hidden w-[300px] shrink-0 lg:block">
             <div className="sticky top-[110px] rounded-[12px] border border-border bg-surface p-4">
               <div className="text-xs font-semibold uppercase tracking-wide text-text-muted">
                 {t("In This Lesson")}
@@ -304,7 +304,7 @@ function LessonInner({ lesson }: { lesson: LessonContent }) {
 
         {/* Right docked AI Tutor panel — desktop xl+ */}
         {mode === "reading" && (
-          <aside className="hidden w-[360px] shrink-0 xl:block">
+          <aside className="hidden w-[300px] shrink-0 xl:block">
             <div className="sticky top-[110px] h-[calc(100vh-130px)]">
               <ChatPanel lesson={lesson} activeSection={activeSection} />
             </div>
