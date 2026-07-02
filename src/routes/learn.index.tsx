@@ -25,6 +25,7 @@ import {
   Library,
 } from "lucide-react";
 import { Card } from "@/components/Card";
+import { AiGlyph } from "@/components/AiGlyph";
 import { EmojiIcon } from "@/components/icons";
 import { LESSONS, GLOSSARY } from "@/lib/finance-data";
 import { LEARNING_PATHS, LESSON_ID_BY_TITLE, LESSON_CONTENT, FLASHCARDS } from "@/lib/learn-data";
