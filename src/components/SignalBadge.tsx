@@ -15,7 +15,7 @@ export function SignalBadge({ signal, className }: { signal: Signal; className?:
   return (
     <span
       className={cn(
-        "inline-flex min-w-[84px] items-center justify-center rounded-full px-2.5 py-0.5 text-[10px] font-semibold tracking-wide whitespace-nowrap uppercase",
+        "inline-flex w-fit items-center justify-center rounded-full px-2.5 py-0.5 text-[10px] font-semibold tracking-wide whitespace-nowrap uppercase",
         styles[signal],
         className,
       )}

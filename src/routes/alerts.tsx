@@ -2,12 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Trash2, TrendingUp, Calendar, Wallet, Target } from "lucide-react";
 import { Card } from "@/components/Card";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { EmojiIcon } from "@/components/icons";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/hooks/use-lang";
 import { useFinanceStore, financeActions } from "@/hooks/use-finance-store";
-import { type Alert } from "@/lib/finance-data";
+import { type Alert, BUDGETS, GOALS, BILLS } from "@/lib/finance-data";
 
 export const Route = createFileRoute("/alerts")({
   head: () => ({
@@ -30,7 +31,6 @@ const TYPES = [
 ];
 
 const STOCKS = ["HBL", "ENGRO", "LUCK", "OGDC"];
-const BILLS_OPTS = ["SNGPL Gas", "PTCL Internet", "Apartment Rent"];
 
 function Alerts() {
   const { t } = useLang();
@@ -41,11 +41,16 @@ function Alerts() {
   const [stock, setStock] = useState(STOCKS[0]);
   const [direction, setDirection] = useState("Above");
   const [price, setPrice] = useState("");
-  const [bill, setBill] = useState(BILLS_OPTS[0]);
+  const [bill, setBill] = useState(BILLS[0]?.name ?? "");
   const [timing, setTiming] = useState("1 day before");
+  const [budgetCat, setBudgetCat] = useState(BUDGETS[0]?.category ?? "");
+  const [budgetThreshold, setBudgetThreshold] = useState("80");
+  const [goal, setGoal] = useState(GOALS[0]?.name ?? "");
+  const [goalMilestone, setGoalMilestone] = useState("50");
   const [push, setPush] = useState(true);
   const [email, setEmail] = useState(false);
   const [error, setError] = useState("");
+  const [confirmIdx, setConfirmIdx] = useState<number | null>(null);
 
   const handleCreate = () => {
     setError("");
@@ -62,13 +67,16 @@ function Alerts() {
       title = `${stock} ${direction.toLowerCase()} PKR ${num}`;
       meta = "Created " + new Date().toLocaleString("en-US", { month: "short", day: "numeric" });
     } else if (type === "Bill Reminder") {
+      if (!bill) { setError(t("Please select a bill.")); return; }
       title = `${bill} — ${timing}`;
       meta = "Recurring monthly";
     } else if (type === "Budget") {
-      title = `${bill} budget alert`;
+      if (!budgetCat) { setError(t("Please select a budget category.")); return; }
+      title = `${budgetCat} at ${budgetThreshold}% of budget`;
       meta = "Monthly";
     } else {
-      title = `Goal milestone alert`;
+      if (!goal) { setError(t("Please select a goal.")); return; }
+      title = `${goal} ${goalMilestone}% reached`;
       meta = "One-time";
     }
 
@@ -76,6 +84,8 @@ function Alerts() {
     const alert: Alert = { emoji: ty.emoji, title, type: `${type} Alert`, meta, on: true };
     financeActions.addAlert(alert, `New alert created: ${title} (${channels})`);
     setPrice("");
+    setBudgetThreshold("80");
+    setGoalMilestone("50");
     setError("");
   };
 
@@ -115,7 +125,7 @@ function Alerts() {
                 />
               </button>
               <button
-                onClick={() => financeActions.removeAlert(i)}
+                onClick={() => setConfirmIdx(i)}
                 className="text-text-muted hover:text-bear"
               >
                 <Trash2 className="h-4 w-4" />
@@ -174,15 +184,15 @@ function Alerts() {
                 />
               </div>
             </div>
-          ) : (
+          ) : type === "Bill Reminder" ? (
             <div className="grid gap-3 sm:grid-cols-2">
               <select
                 value={bill}
                 onChange={(e) => setBill(e.target.value)}
                 className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary"
               >
-                {BILLS_OPTS.map((b) => (
-                  <option key={b}>{b}</option>
+                {BILLS.map((b) => (
+                  <option key={b.name} value={b.name}>{b.name}</option>
                 ))}
               </select>
               <select
@@ -193,6 +203,52 @@ function Alerts() {
                 <option>{t("1 day before")}</option>
                 <option>{t("3 days before")}</option>
                 <option>{t("7 days before")}</option>
+              </select>
+            </div>
+          ) : type === "Budget" ? (
+            <div className="grid gap-3 sm:grid-cols-2">
+              <select
+                value={budgetCat}
+                onChange={(e) => setBudgetCat(e.target.value)}
+                className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary"
+              >
+                {BUDGETS.map((b) => (
+                  <option key={b.category} value={b.category}>{t(b.category)}</option>
+                ))}
+              </select>
+              <select
+                value={budgetThreshold}
+                onChange={(e) => setBudgetThreshold(e.target.value)}
+                className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary"
+              >
+                <option value="50">{t("50%")}</option>
+                <option value="75">{t("75%")}</option>
+                <option value="80">{t("80%")}</option>
+                <option value="90">{t("90%")}</option>
+                <option value="100">{t("100%")}</option>
+              </select>
+            </div>
+          ) : (
+            <div className="grid gap-3 sm:grid-cols-2">
+              <select
+                value={goal}
+                onChange={(e) => setGoal(e.target.value)}
+                className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary"
+              >
+                {GOALS.map((g) => (
+                  <option key={g.name} value={g.name}>{g.emoji} {t(g.name)}</option>
+                ))}
+              </select>
+              <select
+                value={goalMilestone}
+                onChange={(e) => setGoalMilestone(e.target.value)}
+                className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary"
+              >
+                <option value="25">{t("25%")}</option>
+                <option value="50">{t("50%")}</option>
+                <option value="75">{t("75%")}</option>
+                <option value="90">{t("90%")}</option>
+                <option value="100">{t("100%")}</option>
               </select>
             </div>
           )}
@@ -242,6 +298,18 @@ function Alerts() {
           ))}
         </Card>
       </section>
+
+      <ConfirmDialog
+        open={confirmIdx !== null}
+        onOpenChange={(o) => !o && setConfirmIdx(null)}
+        onConfirm={() => {
+          if (confirmIdx != null) financeActions.removeAlert(confirmIdx);
+          setConfirmIdx(null);
+        }}
+        title="Delete Alert"
+        description="Are you sure you want to delete this alert? This action cannot be undone."
+        confirmText="Delete"
+      />
     </div>
   );
 }

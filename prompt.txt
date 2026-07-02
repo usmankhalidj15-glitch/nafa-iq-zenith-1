@@ -1,0 +1,53 @@
+Create a React PhoneMockup component with a floating phone animation for a fintech app landing page called NafaIQ.
+
+Requirements:
+
+1. The phone should have a subtle floating animation using requestAnimationFrame — it bobs up and down with a sin wave (amplitude 7px, frequency 0.45π) and is tilted at 8 degrees.
+
+2. The phone body should be a rounded rectangle (280×580px, border-radius 44px) with a dark gradient background (#24243a → #1a1a2e → #14142a), a subtle teal glow shadow, and a 1px border.
+
+3. Inside the phone (3px inset bezel, border-radius 40px), render a dark app screen (#0d0d14) with these 7 sections stacked vertically:
+
+   Section 1 — Status Bar (24px height):
+   - Left: "9:41" in JetBrains Mono, white/0.55 opacity
+   - Right: 3 small dots (network indicators, last one teal #14b894)
+
+   Section 2 — App Header (38px height):
+   - Left: "NafaIQ" in teal (#14b894), bold
+   - Right: A bell SVG icon (stroke rgba white/0.45)
+
+   Section 3 — Greeting & Net Worth (flex: 1, centered):
+   - "Asalam-o-Alaikum, Usman" in white
+   - Date line: "Wed, Jul 1 · KSE-100 +0.62%" (the percentage in teal)
+   - "Net Worth" label in 40% opacity
+   - "PKR 5,840,000" in large JetBrains Mono white text
+   - An SVG sparkline chart (248×30px) - a smooth upward curve with teal gradient fill
+
+   Section 4 — Portfolio Card (margin 8px, 12px padding):
+   - "Portfolio Value" label
+   - "PKR 4.25M" in teal JetBrains Mono
+   - "+2.4% today" in teal
+
+   Section 5 — Two Side-by-Side Cards (gap 8px):
+   - Left card: "Spending" → "PKR 185K" in white → "-8.2%" in red (#ef4444)
+   - Right card: "P&L" → "+PKR 28.4K" in teal → "+0.68%" in teal
+
+   Section 6 — Mini Watchlist (padding 8px 16px):
+   - 3 stock rows with dividers
+   - Each row: stock symbol (white) on left, price + change on right (teal if up, red if down)
+   - Stocks: OGDC 142.50 +2.3%, HBL 142.50 +1.2%, LUCK 890.00 -0.45%
+
+   Section 7 — Ticker Strip (28px height, dark background #08080c):
+   - A marquee animation that scrolls ticker items horizontally
+   - Items duplicated for seamless loop
+   - Each item: symbol + price + change in JetBrains Mono 9px, teal or red
+   - CSS animation: ticker-marquee 20s linear infinite (translateX 0 to -50%)
+   - Ticker items: OGDC 142.50 +2.3%, HBL 89.40 +1.2%, LUCK 890.00 -0.45%, ENGRO 312.45 +1.36%, FFC 168.70 +1.08%
+
+4. A screen reflection overlay — a diagonal gradient from top-left that adds a subtle glass reflection effect.
+
+5. The component takes an optional className prop.
+
+6. Use only inline styles (style={}) — no Tailwind classes except for the optional className prop on the wrapper.
+
+7. The component should be self-contained with no external dependencies.

@@ -44,6 +44,7 @@ import {
 
 import { toast } from "sonner";
 import { CrescentIcon, PkBadge } from "@/components/icons";
+import { PhoneMockup } from "@/components/PhoneMockup";
 import {
   Accordion,
   AccordionContent,
@@ -240,148 +241,6 @@ function TickerStrip() {
 }
 
 /* ---------- 3D phone with mouse tilt + float ---------- */
-function PhoneMockup({ startDelay = 0 }: { startDelay?: number }) {
-  const reduce = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const px = useMotionValue(0);
-  const py = useMotionValue(0);
-  const ry = useSpring(useTransform(px, [-0.5, 0.5], [-26, -8]), SPRING);
-  const rx = useSpring(useTransform(py, [-0.5, 0.5], [-2, 10]), SPRING);
-
-  function onMove(e: React.MouseEvent) {
-    if (reduce || !ref.current) return;
-    const r = ref.current.getBoundingClientRect();
-    px.set((e.clientX - r.left) / r.width - 0.5);
-    py.set((e.clientY - r.top) / r.height - 0.5);
-  }
-  function reset() {
-    px.set(0);
-    py.set(0);
-  }
-
-  return (
-    <div
-      ref={ref}
-      onMouseMove={onMove}
-      onMouseLeave={reset}
-      className="group/phone relative mx-auto w-[260px] [perspective:1200px] sm:w-[280px]"
-    >
-      {/* KSE-100 floating card — staggered entrance + float loop */}
-      <motion.div
-        initial={reduce ? false : { opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ ...SPRING_SOFT, delay: startDelay + 0.15 }}
-        className="absolute -top-8 -left-10 z-20"
-      >
-        <motion.div
-          animate={reduce ? undefined : { y: [0, -10, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className="rounded-[12px] border border-bull/25 bg-surface/85 px-3.5 py-2.5 backdrop-blur-md"
-          style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04)" }}
-        >
-          <div className="flex items-center gap-1.5">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-bull" />
-            <span className="text-[9px] font-bold tracking-widest text-bull">LIVE</span>
-          </div>
-          <div className="mt-1 flex items-center gap-2 text-[11px]">
-            <span className="font-bold text-text-primary">KSE-100</span>
-            <span className="font-mono text-text-primary">78,542</span>
-            <span className="font-mono text-bull">+1.24% ▲</span>
-          </div>
-        </motion.div>
-      </motion.div>
-
-      {/* Real Wealth floating card — staggered entrance + float loop */}
-      <motion.div
-        initial={reduce ? false : { opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ ...SPRING_SOFT, delay: startDelay + 0.3 }}
-        className="absolute -bottom-8 -right-8 z-20"
-      >
-        <motion.div
-          animate={reduce ? undefined : { y: [0, 9, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
-          className="rounded-[12px] border border-bull/30 bg-surface/85 px-3.5 py-2.5 backdrop-blur-md"
-          style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04)" }}
-        >
-          <div className="flex items-center gap-1.5 text-[10px] font-semibold text-bull">
-            <ShieldCheck className="h-3 w-3" /> Real Wealth
-          </div>
-          <div className="mt-1 flex items-baseline gap-1.5">
-            <span className="font-mono text-sm font-bold text-text-primary">$15,395</span>
-            <span className="text-[9px] text-text-muted">USD value</span>
-          </div>
-        </motion.div>
-      </motion.div>
-
-      {/* phone frame — entrance fade-and-rise */}
-      <motion.div
-        initial={reduce ? false : { opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ ...SPRING_SOFT, delay: startDelay }}
-        style={{ rotateY: ry, rotateX: rx, transformStyle: "preserve-3d" }}
-        className="relative will-change-transform"
-      >
-        <span
-          className="absolute -bottom-10 left-1/2 -z-10 h-[70%] w-[120%] -translate-x-1/2 rounded-full"
-          style={{
-            background: "radial-gradient(ellipse, rgba(0,212,170,0.45), transparent 70%)",
-            filter: "blur(50px)",
-          }}
-        />
-        <div
-          className="rounded-[44px] border border-white/12 p-0"
-          style={{
-            background: "linear-gradient(145deg, #1a1f35 0%, #0d1121 100%)",
-            boxShadow:
-              "0 0 0 1px rgba(255,255,255,0.05), 0 30px 60px rgba(0,0,0,0.6), 0 0 100px rgba(0,212,170,0.28), inset 0 1px 0 rgba(255,255,255,0.08)",
-          }}
-        >
-          <div className="m-2 overflow-hidden rounded-[36px] bg-[#070B14]">
-            <div className="space-y-2.5 p-3">
-              <div className="flex items-center justify-between">
-                <span className="font-display text-xs font-bold text-text-primary">
-                  Nafa<span className="text-primary">IQ</span>
-                </span>
-                <span className="h-5 w-5 rounded-full bg-bull/20" />
-              </div>
-              <div className="rounded-[8px] border border-l-2 border-l-ai border-border bg-ai-tint p-2">
-                <div className="text-[8px] font-semibold text-text-primary">Today's AI Insight</div>
-                <div className="mt-1 h-1 w-full rounded bg-elevated" />
-                <div className="mt-1 h-1 w-2/3 rounded bg-elevated" />
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                {[
-                  ["Net Worth", "4.28M"],
-                  ["Portfolio", "858K"],
-                ].map(([l, v]) => (
-                  <div key={l} className="rounded-[8px] border border-border bg-surface p-2">
-                    <div className="text-[7px] text-text-muted">{l}</div>
-                    <div className="font-mono text-sm font-bold text-bull">{v}</div>
-                  </div>
-                ))}
-              </div>
-              <div className="rounded-[8px] border border-border bg-surface p-2">
-                <div className="text-[8px] text-text-muted">KSE-100</div>
-                <div className="font-mono text-base font-bold text-text-primary">78,542.10</div>
-                <div className="mt-1.5 flex h-12 items-end gap-1">
-                  {[40, 55, 35, 70, 50, 80, 65, 90, 75, 95].map((h, i) => (
-                    <div
-                      key={i}
-                      className="flex-1 rounded-t-sm bg-bull/70"
-                      style={{ height: `${h}%` }}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-    </div>
-  );
-}
-
 const FEATURES: {
   Icon: LucideIcon | typeof CrescentIcon;
   iconColor: string;
@@ -1099,7 +958,7 @@ function Hero() {
           </Reveal>
         </motion.div>
         <div className="lg:col-span-2">
-          <PhoneMockup startDelay={0.35} />
+          <PhoneMockup startDelay={0.35} className="mx-auto w-[280px]" />
         </div>
       </motion.div>
 

@@ -23,6 +23,7 @@ import { EmojiIcon } from "@/components/icons";
 import { useLang } from "@/hooks/use-lang";
 import { useFinanceStore, financeActions } from "@/hooks/use-finance-store";
 import { Modal, fieldClass } from "@/components/Modal";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 
 export const Route = createFileRoute("/portfolio")({
   head: () => ({
@@ -285,6 +286,7 @@ function Portfolio() {
   };
   const [form, setForm] = useState(emptyForm);
   const [formErr, setFormErr] = useState("");
+  const [deleteIdx, setDeleteIdx] = useState<number | null>(null);
 
   function openAdd() {
     setEditIdx(null);
@@ -472,10 +474,10 @@ function Portfolio() {
                     key={`${h.ticker}-${idx}`}
                     className={cn(
                       "border-b border-border/50",
-                      isSell && "border-l-2 border-l-bear bg-bear/[0.04]",
+                      isSell && "border-s-2 border-s-bear bg-bear/[0.04]",
                     )}
                   >
-                    <td className={cn("py-2 font-semibold text-bull", isSell && "pl-3")}>{h.ticker}</td>
+                    <td className={cn("py-2 font-semibold text-bull", isSell && "ps-3")}>{h.ticker}</td>
                     <td className="text-text-secondary">{t(h.sector)}</td>
                     <td className="text-right font-mono tabular-nums text-text-primary">
                       {h.shares.toLocaleString()}
@@ -509,7 +511,7 @@ function Portfolio() {
                           <Pencil className="h-3.5 w-3.5" />
                         </button>
                         <button
-                          onClick={() => remove(idx)}
+                          onClick={() => setDeleteIdx(idx)}
                           aria-label={t("Delete")}
                           className="transition hover:text-bear"
                         >
@@ -611,6 +613,18 @@ function Portfolio() {
       </div>
 
       {reportState === "open" && <ReportModal onClose={() => setReportState("idle")} />}
+
+      <ConfirmDialog
+        open={deleteIdx !== null}
+        onOpenChange={(o) => !o && setDeleteIdx(null)}
+        onConfirm={() => {
+          if (deleteIdx != null) remove(deleteIdx);
+          setDeleteIdx(null);
+        }}
+        title="Delete Holding"
+        description="Are you sure you want to delete this holding? This action cannot be undone."
+        confirmText="Delete"
+      />
     </div>
   );
 }

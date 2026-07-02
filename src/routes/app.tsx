@@ -19,7 +19,7 @@ import { CountUpNumber, AnimatedBar } from "@/components/CountUpNumber";
 import { Typewriter } from "@/components/Typewriter";
 import { useTheme } from "@/hooks/use-theme";
 import { STOCKS, WATCHLIST, generateOHLCV, fmtPKR, fmtNum } from "@/lib/data";
-import { SPENDING, GOALS } from "@/lib/finance-data";
+import { SPENDING, GOALS, BUDGETS, BILLS } from "@/lib/finance-data";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
 import { useLang, localizeDigits } from "@/hooks/use-lang";
@@ -536,7 +536,6 @@ const ALERT_TYPES = [
   { label: "Goal Milestone", icon: Target, emoji: "🎯" },
 ];
 const ALERT_STOCKS = ["HBL", "ENGRO", "LUCK", "OGDC"];
-const ALERT_BILLS = ["SNGPL Gas", "PTCL Internet", "Apartment Rent"];
 
 function QuickAddAlertModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { t } = useLang();
@@ -544,8 +543,12 @@ function QuickAddAlertModal({ open, onClose }: { open: boolean; onClose: () => v
   const [stock, setStock] = useState(ALERT_STOCKS[0]);
   const [direction, setDirection] = useState("Above");
   const [price, setPrice] = useState("");
-  const [bill, setBill] = useState(ALERT_BILLS[0]);
+  const [bill, setBill] = useState(BILLS[0]?.name ?? "");
   const [timing, setTiming] = useState("1 day before");
+  const [budgetCat, setBudgetCat] = useState(BUDGETS[0]?.category ?? "");
+  const [budgetThreshold, setBudgetThreshold] = useState("80");
+  const [goal, setGoal] = useState(GOALS[0]?.name ?? "");
+  const [goalMilestone, setGoalMilestone] = useState("50");
   const [push, setPush] = useState(true);
   const [email, setEmail] = useState(false);
   const [err, setErr] = useState("");
@@ -568,10 +571,12 @@ function QuickAddAlertModal({ open, onClose }: { open: boolean; onClose: () => v
       title = `${bill} — ${timing}`;
       meta = "Recurring monthly";
     } else if (type === "Budget") {
-      title = `${bill} budget alert`;
+      if (!budgetCat) { setErr(t("Please select a budget category.")); return; }
+      title = `${budgetCat} at ${budgetThreshold}% of budget`;
       meta = "Monthly";
     } else {
-      title = `Goal milestone alert`;
+      if (!goal) { setErr(t("Please select a goal.")); return; }
+      title = `${goal} ${goalMilestone}% reached`;
       meta = "One-time";
     }
 
@@ -582,6 +587,8 @@ function QuickAddAlertModal({ open, onClose }: { open: boolean; onClose: () => v
     );
     toast.success(t("Alert created"));
     setPrice("");
+    setBudgetThreshold("80");
+    setGoalMilestone("50");
     setErr("");
     onClose();
   };
@@ -635,15 +642,15 @@ function QuickAddAlertModal({ open, onClose }: { open: boolean; onClose: () => v
               />
             </div>
           </div>
-        ) : (
+        ) : type === "Bill Reminder" ? (
           <div className="grid gap-3 sm:grid-cols-2">
             <select
               value={bill}
               onChange={(e) => setBill(e.target.value)}
               className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary"
             >
-              {ALERT_BILLS.map((b) => (
-                <option key={b}>{b}</option>
+              {BILLS.map((b) => (
+                <option key={b.name} value={b.name}>{b.name}</option>
               ))}
             </select>
             <select
@@ -654,6 +661,52 @@ function QuickAddAlertModal({ open, onClose }: { open: boolean; onClose: () => v
               <option>{t("1 day before")}</option>
               <option>{t("3 days before")}</option>
               <option>{t("7 days before")}</option>
+            </select>
+          </div>
+        ) : type === "Budget" ? (
+          <div className="grid gap-3 sm:grid-cols-2">
+            <select
+              value={budgetCat}
+              onChange={(e) => setBudgetCat(e.target.value)}
+              className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary"
+            >
+              {BUDGETS.map((b) => (
+                <option key={b.category} value={b.category}>{t(b.category)}</option>
+              ))}
+            </select>
+            <select
+              value={budgetThreshold}
+              onChange={(e) => setBudgetThreshold(e.target.value)}
+              className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary"
+            >
+              <option value="50">{t("50%")}</option>
+              <option value="75">{t("75%")}</option>
+              <option value="80">{t("80%")}</option>
+              <option value="90">{t("90%")}</option>
+              <option value="100">{t("100%")}</option>
+            </select>
+          </div>
+        ) : (
+          <div className="grid gap-3 sm:grid-cols-2">
+            <select
+              value={goal}
+              onChange={(e) => setGoal(e.target.value)}
+              className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary"
+            >
+              {GOALS.map((g) => (
+                <option key={g.name} value={g.name}>{g.emoji} {t(g.name)}</option>
+              ))}
+            </select>
+            <select
+              value={goalMilestone}
+              onChange={(e) => setGoalMilestone(e.target.value)}
+              className="rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary"
+            >
+              <option value="25">{t("25%")}</option>
+              <option value="50">{t("50%")}</option>
+              <option value="75">{t("75%")}</option>
+              <option value="90">{t("90%")}</option>
+              <option value="100">{t("100%")}</option>
             </select>
           </div>
         )}

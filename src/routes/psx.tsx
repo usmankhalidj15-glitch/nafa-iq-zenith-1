@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Sparkles,
   Plus,
@@ -27,6 +27,7 @@ import {
   fmtNum,
   type Signal,
 } from "@/lib/data";
+import { StatsGridSkeleton, ChartSkeleton, TableSkeleton } from "@/components/PageSkeleton";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/hooks/use-lang";
 
@@ -104,6 +105,12 @@ export default function PSX() {
   const [signalFilter, setSignalFilter] = useState<string>("All");
   const [watchlist, setWatchlist] = useState<string[]>(["HBL", "ENGRO", "LUCK", "OGDC"]);
   const [addOpen, setAddOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const id = setTimeout(() => setLoading(false), 300);
+    return () => clearTimeout(id);
+  }, []);
 
   const meta = symbolMeta(sym);
   const full = useMemo(
@@ -139,6 +146,27 @@ export default function PSX() {
   }, [moverTab]);
 
   const screened = STOCK_LIST.filter((s) => signalFilter === "All" || s.signal === signalFilter);
+
+  if (loading) {
+    return (
+      <div className="mx-auto max-w-7xl space-y-6">
+        <MarketTicker />
+        <StatsGridSkeleton count={4} />
+        <div className="grid min-w-0 gap-6 lg:grid-cols-[65fr_35fr]">
+          <div className="min-w-0 space-y-4">
+            <ChartSkeleton className="h-[480px]" />
+            <ChartSkeleton className="h-24" />
+            <TableSkeleton rows={5} />
+          </div>
+          <div className="min-w-0 space-y-4">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <ChartSkeleton key={i} className="h-64" />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-7xl space-y-6">

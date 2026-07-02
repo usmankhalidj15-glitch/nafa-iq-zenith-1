@@ -48,4 +48,4 @@ export function Modal({ open, onClose, title, children, className }: ModalProps)
 }
 
 export const fieldClass =
-  "w-full rounded-[6px] border border-border bg-elevated px-3 py-2 text-sm text-text-primary outline-none placeholder:text-text-muted focus:border-primary/50";
+  "w-full rounded-md border border-border bg-elevated px-3 py-2 text-sm text-text-primary outline-none placeholder:text-text-muted focus:border-primary/50";

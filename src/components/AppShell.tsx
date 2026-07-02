@@ -19,7 +19,9 @@ import {
   Sun,
   Moon,
   PanelLeftClose,
+  PanelRightClose,
   PanelLeft,
+  PanelRight,
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence, PageTransition } from "@/components/animations";
@@ -29,6 +31,7 @@ import { LEARNING_PATHS, LESSON_CONTENT } from "@/lib/learn-data";
 import { useAuth } from "@/hooks/use-auth";
 import { useTheme } from "@/hooks/use-theme";
 import { useLang } from "@/hooks/use-lang";
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 const NAV = [
   { to: "/app", label: "Dashboard", icon: LayoutDashboard, mobile: "Home" },
@@ -90,9 +93,7 @@ function SidebarLink({
       to={to}
       className={cn(
         "group relative flex items-center gap-3 rounded-[10px] px-3 py-2.5 text-[13px] font-medium transition-colors duration-200",
-        active
-          ? "text-bull"
-          : "text-text-secondary hover:bg-white/[0.04] hover:text-text-primary",
+        active ? "text-bull" : "text-text-secondary hover:bg-white/[0.04] hover:text-text-primary",
       )}
     >
       {/* shared sliding highlight */}
@@ -123,7 +124,7 @@ function SidebarLink({
 }
 
 function Sidebar({ onCollapse }: { onCollapse: () => void }) {
-  const { t } = useLang();
+  const { t, isUrdu } = useLang();
   const path = useRouterState({ select: (s) => s.location.pathname });
   const { profile, user, signOut } = useAuth();
   const navigate = useNavigate();
@@ -148,15 +149,28 @@ function Sidebar({ onCollapse }: { onCollapse: () => void }) {
 
       {/* utility section — separated from primary nav */}
       <div className="space-y-1 border-t border-white/[0.06] px-3 py-3">
-        <SidebarLink to="/settings" label="Settings" icon={Settings} active={isActive("/settings")} />
+        <SidebarLink
+          to="/settings"
+          label="Settings"
+          icon={Settings}
+          active={isActive("/settings")}
+        />
         <button
           onClick={onCollapse}
+          aria-label={t("Collapse sidebar")}
           className="group flex w-full items-center gap-3 rounded-[10px] px-3 py-2.5 text-[13px] font-medium text-text-secondary transition-colors duration-200 hover:bg-white/[0.04] hover:text-text-primary"
         >
-          <PanelLeftClose
-            className="h-5 w-5 shrink-0 text-text-muted group-hover:text-text-primary"
-            strokeWidth={1.75}
-          />
+          {isUrdu ? (
+            <PanelRightClose
+              className="h-5 w-5 shrink-0 text-text-muted group-hover:text-text-primary"
+              strokeWidth={1.75}
+            />
+          ) : (
+            <PanelLeftClose
+              className="h-5 w-5 shrink-0 text-text-muted group-hover:text-text-primary"
+              strokeWidth={1.75}
+            />
+          )}
           {t("Collapse")}
         </button>
       </div>
@@ -226,7 +240,7 @@ function NotificationBell() {
       <button
         onClick={() => setOpen((v) => !v)}
         className="relative text-text-secondary transition-colors hover:text-text-primary"
-        aria-label="Notifications"
+        aria-label={t("Notifications")}
       >
         <Bell className="h-[18px] w-[18px]" strokeWidth={1.75} />
         <span className="absolute -top-1.5 -end-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-bear text-[9px] font-bold text-white">
@@ -241,7 +255,9 @@ function NotificationBell() {
           )}
         >
           <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-2.5">
-            <span className="text-[13px] font-semibold text-text-primary">{t("Notifications")}</span>
+            <span className="text-[13px] font-semibold text-text-primary">
+              {t("Notifications")}
+            </span>
             <Link
               to="/alerts"
               onClick={() => setOpen(false)}
@@ -304,7 +320,7 @@ function UserMenu() {
       <button
         onClick={() => setOpen((v) => !v)}
         className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-xs font-semibold text-primary transition hover:brightness-110"
-        aria-label="Account menu"
+        aria-label={t("User menu")}
       >
         {initial(profile?.display_name, user?.email)}
       </button>
@@ -346,11 +362,12 @@ function UserMenu() {
 
 function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
+  const { t } = useLang();
   const isDark = theme === "dark";
   return (
     <button
       onClick={toggleTheme}
-      aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+      aria-label={t("Toggle theme")}
       className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[8px] text-text-secondary transition-colors hover:bg-white/[0.04] hover:text-text-primary"
     >
       {isDark ? (
@@ -376,10 +393,13 @@ function Header({
     <header
       className={cn(
         "glass-chrome sticky top-0 z-20 flex h-[52px] items-center gap-2 border-b border-white/[0.06] px-3 sm:gap-3 lg:ps-6",
-        isUrdu && "flex-row-reverse",
       )}
     >
-      <button onClick={onMenu} className="text-text-secondary lg:hidden" aria-label="Menu">
+      <button
+        onClick={onMenu}
+        className="text-text-secondary lg:hidden"
+        aria-label={t("Open menu")}
+      >
         <Menu className="h-5 w-5" strokeWidth={1.75} />
       </button>
       {collapsed && (
@@ -388,7 +408,11 @@ function Header({
           className="hidden text-text-secondary transition-colors hover:text-text-primary lg:inline-flex"
           aria-label="Show menu"
         >
-          <PanelLeft className="h-5 w-5" strokeWidth={1.75} />
+          {isUrdu ? (
+            <PanelRight className="h-5 w-5" strokeWidth={1.75} />
+          ) : (
+            <PanelLeft className="h-5 w-5" strokeWidth={1.75} />
+          )}
         </button>
       )}
       <div className={cn("lg:hidden", collapsed && "lg:block")}>
@@ -568,6 +592,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </main>
       </div>
       <BottomNav />
+      <ScrollToTop />
 
       <AnimatePresence>
         {drawer && (
@@ -588,47 +613,47 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               exit={{ y: "100%" }}
               transition={{ type: "spring", stiffness: 320, damping: 32 }}
             >
-            <div className="mb-3 flex items-center justify-between">
-              <span className="text-sm font-semibold text-text-primary">{t("More")}</span>
-              <button onClick={() => setDrawer(false)}>
-                <X className="h-5 w-5 text-text-secondary" />
-              </button>
-            </div>
-            {NAV.slice(5).map((n) => (
+              <div className="mb-3 flex items-center justify-between">
+                <span className="text-sm font-semibold text-text-primary">{t("More")}</span>
+                <button onClick={() => setDrawer(false)}>
+                  <X className="h-5 w-5 text-text-secondary" />
+                </button>
+              </div>
+              {NAV.slice(5).map((n) => (
+                <Link
+                  key={n.to}
+                  to={n.to}
+                  onClick={() => setDrawer(false)}
+                  className="flex items-center gap-3 rounded-[6px] px-3 py-3 text-sm text-text-primary hover:bg-hover"
+                >
+                  <n.icon className="h-5 w-5 text-text-secondary" />
+                  {t(n.label)}
+                </Link>
+              ))}
               <Link
-                key={n.to}
-                to={n.to}
+                to="/plans"
                 onClick={() => setDrawer(false)}
-                className="flex items-center gap-3 rounded-[6px] px-3 py-3 text-sm text-text-primary hover:bg-hover"
+                className="flex items-center gap-3 rounded-[6px] border border-bull/40 bg-bull/10 px-3 py-3 text-sm font-semibold text-bull hover:bg-bull/15"
               >
-                <n.icon className="h-5 w-5 text-text-secondary" />
-                {t(n.label)}
+                <Sparkles className="h-5 w-5" /> {t("Upgrade to Pro")}
               </Link>
-            ))}
-            <Link
-              to="/plans"
-              onClick={() => setDrawer(false)}
-              className="flex items-center gap-3 rounded-[6px] border border-bull/40 bg-bull/10 px-3 py-3 text-sm font-semibold text-bull hover:bg-bull/15"
-            >
-              <Sparkles className="h-5 w-5" /> {t("Upgrade to Pro")}
-            </Link>
-            <div className="mt-2 flex items-center gap-3 border-t border-border px-3 pt-3">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-bull/20 text-sm font-semibold text-bull">
-                {initial(profile?.display_name, user?.email)}
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="truncate text-sm font-medium text-text-primary">
-                  {profile?.display_name || user?.email?.split("@")[0] || "User"}
+              <div className="mt-2 flex items-center gap-3 border-t border-border px-3 pt-3">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-bull/20 text-sm font-semibold text-bull">
+                  {initial(profile?.display_name, user?.email)}
                 </div>
-                <div className="text-xs text-text-muted">{profile?.plan ?? "Free"} plan</div>
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-sm font-medium text-text-primary">
+                    {profile?.display_name || user?.email?.split("@")[0] || "User"}
+                  </div>
+                  <div className="text-xs text-text-muted">{profile?.plan ?? "Free"} plan</div>
+                </div>
+                <button
+                  onClick={handleSignOut}
+                  className="flex items-center gap-1.5 rounded-[6px] px-2.5 py-1.5 text-sm font-medium text-bear hover:bg-hover"
+                >
+                  <LogOut className="h-4 w-4" /> {t("Sign out")}
+                </button>
               </div>
-              <button
-                onClick={handleSignOut}
-                className="flex items-center gap-1.5 rounded-[6px] px-2.5 py-1.5 text-sm font-medium text-bear hover:bg-hover"
-              >
-                <LogOut className="h-4 w-4" /> {t("Sign out")}
-              </button>
-            </div>
             </motion.div>
           </motion.div>
         )}
